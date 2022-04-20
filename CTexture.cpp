@@ -20,7 +20,7 @@ void CTexture::StartRender(){
 }
 
 
-/*
+
 
 void   CTexture::Prepare(int textureId)
 {
@@ -40,6 +40,7 @@ void   CTexture::Prepare(int textureId)
     //                 image.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
     //                 image.pixels)
 }
+void Prepare (int textureId);
 
 void  CTexture::ReadPPMImage (char *fileName)
 {

@@ -40,6 +40,7 @@ public: static void StartRender();
         int height;
         int numChannels;
     };
+    void Prepare (int textureId);
 
 };
 
