@@ -14,6 +14,6 @@ CRender render;
 int main() {
     std::thread thr(render.StartRender);
     std::cout << "Hello, World!" << std::endl;
-    render.StartRender;
+    thr.join();
     return 0;
 }
