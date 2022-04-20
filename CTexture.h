@@ -20,7 +20,7 @@ public:
         int numChannels;
     };
     void Prepare(int textureId);
-    ReadPPMImage (char *fileName);
+    void ReadPPMImage (char *fileName);
     GLuint texName;
     sTextureImage TextureImage;
 
