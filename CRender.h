@@ -7,7 +7,7 @@
 
 
 class CRender {
-    public void StartRender();
+public: void StartRender();
 
 };
 
