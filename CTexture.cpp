@@ -88,7 +88,7 @@ void  CTexture::ReadPPMImage (char *fileName)
         printf("Reading image %s of size %dx%d\n", fileName, TextureImage.width, TextureImage.height);
 
 
-    fread (image.pixels, sizeof (unsigned char), TextureImage.numChannels * TextureImage.width * TextureImage.height, inFile);
+    fread (TextureImage.pixels, sizeof (unsigned char), TextureImage.numChannels * TextureImage.width * TextureImage.height, inFile);
 
     fclose (inFile);
 }
