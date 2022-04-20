@@ -12,6 +12,7 @@
 #include <mutex>
 #include <GL/glut.h>
 #include <GL/gl.h>
+
 #pragma warning (disable : 4996)
 
 CTexture::CTexture(){}
