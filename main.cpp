@@ -12,7 +12,7 @@
 
 CRender render;
 int main() {
-    std::thread thr(render.);
+    std::thread thr(render.StartRender());
     std::cout << "Hello, World!" << std::endl;
     return 0;
 }
