@@ -32,8 +32,8 @@
 };*/
 class CTexture {
 public: static void StartRender();
-    CTexture();
-    struct sTextureImage
+public:     CTexture();
+public:     struct sTextureImage
     {
         unsigned char* pixels;
         int width;
