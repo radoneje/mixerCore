@@ -28,7 +28,7 @@ void  Prepare(int textureId)
     //                 image.pixels)
 }
 
-void ReadPPMImage (char* fileName)
+void ReadPPMImage (char *fileName)
 {
     int tmpint;
     char str[100];
