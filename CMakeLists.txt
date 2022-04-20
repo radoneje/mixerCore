@@ -3,4 +3,12 @@ project(mixerCore)
 
 set(CMAKE_CXX_STANDARD 20)
 
+
+include_directories(
+        external/ffmpeg
+        /usr/local/include/
+        .
+)
+
+
 add_executable(mixerCore main.cpp CRender.cpp CRender.h)
