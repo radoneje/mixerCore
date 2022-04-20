@@ -40,8 +40,7 @@ void   CTexture::Prepare(int textureId)
     //                 image.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
     //                 image.pixels)
 }
-void Prepare (int textureId);
-
+/*
 void  CTexture::ReadPPMImage (char *fileName)
 {
     int tmpint;
@@ -92,4 +91,6 @@ void  CTexture::ReadPPMImage (char *fileName)
     fread (image.pixels, sizeof (unsigned char), image.numChannels * image.width * image.height, inFile);
 
     fclose (inFile);
-}*/
+}
+
+*/
