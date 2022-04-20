@@ -15,7 +15,6 @@ find_library(GLUT_LIBRARIES glut REQUIRED)
 include_directories(
         external/ffmpeg
         /usr/include
-        /usr/local/include
         .
 )
 set(ALL_LIBS
