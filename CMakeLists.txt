@@ -3,7 +3,7 @@ project(mixerCore)
 
 set(CMAKE_CXX_STANDARD 20)
 
-
+add_subdirectory (external)
 
 find_library(AVCODEC_LIBRARY avcodec)
 find_library(AVFORMAT_LIBRARY avformat)
