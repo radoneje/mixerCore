@@ -32,8 +32,7 @@
 };*/
 class CTexture {
 public:
-    GLuint texName;
-    Image image;
+
     void StartRender();
     CTexture();
     struct sTextureImage {
@@ -43,6 +42,8 @@ public:
         int numChannels;
     };
     void Prepare(int textureId);
+    GLuint texName;
+    sTextureImage TextureImage;
 
 };
 

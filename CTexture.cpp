@@ -33,9 +33,9 @@ void   CTexture::Prepare(int textureId)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width,
-                 image.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 image.pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, TextureImage.width,
+                 TextureImage.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 TextureImage.pixels);
     // gluBuild2DMipmaps(GL_TEXTURE_2D, 0, GL_RGB, image.width,
     //                 image.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
     //                 image.pixels)
