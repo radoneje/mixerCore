@@ -12,7 +12,12 @@
 #include <thread>
 #include <mutex>
 
-void StartRender(){
-    std::cout << "start render" << std::endl;
-    return;
-}
+
+
+
+    void StartRender(){
+        std::cout << "start render" << std::endl;
+        return;
+    }
+
+
