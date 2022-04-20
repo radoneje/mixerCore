@@ -30,7 +30,6 @@ set(ALL_LIBS
         ${SWSCALE_LIBRARIES}
         ${GLUT_LIBRARIES}
         glfw
-        GLEW_1130
         )
 add_definitions(
         -DTW_STATIC
