@@ -14,7 +14,7 @@ void  Prepare(int textureId)
     textureId = textureId;
     glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
 
-    glBindTexture (GL_TEXTURE_2D, texName);
+    glBindTexture (GL_TEXTURE_2D, textureId);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -72,7 +72,7 @@ void ReadPPMImage (char* fileName)
         exit (1);
     }
     else
-        printf("Reading image %s of size %dx%d\n", fn, image.width, image.height);
+        printf("Reading image %s of size %dx%d\n", fileName, image.width, image.height);
 
 
     fread (image.pixels, sizeof (unsigned char), image.numChannels * image.width * image.height, inFile);
