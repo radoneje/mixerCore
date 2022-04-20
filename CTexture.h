@@ -31,16 +31,18 @@
 
 };*/
 class CTexture {
-public: static void StartRender();
-public:     CTexture();
-public:     struct sTextureImage
-    {
-        unsigned char* pixels;
+public:
+    GLuint texName;
+    Image image;
+    void StartRender();
+    CTexture();
+    struct sTextureImage {
+        unsigned char *pixels;
         int width;
         int height;
         int numChannels;
     };
-    void Prepare (int textureId);
+    void Prepare(int textureId);
 
 };
 
