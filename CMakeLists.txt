@@ -7,6 +7,7 @@ find_library(AVCODEC_LIBRARY avcodec)
 find_library(AVFORMAT_LIBRARY avformat)
 find_library(AVUTIL_LIBRARY avutil)
 find_library(SWSCALE_LIBRARIES swscale)
+find_library(THREADS_LIBRARIES pthreads)
 
 
 include_directories(
@@ -15,6 +16,7 @@ include_directories(
         .
 )
 set(ALL_LIBS
+        ${THREADS_LIBRARIES},
         ${AVCODEC_LIBRARY}
         ${AVFORMAT_LIBRARY}
         ${AVUTIL_LIBRARY}
