@@ -40,7 +40,7 @@ void   CTexture::Prepare(int textureId)
     //                 image.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
     //                 image.pixels)
 }
-/*
+
 void  CTexture::ReadPPMImage (char *fileName)
 {
     int tmpint;
@@ -69,28 +69,27 @@ void  CTexture::ReadPPMImage (char *fileName)
 
     // read image dimensions
 
-    sscanf (str,"%d %d",&image.width, &image.height);
+    sscanf (str,"%d %d",&TextureImage.width, &TextureImage.height);
     fgets (str,100,inFile);
     sscanf (str,"%d",&tmpint);
 
     if (tmpint != 255)
         printf("Warning: maxvalue is not 255 in ppm file\n");
 
-    image.numChannels = 3;
-    image.pixels = (unsigned char*) malloc (image.numChannels * image.width *  image.height * sizeof (unsigned char));
+    TextureImage.numChannels = 3;
+    TextureImage.pixels = (unsigned char*) malloc (TextureImage.numChannels * TextureImage.width *  TextureImage.height * sizeof (unsigned char));
 
-    if (image.pixels == NULL)
+    if (TextureImage.pixels == NULL)
     {
-        printf ("Can't allocate image of size %dx%d. Exiting\n", image.width, image.height);
+        printf ("Can't allocate image of size %dx%d. Exiting\n", TextureImage.width, TextureImage.height);
         exit (1);
     }
     else
-        printf("Reading image %s of size %dx%d\n", fileName, image.width, image.height);
+        printf("Reading image %s of size %dx%d\n", fileName, TextureImage.width, TextureImage.height);
 
 
-    fread (image.pixels, sizeof (unsigned char), image.numChannels * image.width * image.height, inFile);
+    fread (image.pixels, sizeof (unsigned char), TextureImage.numChannels * TextureImage.width * TextureImage.height, inFile);
 
     fclose (inFile);
 }
 
-*/

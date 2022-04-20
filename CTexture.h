@@ -7,29 +7,7 @@
 
 #include <GL/glut.h>
 
-/*class CTexture {
 
-    struct sTextureImage
-    {
-        unsigned char* pixels;
-        int width;
-        int height;
-        int numChannels;
-    };
-
-    class Texture
-    {
-    public:
-        GLuint textureId;
-        sTextureImage image;
-
-        Texture();
-        void Prepare (int textureId);
-        void ReadPPMImage (char *fileName);
-
-    };
-
-};*/
 class CTexture {
 public:
 
@@ -42,6 +20,7 @@ public:
         int numChannels;
     };
     void Prepare(int textureId);
+    ReadPPMImage (char *fileName);
     GLuint texName;
     sTextureImage TextureImage;
 
