@@ -23,7 +23,7 @@ class CTexture {
         GLuint textureId;
         sTextureImage image;
 
-        Texture (void);
+        Texture();
         void Prepare (int textureId);
         void ReadPPMImage (char *fileName);
 

@@ -9,7 +9,7 @@
 
 
 
-void  Prepare(int textureId)
+void   CTexture::Prepare(int textureId)
 {
     textureId = textureId;
     glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
@@ -28,7 +28,7 @@ void  Prepare(int textureId)
     //                 image.pixels)
 }
 
-void ReadPPMImage (char *fileName)
+void  CTexture::ReadPPMImage (char *fileName)
 {
     int tmpint;
     char str[100];
