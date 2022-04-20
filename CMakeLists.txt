@@ -17,6 +17,7 @@ include_directories(
         /usr/include/
         /usr/local/include/
         .
+        ..
 )
 set(ALL_LIBS
         ${AVCODEC_LIBRARY}
