@@ -3,7 +3,13 @@
 //
 
 #include "CTexture.h"
-#include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <string>
+#include <chrono>
+#include <thread>
+#include <mutex>
 #include <GL/glut.h>
 #pragma warning (disable : 4996)
 
