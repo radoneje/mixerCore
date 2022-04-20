@@ -29,7 +29,11 @@ set(ALL_LIBS
         ${AVUTIL_LIBRARY}
         ${SWSCALE_LIBRARIES}
         ${GLUT_LIBRARIES}
+        glfw
+        GLEW_1130
         )
+
+
 
 
 add_executable(mixerCore main.cpp CRender.cpp CRender.h CTexture.cpp CTexture.h)
