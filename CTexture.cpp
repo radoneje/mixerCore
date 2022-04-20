@@ -7,9 +7,9 @@
 #include <GL/glut.h>
 #pragma warning (disable : 4996)
 
+using namespace CTexture;
 
-
-void   CTexture::Prepare(int textureId)
+void   Prepare(int textureId)
 {
     textureId = textureId;
     glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
