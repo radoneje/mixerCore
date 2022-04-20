@@ -11,7 +11,7 @@
 
 void  Prepare(int textureId)
 {
-    textureId = texN;
+    textureId = textureId;
     glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
 
     glBindTexture (GL_TEXTURE_2D, texName);
@@ -36,7 +36,7 @@ void ReadPPMImage (char* fileName)
 
     if (inFile == NULL)
     {
-        printf ("Can't open input file %s. Exiting.\n",fn);
+        printf ("Can't open input file %s. Exiting.\n",fileName);
         exit (1);
     }
 
