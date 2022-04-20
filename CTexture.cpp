@@ -7,7 +7,7 @@
 #include <GL/glut.h>
 #pragma warning (disable : 4996)
 
-CTexture::CRender(){}
+CTexture::CTexture(){}
 void CTexture::StartRender(){
     std::cout << "start render" << std::endl;
     return;
