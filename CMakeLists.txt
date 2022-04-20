@@ -20,7 +20,8 @@ include_directories(
         external/assimp-3.0.1270/include/
         external/bullet-2.81-rev2613/src/
         external/ffmpeg
-        /usr/include
+        /usr/include/x86_64-linux-gnu/
+        /usr/local/include/
         .
 )
 set(ALL_LIBS
@@ -30,6 +31,7 @@ set(ALL_LIBS
         ${SWSCALE_LIBRARIES}
         ${GLUT_LIBRARIES}
         glfw
+        GLEW_1130
         )
 add_definitions(
         -DTW_STATIC
