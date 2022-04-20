@@ -15,7 +15,7 @@
 
 
 
-    void StartRender(){
+    void CRender::StartRender(){
         std::cout << "start render" << std::endl;
         return;
     }
