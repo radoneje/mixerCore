@@ -5,6 +5,10 @@
 #ifndef MIXERCORE_CTEXTURE_H
 #define MIXERCORE_CTEXTURE_H
 
+#include <GL/glut.h>
+#include <GL/gl.h>
+
+
 class CTexture {
 public:
 
