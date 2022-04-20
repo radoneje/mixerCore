@@ -4,6 +4,14 @@
 
 #include "CRender.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <string>
+#include <chrono>
+#include <thread>
+#include <mutex>
+
 void StartRender(){
     std::cout << "start render" << std::endl;
     return;
