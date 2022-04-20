@@ -32,6 +32,13 @@ set(ALL_LIBS
         glfw
         GLEW_1130
         )
+add_definitions(
+        -DTW_STATIC
+        -DTW_NO_LIB_PRAGMA
+        -DTW_NO_DIRECT3D
+        -DGLEW_STATIC
+        -D_CRT_SECURE_NO_WARNINGS
+)
 
 
 
@@ -40,4 +47,4 @@ add_executable(mixerCore main.cpp CRender.cpp CRender.h CTexture.cpp CTexture.h)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
-target_link_libraries(mixerCore PRIVATE Threads::Threads)
+target_link_libraries( mixerCore PRIVATE Threads::Threads ${ALL_LIBS})
