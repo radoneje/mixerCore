@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
-target_link_libraries(my_app PRIVATE Threads::Threads)
+target_link_libraries(mixerCore PRIVATE Threads::Threads)
 
 find_library(AVCODEC_LIBRARY avcodec)
 find_library(AVFORMAT_LIBRARY avformat)
