@@ -3,3 +3,8 @@
 //
 
 #include "CRender.h"
+
+void StartRender(){
+    std::cout << "start render" << std::endl;
+    return;
+}
