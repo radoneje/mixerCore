@@ -10,7 +10,7 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
-#include <GL/glut.h>
+
 #pragma warning (disable : 4996)
 
 CTexture::CTexture(){}
