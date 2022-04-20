@@ -8,6 +8,7 @@
 
 class CRender {
 public: static void StartRender();
+    CRender();
 
 };
 

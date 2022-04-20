@@ -12,8 +12,8 @@
 
 CRender render;
 int main() {
-    std::thread thr(render.StartRender);
+    std::thread renderThread(render.StartRender);
     std::cout << "Hello, World!" << std::endl;
-    thr.join();
+    renderThread.join();
     return 0;
 }

@@ -9,6 +9,7 @@ find_library(AVCODEC_LIBRARY avcodec)
 find_library(AVFORMAT_LIBRARY avformat)
 find_library(AVUTIL_LIBRARY avutil)
 find_library(SWSCALE_LIBRARIES swscale)
+find_library(GLUT_LIBRARIES glut REQUIRED)
 
 
 include_directories(
@@ -21,11 +22,11 @@ set(ALL_LIBS
         ${AVFORMAT_LIBRARY}
         ${AVUTIL_LIBRARY}
         ${SWSCALE_LIBRARIES}
-
+        ${GLUT_LIBRARIES}
         )
 
 
-add_executable(mixerCore main.cpp CRender.cpp CRender.h)
+add_executable(mixerCore main.cpp CRender.cpp CRender.h CTexture.cpp CTexture.h)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
