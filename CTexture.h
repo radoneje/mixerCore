@@ -7,7 +7,7 @@
 
 #include <GL/glut.h>
 
-class CTexture {
+/*class CTexture {
 
     struct sTextureImage
     {
@@ -28,6 +28,11 @@ class CTexture {
         void ReadPPMImage (char *fileName);
 
     };
+
+};*/
+class CTexture {
+public: static void StartRender();
+    CTexture();
 
 };
 

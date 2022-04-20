@@ -7,7 +7,14 @@
 #include <GL/glut.h>
 #pragma warning (disable : 4996)
 
+CTexture::CRender(){}
+void CTexture::StartRender(){
+    std::cout << "start render" << std::endl;
+    return;
+}
 
+
+/*
 
 void   CTexture::Prepare(int textureId)
 {
@@ -78,4 +85,4 @@ void  CTexture::ReadPPMImage (char *fileName)
     fread (image.pixels, sizeof (unsigned char), image.numChannels * image.width * image.height, inFile);
 
     fclose (inFile);
-}
+}*/
