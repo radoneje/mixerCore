@@ -5,10 +5,11 @@
 #include "CTexture.h"
 #include <fstream>
 #include <GL/glut.h>
+#pragma warning (disable : 4996)
 
 
 
-void CTexture::Prepare(int textureId)
+void  Prepare(int textureId)
 {
     textureId = texN;
     glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
@@ -27,7 +28,7 @@ void CTexture::Prepare(int textureId)
     //                 image.pixels)
 }
 
-void CTexture::ReadPPMImage (char* fileName)
+void ReadPPMImage (char* fileName)
 {
     int tmpint;
     char str[100];
