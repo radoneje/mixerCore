@@ -33,6 +33,13 @@
 class CTexture {
 public: static void StartRender();
     CTexture();
+    struct sTextureImage
+    {
+        unsigned char* pixels;
+        int width;
+        int height;
+        int numChannels;
+    };
 
 };
 
