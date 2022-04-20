@@ -6,7 +6,7 @@
 #include <fstream>
 #include <GL/glut.h>
 
- CTexture::Texture();
+
 
 void CTexture::Prepare(int textureId)
 {
