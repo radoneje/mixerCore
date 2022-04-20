@@ -7,7 +7,7 @@
 #include <GL/glut.h>
 #pragma warning (disable : 4996)
 
-using namespace CTexture;
+
 
 void   Prepare(int textureId)
 {
