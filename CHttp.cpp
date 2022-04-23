@@ -12,5 +12,8 @@
 #include "CHttp.h"
 CHttp::CHttp(){
 
-    std::cout<< "http condtructor"<<std::endl;
+
 };
+void CHttp::init(int port){
+    std::cout<< "http CHttp"<<std::endl;
+}

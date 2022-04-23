@@ -8,6 +8,7 @@
 
 class CHttp {
     public:   CHttp();
+    static void init(int port);
 
 };
 
