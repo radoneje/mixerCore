@@ -44,7 +44,7 @@ add_definitions(
 
 
 
-add_executable(mixerCore main.cpp CRender.cpp CRender.h CTexture.cpp CTexture.h)
+add_executable(mixerCore main.cpp CRender.cpp CRender.h CTexture.cpp CTexture.h CHttp.cpp CHttp.h)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)

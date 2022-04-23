@@ -12,6 +12,9 @@
 
 CRender render;
 int main() {
+
+    std::thread httpThread(render.StartRender);
+
     std::thread renderThread(render.StartRender);
     std::cout << "Hello, World!" << std::endl;
     renderThread.join();
