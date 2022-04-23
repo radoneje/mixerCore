@@ -20,6 +20,6 @@ int main() {
     std::thread renderThread(render.StartRender);
     std::cout << "Hello, World!" << std::endl;
     renderThread.join();
-    cin.get();
+    std::cin.get();
     return 0;
 }
