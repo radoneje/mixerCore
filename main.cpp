@@ -15,7 +15,7 @@ CRender render;
 
 int main() {
 
-    std::thread httpThread(httpServer.init(8090));
+    std::thread httpThread(httpServer.init,8090);
 
     std::thread renderThread(render.StartRender);
     std::cout << "Hello, World!" << std::endl;
