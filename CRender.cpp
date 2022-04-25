@@ -11,6 +11,7 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
+#include <vector>
 #include "CConfig.h"
 
 // Include GLEW
