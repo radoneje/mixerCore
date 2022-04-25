@@ -6,12 +6,15 @@
 #define MIXERCORE_CRENDER_H
 
 
-struct sTextureImage {
+class sTextureImage {
 public:
     unsigned char *pixels;
     int width;
     int height;
     int numChannels;
+    sTextureImage(){
+        width=0;
+    };
 
 };
 class CRender {
