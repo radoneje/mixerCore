@@ -52,7 +52,7 @@ void CRender::Display(){
         //
         std::cout <<  std::stoi(sWinH.c_str()) << " <<-window name "<< '\n';
 
-        glutInit( 0, &argv);
+       // glutInit( 0, &argv);
        // glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
       //  glutInitWindowPosition(-1, -1);
        // glutInitWindowSize(std::stoi(sWinW), std::stoi(sWinH));
