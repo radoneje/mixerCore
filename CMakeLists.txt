@@ -13,8 +13,7 @@ find_library(SWSCALE_LIBRARIES swscale)
 find_library(GLUT_LIBRARIES glut)
 
 
-message (STATUS "Found LibConfig++: " ${LIBCONFIGPP_LOCATION})
-message (STATUS "Found LibConfig: " ${LIBCONFIG_LOCATION})
+
 
 include_directories(
         external/AntTweakBar-1.16/include/
@@ -36,8 +35,7 @@ set(ALL_LIBS
         ${SWSCALE_LIBRARIES}
         ${GLUT_LIBRARIES}
         ${CONFIG_LIBRARIES}
-        ${LIBCONFIGPP_LOCATION}
-        ${LIBCONFIG_LOCATION}
+
         glfw
         GLEW_1130
         )
