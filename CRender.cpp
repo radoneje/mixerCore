@@ -56,8 +56,8 @@ void CRender::ReadPPMImage(char *fileName, sTextureImage &textureImage) {
     if (tmpint != 255)
         printf("Warning: maxvalue is not 255 in ppm file\n");
 
-    textureImage= 3;
-    textureImage= (unsigned char*) malloc (textureImage.numChannels * textureImage.width *  textureImage.height * sizeof (unsigned char));
+    textureImage.numChannels= 3;
+    textureImage.pixels= (unsigned char*) malloc (textureImage.numChannels * textureImage.width *  textureImage.height * sizeof (unsigned char));
 
     if (textureImage.pixels == NULL)
     {
