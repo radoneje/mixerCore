@@ -20,7 +20,6 @@ void CHttp::init(int port){
     std::cout<< "http CHttp"<<std::endl;
     httplib::Server svr;
     svr.Get("/cmd", [](const httplib::Request &req, httplib::Response &res) {
-        req.
         res.set_content("Hello World!", "text/plain");
     });
 
