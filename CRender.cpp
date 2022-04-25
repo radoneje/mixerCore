@@ -38,7 +38,7 @@ void CRender::Reshape(int width, int height){
     glLoadIdentity();
 }
 void CRender::Display(){
-    std::cout << "display" << width << " " << height << std::endl;
+    std::cout << "display"  << " "  << std::endl;
 
 }
     void CRender::StartRender(int argc, char **argv){
