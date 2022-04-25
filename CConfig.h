@@ -7,7 +7,7 @@
 
 
 class CConfig {
-public: CConfig(char* name, char& str);
+public: CConfig(const char *name, char& str);
     static int GetConfig();
 };
 

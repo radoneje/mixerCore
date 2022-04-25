@@ -15,7 +15,7 @@
 
 CConfig::CConfig() {};
 
-int CConfig::GetConfig(char* name, char& str) {
+int CConfig::GetConfig(const char *name, char& str) {
     config_t cfg;
     config_setting_t *setting;
 
