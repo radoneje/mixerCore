@@ -51,21 +51,21 @@ void CRender::Display(){
         //
         std::cout <<  std::stoi(sWinH.c_str()) << " <<-window name "<< '\n';
 
-        glutInit(NULL, NULL);
-        glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-        glutInitWindowPosition(-1, -1);
+    ///    glutInit(NULL, NULL);
+       // glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+      //  glutInitWindowPosition(-1, -1);
        // glutInitWindowSize(std::stoi(sWinW), std::stoi(sWinH));
        // glutCreateWindow(sWinName.c_str());
        // glClearColor(0.0, 0.0, 0.0, 0.0);
        // glEnable(GL_DEPTH_TEST);
 
         // register callbacks
-        glutDisplayFunc(Display);
-        glutReshapeFunc(Reshape);
-        glutIdleFunc(Display);     // used in animation
+      //  glutDisplayFunc(Display);
+      //  glutReshapeFunc(Reshape);
+      //  glutIdleFunc(Display);     // used in animation
 
         // enter GLUT event processing cycle
-        glutMainLoop();
+      //  glutMainLoop();
 
         return;
     }
