@@ -11,7 +11,6 @@
 
 #include "CConfig.h"
 extern "C" {
-#include <libconfig.h>
 }
 
 using namespace libconfig;
@@ -19,16 +18,27 @@ using namespace libconfig;
 
 CConfig::CConfig() {};
 
-int CConfig::GetConfig(const char *name, const char** str) {
+int CConfig::GetConfig(const char *fileNname, const char** str) {
 
-    config_t cfg;
-    config_setting_t *setting;
-    const char *str;
-
-    config_init(&cfg);
-
-    return  0;
+    std::ifstream cFile (fileNname);
    // if(! config_read_file(&cfg, "/etc/MixerCore/mixerCore.conf"))
+    if (cFile.is_open())
+    {
+        std::string line;
+        while(getline(cFile, line)){
+            line.erase(std::remove_if(line.begin(), line.end(), isspace),
+                       line.end());
+            if(line[0] == '#' || line.empty())
+                continue;
+            auto delimiterPos = line.find("=");
+            auto name = line.substr(0, delimiterPos);
+            auto value = line.substr(delimiterPos + 1);
+            std::cout << name << " " << value << '\n';
+        }
 
+    }
+    else {
+        std::cerr << "Couldn't open config file for reading.\n";
+    }
 }
 

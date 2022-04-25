@@ -11,10 +11,7 @@ find_library(AVFORMAT_LIBRARY avformat)
 find_library(AVUTIL_LIBRARY avutil)
 find_library(SWSCALE_LIBRARIES swscale)
 find_library(GLUT_LIBRARIES glut)
-#find_package(Config REQUIRED)
-#find_package(Config++ REQUIRED)
-find_library(LIBCONFIGPP_LOCATION Libconfig++ HINTS /root/libconfig-1.7.3/lib)
-find_library(LIBCONFIG_LOCATION Libconfig HINTS /root/libconfig-1.7.3/lib)
+
 
 message (STATUS "Found LibConfig++: " ${LIBCONFIGPP_LOCATION})
 message (STATUS "Found LibConfig: " ${LIBCONFIG_LOCATION})
