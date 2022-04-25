@@ -11,7 +11,7 @@ class CRender {
 private:
     static void Reshape(int width, int height);
     static void  Display();
-    struct sTextureImage {
+    static struct sTextureImage {
     public:
         unsigned char *pixels;
         int width;
@@ -20,7 +20,7 @@ private:
 
     };
     void ReadPPMImage (char *fileName, sTextureImage &textureImage );
-    static sTextureImage *textureImage;
+    static sTextureImage *textureImage= new sTextureImage[8];
     static void ReadPPMImage (char *fileName);
 public:
     static void StartRender(int argc, char **argv);
