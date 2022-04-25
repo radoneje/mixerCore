@@ -10,9 +10,12 @@
 #include <mutex>
 
 #include "CConfig.h"
+extern "C" {
 #include <libconfig.h>
+}
 
 using namespace libconfig;
+
 
 CConfig::CConfig() {};
 
