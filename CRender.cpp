@@ -13,6 +13,15 @@
 #include <mutex>
 #include "CConfig.h"
 
+// Include GLEW
+#include <GL/glew.h>
+
+// Include GLFW
+#include <GLFW/glfw3.h>
+
+///
+#include <GL/glut.h>
+
 
 
     CRender::CRender(){}
