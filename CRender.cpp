@@ -27,6 +27,16 @@
     CRender::CRender(){}
 void CRender::Reshape(int width, int height){
 
+    std::cout << "reshape" << width << " " << height << std::endl;
+    glViewport(0, 0, width, height);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    glOrtho(fMinX, fMaxX, fMinY, fMaxY, fNearZ, fFarZ);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 void CRender::Display(){
 
