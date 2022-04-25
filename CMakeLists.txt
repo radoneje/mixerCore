@@ -4,7 +4,7 @@ project(mixerCore)
 set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory (external)
-link_directories("/usr/local/lib/lib")
+
 
 find_library(AVCODEC_LIBRARY avcodec)
 find_library(AVFORMAT_LIBRARY avformat)
@@ -13,8 +13,8 @@ find_library(SWSCALE_LIBRARIES swscale)
 find_library(GLUT_LIBRARIES glut)
 #find_package(Config REQUIRED)
 #find_package(Config++ REQUIRED)
-find_library(LIBCONFIGPP_LOCATION libconfig++)
-find_library(LIBCONFIG_LOCATION libconfig)
+find_library(LIBCONFIGPP_LOCATION libconfig++ HINTS /usr/local/lib/)
+find_library(LIBCONFIG_LOCATION libconfig HINTS /usr/local/lib/)
 
 message (STATUS "Found LibConfig++: " ${LIBCONFIGPP_LOCATION})
 message (STATUS "Found LibConfig: " ${LIBCONFIG_LOCATION})
