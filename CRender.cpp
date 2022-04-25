@@ -31,7 +31,7 @@ void CRender::Reshape(int width, int height){
 void CRender::Display(){
 
 }
-    void CRender::StartRender(){
+    void CRender::StartRender(int argc, char* argv[]){
         std::cout << "start render" << std::endl;
         std::string sWinName, sWinW, sWinH;
 

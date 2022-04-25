@@ -13,11 +13,11 @@
 CHttp httpServer;
 CRender render;
 
-int main() {
+int main(int argc, char* argv[]) {
 
     std::thread httpThread(httpServer.init,8090);
 
-    std::thread renderThread(render.StartRender);
+    std::thread renderThread(render.StartRender, argc,  argv[]);
     std::cout << "Hello, World!" << std::endl;
     renderThread.join();
     std::cin.get();
