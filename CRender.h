@@ -11,7 +11,7 @@ class CRender {
 private:
     static void Reshape(int width, int height);
     static void  Display();
-    static struct sTextureImage {
+    struct sTextureImage {
         unsigned char *pixels;
         int width;
         int height;
