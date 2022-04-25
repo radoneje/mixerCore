@@ -12,7 +12,7 @@ find_library(SWSCALE_LIBRARIES swscale)
 find_library(GLUT_LIBRARIES glut)
 #find_package(Config REQUIRED)
 #find_package(Config++ REQUIRED)
-find_library(CONFIG_LIBRARIES Config++)
+find_library(CONFIG_LIBRARIES Config)
 
 
 include_directories(
