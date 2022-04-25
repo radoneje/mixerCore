@@ -18,7 +18,7 @@
 
 CConfig::CConfig() {};
 
-int CConfig::GetConfig(const char *name, const char** str) {
+int CConfig::GetConfig(const char *name, string* str) {
 
     std::ifstream cFile("/etc/mixerCore/mixerCore.conf");
 
@@ -36,6 +36,8 @@ int CConfig::GetConfig(const char *name, const char** str) {
             auto value = line.substr(delimiterPos + 1);
             std::string sKey(name);
 
+            if(sKey.compare(key)==0)
+                str=&value;
             std::cout <<  sKey.compare(key) << " "<< key << " " << value << '\n';
         }
 

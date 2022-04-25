@@ -16,7 +16,7 @@
     CRender::CRender(){}
     void CRender::StartRender(){
         std::cout << "start render" << std::endl;
-        const char *str;
+        string str;
         const char *name="window";
         CConfig::GetConfig(name,  &str);
       /*  glutInit(&argc, argv);
