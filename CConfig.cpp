@@ -11,8 +11,7 @@
 #include <fstream>
 
 #include "CConfig.h"
-extern "C" {
-}
+
 
 
 
@@ -22,7 +21,7 @@ CConfig::CConfig() {};
 int CConfig::GetConfig(const char *fileNname, const char** str) {
 
     std::ifstream cFile();
-    cFile.open(fileNname );
+    cFile.open("/etc/MixerCore/mixerCore.conf" );
    // if(! config_read_file(&cfg, "/etc/MixerCore/mixerCore.conf"))
     if (cFile.is_open())
     {
