@@ -16,6 +16,7 @@ public:
         this->width=0;
         this->height=0;
     };
+    void ReadPPMImage (char *fileName);
 };
 
 class CRender {
