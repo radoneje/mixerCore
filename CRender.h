@@ -5,6 +5,7 @@
 #ifndef MIXERCORE_CRENDER_H
 #define MIXERCORE_CRENDER_H
 
+#include <vector>
 
 class sTextureImage {
 public:
