@@ -20,6 +20,7 @@ int CConfig::GetConfig(const char *name, const char** str) {
 
     Config cfg;
 
+    return  0;
    // if(! config_read_file(&cfg, "/etc/MixerCore/mixerCore.conf"))
 
 }
