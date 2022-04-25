@@ -31,7 +31,7 @@ void CRender::Reshape(int width, int height){
 void CRender::Display(){
 
 }
-    void CRender::StartRender(int argc, char* argv[]){
+    void CRender::StartRender(int argc, char **argv){
         char argv1[0];
         std::cout << "start render" << std::endl;
         std::string sWinName, sWinW, sWinH;
@@ -52,7 +52,7 @@ void CRender::Display(){
         //
         std::cout <<  std::stoi(sWinH.c_str()) << " <<-window name "<< '\n';
 
-       // glutInit( 0, &argv);
+        glutInit(&argc, argv);
        // glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
       //  glutInitWindowPosition(-1, -1);
        // glutInitWindowSize(std::stoi(sWinW), std::stoi(sWinH));

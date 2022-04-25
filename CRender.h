@@ -11,7 +11,7 @@ private:
     static void Reshape(int width, int height);
     static void  Display();
 public:
-    static void StartRender(int argc, char* argv[]);
+    static void StartRender(int argc, char **argv);
 
     CRender();
 
