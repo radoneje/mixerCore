@@ -36,7 +36,7 @@ int CConfig::GetConfig(const char *name, const char** str) {
             auto value = line.substr(delimiterPos + 1);
             std::string sKey(name);
 
-            std::cout <<  sKey << " "<< key << " " << value << '\n';
+            std::cout <<  sKey.compare(key) << " "<< key << " " << value << '\n';
         }
 
     }
