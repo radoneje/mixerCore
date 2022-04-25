@@ -16,6 +16,10 @@ public:
     sTextureImage(){
         width=0;
     };
+    sTextureImage(int w, int h){
+        width=w;
+        height=0;
+    };
 
 };
 class CRender {
