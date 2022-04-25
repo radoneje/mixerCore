@@ -36,14 +36,17 @@ void CRender::Display(){
         std::string sWinName, sWinW, sWinH;
 
 
-        if( CConfig::GetConfig("widow",  sWinName)!=0) {
-            std::cout <<  "ERROR: could read config file, varible" << sWinName << '\n';
+        if( CConfig::GetConfig("window",  sWinName)!=0) {
+            std::cout <<  "ERROR: could read config file, varible window" << sWinName << '\n';
+            return -1;
         }
         if( CConfig::GetConfig("windowW",  sWinName)!=0) {
             std::cout <<  "ERROR: could read config file, varible windowW" << sWinW << '\n';
+            return -1;
         }
         if( CConfig::GetConfig("windowH",  sWinH)!=0) {
             std::cout <<  "ERROR: could read config file, varible windowH" << sWinH << '\n';
+            return -1;
         }
         std::cout <<  std::stoi(sWinW.c_str()) << " <<-window name "<< '\n';
 
