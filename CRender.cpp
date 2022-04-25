@@ -29,20 +29,16 @@ void CRender::Reshape(int width, int height){
 
     const float fMinX = -5.0, fMinY = -5.0, fNearZ = 1.0,
             fMaxX = 5.0, fMaxY = 5.0, fFarZ = 10.0;
-
     std::cout << "reshape" << width << " " << height << std::endl;
     glViewport(0, 0, width, height);
-
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-
     glOrtho(fMinX, fMaxX, fMinY, fMaxY, fNearZ, fFarZ);
-
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
 void CRender::Display(){
-
+    std::cout << "display" << width << " " << height << std::endl;
 
 }
     void CRender::StartRender(int argc, char **argv){
