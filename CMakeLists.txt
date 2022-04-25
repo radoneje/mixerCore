@@ -10,7 +10,7 @@ find_library(AVFORMAT_LIBRARY avformat)
 find_library(AVUTIL_LIBRARY avutil)
 find_library(SWSCALE_LIBRARIES swscale)
 find_library(GLUT_LIBRARIES glut)
-find_package(Config REQUIRED)
+#find_package(Config REQUIRED)
 find_package(Config++ REQUIRED)
 
 
