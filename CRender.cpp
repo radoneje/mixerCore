@@ -22,7 +22,7 @@
 ///
 #include <GL/glut.h>
 
-void sTextureImage::ReadPPMImage(char *fileName) {
+void CRender::ReadPPMImage(char *fileName, sTextureImage &textureImage) {
     int tmpint;
     char str[100];
     FILE* inFile = fopen (fileName,"rb");
@@ -49,31 +49,36 @@ void sTextureImage::ReadPPMImage(char *fileName) {
 
     // read image dimensions
 
-    sscanf (str,"%d %d",&this->width, &this->height);
+    sscanf (str,"%d %d",&textureImage.width, &textureImage.height);
     fgets (str,100,inFile);
     sscanf (str,"%d",&tmpint);
 
     if (tmpint != 255)
         printf("Warning: maxvalue is not 255 in ppm file\n");
 
-    this->numChannels = 3;
-    this->pixels = (unsigned char*) malloc (this->numChannels * this->width *  this->height * sizeof (unsigned char));
+    textureImage= 3;
+    textureImage= (unsigned char*) malloc (textureImage.numChannels * textureImage.width *  textureImage.height * sizeof (unsigned char));
 
-    if (this->pixels == NULL)
+    if (textureImage.pixels == NULL)
     {
-        printf ("Can't allocate image of size %dx%d. Exiting\n", this->width, this->height);
+        printf ("Can't allocate image of size %dx%d. Exiting\n", textureImage.width, textureImage.height);
         exit (1);
     }
     else
-        printf("Reading image %s of size %dx%d\n", fileName, this->width, this->height);
+        printf("Reading image %s of size %dx%d\n", fileName, textureImage.width, textureImage.height);
 
 
-    fread (this->pixels, sizeof (unsigned char), this->numChannels * this->width * this->height, inFile);
+    fread (textureImage.pixels, sizeof (unsigned char), textureImage.numChannels * textureImage.width * textureImage.height, inFile);
 
     fclose (inFile);
 }
 
     CRender::CRender(){
+        for(int i=0; i<8; i++) {
+            textureImage[i].width=0;
+            textureImage[i].height=0;
+        }
+
 
     }
 void CRender::Reshape(int width, int height){

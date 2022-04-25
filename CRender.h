@@ -5,25 +5,20 @@
 #ifndef MIXERCORE_CRENDER_H
 #define MIXERCORE_CRENDER_H
 
-class sTextureImage {
-public:
-    unsigned char *pixels;
-    int width;
-    int height;
-    int numChannels;
 
-    sTextureImage(){
-        this->width=0;
-        this->height=0;
-    };
-    void ReadPPMImage (char *fileName);
-};
 
 class CRender {
 private:
     static void Reshape(int width, int height);
     static void  Display();
-
+    struct sTextureImage {
+    public:
+        unsigned char *pixels;
+        int width;
+        int height;
+        int numChannels;
+    };
+    void ReadPPMImage (char *fileName, sTextureImage &textureImage );
     static sTextureImage textureImage[8];
     static void ReadPPMImage (char *fileName);
 public:
