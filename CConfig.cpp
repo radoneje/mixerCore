@@ -13,7 +13,7 @@
 extern "C" {
 }
 
-using namespace libconfig;
+
 
 
 CConfig::CConfig() {};
