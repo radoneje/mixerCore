@@ -40,7 +40,7 @@ void CRender::Display(){
             std::cout <<  "ERROR: could read config file, varible window" << sWinName << '\n';
             return ;
         }
-        if( CConfig::GetConfig("windowW",  sWinName)!=0) {
+        if( CConfig::GetConfig("windowW",  sWinW)!=0) {
             std::cout <<  "ERROR: could read config file, varible windowW" << sWinW << '\n';
             return ;
         }
@@ -48,6 +48,7 @@ void CRender::Display(){
             std::cout <<  "ERROR: could read config file, varible windowH" << sWinH << '\n';
             return ;
         }
+        //std::stoi
         std::cout <<  (sWinW.c_str()) << " <<-window name "<< '\n';
 
         glutInit(NULL, NULL);
