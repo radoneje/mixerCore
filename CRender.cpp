@@ -65,7 +65,7 @@ void CRender::Display(){
       //  glutIdleFunc(Display);     // used in animation
 
         // enter GLUT event processing cycle
-      //  glutMainLoop();
+        glutMainLoop();
 
         return;
     }
