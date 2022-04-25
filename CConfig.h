@@ -8,7 +8,7 @@
 
 class CConfig {
 public: CConfig();
-    static int GetConfig(const char *fileNname, const char** str);
+    static int GetConfig(const char *name, const char** str);
 };
 
 

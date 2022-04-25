@@ -18,7 +18,7 @@
 
 CConfig::CConfig() {};
 
-int CConfig::GetConfig(const char *fileNname, const char** str) {
+int CConfig::GetConfig(const char *name, const char** str) {
 
     std::ifstream cFile("/etc/MixerCore/mixerCore.conf");
 
