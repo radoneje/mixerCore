@@ -15,10 +15,10 @@
 
 CConfig::CConfig() {};
 
-int CConfig::GetConfig() {
+int CConfig::GetConfig(char* name, char& str) {
     config_t cfg;
     config_setting_t *setting;
-    const char *str;
+
 
     config_init(&cfg);
     if(! config_read_file(&cfg, "/etc/MixerCore/mixerCore.conf"))
@@ -28,7 +28,7 @@ int CConfig::GetConfig() {
         config_destroy(&cfg);
         return(EXIT_FAILURE);
     }
-    if(config_lookup_string(&cfg, "name", &str))
+    if(config_lookup_string(&cfg, name, str))
         printf("Store name: %s\n\n", str);
     else
         fprintf(stderr, "No 'name' setting in configuration file.\n");
