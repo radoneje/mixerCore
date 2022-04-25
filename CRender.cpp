@@ -16,7 +16,7 @@
     CRender::CRender(){}
     void CRender::StartRender(){
         std::cout << "start render" << std::endl;
-         char* str[1024];
+         char* str;
         CConfig::GetConfig("name",  &str);
       /*  glutInit(&argc, argv);
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
