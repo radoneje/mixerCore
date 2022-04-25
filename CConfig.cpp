@@ -36,15 +36,15 @@ int CConfig::GetConfig(const char *name, std::string* str) {
             auto value = line.substr(delimiterPos + 1);
             std::string sKey(name);
 
-            if(sKey.compare(key)==0)
+            if(sKey.compare(key)==0){
                 str=&value;
-            std::cout <<  sKey.compare(key) << " "<< key << " " << value << '\n';
+                return 0;
         }
 
     }
     else {
         std::cerr << "Couldn't open config file for reading.\n";
     }
-    return 0;
+    return -1;
 }
 

@@ -19,8 +19,11 @@
     void CRender::StartRender(){
         std::cout << "start render" << std::endl;
         std::string str;
-        const char *name="window";
-        CConfig::GetConfig(name,  &str);
+        const char *name="windowc";
+        if( CConfig::GetConfig(name,  &str)!=0) {
+            std:std::cout <<  "ERROR: could read config file, varible" << name << '\n';
+        }
+        std::cout <<  str << " "<< '\n';
       /*  glutInit(&argc, argv);
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
         glutInitWindowPosition(-1, -1);
