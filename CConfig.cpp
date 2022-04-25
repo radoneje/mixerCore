@@ -38,7 +38,7 @@ int CConfig::GetConfig(const char *name, std::string str) {
 
             if(sKey.compare(key)==0) {
                 str = value;
-                std::count<< "value: "<< value <<std::end;
+                std::cout<< "value: "<< value <<std::end;
                 return 0;
             }
         }
