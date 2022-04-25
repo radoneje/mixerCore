@@ -4,13 +4,14 @@
 
 #ifndef MIXERCORE_CRENDER_H
 #define MIXERCORE_CRENDER_H
+#include "CTexture.h"
 
 
 class CRender {
 private:
     static void Reshape(int width, int height);
     static void  Display();
-    static CTextere texture[8];
+    static CTexture texture[8];
 public:
     static void StartRender(int argc, char **argv);
 
