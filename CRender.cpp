@@ -20,7 +20,7 @@
         std::cout << "start render" << std::endl;
         std::string str;
         const char *name="window";
-        if( CConfig::GetConfig(name,  *str)!=0) {
+        if( CConfig::GetConfig(name,  str)!=0) {
             std:std::cout <<  "ERROR: could read config file, varible" << name << '\n';
         }
         std::cout <<  str << " <<-window name "<< '\n';
