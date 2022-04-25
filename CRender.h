@@ -7,7 +7,12 @@
 
 
 class CRender {
-public: static void StartRender();
+private:
+    void Reshape(int width, int height);
+    void  Display();
+public:
+    static void StartRender();
+
     CRender();
 
 };

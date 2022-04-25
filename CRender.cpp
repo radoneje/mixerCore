@@ -25,6 +25,12 @@
 
 
     CRender::CRender(){}
+void CRender::Reshape(int width, int height){
+
+}
+void CRender::Display(){
+
+}
     void CRender::StartRender(){
         std::cout << "start render" << std::endl;
         std::string sWinName, sWinW, sWinH;
@@ -46,6 +52,16 @@
         glutInitWindowPosition(-1, -1);
         glutInitWindowSize(std::stoi(sWinW), std::stoi(sWinH));
         glutCreateWindow(sWinName);
+        glClearColor(0.0, 0.0, 0.0, 0.0);
+        glEnable(GL_DEPTH_TEST);
+
+        // register callbacks
+        glutDisplayFunc(Display);
+        glutReshapeFunc(Reshape);
+        glutIdleFunc(Display);     // used in animation
+
+        // enter GLUT event processing cycle
+        glutMainLoop();
 
         return;
     }
