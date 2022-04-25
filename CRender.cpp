@@ -18,17 +18,25 @@
     CRender::CRender(){}
     void CRender::StartRender(){
         std::cout << "start render" << std::endl;
-        std::string str;
-        const char *name="window";
-        if( CConfig::GetConfig(name,  str)!=0) {
-            std:std::cout <<  "ERROR: could read config file, varible" << name << '\n';
+        std::string sWinName, sWinW, sWinH;
+
+
+        if( CConfig::GetConfig("widow",  sWinName)!=0) {
+            std:std::cout <<  "ERROR: could read config file, varible" << sWinName << '\n';
         }
-        std::cout <<  str << " <<-window name "<< '\n';
-      /*  glutInit(&argc, argv);
+        if( CConfig::GetConfig("windowW",  sWinName)!=0) {
+            std:std::cout <<  "ERROR: could read config file, varible" << sWinW << '\n';
+        }
+        if( CConfig::GetConfig("windowH",  sWinH)!=0) {
+            std:std::cout <<  "ERROR: could read config file, varible" << sWinH << '\n';
+        }
+        std::cout <<  std::stoi(sWinW) << " <<-window name "<< '\n';
+
+        glutInit(NULL, NULL);
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
         glutInitWindowPosition(-1, -1);
-        glutInitWindowSize(1280, 720);
-        glutCreateWindow("OpenGL - Rotating Cubes");*/
+        glutInitWindowSize(std::stoi(sWinW), std::stoi(sWinH));
+        glutCreateWindow(sWinName);
 
         return;
     }
