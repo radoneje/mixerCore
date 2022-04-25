@@ -8,6 +8,7 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
+#include <fstream>
 
 #include "CConfig.h"
 extern "C" {
