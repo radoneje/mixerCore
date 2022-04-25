@@ -13,10 +13,12 @@
 #include <mutex>
 #include "CConfig.h"
 
+
+
     CRender::CRender(){}
     void CRender::StartRender(){
         std::cout << "start render" << std::endl;
-        string str;
+        std::string str;
         const char *name="window";
         CConfig::GetConfig(name,  &str);
       /*  glutInit(&argc, argv);
