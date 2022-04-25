@@ -8,7 +8,7 @@
 
 class CConfig {
 public: CConfig();
-    static int GetConfig(const char *name, string* str);
+    static int GetConfig(const char *name, std::string* str);
 };
 
 
