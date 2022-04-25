@@ -48,7 +48,7 @@ void CRender::Display(){
             std::cout <<  "ERROR: could read config file, varible windowH" << sWinH << '\n';
             return ;
         }
-        std::cout <<  std::stoi(sWinW.c_str()) << " <<-window name "<< '\n';
+        std::cout <<  (sWinW.c_str()) << " <<-window name "<< '\n';
 
         glutInit(NULL, NULL);
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
