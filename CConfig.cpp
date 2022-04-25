@@ -3,6 +3,7 @@
 //
 
 #include "CConfig.h"
+#include <libconfig.hh>
 
 
 CConfig::CConfig() {};
