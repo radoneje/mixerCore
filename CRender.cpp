@@ -22,13 +22,13 @@
 
 
         if( CConfig::GetConfig("widow",  sWinName)!=0) {
-            std:std::cout <<  "ERROR: could read config file, varible" << sWinName << '\n';
+            std::cout <<  "ERROR: could read config file, varible" << sWinName << '\n';
         }
         if( CConfig::GetConfig("windowW",  sWinName)!=0) {
-            std:std::cout <<  "ERROR: could read config file, varible" << sWinW << '\n';
+            std::cout <<  "ERROR: could read config file, varible" << sWinW << '\n';
         }
         if( CConfig::GetConfig("windowH",  sWinH)!=0) {
-            std:std::cout <<  "ERROR: could read config file, varible" << sWinH << '\n';
+            std::cout <<  "ERROR: could read config file, varible" << sWinH << '\n';
         }
         std::cout <<  std::stoi(sWinW) << " <<-window name "<< '\n';
 
