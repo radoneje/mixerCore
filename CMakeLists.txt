@@ -12,8 +12,11 @@ find_library(SWSCALE_LIBRARIES swscale)
 find_library(GLUT_LIBRARIES glut)
 #find_package(Config REQUIRED)
 #find_package(Config++ REQUIRED)
-find_library(CONFIG_LIBRARIES libconfig)
+find_library(LIBCONFIGPP_LOCATION libconfig++)
+find_library(LIBCONFIG_LOCATION libconfig)
 
+message (STATUS "Found LibConfig++: " ${LIBCONFIGPP_LOCATION})
+message (STATUS "Found LibConfig: " ${LIBCONFIG_LOCATION})
 
 include_directories(
         external/AntTweakBar-1.16/include/
@@ -27,6 +30,7 @@ include_directories(
         /usr/local/include/
         .
 )
+
 set(ALL_LIBS
         ${AVCODEC_LIBRARY}
         ${AVFORMAT_LIBRARY}
@@ -34,6 +38,8 @@ set(ALL_LIBS
         ${SWSCALE_LIBRARIES}
         ${GLUT_LIBRARIES}
         ${CONFIG_LIBRARIES}
+        ${LIBCONFIGPP_LOCATION}
+        ${LIBCONFIG_LOCATION}
         glfw
         GLEW_1130
         )
