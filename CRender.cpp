@@ -73,7 +73,9 @@ void sTextureImage::ReadPPMImage(char *fileName) {
     fclose (inFile);
 }
 
-    CRender::CRender(){}
+    CRender::CRender(){
+
+    }
 void CRender::Reshape(int width, int height){
 
     const float fMinX = -5.0, fMinY = -5.0, fNearZ = 1.0,
