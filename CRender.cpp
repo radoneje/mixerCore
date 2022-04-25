@@ -38,7 +38,11 @@ void CRender::Reshape(int width, int height){
     glLoadIdentity();
 }
 void CRender::Display(){
-    std::cout << "display"  << " "  << std::endl;
+    glClearColor(0.0, 0.0, 1.0, 0.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glutSwapBuffers();
+    glFlush();
 
 }
     void CRender::StartRender(int argc, char **argv){
