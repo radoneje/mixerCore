@@ -10,6 +10,17 @@
 #include "CRender.h"
 #include "CHttp.h"
 
+// Include GLEW
+#include <GL/glew.h>
+
+// Include GLFW
+#include <GLFW/glfw3.h>
+
+///
+#include <GL/glut.h>
+
+
+
 CHttp httpServer;
 CRender render;
 
@@ -17,9 +28,12 @@ int main(int argc, char* argv[]) {
 
     std::thread httpThread(httpServer.init,8090);
 
-    std::thread renderThread(render.StartRender, argc,  &argv);
+    //std::thread renderThread(render.StartRender, argc,  &argv);
     std::cout << "Hello, World!" << std::endl;
-    renderThread.join();
+   // renderThread.join();
+
+    glutInit(&argc, argv);
+
     std::cin.get();
     return 0;
 }
