@@ -11,14 +11,15 @@ class CRender {
 private:
     static void Reshape(int width, int height);
     static void  Display();
-    struct sTextureImage {
+    class sTextureImage {
     public:
         unsigned char *pixels;
         int width;
         int height;
         int numChannels;
+        void ReadPPMImage (char *fileName, sTextureImage &textureImage );
     };
-    void ReadPPMImage (char *fileName, sTextureImage &textureImage );
+
     static sTextureImage textureImage[8];
     static void ReadPPMImage (char *fileName);
 public:
