@@ -9,8 +9,12 @@
 #include <thread>
 #include <mutex>
 #include <fstream>
+#include <algorithm>
+#include <cctype>
+#include <locale>
 
 #include "CConfig.h"
+
 
 
 
@@ -37,6 +41,7 @@ int CConfig::GetConfig(const char *name, std::string &str) {
             std::string sKey(name);
 
             if(sKey.compare(key)==0) {
+                trim(value);
                 str = value;
                 std::cout<< "value: "<< value << std::endl;
                 return 0;
