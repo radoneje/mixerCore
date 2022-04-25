@@ -40,6 +40,7 @@ void CRender::Reshape(int width, int height){
 }
 void CRender::Display(){
 
+
 }
     void CRender::StartRender(int argc, char **argv){
         char argv1[0];
