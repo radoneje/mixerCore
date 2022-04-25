@@ -8,8 +8,8 @@
 
 class CRender {
 private:
-    void Reshape(int width, int height);
-    void  Display();
+    static void Reshape(int width, int height);
+    static void  Display();
 public:
     static void StartRender();
 
