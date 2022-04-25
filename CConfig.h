@@ -8,7 +8,7 @@
 
 class CConfig {
 public: CConfig();
-    static void GetConfig()
+    static void GetConfig();
 };
 
 
