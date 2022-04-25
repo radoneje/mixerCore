@@ -32,14 +32,15 @@ int CConfig::GetConfig(const char *name, const char** str) {
             if(line[0] == '#' || line.empty())
                 continue;
             auto delimiterPos = line.find("=");
-            auto name = line.substr(0, delimiterPos);
+            auto key = line.substr(0, delimiterPos);
             auto value = line.substr(delimiterPos + 1);
-            std::cout << name << " " << value << '\n';
+            std::cout << name << " "<< key << " " << value << '\n';
         }
 
     }
     else {
         std::cerr << "Couldn't open config file for reading.\n";
     }
+    return 0;
 }
 
