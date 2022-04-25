@@ -2,7 +2,7 @@
 // Created by Denis Shevchenko on 20.04.2022.
 //
 
-#include "CTexture.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
