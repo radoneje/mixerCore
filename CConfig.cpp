@@ -20,7 +20,7 @@ CConfig::CConfig() {};
 
 int CConfig::GetConfig(const char *fileNname, const char** str) {
 
-    std::ifstream cFile (fileNname);
+    std::ifstream cFile(fileNname );
    // if(! config_read_file(&cfg, "/etc/MixerCore/mixerCore.conf"))
     if (cFile.is_open())
     {
