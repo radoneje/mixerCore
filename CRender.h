@@ -37,7 +37,7 @@ private:
     void ReadPPMImage (char *fileName, sTextureImage &textureImage );
 
    // static std::vector<sTextureImage> textureImage;
-   static sTextureImage textureImage[8];
+   static sTextureImage textureImage;
     static void ReadPPMImage (char *fileName);
 public:
     static void StartRender(int argc, char **argv);
