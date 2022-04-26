@@ -77,7 +77,8 @@
 
     CRender::CRender(){
 
-        textureImage.emplace_back();
+
+    std::cout<<textureData[0].width<<std::endl;
         for(int i=0; i<8; i++) {
           //  textureImage.width=0;
         // std::cout<<textureImage.width<<std::endl;
