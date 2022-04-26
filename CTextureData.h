@@ -12,6 +12,7 @@ class CTextureData {
         int width;
         int height;
         int numChannels;
+        int test(){return 1;}
     CTextureData();
 
 };
