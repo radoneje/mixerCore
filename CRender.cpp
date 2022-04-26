@@ -23,7 +23,7 @@
 ///
 #include <GL/glut.h>
 
-void CRender::ReadPPMImage(char *fileName, sTextureImage &textureImage) {
+/*void CRender::ReadPPMImage(char *fileName, sTextureImage &textureImage) {
     int tmpint;
     char str[100];
     FILE* inFile = fopen (fileName,"rb");
@@ -72,7 +72,7 @@ void CRender::ReadPPMImage(char *fileName, sTextureImage &textureImage) {
     fread (textureImage.pixels, sizeof (unsigned char), textureImage.numChannels * textureImage.width * textureImage.height, inFile);
 
     fclose (inFile);
-}
+}*/
 
     CRender::CRender(){
 
