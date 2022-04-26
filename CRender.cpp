@@ -78,7 +78,7 @@
     CRender::CRender(){
 
 
-    std::cout<<textureData.test()<<std::endl;
+    std::cout<<this->textureData.width<<std::endl;
         for(int i=0; i<8; i++) {
           //  textureImage.width=0;
         // std::cout<<textureImage.width<<std::endl;
