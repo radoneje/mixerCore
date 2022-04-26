@@ -34,7 +34,7 @@ private:
     };*/
     static void Reshape(int width, int height);
     static void  Display();
-    static  CTextureData* textureData[8];
+    static  CTextureData textureData[8];
    // void ReadPPMImage (char *fileName, sTextureImage &textureImage );
 
    //static std::vector<CTextureData> textureImage;
