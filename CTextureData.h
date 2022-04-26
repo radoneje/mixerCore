@@ -7,12 +7,14 @@
 
 
 class CTextureData {
-    public:
-        unsigned char *pixels;
-        int width;
-        int height;
-        int numChannels;
-        int test(){return 1;}
+public:
+    static unsigned char *pixels;
+    static int width;
+    static int height;
+    static int numChannels;
+
+    static int test() { return 1; }
+
     CTextureData();
 
 };
