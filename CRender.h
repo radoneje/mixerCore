@@ -7,7 +7,7 @@
 
 #include <vector>
 
-class sTextureImage {
+/*class sTextureImage {
 public:
     unsigned char *pixels;
     int width;
@@ -21,9 +21,16 @@ public:
         height=0;
     };
 
-};
+};*/
 class CRender {
 private:
+    struct sTextureImage{
+    public:
+        unsigned char *pixels;
+        int width;
+        int height;
+        int numChannels;
+    };
     static void Reshape(int width, int height);
     static void  Display();
 
