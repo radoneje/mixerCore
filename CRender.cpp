@@ -106,7 +106,7 @@ void CRender::Display(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for(int i=0; i<8; i++){
-        std:cout<<textureData[i].width << std::endl;
+        std::cout<<textureData[i].width << std::endl;
         continue;
         /*
         glBindTexture(GL_TEXTURE_2D, i+1);
