@@ -122,8 +122,8 @@ void CRender::Display(){
 
 }
     void CRender::StartRender(int argc, char **argv){
-        static const CTextureData textureData;
-        std::cout<<textureData.width<<std::endl;
+
+        std::cout<<CRender::textureData.width<<std::endl;
 
         std::cout << "start render" << std::endl;
         std::string sWinName, sWinW, sWinH;
