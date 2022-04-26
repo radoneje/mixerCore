@@ -40,7 +40,7 @@ private:
    //static std::vector<CTextureData> textureImage;
 
 public:
-    static const CTextureData textureData;
+
     static void StartRender(int argc, char **argv);
     CRender();
 
