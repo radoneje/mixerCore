@@ -26,7 +26,7 @@
 
   CTextureData CRender::textureData[8];
 
-/*void CRender::ReadPPMImage(char *fileName, sTextureImage &textureImage) {
+void CRender::ReadPPMImage(char *fileName, CTextureData &textureDataParam) {
     int tmpint;
     char str[100];
     FILE* inFile = fopen (fileName,"rb");
@@ -53,29 +53,29 @@
 
     // read image dimensions
 
-    sscanf (str,"%d %d",&textureImage.width, &textureImage.height);
+    sscanf (str,"%d %d",&textureDataParam.width, &textureDataParam.height);
     fgets (str,100,inFile);
     sscanf (str,"%d",&tmpint);
 
     if (tmpint != 255)
         printf("Warning: maxvalue is not 255 in ppm file\n");
 
-    textureImage.numChannels= 3;
-    textureImage.pixels= (unsigned char*) malloc (textureImage.numChannels * textureImage.width *  textureImage.height * sizeof (unsigned char));
+    textureDataParam.numChannels= 3;
+    textureDataParam.pixels= (unsigned char*) malloc (textureDataParam.numChannels * textureDataParam.width *  textureDataParam.height * sizeof (unsigned char));
 
-    if (textureImage.pixels == NULL)
+    if (textureDataParam.pixels == NULL)
     {
-        printf ("Can't allocate image of size %dx%d. Exiting\n", textureImage.width, textureImage.height);
+        printf ("Can't allocate image of size %dx%d. Exiting\n", textureDataParam.width, textureDataParam.height);
         exit (1);
     }
     else
-        printf("Reading image %s of size %dx%d\n", fileName, textureImage.width, textureImage.height);
+        printf("Reading image %s of size %dx%d\n", fileName, textureDataParam.width, textureDataParam.height);
 
 
-    fread (textureImage.pixels, sizeof (unsigned char), textureImage.numChannels * textureImage.width * textureImage.height, inFile);
+    fread (textureDataParam.pixels, sizeof (unsigned char), textureDataParam.numChannels * textureDataParam.width * textureDataParam.height, inFile);
 
     fclose (inFile);
-}*/
+}
 
     CRender::CRender(){
 
