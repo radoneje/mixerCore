@@ -24,7 +24,7 @@
 ///
 #include <GL/glut.h>
 
- const CTextureData CRender::textureData;
+  CTextureData* CRender::textureData[8];
 
 /*void CRender::ReadPPMImage(char *fileName, sTextureImage &textureImage) {
     int tmpint;
@@ -125,7 +125,7 @@ void CRender::Display(){
 }
     void CRender::StartRender(int argc, char **argv){
 
-        std::cout<<CRender::textureData.width<<std::endl;
+        std::cout<<CRender::textureData[0].width<<std::endl;
 
         std::cout << "start render" << std::endl;
         std::string sWinName, sWinW, sWinH;
