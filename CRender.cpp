@@ -122,7 +122,7 @@ void CRender::Display(){
 
 }
     void CRender::StartRender(int argc, char **argv){
-        //std::cout<<textureData.width<<std::endl;
+        std::cout<<textureData.width<<std::endl;
 
         std::cout << "start render" << std::endl;
         std::string sWinName, sWinW, sWinH;
