@@ -106,16 +106,16 @@ void CRender::Display(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for(int i=0; i<8; i++){
-        std::cout<<textureData[i].width << std::endl;
-        continue;
-        /*
+        std::cout << textureData[i].width << std::endl;
+
+
         glBindTexture(GL_TEXTURE_2D, i+1);
         char buf[1024];
         snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
-        ReadPPMImage(buf, textureData[i]);
+        ReadPPMImage(buf, &textureData[i]);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData[i].width,
                      textureData[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                     textureData[i].pixels);*/
+                     textureData[i].pixels);
 
     }
 
