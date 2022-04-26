@@ -8,10 +8,10 @@
 
 class CTextureData {
 public:
-    static unsigned char *pixels;
-    static int width;
-    static int height;
-    static int numChannels;
+     unsigned char *pixels;
+     int width;
+     int height;
+     int numChannels;
 
     static int test() { return 1; }
 
