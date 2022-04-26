@@ -6,6 +6,7 @@
 #define MIXERCORE_CRENDER_H
 
 #include <vector>
+#include "CTextureData.h"
 
 /*class sTextureImage {
 public:
@@ -24,20 +25,20 @@ public:
 };*/
 class CRender {
 private:
-    struct sTextureImage{
+    /*struct sTextureImage{
     public:
         unsigned char *pixels;
         int width;
         int height;
         int numChannels;
-    };
+    };*/
     static void Reshape(int width, int height);
     static void  Display();
 
     void ReadPPMImage (char *fileName, sTextureImage &textureImage );
 
    // static std::vector<sTextureImage> textureImage;
-   static sTextureImage textureImage;
+   static CTextureData textureImage;
     static void ReadPPMImage (char *fileName);
 public:
     static void StartRender(int argc, char **argv);
