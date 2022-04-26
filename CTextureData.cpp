@@ -13,8 +13,8 @@
 
 CTextureData::CTextureData(){
     std::cout<< "CTextureData()"<< std::endl;
-    this->width=0;
-    this->height=0;
-    this->numChannels=0;
+    width=0;
+    height=0;
+    numChannels=0;
 
 }
