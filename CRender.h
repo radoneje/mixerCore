@@ -41,7 +41,6 @@ private:
 
 public:
     static void StartRender(int argc, char **argv);
-
     CRender();
 
 };

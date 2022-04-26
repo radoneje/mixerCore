@@ -13,6 +13,7 @@
 #include <mutex>
 #include <vector>
 #include "CConfig.h"
+#include "CTextureData.h"
 
 // Include GLEW
 #include <GL/glew.h>
