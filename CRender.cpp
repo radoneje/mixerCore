@@ -78,7 +78,7 @@
     CRender::CRender(){
 
 
-    std::cout<<this->textureData.width<<std::endl;
+
         for(int i=0; i<8; i++) {
           //  textureImage.width=0;
         // std::cout<<textureImage.width<<std::endl;
@@ -122,7 +122,8 @@ void CRender::Display(){
 
 }
     void CRender::StartRender(int argc, char **argv){
-        char argv1[0];
+        std::cout<<textureData.width<<std::endl;
+
         std::cout << "start render" << std::endl;
         std::string sWinName, sWinW, sWinH;
 
