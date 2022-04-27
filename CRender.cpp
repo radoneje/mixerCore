@@ -121,9 +121,11 @@ void CRender::Display(){
         //snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
 
         ReadPPMImage( "/var/www/video-broadcast.space/102.ppm" , textureData[0]);
+        std:cout<<"textureData[i]->width"<<textureData[i]->width<<std::endl;
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData[i]->width,
                      textureData[i]->height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      textureData[i]->pixels);
+
 
         glBegin(GL_QUADS);
             glTexCoord2f(0, 0);
