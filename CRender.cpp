@@ -206,7 +206,7 @@ void CRender::Display(){
         //char buf[1024];
         //snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
 
-        ReadPPMImage( "/var/www/video-broadcast.space/102.ppm" , textureData[0]);
+       // ReadPPMImage( "/var/www/video-broadcast.space/102.ppm" , textureData[0]);
     ReadPPMImage2( "/var/www/video-broadcast.space/102.ppm" , textureData2);
         //std::cout<<"textureData[i]->width"<<textureData[i]->pixels<<std::endl;
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData2.width,
