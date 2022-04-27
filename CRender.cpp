@@ -82,6 +82,8 @@ void CRender::ReadPPMImage(char *fileName, CTextureData *textureDataParam) {
 
 
         for(int i=0; i<8; i++) {
+            CTextureData tmpData;
+            textureData[i]=tmpData;
           //  textureImage.width=0;
         // std::cout<<textureImage.width<<std::endl;
         }
