@@ -57,7 +57,7 @@ void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam
     std::cout << "filename is read :" << fileName << "----" <<std::endl;
     // read image dimensions
 
-    sscanf (str,"%d %d",textureDataParam->width, textureDataParam->height);
+    sscanf (str,"%d %d",&textureDataParam->width, &textureDataParam->height);
     fgets (str,100,inFile);
     sscanf (str,"%d",&tmpint);
 
