@@ -154,7 +154,8 @@ void CRender::ReadPPMImage2( const char* fn, CTextureData &textureDataParam) {
 void CRender::Reshape(int width, int height){
 
     std::cout << "reshape" << width << " " << height << std::endl;
-
+    float fMinX = -5.0, fMinY = -5.0, fNearZ = 1.0,
+            fMaxX = 5.0, fMaxY = 5.0, fFarZ = 10.0;
 
     { ///prepare
         glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
@@ -184,15 +185,15 @@ void CRender::Display(){
     glBindTexture(GL_TEXTURE_2D, 1);
     char buf[1024];
     snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
-    ImageOne.ReadPPMImage(buf);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ImageOne.image.width,
-                 ImageOne.image.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 ImageOne.image.pixels);
+    ReadPPMImage2(buf);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width,
+                 image.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 image.pixels);
     glClearColor(0.0, 0.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_TEXTURE_2D);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-    glBindTexture(GL_TEXTURE_2D, ImageOne.texName);
+    glBindTexture(GL_TEXTURE_2D, 1);
 
     glBegin(GL_QUADS);
     glTexCoord2f(0, 0);
