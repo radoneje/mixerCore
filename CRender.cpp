@@ -180,7 +180,7 @@ void CRender::Display(){
         glutInitWindowPosition(-1, -1);
         glutInitWindowSize(std::stoi(sWinW), std::stoi(sWinH));
         glutCreateWindow(sWinName.c_str());
-        glClearColor(0.0, 0.0, 0.0, 0.0);
+        glClearColor(1.0, 0.0, 0.0, 0.0);
         glEnable(GL_DEPTH_TEST);
 
         // register callbacks
