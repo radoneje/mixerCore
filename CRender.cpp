@@ -110,6 +110,11 @@ void CRender::Display(){
 
     int i=0;
     glClearColor(0.0, 0.0, 1.0, 0.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    glBindTexture(GL_TEXTURE_2D, 1);
+
     glutSwapBuffers();
     glFlush();
 
