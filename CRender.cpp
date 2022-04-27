@@ -174,11 +174,17 @@ void CRender::Display(){
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
     glBindTexture(GL_TEXTURE_2D, 1);
 
-    ReadPPMImage( "/var/www/video-broadcast.space/102.ppm" , textureData[0]);
+    /*ReadPPMImage( "/var/www/video-broadcast.space/102.ppm" , textureData[0]);
     //std::cout<<"textureData[i]->width"<<textureData[i]->pixels<<std::endl;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData[i]->width,
                  textureData[i]->height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 textureData[i]->pixels);
+                 textureData[i]->pixels)*/
+
+    ReadPPMImage2( "/var/www/video-broadcast.space/102.ppm" , textureData2);
+    //std::cout<<"textureData[i]->width"<<textureData[i]->pixels<<std::endl;
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData2.width,
+                 textureData2.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 textureData2.pixels);
 
     glBegin(GL_QUADS);
     glTexCoord2f(0, 0);
