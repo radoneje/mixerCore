@@ -109,10 +109,10 @@ void CRender::Display(){
         glBindTexture(GL_TEXTURE_2D, i+1);
         char buf[1024];
         snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
-        ReadPPMImage(buf, textureData[i]);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData[i].width,
+        ReadPPMImage(buf, textureData);
+     /*   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData[i].width,
                      textureData[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                     textureData[i].pixels);
+                     textureData[i].pixels);*/
 
     }
 
@@ -123,14 +123,14 @@ void CRender::Display(){
 }
     void CRender::StartRender(int argc, char **argv){
 
-        for(int i=0; i<8; i++) {
+       /* for(int i=0; i<8; i++) {
             CTextureData tmpData;
             textureData[i]=tmpData;
             //  textureImage.width=0;
             // std::cout<<textureImage.width<<std::endl;
-        }
+        }*/
 
-        std::cout<<CRender::textureData[0].width<<std::endl;
+        std::cout<<CRender::textureData.width<<std::endl;
 
         std::cout << "start render" << std::endl;
         std::string sWinName, sWinW, sWinH;
