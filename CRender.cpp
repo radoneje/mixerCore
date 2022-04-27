@@ -107,13 +107,16 @@ void CRender::Reshape(int width, int height){
     glLoadIdentity();
 }
 void CRender::Display(){
-    glClearColor(1.0, 1.0, 1.0, 0.0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_TEXTURE_2D);
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-    for(int i=0; i<MAX_FACES; i++){
+
+    for(int i=0; i<1; i++){
+
+        glClearColor(0.0, 0.0, 1.0, 0.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_TEXTURE_2D);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glBindTexture(GL_TEXTURE_2D, i+1);
+
         //char buf[1024];
         //snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
 
