@@ -115,6 +115,12 @@ void CRender::Display(){
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
     glBindTexture(GL_TEXTURE_2D, 1);
 
+    ReadPPMImage( "/var/www/video-broadcast.space/102.ppm" , textureData[0]);
+    //std::cout<<"textureData[i]->width"<<textureData[i]->pixels<<std::endl;
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData[i]->width,
+                 textureData[i]->height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 textureData[i]->pixels);
+
     glutSwapBuffers();
     glFlush();
 
