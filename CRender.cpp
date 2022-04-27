@@ -115,7 +115,7 @@ void CRender::Display(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-        glBindTexture(GL_TEXTURE_2D, i+1);
+        glBindTexture(GL_TEXTURE_2D, 1);
 
         //char buf[1024];
         //snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
@@ -137,10 +137,11 @@ void CRender::Display(){
             glTexCoord2f(1, 0);
             glVertex3f(5, 5, -8);
         glEnd();
+        glDisable(GL_TEXTURE_2D);
 
 
     }
-    glDisable(GL_TEXTURE_2D);
+
 
     glutSwapBuffers();
     glFlush();
