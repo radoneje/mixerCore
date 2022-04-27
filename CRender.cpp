@@ -27,6 +27,8 @@
   CTextureData * CRender::textureData[MAX_FACES];
 
 void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam) {
+
+    std::cout << "ReadPPMImage" << textureDataParam->width << "----" <<std::endl;
     int tmpint;
     char str[100];
     FILE* inFile = fopen (fileName,"rb");
