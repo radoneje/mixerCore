@@ -24,9 +24,9 @@
 ///
 #include <GL/glut.h>
 
-  CTextureData CRender::textureData;
+  CTextureData * CRender::textureData[MAX_FACES];
 
-void CRender::ReadPPMImage(char *fileName, CTextureData &textureDataParam) {
+void CRender::ReadPPMImage(char *fileName, CTextureData *textureDataParam) {
   /*  int tmpint;
     char str[100];
     FILE* inFile = fopen (fileName,"rb");
@@ -109,7 +109,7 @@ void CRender::Display(){
         glBindTexture(GL_TEXTURE_2D, i+1);
         char buf[1024];
         snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
-        ReadPPMImage(buf, textureData);
+        ReadPPMImage(buf, textureData[0]);
      /*   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData[i].width,
                      textureData[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      textureData[i].pixels);*/
