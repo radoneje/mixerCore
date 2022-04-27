@@ -248,7 +248,8 @@ void CRender::Display(){
         glClearColor(0.0, 0.0, 0.0, 0.0);
         glEnable(GL_DEPTH_TEST);
 
-        glGenTextures(1, 1);
+        int t=1;
+        glGenTextures(1, &t);
 
         char buf[1024];
         snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
