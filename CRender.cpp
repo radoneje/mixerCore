@@ -75,8 +75,8 @@ void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam
         printf ("Can't allocate image of size %dx%d. Exiting\n", textureDataParam->width, textureDataParam->height);
         exit (1);
     }
-    else
-        printf("Reading image %s of size %dx%d\n", fileName, textureDataParam->width, textureDataParam->height);
+   // else
+    //    printf("Reading image %s of size %dx%d\n", fileName, textureDataParam->width, textureDataParam->height);
 
 
     fread (textureDataParam->pixels, sizeof (unsigned char), textureDataParam->numChannels * textureDataParam->width * textureDataParam->height, inFile);
@@ -109,6 +109,8 @@ void CRender::Reshape(int width, int height){
 void CRender::Display(){
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
     for(int i=0; i<MAX_FACES; i++){
         glBindTexture(GL_TEXTURE_2D, i+1);
@@ -120,8 +122,20 @@ void CRender::Display(){
                      textureData[i]->height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      textureData[i]->pixels);
 
-    }
+        glBegin(GL_QUADS);
+            glTexCoord2f(0, 0);
+            glVertex3f(-5, 5, -8);
+            glTexCoord2f(0, 1);
+            glVertex3f(-5, -5, -8);
+            glTexCoord2f(1, 1);
+            glVertex3f(5, -5, -8);
+            glTexCoord2f(1, 0);
+            glVertex3f(5, 5, -8);
+        glEnd();
 
+
+    }
+    glDisable(GL_TEXTURE_2D);
 
     glutSwapBuffers();
     glFlush();
