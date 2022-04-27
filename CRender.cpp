@@ -62,8 +62,9 @@ void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam
 
     if (tmpint != 255)
         printf("Warning: maxvalue is not 255 in ppm file\n");
-
+    std::cout << "ReadPPMImage 2 " << std::endl;
     textureDataParam->numChannels= 3;
+    std::cout << "ReadPPMImage 3 " << std::endl;
     textureDataParam->pixels= (unsigned char*) malloc (textureDataParam->numChannels * textureDataParam->width *  textureDataParam->height * sizeof (unsigned char));
 
     if (textureDataParam->pixels == NULL)
