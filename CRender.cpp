@@ -153,86 +153,58 @@ void CRender::ReadPPMImage2( const char* fn, CTextureData &textureDataParam) {
     }
 void CRender::Reshape(int width, int height){
 
-    const float fMinX = -5.0, fMinY = -5.0, fNearZ = 1.0,
-            fMaxX = 5.0, fMaxY = 5.0, fFarZ = 10.0;
     std::cout << "reshape" << width << " " << height << std::endl;
+
+
+    { ///prepare
+        glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
+
+        glBindTexture (GL_TEXTURE_2D, 1);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width,
+                     image.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                     image.pixels);
+    }
     glViewport(0, 0, width, height);
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+
     glOrtho(fMinX, fMaxX, fMinY, fMaxY, fNearZ, fFarZ);
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
 void CRender::Display(){
 
-    int i=0;
+    glBindTexture(GL_TEXTURE_2D, 1);
+    char buf[1024];
+    snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
+    ImageOne.ReadPPMImage(buf);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ImageOne.image.width,
+                 ImageOne.image.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 ImageOne.image.pixels);
     glClearColor(0.0, 0.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_TEXTURE_2D);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-    glBindTexture(GL_TEXTURE_2D, 1);
-
-    /*ReadPPMImage( "/var/www/video-broadcast.space/102.ppm" , textureData[0]);
-    //std::cout<<"textureData[i]->width"<<textureData[i]->pixels<<std::endl;
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData[i]->width,
-                 textureData[i]->height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 textureData[i]->pixels)*/
-
-    ReadPPMImage2( "/var/www/video-broadcast.space/102.ppm" , textureData2);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1280,
-                 720, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 image.pixels);
+    glBindTexture(GL_TEXTURE_2D, ImageOne.texName);
 
     glBegin(GL_QUADS);
     glTexCoord2f(0, 0);
-    glVertex3f(-1, 1, -8);
+    glVertex3f(-5, 5, -8);
     glTexCoord2f(0, 1);
-    glVertex3f(-1, -1, -8);
+    glVertex3f(-5, -5, -8);
     glTexCoord2f(1, 1);
-    glVertex3f(1, -1, -8);
+    glVertex3f(5, -5, -8);
     glTexCoord2f(1, 0);
-    glVertex3f(1, 1, -8);
+    glVertex3f(5, 5, -8);
     glEnd();
-
-    glutSwapBuffers();
-    glFlush();
-
-    return;
-   // for(int i=0; i<1; i++){
-
-        glClearColor(0.0, 0.0, 1.0, 0.0);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glEnable(GL_TEXTURE_2D);
-        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-        glBindTexture(GL_TEXTURE_2D, 1);
-
-        //char buf[1024];
-        //snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
-
-       // ReadPPMImage( "/var/www/video-broadcast.space/102.ppm" , textureData[0]);
-    ReadPPMImage2( "/var/www/video-broadcast.space/102.ppm" , textureData2);
-        //std::cout<<"textureData[i]->width"<<textureData[i]->pixels<<std::endl;
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData2.width,
-                     textureData2.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                     textureData2.pixels);
-
-
-        glBegin(GL_QUADS);
-            glTexCoord2f(0, 0);
-            glVertex3f(-5, 5, -8);
-            glTexCoord2f(0, 1);
-            glVertex3f(-5, -5, -8);
-            glTexCoord2f(1, 1);
-            glVertex3f(5, -5, -8);
-            glTexCoord2f(1, 0);
-            glVertex3f(5, 5, -8);
-        glEnd();
-        glDisable(GL_TEXTURE_2D);
-
-
-   // }
-
+    glDisable(GL_TEXTURE_2D);
 
     glutSwapBuffers();
     glFlush();
