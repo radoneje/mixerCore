@@ -106,7 +106,7 @@ void CRender::Display(){
         glBindTexture(GL_TEXTURE_2D, i+1);
        // char buf[1024];
        // snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
-        auto filename=std::string("/var/www/video-broadcast.space/102.ppm");
+        std::string filename=std::string("/var/www/video-broadcast.space/102.ppm");
         ReadPPMImage( &filename , textureData[0]);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData[i]->width,
                      textureData[i]->height, 0, GL_RGB, GL_UNSIGNED_BYTE,
