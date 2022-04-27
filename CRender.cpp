@@ -61,6 +61,8 @@ void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam
     fgets (str,100,inFile);
     sscanf (str,"%d",&tmpint);
 
+    std::cout << "filename is sscanf :" << fileName << "----" <<std::endl;
+
     if (tmpint != 255)
         printf("Warning: maxvalue is not 255 in ppm file\n");
     std::cout << "ReadPPMImage 2 " << std::endl;
