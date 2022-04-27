@@ -182,8 +182,8 @@ void CRender::Display(){
 
     ReadPPMImage2( "/var/www/video-broadcast.space/102.ppm" , textureData2);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData2.width,
-                 textureData2.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1280,
+                 720, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  textureData2.pixels);
 
     glBegin(GL_QUADS);
