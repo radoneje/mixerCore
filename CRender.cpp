@@ -269,10 +269,10 @@ void CRender::Display(){
         glutInit(&argc, argv);
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
         glutInitWindowPosition(-1, -1);
-        glutInitWindowSize(1280,720);//std::stoi(sWinW), std::stoi(sWinH));
-        glutCreateWindow("1");//sWinName.c_str());
-        glClearColor(1.0, 0.0, 0.0, 0.0);
-        glEnable(GL_DEPTH_TEST);
+        glutInitWindowSize(1280, 720);
+        glutCreateWindow("OpenGL - Rotating Cubes");
+
+        Init();
 
         // register callbacks
         glutDisplayFunc(Display);
