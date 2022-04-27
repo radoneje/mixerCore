@@ -181,20 +181,20 @@ void CRender::Display(){
                  textureData[i]->pixels)*/
 
     ReadPPMImage2( "/var/www/video-broadcast.space/102.ppm" , textureData2);
-    std::cout<<"textureData2.width"<<textureData2.width<<std::endl;
+
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData2.width,
                  textureData2.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  textureData2.pixels);
 
     glBegin(GL_QUADS);
     glTexCoord2f(0, 0);
-    glVertex3f(-5, 5, -8);
+    glVertex3f(-1, 1, -8);
     glTexCoord2f(0, 1);
-    glVertex3f(-5, -5, -8);
+    glVertex3f(-1, -1, -8);
     glTexCoord2f(1, 1);
-    glVertex3f(5, -5, -8);
+    glVertex3f(1, -1, -8);
     glTexCoord2f(1, 0);
-    glVertex3f(5, 5, -8);
+    glVertex3f(1, 1, -8);
     glEnd();
 
     glutSwapBuffers();
