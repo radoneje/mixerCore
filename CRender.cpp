@@ -86,6 +86,7 @@ void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam
 
 }
 
+  Image CRender::image;
 void CRender::ReadPPMImage2( const char* fn, CTextureData &textureDataParam) {
 
 
