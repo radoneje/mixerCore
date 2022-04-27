@@ -12,7 +12,6 @@
 #include "CTextureData.h"
 
 CTextureData::CTextureData(){
-    std::cout<< "CTextureData()"<< std::endl;
     width=0;
     height=0;
     numChannels=0;

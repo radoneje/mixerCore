@@ -102,7 +102,7 @@ void CRender::Display(){
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    for(int i=0; i<8; i++){
+    for(int i=0; i<MAX_FACES; i++){
 // std::cout << textureData[i].width << std::endl;
 
 
@@ -123,14 +123,12 @@ void CRender::Display(){
 }
     void CRender::StartRender(int argc, char **argv){
 
-        for(int i=0; i<8; i++) {
+        for(int i=0; i<MAX_FACES; i++) {
             CTextureData tmpData;
             textureData[i]=&tmpData;
-            //  textureImage.width=0;
-            // std::cout<<textureImage.width<<std::endl;
         }
 
-        std::cout<<CRender::textureData[0]->width<<std::endl;
+       // std::cout<<CRender::textureData[0]->width<<std::endl;
 
         std::cout << "start render" << std::endl;
         std::string sWinName, sWinW, sWinH;
