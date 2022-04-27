@@ -28,11 +28,11 @@
 
 void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam) {
 
-    std::cout << "ReadPPMImage" << textureDataParam->width << "----" <<std::endl;
+
 
     int tmpint;
     char str[100];
-    std::cout << "filename:" << fileName << "----" <<std::endl;
+
     FILE* inFile = fopen (fileName,"rb");
 
     if (inFile == NULL)
@@ -48,26 +48,26 @@ void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam
         printf ("Input file is not ppm. Exiting. %d \n", tmpint);
         exit (1);
     }
-    std::cout << "filename is open :" << fileName << "----" <<std::endl;
+
     // skip comments embedded in header
 
     fgets (str,100,inFile);
     while (str[0]=='#')
         fgets(str,100,inFile);
-    std::cout << "filename is read :" << fileName << "----" <<std::endl;
+
     // read image dimensions
 
     sscanf (str,"%d %d",&textureDataParam->width, &textureDataParam->height);
     fgets (str,100,inFile);
     sscanf (str,"%d",&tmpint);
 
-    std::cout << "filename is sscanf :" << fileName << "----" <<std::endl;
+
 
     if (tmpint != 255)
         printf("Warning: maxvalue is not 255 in ppm file\n");
-    std::cout << "ReadPPMImage 2 " << std::endl;
+
     textureDataParam->numChannels= 3;
-    std::cout << "ReadPPMImage 3 " << std::endl;
+
     textureDataParam->pixels= (unsigned char*) malloc (textureDataParam->numChannels * textureDataParam->width *  textureDataParam->height * sizeof (unsigned char));
 
     if (textureDataParam->pixels == NULL)
@@ -82,7 +82,7 @@ void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam
     fread (textureDataParam->pixels, sizeof (unsigned char), textureDataParam->numChannels * textureDataParam->width * textureDataParam->height, inFile);
 
     fclose (inFile);
-    std::cout << "ReadPPMImage end " << std::endl;
+
 }
 
     CRender::CRender(){
