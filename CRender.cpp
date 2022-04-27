@@ -32,6 +32,7 @@ void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam
 
     int tmpint;
     char str[100];
+    std::cout << "filename:" << fileName << "----" <<std::endl;
     FILE* inFile = fopen (fileName,"rb");
 
     if (inFile == NULL)
