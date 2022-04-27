@@ -108,8 +108,8 @@ void CRender::Reshape(int width, int height){
 }
 void CRender::Display(){
 
-
-    for(int i=0; i<1; i++){
+    int i=0;
+   // for(int i=0; i<1; i++){
 
         glClearColor(0.0, 0.0, 1.0, 0.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -140,7 +140,7 @@ void CRender::Display(){
         glDisable(GL_TEXTURE_2D);
 
 
-    }
+   // }
 
 
     glutSwapBuffers();
