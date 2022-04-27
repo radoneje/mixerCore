@@ -265,8 +265,8 @@ void CRender::Display(){
         glutInit(&argc, argv);
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
         glutInitWindowPosition(-1, -1);
-        glutInitWindowSize(std::stoi(sWinW), std::stoi(sWinH));
-        glutCreateWindow(sWinName.c_str());
+        glutInitWindowSize(1280,720);//std::stoi(sWinW), std::stoi(sWinH));
+        glutCreateWindow("1");//sWinName.c_str());
         glClearColor(1.0, 0.0, 0.0, 0.0);
         glEnable(GL_DEPTH_TEST);
 
