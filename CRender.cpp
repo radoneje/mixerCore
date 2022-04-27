@@ -272,7 +272,16 @@ void CRender::Display(){
         glutInitWindowSize(1280, 720);
         glutCreateWindow("OpenGL - Rotating Cubes");
 
-        Init();
+        glClearColor(0.0, 0.0, 0.0, 0.0);
+        glEnable(GL_DEPTH_TEST);
+
+        glGenTextures(1, &ImageOne.texName);
+
+        char buf[1024];
+        snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
+        ReadPPMImage(buf);
+
+
 
         // register callbacks
         glutDisplayFunc(Display);
