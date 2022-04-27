@@ -34,7 +34,7 @@ void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam
     char str[100];
     std::cout << "filename:" << fileName << "----" <<std::endl;
     FILE* inFile = fopen (fileName,"rb");
-    std::cout << "filename is open :" << fileName << "----" <<std::endl;
+
     if (inFile == NULL)
     {
         printf ("Can't open input file %s. Exiting.\n",fileName);
@@ -48,7 +48,7 @@ void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam
         printf ("Input file is not ppm. Exiting. %d \n", tmpint);
         exit (1);
     }
-
+    std::cout << "filename is open :" << fileName << "----" <<std::endl;
     // skip comments embedded in header
 
     fgets (str,100,inFile);
