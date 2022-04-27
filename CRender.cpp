@@ -123,12 +123,12 @@ void CRender::Display(){
 }
     void CRender::StartRender(int argc, char **argv){
 
-       /* for(int i=0; i<8; i++) {
+        for(int i=0; i<8; i++) {
             CTextureData tmpData;
-            textureData[i]=tmpData;
+            textureData[i]=&tmpData;
             //  textureImage.width=0;
             // std::cout<<textureImage.width<<std::endl;
-        }*/
+        }
 
         std::cout<<CRender::textureData[0]->width<<std::endl;
 
