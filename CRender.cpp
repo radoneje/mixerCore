@@ -92,12 +92,11 @@ void CRender::ReadPPMImage2( const char* fileName, CTextureData &textureDataPara
 
     int tmpint;
     char str[100];
-
-    FILE* inFile = fopen (fileName,"rb");
+    FILE* inFile = fopen (fn,"rb");
 
     if (inFile == NULL)
     {
-        printf ("Can't open input file %s. Exiting.\n",fileName);
+        printf ("Can't open input file %s. Exiting.\n",fn);
         exit (1);
     }
 
@@ -117,29 +116,26 @@ void CRender::ReadPPMImage2( const char* fileName, CTextureData &textureDataPara
 
     // read image dimensions
 
-    sscanf (str,"%d %d",&textureDataParam.width, &textureDataParam.height);
+    sscanf (str,"%d %d",&image.width, &image.height);
     fgets (str,100,inFile);
     sscanf (str,"%d",&tmpint);
-
-
 
     if (tmpint != 255)
         printf("Warning: maxvalue is not 255 in ppm file\n");
 
-    textureDataParam.numChannels= 3;
+    image.numChannels = 3;
+    image.pixels = (unsigned char*) malloc (image.numChannels * image.width *  image.height * sizeof (unsigned char));
 
-    textureDataParam.pixels= (unsigned char*) malloc (textureDataParam.numChannels * textureDataParam.width *  textureDataParam.height * sizeof (unsigned char));
-
-    if (textureDataParam.pixels == NULL)
+    if (image.pixels == NULL)
     {
-        printf ("Can't allocate image of size %dx%d. Exiting\n", textureDataParam.width, textureDataParam.height);
+        printf ("Can't allocate image of size %dx%d. Exiting\n", image.width, image.height);
         exit (1);
     }
-    // else
-    //    printf("Reading image %s of size %dx%d\n", fileName, textureDataParam->width, textureDataParam->height);
+    else
+        printf("Reading image %s of size %dx%d\n", fn, image.width, image.height);
 
 
-    fread (textureDataParam.pixels, sizeof (unsigned char), textureDataParam.numChannels * textureDataParam.width * textureDataParam.height, inFile);
+    fread (image.pixels, sizeof (unsigned char), image.numChannels * image.width * image.height, inFile);
 
     fclose (inFile);
 
@@ -185,7 +181,7 @@ void CRender::Display(){
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1280,
                  720, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 textureData2.pixels);
+                 image.pixels);
 
     glBegin(GL_QUADS);
     glTexCoord2f(0, 0);
