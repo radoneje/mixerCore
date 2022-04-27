@@ -27,7 +27,7 @@
   CTextureData * CRender::textureData[MAX_FACES];
 
 void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam) {
-  /*  int tmpint;
+    int tmpint;
     char str[100];
     FILE* inFile = fopen (fileName,"rb");
 
@@ -74,7 +74,7 @@ void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam
 
     fread ((*textureDataParam).pixels, sizeof (unsigned char), (*textureDataParam).numChannels * (*textureDataParam).width * (*textureDataParam).height, inFile);
 
-    fclose (inFile);*/
+    fclose (inFile);
 }
 
     CRender::CRender(){
