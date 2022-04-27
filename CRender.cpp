@@ -109,6 +109,11 @@ void CRender::Reshape(int width, int height){
 void CRender::Display(){
 
     int i=0;
+    glClearColor(0.0, 0.0, 1.0, 0.0);
+    glutSwapBuffers();
+    glFlush();
+
+    return;
    // for(int i=0; i<1; i++){
 
         glClearColor(0.0, 0.0, 1.0, 0.0);
