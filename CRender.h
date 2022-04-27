@@ -23,6 +23,14 @@ public:
     };
 
 };*/
+struct Image
+{
+    unsigned char* pixels;
+    int width;
+    int height;
+    int numChannels;
+};
+
 class CRender {
 private:
     /*struct sTextureImage{
@@ -39,7 +47,7 @@ private:
     static void ReadPPMImage (  const char * fileName, CTextureData *textureDataParam );
     static  CTextureData textureData2;
     static void ReadPPMImage2 (  const char * fileName, CTextureData &textureDataParam );
-
+    static  Image image;
 
    //static std::vector<CTextureData> textureImage;
 
