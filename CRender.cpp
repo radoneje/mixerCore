@@ -24,7 +24,7 @@
 ///
 #include <GL/glut.h>
 
-  CTextureData CRender::textureData[8];
+  CTextureData CRender::textureData;
 
 void CRender::ReadPPMImage(char *fileName, CTextureData &textureDataParam) {
   /*  int tmpint;
