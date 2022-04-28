@@ -224,7 +224,7 @@ void CRender::Display(){
 
 
         glGenTextures(1, &textures);
-        std::cout<< textures <<""<<std::endl;
+        std::cout<< textures <<"<--textures"<<std::endl;
 
 
         char buf[1024];
