@@ -331,6 +331,11 @@ void CRender::Display() {
             item.yBottom =1.0f - (row * 0.5) - 0.5;
 
             int imgWidth, imgHeight;
+            std::string fileName;
+            fileName.append("/etc/mixerCore/images/notconnected");
+            fileName.append(std::to_string(i+1));
+            fileName.append(".png");
+            std::cout<<fileName<<std::endl;
             item.pixels =SOIL_load_image("/var/www/video-broadcast.space/2.jpg",
                                                   &item.width,
                                                   &item.height,
