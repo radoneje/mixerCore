@@ -27,7 +27,7 @@
 #include <GL/glut.h>
 
 CTextureData  CRender::textureData2;
-
+Ccmd* CRender::pCmd;
 
 
 //sImage CRender::texturePlaceholder;
@@ -224,13 +224,19 @@ void CRender::Display() {
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
+    /// make active input
+    if(pCmd->activeTextureId.size()==1)
+    {
+        std::cout<<"render active cmd"<<std::endl;
+    }
+
     glutSwapBuffers();
     glFlush();
 
 }
     void CRender::StartRender(int argc, char **argv, Ccmd *pCmd){
 
-
+        CRender::pCmd=pCmd;
         for(int i=0; i<MAX_FACES; i++) {
 
             sImage item;

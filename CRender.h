@@ -56,7 +56,7 @@ private:
     static  std::vector<sImage> texturePlaceholder;
     static std::vector<std::vector<float>>  texturePosition;
     static sImage backgroundImage;
-
+    static Ccmd* pCmd;
    //static std::vector<CTextureData> textureImage;
 
 public:
