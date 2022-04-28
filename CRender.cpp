@@ -190,15 +190,23 @@ void CRender::Display(){
 
 
     glBegin(GL_QUADS);
+        glTexCoord2f(0, 0);
         glColor3d(1,0,0);
         glVertex3f(0,0,-8);
+
+        glTexCoord2f(0, 1);
         glColor3d(1,1,0);
         glVertex3f(0.3,0,-8);
+
+        glTexCoord2f(1, 1);
         glColor3d(1,1,1);
         glVertex3f(0.3,0.3,-8);
+
+        glTexCoord2f(1, 0);
         glColor3d(0,1,1);
         glVertex3f(0,0.3,-8);
     glEnd();
+    glDisable(GL_TEXTURE_2D);
 
     glutSwapBuffers();
     return;
