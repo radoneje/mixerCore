@@ -225,7 +225,7 @@ void CRender::Display(){
 
         {
             GLuint textures;
-            glGenTextures(1, &textures);
+            glGenTextures(1, textures);
         }
 
         glClearColor(0.0, 0.0, 0.0, 0.0);
