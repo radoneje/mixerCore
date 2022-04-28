@@ -153,6 +153,12 @@ void CRender::Display() {
                                                      &imgHeight,
                                                      0,
                                                      SOIL_LOAD_RGB);
+        std::cout << "null: " << !image << std::endl;
+        std::cout << "Max size: " << GL_MAX_TEXTURE_SIZE << std::endl;
+        std::cout << "Width: " <<  imgWidth << std::endl;
+        std::cout << "Height: " << imgHeight << std::endl;
+        std::cout << "Obj: " << m_texture << std::endl;
+
         glTexImage2D(GL_TEXTURE_2D,
                      0,
                      GL_RGB,
