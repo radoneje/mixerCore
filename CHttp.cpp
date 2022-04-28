@@ -25,7 +25,13 @@ void CHttp::init(int port, Ccmd *pCmd){
         {
             std::cout<<"activeInput: "<< value <<std::endl;
             std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+            bool find=false;
+            for(int i=0; i<pCmd->activeTextureId.size();i++){
+                if(pCmd->activeTextureId[i]==std::stoi(value))
+                    find=true;
+            }
             pCmd->activeTextureId.clear();
+            if(!find);
             pCmd->activeTextureId.push_back(std::stoi(value));
         }
 

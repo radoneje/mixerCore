@@ -225,31 +225,34 @@ void CRender::Display() {
     glDisable(GL_TEXTURE_2D);
 
     /// make active input
-    if(pCmd->activeTextureId.size()==1)
     {
-        std::cout<<"render active cmd "<< pCmd->activeTextureId[0]  <<" " << texturePlaceholder[pCmd->activeTextureId[0]].width<<std::endl;
-        glEnable(GL_TEXTURE_2D);
-        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-        glBindTexture(GL_TEXTURE_2D, textures[0]);
+        std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+        if (pCmd->activeTextureId.size() == 1) {
+            std::cout << "render active cmd " << pCmd->activeTextureId[0] << " "
+                      << texturePlaceholder[pCmd->activeTextureId[0]].width << std::endl;
+            glEnable(GL_TEXTURE_2D);
+            glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+            glBindTexture(GL_TEXTURE_2D, textures[0]);
 
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[pCmd->activeTextureId[0]].width,
-                     texturePlaceholder[pCmd->activeTextureId[0]].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                     texturePlaceholder[pCmd->activeTextureId[0]].pixels);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[pCmd->activeTextureId[0]].width,
+                         texturePlaceholder[pCmd->activeTextureId[0]].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                         texturePlaceholder[pCmd->activeTextureId[0]].pixels);
 
 
-        glBegin(GL_QUADS);
-        glTexCoord2f(0, 0);
-        glVertex3f(-1, 0.5, -7);
-        glTexCoord2f(0, 1);
-        glVertex3f(-1, -1, -7);
-        glTexCoord2f(1, 1);
-        glVertex3f(0.5, -1, -7);
-        glTexCoord2f(1, 0);
-        glVertex3f(0.5, 0.5, -7);
-        glEnd();
-        glDisable(GL_TEXTURE_2D);
+            glBegin(GL_QUADS);
+            glTexCoord2f(0, 0);
+            glVertex3f(-1, 0.5, -7);
+            glTexCoord2f(0, 1);
+            glVertex3f(-1, -1, -7);
+            glTexCoord2f(1, 1);
+            glVertex3f(0.5, -1, -7);
+            glTexCoord2f(1, 0);
+            glVertex3f(0.5, 0.5, -7);
+            glEnd();
+            glDisable(GL_TEXTURE_2D);
 
+        }
     }
 
     glutSwapBuffers();
