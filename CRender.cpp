@@ -132,6 +132,7 @@ void CRender::Reshape(int width, int height){
 }
 void CRender::Display(){
 
+    return;
     for(int i=0; i<texturePlaceholder.size();i++) {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures[i]);
@@ -155,7 +156,7 @@ void CRender::Display(){
         glTexCoord2f(1, 0);
         glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yTop, -8);
         glEnd();
-     //   glDisable(GL_TEXTURE_2D);
+        glDisable(GL_TEXTURE_2D);
 
 
     }
