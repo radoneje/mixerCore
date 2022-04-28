@@ -136,8 +136,8 @@ void CRender::Display(){
 
     for(int i=0; i<texturePlaceholder.size();i++) {
         //glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, 1);
-       // glBindTexture(GL_TEXTURE_2D, i+1);
+       // glBindTexture(GL_TEXTURE_2D, 1);
+        glBindTexture(GL_TEXTURE_2D, i+1);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
                      texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      texturePlaceholder[i].pixels);
@@ -167,7 +167,7 @@ void CRender::Display(){
 }
     void CRender::StartRender(int argc, char **argv){
 
-        glGenTextures(MAX_FACES, textures);
+     //   glGenTextures(MAX_FACES, textures);
         std::cout<<textures[0]<<"\t"<<textures[1] <<"<--glGenTextures[i]"<<std::endl;
 
         for(int i=0; i<MAX_FACES; i++) {
