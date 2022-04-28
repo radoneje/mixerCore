@@ -163,7 +163,7 @@ void CRender::Display(){
         for(int i=0; i<MAX_FACES; i++) {
             sImage item;
             int j=i;
-            if(i>=4)
+            if(i>4)
                  j=i-4;
             item.xLeft = -1.0f + (j * 0.5);// + (i*0.25);
             item.xRight = -1.0f + (j * 0.5) + 0.5;//+ (i*0.25)+0.25;
