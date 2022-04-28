@@ -32,7 +32,7 @@ void CHttp::init(int port, Ccmd *pCmd){
             }
             pCmd->activeTextureId.clear();
             std::cout<<"activeInput: "<< value << find << std::endl;
-            if(find==0);
+            if(!find)
                 pCmd->activeTextureId.push_back(std::stoi(value));
         }
 
