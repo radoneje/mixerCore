@@ -6,6 +6,7 @@
 #define MIXERCORE_CRENDER_H
 
 #include <vector>
+#include <GL/glut.h>
 #include "CTextureData.h"
 
 /*class sTextureImage {
