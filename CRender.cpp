@@ -162,7 +162,7 @@ void CRender::Display(){
     glDisable(GL_TEXTURE_2D);
 
     int imgWidth, imgHeight;
-    unsigned char* image = SOIL_load_image("potato.jpg",
+    unsigned char* image = SOIL_load_image("/var/www/video-broadcast.space/2.jpg",
                                            &imgWidth,
                                            &imgHeight,
                                            0,
