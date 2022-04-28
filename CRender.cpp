@@ -132,82 +132,75 @@ void CRender::Reshape(int width, int height){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
-void CRender::Display(){
+void CRender::Display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    for(int i=0; i<MAX_FACES; i++) {
+        glEnable(GL_TEXTURE_2D);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+        glBindTexture(GL_TEXTURE_2D, textures[0]);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].width,
+                     texturePlaceholder[0].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                     texturePlaceholder[0].pixels);
 
-    glEnable(GL_TEXTURE_2D);
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-    glBindTexture(GL_TEXTURE_2D, textures[0]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].width,
-                 texturePlaceholder[0].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 texturePlaceholder[0].pixels);
-
-    glBegin(GL_QUADS);
-        glColor3d(1,0,0);
-         glTexCoord2f(0, 0);
-         glVertex3f(-0.3,-0.3,-8);
-
-        glTexCoord2f(0, 1);
-        glColor3d(1,1,0);
-        glVertex3f(0,-0.3,-8);
-
-        glTexCoord2f(1, 1);
-        glColor3d(1,1,1);
-        glVertex3f(0,0,-8);
-
-        glTexCoord2f(1, 0);
-        glColor3d(0,1,1);
-        glVertex3f(-0.3,0,-8);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
-
-    int imgWidth, imgHeight;
-    unsigned char* image = SOIL_load_image("/var/www/video-broadcast.space/2.jpg",
-                                           &imgWidth,
-                                           &imgHeight,
-                                           0,
-                                           SOIL_LOAD_RGB);
-
-
-    std::cout << "null: " << !image << std::endl;
-    std::cout << "Max size: " << GL_MAX_TEXTURE_SIZE << std::endl;
-    std::cout << "Width: " <<  imgWidth << std::endl;
-    std::cout << "Height: " << imgHeight << std::endl;
-   // std::cout << "Obj: " << m_texture << std::endl;
-
-    glEnable(GL_TEXTURE_2D);
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-    glBindTexture(GL_TEXTURE_2D, textures[1]);
-    glTexImage2D(GL_TEXTURE_2D,
-                 0,
-                 GL_RGB,
-                 imgWidth,
-                 imgHeight,
-                 0,
-                 GL_RGB,
-                 GL_UNSIGNED_BYTE,
-                 image);
-
-
-    glBegin(GL_QUADS);
+        glBegin(GL_QUADS);
+        glColor3d(1, 0, 0);
         glTexCoord2f(0, 0);
-        glColor3d(1,0,0);
-        glVertex3f(0,0,-8);
+        glVertex3f(-0.3, -0.3, -8);
 
         glTexCoord2f(0, 1);
-        glColor3d(1,1,0);
-        glVertex3f(0.3,0,-8);
+        glColor3d(1, 1, 0);
+        glVertex3f(0, -0.3, -8);
 
         glTexCoord2f(1, 1);
-        glColor3d(1,1,1);
-        glVertex3f(0.3,0.3,-8);
+        glColor3d(1, 1, 1);
+        glVertex3f(0, 0, -8);
 
         glTexCoord2f(1, 0);
-        glColor3d(0,1,1);
-        glVertex3f(0,0.3,-8);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
+        glColor3d(0, 1, 1);
+        glVertex3f(-0.3, 0, -8);
+        glEnd();
+        glDisable(GL_TEXTURE_2D);
 
+      /*  int imgWidth, imgHeight;
+        unsigned char *image = SOIL_load_image("/var/www/video-broadcast.space/2.jpg",
+                                               &imgWidth,
+                                               &imgHeight,
+                                               0,
+                                               SOIL_LOAD_RGB);
+
+        glEnable(GL_TEXTURE_2D);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+        glBindTexture(GL_TEXTURE_2D, textures[1]);
+        glTexImage2D(GL_TEXTURE_2D,
+                     0,
+                     GL_RGB,
+                     imgWidth,
+                     imgHeight,
+                     0,
+                     GL_RGB,
+                     GL_UNSIGNED_BYTE,
+                     image);
+
+
+        glBegin(GL_QUADS);
+        glTexCoord2f(0, 0);
+        glColor3d(1, 0, 0);
+        glVertex3f(0, 0, -8);
+
+        glTexCoord2f(0, 1);
+        glColor3d(1, 1, 0);
+        glVertex3f(0.3, 0, -8);
+
+        glTexCoord2f(1, 1);
+        glColor3d(1, 1, 1);
+        glVertex3f(0.3, 0.3, -8);
+
+        glTexCoord2f(1, 0);
+        glColor3d(0, 1, 1);
+        glVertex3f(0, 0.3, -8);
+        glEnd();
+        glDisable(GL_TEXTURE_2D);*/
+    }
     glutSwapBuffers();
     return;
 
