@@ -228,7 +228,7 @@ void CRender::Display(){
 
 
             glGenTextures(1, &textures);
-            std::cout<<textures<<"textures"<<std:endl;
+            std::cout<<textures<<"textures"<<std::endl;
 
         }
 
