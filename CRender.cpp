@@ -169,6 +169,7 @@ void CRender::Display() {
         }
         else
         {
+            std::cout<< row<<"row"<< std::endl;
             glColor3d(1, 0, 0);
             glTexCoord2f(0, 0);
             glVertex3f(1 - 0.5, -1 + 0.5, -8);
