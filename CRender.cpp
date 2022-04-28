@@ -121,7 +121,7 @@ void CRender::Reshape(int width, int height){
                                                    &texturePlaceholder[i].height,
                                                    0,
                                                    SOIL_LOAD_RGB);
-            std::cout<<texturePlaceholder[i].width << " " << textures[1] <<"textures"<<std::endl;
+            std::cout<<texturePlaceholder[i].pixels << " " << textures[1] <<"textures"<<std::endl;
 
 
         }
