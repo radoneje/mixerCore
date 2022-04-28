@@ -153,7 +153,7 @@ void CRender::Display() {
                                                      0,
                                                      SOIL_LOAD_RGB);
         std::cout<<texturePlaceholder[i].pixels << " " << textures[1] <<"textures"<<std::endl;
-        SOIL_free_image_data(image);
+        //SOIL_free_image_data(image);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].width,
                      texturePlaceholder[0].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
