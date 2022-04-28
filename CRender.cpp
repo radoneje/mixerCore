@@ -336,7 +336,7 @@ void CRender::Display() {
             fileName.append(std::to_string(i+1));
             fileName.append(".png");
             std::cout<<fileName<<std::endl;
-            item.pixels =SOIL_load_image("/var/www/video-broadcast.space/2.jpg",
+            item.pixels =SOIL_load_image(fileName,
                                                   &item.width,
                                                   &item.height,
                                                   0,
