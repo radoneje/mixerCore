@@ -134,6 +134,9 @@ void CRender::Display(){
 
 
     for(int i=0; i<1/*texturePlaceholder.size()*/;i++) {
+
+        std::cout<<  texturePlaceholder[i].height<<"--<i<<---height\t" << item.yTop<<std::endl;
+
        // glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures);
       //  glBindTexture(GL_TEXTURE_2D, 1);
