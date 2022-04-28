@@ -140,7 +140,7 @@ void CRender::Display() {
             cell = 0;
             row++;
         }
-        std::cout<<cell<<std::endl;
+       // std::cout<<cell<<std::endl;
 
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
@@ -152,19 +152,19 @@ void CRender::Display() {
         glBegin(GL_QUADS);
         glColor3d(1, 0, 0);
         glTexCoord2f(0, 0);
-        glVertex3f(-1+(cell*0.5), 0.5, -8);
+        glVertex3f(-1+(cell*0.5), 0.25, -8);
 
         glTexCoord2f(0, 1);
         glColor3d(1, 1, 0);
-        glVertex3f(-1+(cell*0.5), -0.5, -8);
+        glVertex3f(-1+(cell*0.5), -0.25, -8);
 
         glTexCoord2f(1, 1);
         glColor3d(1, 1, 1);
-        glVertex3f(-1+0.5+(cell*0.5), -0.5, -8);
+        glVertex3f(-1+0.5+(cell*0.5), -0.25, -8);
 
         glTexCoord2f(1, 0);
         glColor3d(0, 1, 1);
-        glVertex3f(-1+0.5+(cell*0.5), 0.5, -8);
+        glVertex3f(-1+0.5+(cell*0.5), 0.25, -8);
         glEnd();
         glDisable(GL_TEXTURE_2D);
 
