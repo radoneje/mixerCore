@@ -171,8 +171,8 @@ void CRender::Display(){
             int row=0;
             if(i>4)
                 row=1;
-            item.yTop = 1.0f - (row * 0.25);
-            item.yBottom =1.0f - (row * 0.25) - 0.25;
+            item.yTop = 1.0f - (row * 0.5);
+            item.yBottom =1.0f - (row * 0.5) - 0.5;
 
 
             texturePlaceholder.push_back(item);
