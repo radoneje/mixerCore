@@ -202,9 +202,9 @@ void CRender::Display() {
     glBindTexture(GL_TEXTURE_2D, textures[MAX_FACES+1]);
 
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, backgroundImage.width,
-                 backgroundImage.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 backgroundImage.pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].height,
+                 texturePlaceholder[0].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 texturePlaceholder[0].pixels);
 
 
     glBegin(GL_QUADS);
