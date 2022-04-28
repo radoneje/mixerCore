@@ -21,7 +21,7 @@ void CHttp::init(int port){
     httplib::Server svr;
     svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {
        // res.set_content("Hello World!", "text/plain");
-        auto numbers = req.matches[1];
+        std::string numbers = req.matches[1];
         res.set_content(numbers, "text/plain");
     });
 
