@@ -161,6 +161,9 @@ void CRender::Display(){
         for(int i=0; i<MAX_FACES; i++) {
             sImage item;
             texturePlaceholder.push_back(item);
+
+            texturePosition[i][0]=1.0f;
+            texturePosition[i][1]=1.0f;
            // CTextureData tmpData;
            // textureData[i]=&tmpData;
         }
