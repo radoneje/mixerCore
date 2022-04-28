@@ -66,19 +66,19 @@ void CRender::ReadPPMImage2( const char* fileName, sImage *image) {
     if (tmpint != 255)
         printf("Warning: maxvalue is not 255 in ppm file\n");
 
-    image.numChannels = 3;
-    image.pixels = (unsigned char*) malloc (image.numChannels * image.width *  image.height * sizeof (unsigned char));
+    image->numChannels = 3;
+    image->pixels = (unsigned char*) malloc (image->numChannels * image->width *  image->height * sizeof (unsigned char));
 
-    if (image.pixels == NULL)
+    if (image->pixels == NULL)
     {
-        printf ("Can't allocate image of size %dx%d. Exiting\n", image.width, image.height);
+        printf ("Can't allocate image of size %dx%d. Exiting\n", image->width, image->height);
         exit (1);
     }
     else
-        printf("Reading image %s of size %dx%d\n", fileName, image.width, image.height);
+        printf("Reading image %s of size %dx%d\n", fileName, image->width, image->height);
 
 
-    fread (image.pixels, sizeof (unsigned char), image.numChannels * image.width * image.height, inFile);
+    fread (image->pixels, sizeof (unsigned char), image->numChannels * image->width * image->height, inFile);
 
     fclose (inFile);
 
