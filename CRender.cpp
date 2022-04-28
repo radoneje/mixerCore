@@ -165,6 +165,8 @@ void CRender::Display(){
     void CRender::StartRender(int argc, char **argv){
 
         for(int i=0; i<MAX_FACES; i++) {
+            Gluint tmp;
+            textures[i]=tmp;
             sImage item;
             int j=i;
             if(i>4)
