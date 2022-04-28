@@ -59,7 +59,7 @@ void CRender::ReadPPMImage2( const char* fileName, sImage *image) {
 
     // read image dimensions
 
-    sscanf (str,"%d %d",&image.width, &image.height);
+    sscanf (str,"%d %d",image->width, image->height);
     fgets (str,100,inFile);
     sscanf (str,"%d",&tmpint);
 
