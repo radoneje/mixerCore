@@ -147,17 +147,28 @@ void CRender::Display() {
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glBindTexture(GL_TEXTURE_2D, textures[0]);
 
-        texturePlaceholder[i].pixels=SOIL_load_image("/etc/mixerCore/images/1.jpg",
-                                                     &texturePlaceholder[i].width,
-                                                     &texturePlaceholder[i].height,
+        int imgWidth, imgHeight;
+        unsigned char *image =SOIL_load_image("/etc/mixerCore/images/1.jpg",
+                                                     &imgWidth,
+                                                     &imgHeight,
                                                      0,
                                                      SOIL_LOAD_RGB);
-        std::cout<<texturePlaceholder[i].pixels << " " << textures[1] <<"textures"<<std::endl;
+        glTexImage2D(GL_TEXTURE_2D,
+                     0,
+                     GL_RGB,
+                     imgWidth,
+                     imgHeight,
+                     0,
+                     GL_RGB,
+                     GL_UNSIGNED_BYTE,
+                     image);
+       // std::cout<<texturePlaceholder[i].pixels << " " << textures[1] <<"textures"<<std::endl;
         //SOIL_free_image_data(image);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].width,
+       /* glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].width,
                      texturePlaceholder[0].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                     texturePlaceholder[0].pixels);
+                     texturePlaceholder[0].pixels);*/
+
 
         glBegin(GL_QUADS);
         if(row==0) {
