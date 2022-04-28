@@ -102,13 +102,15 @@ void CRender::Reshape(int width, int height){
     { ///prepare
         glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
 
-     /*   glBindTexture (GL_TEXTURE_2D, 1);
+        for(int i=0; i<MAX_FACES; i++) {
+            glBindTexture(GL_TEXTURE_2D, 1);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder.width,
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        }
+        /*glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder.width,
                      texturePlaceholder.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      texturePlaceholder.pixels);*/
     }
@@ -125,10 +127,7 @@ void CRender::Reshape(int width, int height){
 void CRender::Display(){
 
     glBindTexture(GL_TEXTURE_2D, 1);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+
 
 
 
