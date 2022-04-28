@@ -137,9 +137,9 @@ void CRender::Display(){
     for(int i=0; i<texturePlaceholder.size();i++) {
 
         std::cout<<  i<<"--<0<<---glActiveTexture\t" <<std::endl;
-        glEnable(GL_TEXTURE_2D);
-        glActiveTexture(GL_TEXTURE0 + i);
 
+        glActiveTexture(GL_TEXTURE0 + i);
+        glEnable(GL_TEXTURE_2D);
         std::cout<<  i<<"--<1<<---glActiveTexture\t" <<std::endl;
        // glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures[i]);
