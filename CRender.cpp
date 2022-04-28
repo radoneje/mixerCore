@@ -161,16 +161,12 @@ void CRender::Display(){
         glTexCoord2f(1, 0);
         glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yTop, -8);
         glEnd();
-        //glDisable(GL_TEXTURE_2D);
+        glDisable(GL_TEXTURE_2D);
 
-        auto item=texturePlaceholder[i];
-        std::cout<<  texturePlaceholder[i].height<<"\t" << item.yTop<<std::endl;
-        std::cout<<  item.xLeft<<"\t" << item.yBottom<<std::endl;
-        std::cout<<  item.xRight<<"\t" << item.yBottom<<std::endl;
-        std::cout<<  item.xRight<<"\t" << item.yTop<<std::endl;
+
     }
     glutSwapBuffers();
-    //glFlush();
+    glFlush();
 
 }
     void CRender::StartRender(int argc, char **argv){
