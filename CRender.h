@@ -48,7 +48,7 @@ private:
     static  CTextureData textureData2;
     static void ReadPPMImage2 (  const char * fileName, sImage *image  );
     static  std::vector<sImage> texturePlaceholder;
-    static std::vector<std::vector<int>>  texturePosition;
+    static std::vector<std::vector<float>>  texturePosition;
 
    //static std::vector<CTextureData> textureImage;
 
