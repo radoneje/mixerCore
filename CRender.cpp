@@ -152,14 +152,14 @@ void CRender::Display(){
         glBindTexture(GL_TEXTURE_2D, textures);
 
         glBegin(GL_QUADS);
-        glTexCoord2f(0, 0);
-        glVertex3f(texturePlaceholder[i].xLeft, texturePlaceholder[i].yTop, -8);
-        glTexCoord2f(0, 1);
-        glVertex3f(texturePlaceholder[i].xLeft, texturePlaceholder[i].yBottom, -8);
-        glTexCoord2f(1, 1);
-        glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yBottom, -8);
-        glTexCoord2f(1, 0);
-        glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yTop, -8);
+            glTexCoord2f(0, 0);
+            glVertex3f(texturePlaceholder[i].xLeft, texturePlaceholder[i].yTop, -8);
+            glTexCoord2f(0, 1);
+            glVertex3f(texturePlaceholder[i].xLeft, texturePlaceholder[i].yBottom, -8);
+            glTexCoord2f(1, 1);
+            glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yBottom, -8);
+            glTexCoord2f(1, 0);
+            glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yTop, -8);
         glEnd();
         glDisable(GL_TEXTURE_2D);
 
