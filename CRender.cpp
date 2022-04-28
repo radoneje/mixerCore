@@ -116,12 +116,6 @@ void CRender::Reshape(int width, int height){
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-            texturePlaceholder[i].pixels=SOIL_load_image("/etc/mixerCore/images/1.jpg",
-                                                   &texturePlaceholder[i].width,
-                                                   &texturePlaceholder[i].height,
-                                                   0,
-                                                   SOIL_LOAD_RGB);
-            std::cout<<texturePlaceholder[i].pixels << " " << textures[1] <<"textures"<<std::endl;
 
 
         }
@@ -152,6 +146,15 @@ void CRender::Display() {
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glBindTexture(GL_TEXTURE_2D, textures[0]);
+
+        texturePlaceholder[i].pixels=SOIL_load_image("/etc/mixerCore/images/1.jpg",
+                                                     &texturePlaceholder[i].width,
+                                                     &texturePlaceholder[i].height,
+                                                     0,
+                                                     SOIL_LOAD_RGB);
+        std::cout<<texturePlaceholder[i].pixels << " " << textures[1] <<"textures"<<std::endl;
+        SOIL_free_image_data(image);
+
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].width,
                      texturePlaceholder[0].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      texturePlaceholder[0].pixels);
