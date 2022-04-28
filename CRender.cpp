@@ -129,30 +129,29 @@ void CRender::Reshape(int width, int height){
 }
 void CRender::Display(){
 
-    glBindTexture(GL_TEXTURE_2D, 1);
+    for(var i=0; i<texturePlaceholder.size();i++) {
+        glBindTexture(GL_TEXTURE_2D, i+1);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
+                     texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                     texturePlaceholder[i].pixels);
+        glClearColor(0.0, 0.0, 1.0, 0.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_TEXTURE_2D);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+        glBindTexture(GL_TEXTURE_2D, 1);
 
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].width,
-                 texturePlaceholder[0].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 texturePlaceholder[0].pixels);
-    glClearColor(0.0, 0.0, 1.0, 0.0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_TEXTURE_2D);
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-    glBindTexture(GL_TEXTURE_2D, 1);
-
-    glBegin(GL_QUADS);
-    glTexCoord2f(0, 0);
-    glVertex3f(-5, 5, -8);
-    glTexCoord2f(0, 1);
-    glVertex3f(-5, -5, -8);
-    glTexCoord2f(1, 1);
-    glVertex3f(5, -5, -8);
-    glTexCoord2f(1, 0);
-    glVertex3f(5, 5, -8);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
-
+        glBegin(GL_QUADS);
+        glTexCoord2f(0, 0);
+        glVertex3f(-5, 5, -8);
+        glTexCoord2f(0, 1);
+        glVertex3f(-5, -5, -8);
+        glTexCoord2f(1, 1);
+        glVertex3f(5, -5, -8);
+        glTexCoord2f(1, 0);
+        glVertex3f(5, 5, -8);
+        glEnd();
+        glDisable(GL_TEXTURE_2D);
+    }
     glutSwapBuffers();
     glFlush();
 
