@@ -140,9 +140,9 @@ void CRender::Display() {
         if(cell>=4) {
             cell = 0;
             row++;
-            std::cout<<"news row"<<std::endl;
+
         }
-       // std::cout<<cell<<std::endl;
+
 
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
@@ -171,7 +171,7 @@ void CRender::Display() {
         }
         else
         {
-            std::cout<< row<<"row"<< std::endl;
+
             glColor3d(1, 0, 0);
             glTexCoord2f(0, 0);
             glVertex3f(1 - 0.5, -1 + 0.5, -8);
