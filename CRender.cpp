@@ -151,7 +151,7 @@ void CRender::Display() {
 
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-        glBindTexture(GL_TEXTURE_2D, textures[i]);
+        glBindTexture(GL_TEXTURE_2D, textures[0]);
 
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
@@ -203,7 +203,7 @@ void CRender::Display() {
 
     glEnable(GL_TEXTURE_2D);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-    glBindTexture(GL_TEXTURE_2D, textures[3]);
+    glBindTexture(GL_TEXTURE_2D, textures[0]);
 
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[3].height,
