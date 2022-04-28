@@ -227,7 +227,8 @@ void CRender::Display() {
     /// make active input
     if(pCmd->activeTextureId.size()==1)
     {
-        std::cout<<"render active cmd"<<std::endl;
+        std::cout<<"render active cmd"<< pCmd->activeTextureId[0] <<std::endl;
+
     }
 
     glutSwapBuffers();
