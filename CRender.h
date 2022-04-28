@@ -55,7 +55,7 @@ private:
 
     static void Reshape(int width, int height);
     static void  Display();
-    static const int MAX_FACES=4;
+    static const int MAX_FACES=7;
    // static GLuint textures;
     static GLuint textures[MAX_FACES];
     static  CTextureData textureData2;
