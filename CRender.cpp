@@ -129,7 +129,7 @@ void CRender::Reshape(int width, int height){
 }
 void CRender::Display(){
 
-    for(int i=0; i<texturePlaceholder.size;i++) {
+    for(int i=0; i<texturePlaceholder.size();i++) {
         glBindTexture(GL_TEXTURE_2D, i+1);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
                      texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
