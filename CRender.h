@@ -46,7 +46,7 @@ private:
     };*/
     static void Reshape(int width, int height);
     static void  Display();
-    static const int MAX_FACES=7;
+    static const int MAX_FACES=4;
 
 
     static  CTextureData textureData2;
