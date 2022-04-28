@@ -150,21 +150,41 @@ void CRender::Display() {
                      texturePlaceholder[0].pixels);
 
         glBegin(GL_QUADS);
-        glColor3d(1, 0, 0);
-        glTexCoord2f(0, 0);
-        glVertex3f(-1+(cell*0.5), -1+0.5, -8);
+        if(row==0) {
+            glColor3d(1, 0, 0);
+            glTexCoord2f(0, 0);
+            glVertex3f(-1 + (cell * 0.5), -1 + 0.5, -8);
 
-        glTexCoord2f(0, 1);
-        glColor3d(1, 1, 0);
-        glVertex3f(-1+(cell*0.5), -1, -8);
+            glTexCoord2f(0, 1);
+            glColor3d(1, 1, 0);
+            glVertex3f(-1 + (cell * 0.5), -1, -8);
 
-        glTexCoord2f(1, 1);
-        glColor3d(1, 1, 1);
-        glVertex3f(-1+0.5+(cell*0.5), -1, -8);
+            glTexCoord2f(1, 1);
+            glColor3d(1, 1, 1);
+            glVertex3f(-1 + 0.5 + (cell * 0.5), -1, -8);
 
-        glTexCoord2f(1, 0);
-        glColor3d(0, 1, 1);
-        glVertex3f(-1+0.5+(cell*0.5), -1+0.5, -8);
+            glTexCoord2f(1, 0);
+            glColor3d(0, 1, 1);
+            glVertex3f(-1 + 0.5 + (cell * 0.5), -1 + 0.5, -8);
+        }
+        else
+        {
+            glColor3d(1, 0, 0);
+            glTexCoord2f(0, 0);
+            glVertex3f(1 - (cell * 0.5), -1 + 0.5, -8);
+
+            glTexCoord2f(0, 1);
+            glColor3d(1, 1, 0);
+            glVertex3f(1 - (cell * 0.5), -1, -8);
+
+            glTexCoord2f(1, 1);
+            glColor3d(1, 1, 1);
+            glVertex3f(1, -1, -8);
+
+            glTexCoord2f(1, 0);
+            glColor3d(0, 1, 1);
+            glVertex3f(1, -1 + 0.5, -8);
+        }
         glEnd();
         glDisable(GL_TEXTURE_2D);
 
