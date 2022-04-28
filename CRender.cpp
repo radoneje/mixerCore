@@ -109,6 +109,8 @@ void CRender::Reshape(int width, int height){
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+            ReadPPMImage2(buf, &texturePlaceholder);
         }
         /*glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder.width,
                      texturePlaceholder.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
@@ -131,7 +133,7 @@ void CRender::Display(){
 
     char buf[1024];
     snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
-    ReadPPMImage2(buf, &texturePlaceholder);
+
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder.width,
                  texturePlaceholder.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  texturePlaceholder.pixels);
@@ -193,8 +195,6 @@ void CRender::Display(){
 
         glClearColor(0.0, 0.0, 0.0, 0.0);
         glEnable(GL_DEPTH_TEST);
-
-
 
         for(int i=0; i<MAX_FACES; i++) {
             GLuint t=i+1;
