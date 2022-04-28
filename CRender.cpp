@@ -14,6 +14,7 @@
 #include <vector>
 #include "CConfig.h"
 #include "CTextureData.h"
+#include "SOIL.h"
 
 // Include GLEW
 #include <GL/glew.h>
