@@ -160,6 +160,20 @@ void CRender::Display(){
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
+    int imgWidth, imgHeight;
+    unsigned char* image = SOIL_load_image("potato.jpg",
+                                           &imgWidth,
+                                           &imgHeight,
+                                           0,
+                                           SOIL_LOAD_RGB);
+
+
+    std::cout << "null: " << !image << std::endl;
+    std::cout << "Max size: " << GL_MAX_TEXTURE_SIZE << std::endl;
+    std::cout << "Width: " <<  imgWidth << std::endl;
+    std::cout << "Height: " << imgHeight << std::endl;
+   // std::cout << "Obj: " << m_texture << std::endl;
+
     glBegin(GL_QUADS);
         glColor3d(1,0,0);
         glVertex3f(0,0,-8);
