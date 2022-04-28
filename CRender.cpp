@@ -138,7 +138,7 @@ void CRender::Display(){
 
         std::cout<<  i<<"--<0<<---glActiveTexture\t" <<std::endl;
 
-        glActiveTexture(GL_TEXTURE0 + i);
+       // glActiveTexture(GL_TEXTURE0 + i);
         glEnable(GL_TEXTURE_2D);
         std::cout<<  i<<"--<1<<---glActiveTexture\t" <<std::endl;
        // glActiveTexture(GL_TEXTURE0);
