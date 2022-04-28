@@ -45,14 +45,6 @@ struct sImage
 
 class CRender {
 private:
-    /*struct sTextureImage{
-    public:
-        unsigned char *pixels;
-        int width;
-        int height;
-        int numChannels;
-    };*/
-
     static void Reshape(int width, int height);
     static void  Display();
     static const int MAX_FACES=7;
@@ -62,6 +54,7 @@ private:
     static void ReadPPMImage2 (  const char * fileName, sImage *image  );
     static  std::vector<sImage> texturePlaceholder;
     static std::vector<std::vector<float>>  texturePosition;
+    static sImage backgroundImage;
 
    //static std::vector<CTextureData> textureImage;
 

@@ -193,48 +193,33 @@ void CRender::Display() {
 
         cell++;
     }
-    glutSwapBuffers();
-    return;
 
-    for(int i=0; i<texturePlaceholder.size();i++) {
+    ///// make background
 
-        std::cout<<  i<<"--<0<<---glActiveTexture\t" <<std::endl;
-
-       // glActiveTexture(GL_TEXTURE0 + i);
-        glEnable(GL_TEXTURE_2D);
-        std::cout<<  i<<"--<1<<---glActiveTexture\t" <<std::endl;
-       // glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, textures[i]);
-      //  glBindTexture(GL_TEXTURE_2D, 1);
-        std::cout<<  i<<"--<2<<---glActiveTexture\t" <<std::endl;
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
-                     texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                     texturePlaceholder[i].pixels);
-        std::cout<<  i<<"--<3<<---glActiveTexture\t" <<std::endl;
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    glBindTexture(GL_TEXTURE_2D, textures[MAX_FACES+1]);
 
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        glEnable(GL_TEXTURE_2D);
-        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-        glBindTexture(GL_TEXTURE_2D, textures[i]);
-
-        glBegin(GL_QUADS);
-            glTexCoord2f(0, 0);
-            glVertex3f(texturePlaceholder[i].xLeft, texturePlaceholder[i].yTop, -8);
-            glTexCoord2f(0, 1);
-            glVertex3f(texturePlaceholder[i].xLeft, texturePlaceholder[i].yBottom, -8);
-            glTexCoord2f(1, 1);
-            glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yBottom, -8);
-            glTexCoord2f(1, 0);
-            glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yTop, -8);
-        glEnd();
-        glDisable(GL_TEXTURE_2D);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, backgroundImage.width,
+                 backgroundImage.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 backgroundImage.pixels);
 
 
+    glBegin(GL_QUADS);
+        glTexCoord2f(0, 0);
+        glVertex3f(-1, 0.5, -8);
 
+        glTexCoord2f(0, 1);
+        glVertex3f(-1, -1, -8);
 
-    }
+        glTexCoord2f(1, 1);
+        glVertex3f(0.5, -1, -8);
+
+        glTexCoord2f(1, 0);
+        glVertex3f(0.5, 0.5, -8);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
 
     glutSwapBuffers();
     glFlush();
@@ -246,19 +231,7 @@ void CRender::Display() {
         for(int i=0; i<MAX_FACES; i++) {
 
             sImage item;
-            int j=i;
-            if(i>4)
-                 j=i-4;
-            item.xLeft = -1.0f + (j * 0.5);// + (i*0.25);
-            item.xRight = -1.0f + (j * 0.5) + 0.5;//+ (i*0.25)+0.25;
 
-            int row=0;
-            if(i>4)
-                row=1;
-            item.yTop = 1.0f - (row * 0.5);
-            item.yBottom =1.0f - (row * 0.5) - 0.5;
-
-            int imgWidth, imgHeight;
             std::string fileName;
             fileName.append("/etc/mixerCore/images/notconnected");
             fileName.append(std::to_string(i+1));
@@ -273,12 +246,14 @@ void CRender::Display() {
 
             texturePlaceholder.push_back(item);
 
-
-           // CTextureData tmpData;
-           // textureData[i]=&tmpData;
         }
+        backgroundImage.pixels =SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
+                                                &backgroundImage.width,
+                                                &backgroundImage.height,
+                                                0,
+                                                SOIL_LOAD_RGB);
 
-       // std::cout<<CRender::textureData[0]->width<<std::endl;
+
 
         std::cout << "start render" << std::endl;
         std::string sWinName, sWinW, sWinH;
@@ -304,19 +279,16 @@ void CRender::Display() {
         glutInitWindowPosition(-1, -1);
         glutInitWindowSize(1280, 720);
         glutCreateWindow("OpenGL - Rotating Cubes");
-        {
+
             glClearColor(0.0, 0.0, 0.0, 0.0);
             glEnable(GL_DEPTH_TEST);
 
 
-            glGenTextures(MAX_FACES, textures);
-            {
-
-                std::cout<<textures[0] << " " << textures[1] <<"textures"<<std::endl;
-            }
+            glGenTextures(MAX_FACES+1, textures);
 
 
-        }
+
+
         glClearColor(0.0, 0.0, 1.0, 0.0);
         glutDisplayFunc(Display);
         glutReshapeFunc(Reshape);
