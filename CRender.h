@@ -44,9 +44,9 @@ private:
     static void  Display();
     static const int MAX_FACES=8;
     static  CTextureData * textureData[MAX_FACES];
-    static void ReadPPMImage (  const char * fileName, CTextureData *textureDataParam );
+
     static  CTextureData textureData2;
-    static void ReadPPMImage2 (  const char * fn );
+    static void ReadPPMImage2 (  const char * fileName  );
     static  Image image;
 
    //static std::vector<CTextureData> textureImage;

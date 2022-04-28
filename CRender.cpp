@@ -27,77 +27,18 @@
   CTextureData * CRender::textureData[MAX_FACES];
 CTextureData  CRender::textureData2;
 
-void CRender::ReadPPMImage( const char* fileName, CTextureData *textureDataParam) {
 
 
+  Image CRender::image;
+void CRender::ReadPPMImage2( const char* fileName) {
 
     int tmpint;
     char str[100];
-
     FILE* inFile = fopen (fileName,"rb");
 
     if (inFile == NULL)
     {
         printf ("Can't open input file %s. Exiting.\n",fileName);
-        exit (1);
-    }
-
-    fscanf (inFile,"P%d\n", &tmpint);
-
-    if (tmpint != 6)
-    {
-        printf ("Input file is not ppm. Exiting. %d \n", tmpint);
-        exit (1);
-    }
-
-    // skip comments embedded in header
-
-    fgets (str,100,inFile);
-    while (str[0]=='#')
-        fgets(str,100,inFile);
-
-    // read image dimensions
-
-    sscanf (str,"%d %d",&textureDataParam->width, &textureDataParam->height);
-    fgets (str,100,inFile);
-    sscanf (str,"%d",&tmpint);
-
-
-
-    if (tmpint != 255)
-        printf("Warning: maxvalue is not 255 in ppm file\n");
-
-    textureDataParam->numChannels= 3;
-
-    textureDataParam->pixels= (unsigned char*) malloc (textureDataParam->numChannels * textureDataParam->width *  textureDataParam->height * sizeof (unsigned char));
-
-    if (textureDataParam->pixels == NULL)
-    {
-        printf ("Can't allocate image of size %dx%d. Exiting\n", textureDataParam->width, textureDataParam->height);
-        exit (1);
-    }
-   // else
-    //    printf("Reading image %s of size %dx%d\n", fileName, textureDataParam->width, textureDataParam->height);
-
-
-    fread (textureDataParam->pixels, sizeof (unsigned char), textureDataParam->numChannels * textureDataParam->width * textureDataParam->height, inFile);
-
-    fclose (inFile);
-
-}
-
-  Image CRender::image;
-void CRender::ReadPPMImage2( const char* fn) {
-
-
-
-    int tmpint;
-    char str[100];
-    FILE* inFile = fopen (fn,"rb");
-
-    if (inFile == NULL)
-    {
-        printf ("Can't open input file %s. Exiting.\n",fn);
         exit (1);
     }
 
