@@ -135,7 +135,7 @@ void CRender::Reshape(int width, int height){
 void CRender::Display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     for(int i=0, cell=0, row=0; i<MAX_FACES; i++) {
-        cell++;
+
         if(cell>=4) {
             cell = 0;
             row++;
@@ -207,6 +207,8 @@ void CRender::Display() {
         glVertex3f(0, 0.3, -8);
         glEnd();
         glDisable(GL_TEXTURE_2D);*/
+
+        cell++;
     }
     glutSwapBuffers();
     return;
