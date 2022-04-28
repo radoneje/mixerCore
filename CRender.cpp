@@ -163,10 +163,10 @@ void CRender::Display(){
         for(int i=0; i<MAX_FACES; i++) {
             sImage item;
             item.xLeft=-1.0f;// + (i*0.25);
-            item.xRight=1.0f ;//+ (i*0.25)+0.25;
+            item.xRight=-1.0f *0.25 ;//+ (i*0.25)+0.25;
 
-            item.yTop=1.0f;
-            item.yBottom=-1.0f;
+            item.yTop=1.0f*0.25;
+            item.yBottom=-1.0f*0.25;
 
             texturePlaceholder.push_back(item);
             std::cout<<  item.xLeft<<"\t" << item.yTop<<std::endl;
