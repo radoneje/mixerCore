@@ -10,7 +10,7 @@
 
 class CHttp {
     public:   CHttp();
-    static void init(int port, Ccmd *pCmd );
+    static void init(int port, Ccmd Cmd );
 
 };
 

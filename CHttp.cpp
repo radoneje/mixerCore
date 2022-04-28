@@ -16,7 +16,7 @@ CHttp::CHttp(){
 
 
 };
-void CHttp::init(int port, Ccmd *pCmd){
+void CHttp::init(int port, Ccmd Cmd){
     std::cout<< "http CHttp: "<< port <<std::endl;
     httplib::Server svr;
     svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {
