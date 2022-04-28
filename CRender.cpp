@@ -120,9 +120,13 @@ void CRender::Reshape(int width, int height){
 
 
         }
-        /*glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder.width,
-                     texturePlaceholder.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                     texturePlaceholder.pixels);*/
+        glBindTexture(GL_TEXTURE_2D, textures[MAX_FACES]);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
     }
     glViewport(0, 0, width, height);
 
