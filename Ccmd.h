@@ -14,7 +14,6 @@ class Ccmd {
         Ccmd();
         std::vector<int> activeTextureId;
         std::mutex locker;
-        std::lock_guard<std::mutex> guard;
 };
 
 

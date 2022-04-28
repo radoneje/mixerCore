@@ -21,7 +21,12 @@ void CHttp::init(int port, Ccmd *pCmd){
     httplib::Server svr;
     svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {
        // res.set_content("Hello World!", "text/plain");
-        std::string numbers = req.matches[1];
+        std::string value = req.matches[1];
+        {
+            std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+            pCmd->activeTextureId.clear();
+            pCmd->activeTextureId.push_back(std::stoi(value));
+        }
         res.set_content(numbers, "text/plain");
     });
 
