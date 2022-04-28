@@ -31,7 +31,7 @@ CTextureData  CRender::textureData2;
 //sImage CRender::texturePlaceholder;
 std::vector<sImage> CRender::texturePlaceholder;
 std::vector<std::vector<float>>  CRender::texturePosition(MAX_FACES, std::vector<float>(2));
-GLuint CRender::textures[MAX_FACES];
+GLuint CRender::textures;//[MAX_FACES];
 
 void CRender::ReadPPMImage2( const char* fileName, sImage *image) {
 
@@ -106,7 +106,7 @@ void CRender::Reshape(int width, int height){
 
         for(int i=0; i<texturePlaceholder.size(); i++) {
             glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, textures[i]);
+            glBindTexture(GL_TEXTURE_2D, textures);
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -165,8 +165,7 @@ void CRender::Display(){
     void CRender::StartRender(int argc, char **argv){
 
         for(int i=0; i<MAX_FACES; i++) {
-            GLuint tmp;
-            textures[i]=tmp;
+
             sImage item;
             int j=i;
             if(i>4)
