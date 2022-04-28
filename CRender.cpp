@@ -29,7 +29,8 @@ CTextureData  CRender::textureData2;
 
 
 
-sImage CRender::texturePlaceholder;
+//sImage CRender::texturePlaceholder;
+std::vector<sImage> CRender::texturePlaceholder;
 
 void CRender::ReadPPMImage2( const char* fileName, sImage *image) {
 
@@ -110,8 +111,7 @@ void CRender::Reshape(int width, int height){
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-
-            ReadPPMImage2("/var/www/video-broadcast.space/102.ppm", &texturePlaceholder);
+            ReadPPMImage2("/var/www/video-broadcast.space/102.ppm", &(texturePlaceholder[0]));
         }
         /*glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder.width,
                      texturePlaceholder.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
@@ -132,11 +132,9 @@ void CRender::Display(){
     glBindTexture(GL_TEXTURE_2D, 1);
 
 
-
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder.width,
-                 texturePlaceholder.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 texturePlaceholder.pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].width,
+                 texturePlaceholder[0].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 texturePlaceholder[0].pixels);
     glClearColor(0.0, 0.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_TEXTURE_2D);
@@ -162,8 +160,10 @@ void CRender::Display(){
     void CRender::StartRender(int argc, char **argv){
 
         for(int i=0; i<MAX_FACES; i++) {
-            CTextureData tmpData;
-            textureData[i]=&tmpData;
+            sImage item;
+            texturePlaceholder.push_back(item);
+           // CTextureData tmpData;
+           // textureData[i]=&tmpData;
         }
 
        // std::cout<<CRender::textureData[0]->width<<std::endl;
