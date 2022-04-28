@@ -133,8 +133,8 @@ void CRender::Display(){
 
     for(int i=0; i<texturePlaceholder.size();i++) {
        // glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, 1);
-        glBindTexture(GL_TEXTURE_2D, 1);
+      //  glBindTexture(GL_TEXTURE_2D, 1);
+      //  glBindTexture(GL_TEXTURE_2D, 1);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
                      texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      texturePlaceholder[i].pixels);
@@ -142,7 +142,7 @@ void CRender::Display(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-        glBindTexture(GL_TEXTURE_2D, 1);
+      //  glBindTexture(GL_TEXTURE_2D, 1);
 
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0);
