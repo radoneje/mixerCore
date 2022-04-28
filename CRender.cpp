@@ -132,7 +132,20 @@ void CRender::Reshape(int width, int height){
     glLoadIdentity();
 }
 void CRender::Display(){
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    glBegin(GL_QUADS);
+    glColor3d(1,0,0);
+    glVertex3f(-1,-1,-10);
+    glColor3d(1,1,0);
+    glVertex3f(1,-1,-10);
+    glColor3d(1,1,1);
+    glVertex3f(1,1,-10);
+    glColor3d(0,1,1);
+    glVertex3f(-1,1,-10);
+    glEnd();
+    glutSwapBuffers();
+    return;
 
     for(int i=0; i<texturePlaceholder.size();i++) {
 
@@ -173,16 +186,7 @@ void CRender::Display(){
 
 
     }
-    glBegin(GL_QUADS);
-    glColor3d(1,0,0);
-    glVertex3f(-1,-1,-10);
-    glColor3d(1,1,0);
-    glVertex3f(1,-1,-10);
-    glColor3d(1,1,1);
-    glVertex3f(1,1,-10);
-    glColor3d(0,1,1);
-    glVertex3f(-1,1,-10);
-    glEnd();
+
     glutSwapBuffers();
     glFlush();
 
