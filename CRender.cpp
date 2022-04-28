@@ -106,7 +106,7 @@ void CRender::Reshape(int width, int height){
 
         for(int i=0; i<texturePlaceholder.size(); i++) {
            // glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, textures);
+            glBindTexture(GL_TEXTURE_2D, 1);
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -133,8 +133,8 @@ void CRender::Display(){
 
     for(int i=0; i<texturePlaceholder.size();i++) {
        // glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, textures);
-        glBindTexture(GL_TEXTURE_2D, i+1);
+        glBindTexture(GL_TEXTURE_2D, 1);
+        glBindTexture(GL_TEXTURE_2D, 1);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
                      texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      texturePlaceholder[i].pixels);
