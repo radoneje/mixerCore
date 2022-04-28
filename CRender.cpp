@@ -129,8 +129,6 @@ void CRender::Display(){
     glBindTexture(GL_TEXTURE_2D, 1);
 
 
-
-
     char buf[1024];
     snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
     ReadPPMImage2(buf, &texturePlaceholder);
@@ -201,7 +199,7 @@ void CRender::Display(){
 
         char buf[1024];
         snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
-        ReadPPMImage2(buf, &texturePlaceholder);
+     //   ReadPPMImage2(buf, &texturePlaceholder);
 
 
 
