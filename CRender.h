@@ -15,6 +15,7 @@
 ///
 #include <GL/glut.h>
 #include "CTextureData.h"
+#include "Ccmd.h"
 
 /*class sTextureImage {
 public:
@@ -60,7 +61,7 @@ private:
 
 public:
 
-    static void StartRender(int argc, char **argv);
+    static void StartRender(int argc, char **argv, Ccmd *pCmd);
     CRender();
 
 };

@@ -15,6 +15,7 @@
 #include "CConfig.h"
 #include "CTextureData.h"
 #include "SOIL.h"
+#include "Ccmd.h"
 
 // Include GLEW
 #include <GL/glew.h>
@@ -227,7 +228,7 @@ void CRender::Display() {
     glFlush();
 
 }
-    void CRender::StartRender(int argc, char **argv){
+    void CRender::StartRender(int argc, char **argv, Ccmd *pCmd){
 
 
         for(int i=0; i<MAX_FACES; i++) {
