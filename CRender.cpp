@@ -137,6 +137,9 @@ void CRender::Display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     int cell=0, row=0;
     for(int i=0; i<MAX_FACES; i++) {
+
+
+
         if(cell>=4) {
             cell = 0;
             row++;
@@ -147,12 +150,7 @@ void CRender::Display() {
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glBindTexture(GL_TEXTURE_2D, textures[0]);
 
-        int imgWidth, imgHeight;
-        unsigned char *image =SOIL_load_image("/var/www/video-broadcast.space/2.jpg",
-                                                     &imgWidth,
-                                                     &imgHeight,
-                                                     0,
-                                                     SOIL_LOAD_RGB);
+     /*
         std::cout << "null: " << !image << std::endl;
         std::cout << "Max size: " << GL_MAX_TEXTURE_SIZE << std::endl;
         std::cout << "Width: " <<  imgWidth << std::endl;
@@ -168,15 +166,15 @@ void CRender::Display() {
                      GL_RGB,
                      GL_UNSIGNED_BYTE,
                      image);
-        SOIL_free_image_data(image);
+        SOIL_free_image_data(image);*/
 
 
        // std::cout<<texturePlaceholder[i].pixels << " " << textures[1] <<"textures"<<std::endl;
         //SOIL_free_image_data(image);
 
-       /* glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].width,
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].width,
                      texturePlaceholder[0].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                     texturePlaceholder[0].pixels);*/
+                     texturePlaceholder[0].pixels);
 
 
         glBegin(GL_QUADS);
@@ -331,6 +329,13 @@ void CRender::Display() {
                 row=1;
             item.yTop = 1.0f - (row * 0.5);
             item.yBottom =1.0f - (row * 0.5) - 0.5;
+
+            int imgWidth, imgHeight;
+            item.pixels =SOIL_load_image("/var/www/video-broadcast.space/2.jpg",
+                                                  &item.width,
+                                                  &item.height,
+                                                  0,
+                                                  SOIL_LOAD_RGB);
 
 
             texturePlaceholder.push_back(item);
