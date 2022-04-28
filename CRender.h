@@ -42,12 +42,13 @@ private:
     };*/
     static void Reshape(int width, int height);
     static void  Display();
-    static const int MAX_FACES=8;
+    static const int MAX_FACES=7;
 
 
     static  CTextureData textureData2;
     static void ReadPPMImage2 (  const char * fileName, sImage *image  );
     static  std::vector<sImage> texturePlaceholder;
+    static std::vector<std::vector<int>>  texturePosition;
 
    //static std::vector<CTextureData> textureImage;
 

@@ -30,6 +30,7 @@ CTextureData  CRender::textureData2;
 
 //sImage CRender::texturePlaceholder;
 std::vector<sImage> CRender::texturePlaceholder;
+std::vector<std::vector<int>>  CRender::texturePosition(MAX_FACES, std::vector<int>(2));
 
 void CRender::ReadPPMImage2( const char* fileName, sImage *image) {
 
