@@ -203,7 +203,7 @@ void CRender::Display() {
 
     glEnable(GL_TEXTURE_2D);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-    glBindTexture(GL_TEXTURE_2D, textures[MAX_FACES+1]);
+    glBindTexture(GL_TEXTURE_2D, textures[0]);
 
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].height,
