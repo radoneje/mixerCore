@@ -115,8 +115,18 @@ void CRender::Reshape(int width, int height){
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+// ReadPPMImage2
+           // ReadPPMImage2("/var/www/video-broadcast.space/102.ppm", &(texturePlaceholder[i]));
 
-            ReadPPMImage2("/var/www/video-broadcast.space/102.ppm", &(texturePlaceholder[i]));
+
+            //unsigned char *image =
+            texturePlaceholder[i].pixels=SOIL_load_image("/etc/mixerCore/images/notconnected4.png",
+                                                   &texturePlaceholder[i].width,
+                                                   &texturePlaceholder[i].height,
+                                                   0,
+                                                   SOIL_LOAD_RGB);
+            texturePlaceholder[i].pixels
+
         }
         /*glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder.width,
                      texturePlaceholder.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
@@ -142,7 +152,6 @@ void CRender::Display() {
 
         }
 
-
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glBindTexture(GL_TEXTURE_2D, textures[0]);
@@ -152,38 +161,29 @@ void CRender::Display() {
 
         glBegin(GL_QUADS);
         if(row==0) {
-            glColor3d(1, 0, 0);
             glTexCoord2f(0, 0);
             glVertex3f(-1 + (cell * 0.5), -1 + 0.5, -8);
 
-            glTexCoord2f(0, 1);
             glColor3d(1, 1, 0);
             glVertex3f(-1 + (cell * 0.5), -1, -8);
 
-            glTexCoord2f(1, 1);
             glColor3d(1, 1, 1);
             glVertex3f(-1 + 0.5 + (cell * 0.5), -1, -8);
 
-            glTexCoord2f(1, 0);
             glColor3d(0, 1, 1);
             glVertex3f(-1 + 0.5 + (cell * 0.5), -1 + 0.5, -8);
         }
         else
         {
-
-            glColor3d(1, 0, 0);
             glTexCoord2f(0, 0);
             glVertex3f(0.5, 1-(0.5*cell), -8);
 
-            glTexCoord2f(0, 1);
             glColor3d(1, 1, 0);
             glVertex3f(0.5, 0.5-(0.5*cell), -8);
 
-            glTexCoord2f(1, 1);
             glColor3d(1, 1, 1);
             glVertex3f(1, 0.5-(0.5*cell), -8);
 
-            glTexCoord2f(1, 0);
             glColor3d(0, 1, 1);
             glVertex3f(1, 1-(0.5*cell), -8);
         }
