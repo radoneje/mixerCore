@@ -136,14 +136,17 @@ void CRender::Display(){
 
     for(int i=0; i<texturePlaceholder.size();i++) {
 
-        std::cout<<  i<<"--<i<<---glActiveTexture\t" <<std::endl;
+        std::cout<<  i<<"--<0<<---glActiveTexture\t" <<std::endl;
         glActiveTexture(GL_TEXTURE0 + i);
+        std::cout<<  i<<"--<1<<---glActiveTexture\t" <<std::endl;
        // glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures[i]);
       //  glBindTexture(GL_TEXTURE_2D, 1);
+        std::cout<<  i<<"--<2<<---glActiveTexture\t" <<std::endl;
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
                      texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      texturePlaceholder[i].pixels);
+        std::cout<<  i<<"--<3<<---glActiveTexture\t" <<std::endl;
         glClearColor(0.0, 0.0, 1.0, 0.0);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
