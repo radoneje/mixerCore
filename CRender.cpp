@@ -32,7 +32,7 @@ CTextureData  CRender::textureData2;
 //sImage CRender::texturePlaceholder;
 std::vector<sImage> CRender::texturePlaceholder;
 std::vector<std::vector<float>>  CRender::texturePosition(MAX_FACES, std::vector<float>(2));
-GLuint CRender::textures[MAX_FACES];
+GLuint CRender::textures[MAX_FACES+1];
 sImage CRender::backgroundImage;
 //GLuint CRender::textures;
 
