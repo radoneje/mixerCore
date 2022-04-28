@@ -96,8 +96,8 @@ void CRender::ReadPPMImage2( const char* fileName, sImage *image) {
 void CRender::Reshape(int width, int height){
 
     std::cout << "reshape" << width << " " << height << std::endl;
-    float fMinX = -5.0, fMinY = -5.0, fNearZ = 1.0,
-            fMaxX = 5.0, fMaxY = 5.0, fFarZ = 10.0;
+    float fMinX = -1.0, fMinY = -1.0, fNearZ = 1.0,
+            fMaxX = 1.0, fMaxY = 1.0, fFarZ = 10.0;
 
     { ///prepare
         glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
