@@ -125,6 +125,13 @@ void CRender::Reshape(int width, int height){
 void CRender::Display(){
 
     glBindTexture(GL_TEXTURE_2D, 1);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+
+
+
     char buf[1024];
     snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
     ReadPPMImage2(buf, &texturePlaceholder);
