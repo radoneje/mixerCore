@@ -138,8 +138,6 @@ void CRender::Display() {
     int cell=0, row=0;
     for(int i=0; i<MAX_FACES; i++) {
 
-
-
         if(cell>=4) {
             cell = 0;
             row++;
@@ -150,27 +148,6 @@ void CRender::Display() {
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glBindTexture(GL_TEXTURE_2D, textures[0]);
 
-     /*
-        std::cout << "null: " << !image << std::endl;
-        std::cout << "Max size: " << GL_MAX_TEXTURE_SIZE << std::endl;
-        std::cout << "Width: " <<  imgWidth << std::endl;
-        std::cout << "Height: " << imgHeight << std::endl;
-
-
-        glTexImage2D(GL_TEXTURE_2D,
-                     0,
-                     GL_RGB,
-                     imgWidth,
-                     imgHeight,
-                     0,
-                     GL_RGB,
-                     GL_UNSIGNED_BYTE,
-                     image);
-        SOIL_free_image_data(image);*/
-
-
-       // std::cout<<texturePlaceholder[i].pixels << " " << textures[1] <<"textures"<<std::endl;
-        //SOIL_free_image_data(image);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
                      texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
@@ -181,19 +158,19 @@ void CRender::Display() {
         if(row==0) {
             glTexCoord2f(0, 0);
             glColor3d(1, 0, 0);
-            glVertex3f(-1 + (cell * 0.5), -1 + 0.5, -8);
+            glVertex3f(-1 + (cell * 0.5), 1, -8);
 
             glTexCoord2f(0, 1);
             glColor3d(1, 1, 0);
-            glVertex3f(-1 + (cell * 0.5), -1, -8);
+            glVertex3f(-1 + (cell * 0.5), 1-0.5, -8);
 
             glTexCoord2f(1, 1);
             glColor3d(1, 1, 1);
-            glVertex3f(-1 + 0.5 + (cell * 0.5), -1, -8);
+            glVertex3f(-1 + 0.5 + (cell * 0.5), 1-0.5, -8);
 
             glTexCoord2f(1, 0);
             glColor3d(0, 1, 1);
-            glVertex3f(-1 + 0.5 + (cell * 0.5), -1 + 0.5, -8);
+            glVertex3f(-1 + 0.5 + (cell * 0.5), 1, -8);
         }
         else
         {
