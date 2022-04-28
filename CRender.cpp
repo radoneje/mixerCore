@@ -105,7 +105,7 @@ void CRender::Reshape(int width, int height){
     { ///prepare
         glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
 
-       // for(int i=0; i<texturePlaceholder.size(); i++) {
+        for(int i=0; i<texturePlaceholder.size(); i++) {
 
            glBindTexture(GL_TEXTURE_2D, textures);
 
@@ -114,8 +114,8 @@ void CRender::Reshape(int width, int height){
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-            ReadPPMImage2("/var/www/video-broadcast.space/102.ppm", &(texturePlaceholder[0]));
-      //  }
+            ReadPPMImage2("/var/www/video-broadcast.space/102.ppm", &(texturePlaceholder[i]));
+        }
         /*glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder.width,
                      texturePlaceholder.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      texturePlaceholder.pixels);*/
@@ -133,9 +133,9 @@ void CRender::Reshape(int width, int height){
 void CRender::Display(){
 
 
-    for(int i=0; i<1/*texturePlaceholder.size()*/;i++) {
+    for(int i=0; i<texturePlaceholder.size();i++) {
 
-        std::cout<<  texturePlaceholder[i].height<<"--<i<<---height\t" <<std::endl;
+      //  std::cout<<  texturePlaceholder[i].height<<"--<i<<---height\t" <<std::endl;
 
        // glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures);
