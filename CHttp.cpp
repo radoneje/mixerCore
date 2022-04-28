@@ -17,9 +17,9 @@ CHttp::CHttp(){
 
 };
 void CHttp::init(int port){
-    std::cout<< "http CHttp"<<std::endl;
+    std::cout<< "http CHttp: "<< port <<std::endl;
     httplib::Server svr;
-    svr.Get("/cmd", [](const httplib::Request &req, httplib::Response &res) {
+    svr.Get("/mixer", [](const httplib::Request &req, httplib::Response &res) {
         res.set_content("Hello World!", "text/plain");
     });
 
