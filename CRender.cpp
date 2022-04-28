@@ -31,7 +31,7 @@ CTextureData  CRender::textureData2;
 //sImage CRender::texturePlaceholder;
 std::vector<sImage> CRender::texturePlaceholder;
 std::vector<std::vector<float>>  CRender::texturePosition(MAX_FACES, std::vector<float>(2));
-GLuint CRender::textures;//[MAX_FACES];
+GLuint CRender::textures[MAX_FACES];
 
 void CRender::ReadPPMImage2( const char* fileName, sImage *image) {
 
@@ -164,6 +164,8 @@ void CRender::Display(){
 }
     void CRender::StartRender(int argc, char **argv){
 
+        glGenTextures(MAX_FACES, textures);
+
         for(int i=0; i<MAX_FACES; i++) {
 
             sImage item;
@@ -220,7 +222,7 @@ void CRender::Display(){
         glClearColor(0.0, 0.0, 0.0, 0.0);
         glEnable(GL_DEPTH_TEST);
 
-        glGenTextures(MAX_FACES, &textures);
+
 
 
 
