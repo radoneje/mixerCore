@@ -141,8 +141,9 @@ void CRender::Display(){
                      texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      texturePlaceholder[i].pixels);
         glClearColor(0.0, 0.0, 1.0, 0.0);
-        continue;
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        continue;
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glBindTexture(GL_TEXTURE_2D, textures);
