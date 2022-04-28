@@ -24,7 +24,6 @@
 ///
 #include <GL/glut.h>
 
-  CTextureData * CRender::textureData[MAX_FACES];
 CTextureData  CRender::textureData2;
 
 
@@ -103,7 +102,7 @@ void CRender::Reshape(int width, int height){
     { ///prepare
         glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
 
-        for(int i=0; i<MAX_FACES; i++) {
+        for(int i=0; i<texturePlaceholder.size(); i++) {
             glBindTexture(GL_TEXTURE_2D, i+1);
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
