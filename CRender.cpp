@@ -168,7 +168,7 @@ void CRender::Display(){
     void CRender::StartRender(int argc, char **argv){
 
      //   glGenTextures(MAX_FACES, textures);
-        std::cout<<textures[0]<<"\t"<<textures[1] <<"<--glGenTextures[i]"<<std::endl;
+        //std::cout<<textures[0]<<"\t"<<textures[1] <<"<--glGenTextures[i]"<<std::endl;
 
         for(int i=0; i<MAX_FACES; i++) {
 
@@ -223,8 +223,14 @@ void CRender::Display(){
         glutInitWindowSize(1280, 720);
         glutCreateWindow("OpenGL - Rotating Cubes");
 
+        {
+            GLuint textures;
+            glGenTextures(1, &textures);
+        }
+
         glClearColor(0.0, 0.0, 0.0, 0.0);
         glEnable(GL_DEPTH_TEST);
+
 
 
 
