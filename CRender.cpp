@@ -105,7 +105,7 @@ void CRender::Reshape(int width, int height){
         glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
 
         for(int i=0; i<texturePlaceholder.size(); i++) {
-            glActiveTexture(GL_TEXTURE0);
+          //  glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, 1);
             std::cout<<textures[i]<< "<--textures[i]"<<std::endl;
 
