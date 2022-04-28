@@ -132,6 +132,7 @@ void CRender::Reshape(int width, int height){
 }
 void CRender::Display(){
 
+
     for(int i=0; i<texturePlaceholder.size();i++) {
        // glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures);
@@ -140,6 +141,7 @@ void CRender::Display(){
                      texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      texturePlaceholder[i].pixels);
         glClearColor(0.0, 0.0, 1.0, 0.0);
+        continue;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
