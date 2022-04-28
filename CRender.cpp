@@ -162,7 +162,7 @@ void CRender::Display(){
                      texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      texturePlaceholder[i].pixels);
         std::cout<<  i<<"--<3<<---glActiveTexture\t" <<std::endl;
-        glClearColor(0.0, 0.0, 1.0, 0.0);
+
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -256,7 +256,7 @@ void CRender::Display(){
 
 
         }
-
+        glClearColor(0.0, 0.0, 1.0, 0.0);
         glutDisplayFunc(Display);
         glutReshapeFunc(Reshape);
         glutIdleFunc(Display);     // used in animation
