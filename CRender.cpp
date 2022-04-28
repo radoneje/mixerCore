@@ -115,17 +115,13 @@ void CRender::Reshape(int width, int height){
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-// ReadPPMImage2
-           // ReadPPMImage2("/var/www/video-broadcast.space/102.ppm", &(texturePlaceholder[i]));
 
-
-            //unsigned char *image =
             texturePlaceholder[i].pixels=SOIL_load_image("/etc/mixerCore/images/notconnected4.png",
                                                    &texturePlaceholder[i].width,
                                                    &texturePlaceholder[i].height,
                                                    0,
                                                    SOIL_LOAD_RGB);
-            texturePlaceholder[i].pixels
+
 
         }
         /*glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder.width,
