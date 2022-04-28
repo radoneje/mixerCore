@@ -46,7 +46,7 @@ private:
     static  CTextureData * textureData[MAX_FACES];
 
     static  CTextureData textureData2;
-    static void ReadPPMImage2 (  const char * fileName  );
+    static void ReadPPMImage2 (  const char * fileName, sImage *image  );
     static  sImage texturePlaceholder;
 
    //static std::vector<CTextureData> textureImage;

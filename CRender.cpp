@@ -31,7 +31,7 @@ CTextureData  CRender::textureData2;
 
 sImage CRender::texturePlaceholder;
 
-void CRender::ReadPPMImage2( const char* fileName) {
+void CRender::ReadPPMImage2( const char* fileName, sImage *image) {
 
     int tmpint;
     char str[100];
@@ -195,7 +195,7 @@ void CRender::Display(){
 
         char buf[1024];
         snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
-        ReadPPMImage2(buf);
+        ReadPPMImage2(buf, &texturePlaceholder);
 
 
 
