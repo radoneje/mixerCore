@@ -19,8 +19,10 @@ CHttp::CHttp(){
 void CHttp::init(int port){
     std::cout<< "http CHttp: "<< port <<std::endl;
     httplib::Server svr;
-    svr.Get("/mixer/activeInput", [](const httplib::Request &req, httplib::Response &res) {
-        res.set_content("Hello World!", "text/plain");
+    svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {
+       // res.set_content("Hello World!", "text/plain");
+        auto numbers = req.matches[1];
+        res.set_content(numbers, "text/plain");
     });
 
     svr.listen("0.0.0.0", port);
