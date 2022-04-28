@@ -160,7 +160,11 @@ void CRender::Display(){
         glEnd();
         //glDisable(GL_TEXTURE_2D);
 
-
+        auto item=texturePlaceholder[i];
+        std::cout<<  item.xLeft<<"\t" << item.yTop<<std::endl;
+        std::cout<<  item.xLeft<<"\t" << item.yBottom<<std::endl;
+        std::cout<<  item.xRight<<"\t" << item.yBottom<<std::endl;
+        std::cout<<  item.xRight<<"\t" << item.yTop<<std::endl;
     }
     glutSwapBuffers();
     //glFlush();
@@ -186,10 +190,7 @@ void CRender::Display(){
 
 
             texturePlaceholder.push_back(item);
-            std::cout<<  item.xLeft<<"\t" << item.yTop<<std::endl;
-            std::cout<<  item.xLeft<<"\t" << item.yBottom<<std::endl;
-            std::cout<<  item.xRight<<"\t" << item.yBottom<<std::endl;
-            std::cout<<  item.xRight<<"\t" << item.yTop<<std::endl;
+
 
            // CTextureData tmpData;
            // textureData[i]=&tmpData;
