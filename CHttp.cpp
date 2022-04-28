@@ -23,7 +23,7 @@ void CHttp::init(int port, Ccmd *pCmd){
        // res.set_content("Hello World!", "text/plain");
         std::string value = req.matches[1];
         {
-            std::cout<<"activeInput: "<< value <<std::endl;
+
             std::lock_guard<std::mutex> lockGuard(pCmd->locker);
             bool find=false;
             for(int i=0; i<pCmd->activeTextureId.size();i++){
@@ -31,8 +31,9 @@ void CHttp::init(int port, Ccmd *pCmd){
                     find=true;
             }
             pCmd->activeTextureId.clear();
+            std::cout<<"activeInput: "<< value << find << std::endl;
             if(!find);
-            pCmd->activeTextureId.push_back(std::stoi(value));
+                pCmd->activeTextureId.push_back(std::stoi(value));
         }
 
         res.set_content(value, "text/plain");
