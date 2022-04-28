@@ -142,7 +142,7 @@ void CRender::Display(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-      //  glBindTexture(GL_TEXTURE_2D, 1);
+        glBindTexture(GL_TEXTURE_2D, 1);
 
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0);
@@ -222,7 +222,7 @@ void CRender::Display(){
         glEnable(GL_DEPTH_TEST);
 
 
-
+        glGenTextures(1, &textures);
 
 
         char buf[1024];
