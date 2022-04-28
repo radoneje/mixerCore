@@ -310,7 +310,7 @@ void CRender::Display() {
         std::cout <<  std::stoi(sWinH.c_str()) << " <<-window name "<< '\n';
 
         glutInit(&argc, argv);
-        glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+        glutInitDisplayMode(/*GLUT_DOUBLE*/GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
         glutInitWindowPosition(-1, -1);
         glutInitWindowSize(1280, 720);
         glutCreateWindow("OpenGL - Rotating Cubes");
