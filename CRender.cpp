@@ -168,8 +168,11 @@ void CRender::Display(){
             item.xLeft = -1.0f + (j * 0.5);// + (i*0.25);
             item.xRight = -1.0f + (j * 0.5) + 0.5;//+ (i*0.25)+0.25;
 
-            item.yTop = 1.0f * 0.25;
-            item.yBottom = -1.0f * 0.25;
+            int row=0;
+            if(i>4)
+                row=1;
+            item.yTop = 1.0f - (row * 0.25);
+            item.yBottom =1.0f - (row * 0.25) - 0.25;
 
 
             texturePlaceholder.push_back(item);
