@@ -5,14 +5,16 @@
 #ifndef MIXERCORE_CCMD_H
 #define MIXERCORE_CCMD_H
 #include <vector>
+#include <mutex>
 
 
 class Ccmd {
 
     public:
-    Ccmd();
+        Ccmd();
         std::vector<int> activeTextureId;
-
+        std::mutex locker;
+        std::lock_guard<std::mutex> guard(locker);
 };
 
 
