@@ -175,6 +175,20 @@ void CRender::Display(){
     std::cout << "Height: " << imgHeight << std::endl;
    // std::cout << "Obj: " << m_texture << std::endl;
 
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    glBindTexture(GL_TEXTURE_2D, textures[1]);
+    glTexImage2D(GL_TEXTURE_2D,
+                 0,
+                 GL_RGB,
+                 imgWidth,
+                 imgHeight,
+                 0,
+                 GL_RGB,
+                 GL_UNSIGNED_BYTE,
+                 image);
+
+
     glBegin(GL_QUADS);
         glColor3d(1,0,0);
         glVertex3f(0,0,-8);
