@@ -148,7 +148,7 @@ void CRender::Display() {
         glBindTexture(GL_TEXTURE_2D, textures[0]);
 
         int imgWidth, imgHeight;
-        unsigned char *image =SOIL_load_image("/etc/mixerCore/images/1.jpg",
+        unsigned char *image =SOIL_load_image("/var/www/video-broadcast.space/2.jpg",
                                                      &imgWidth,
                                                      &imgHeight,
                                                      0,
