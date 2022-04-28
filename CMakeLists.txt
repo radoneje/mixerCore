@@ -11,6 +11,8 @@ find_library(AVFORMAT_LIBRARY avformat)
 find_library(AVUTIL_LIBRARY avutil)
 find_library(SWSCALE_LIBRARIES swscale)
 find_library(GLUT_LIBRARIES glut)
+find_library(SOIL_LIBRARIES SOIL)
+
 
 
 
@@ -35,6 +37,7 @@ set(ALL_LIBS
         ${SWSCALE_LIBRARIES}
         ${GLUT_LIBRARIES}
         ${CONFIG_LIBRARIES}
+        ${SOIL_LIBRARIES}
 
         glfw
         GLEW_1130
