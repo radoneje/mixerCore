@@ -136,11 +136,9 @@ void CRender::Display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     int cell=0, row=0;
     for(int i=0; i<MAX_FACES; i++) {
-        std::cout<< cell <<" cell row"<<std::endl;
         if(cell>=4) {
             cell = 0;
             row++;
-
         }
 
 
