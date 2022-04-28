@@ -168,20 +168,21 @@ void CRender::Display(){
             glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yTop, -8);
         glEnd();
         glDisable(GL_TEXTURE_2D);
-        glBegin(GL_QUADS);
-        glColor3d(1,0,0);
-        glVertex3f(-1,-1,-10);
-        glColor3d(1,1,0);
-        glVertex3f(1,-1,-10);
-        glColor3d(1,1,1);
-        glVertex3f(1,1,-10);
-        glColor3d(0,1,1);
-        glVertex3f(-1,1,-10);
-        glEnd();
+
 
 
 
     }
+    glBegin(GL_QUADS);
+    glColor3d(1,0,0);
+    glVertex3f(-1,-1,-10);
+    glColor3d(1,1,0);
+    glVertex3f(1,-1,-10);
+    glColor3d(1,1,1);
+    glVertex3f(1,1,-10);
+    glColor3d(0,1,1);
+    glVertex3f(-1,1,-10);
+    glEnd();
     glutSwapBuffers();
     glFlush();
 
