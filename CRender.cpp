@@ -116,7 +116,7 @@ void CRender::Reshape(int width, int height){
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-            texturePlaceholder[i].pixels=SOIL_load_image("/etc/mixerCore/images/1.png",
+            texturePlaceholder[i].pixels=SOIL_load_image("/etc/mixerCore/images/1.jpg",
                                                    &texturePlaceholder[i].width,
                                                    &texturePlaceholder[i].height,
                                                    0,
