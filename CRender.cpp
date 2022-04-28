@@ -136,13 +136,13 @@ void CRender::Display(){
 
     glBegin(GL_QUADS);
     glColor3d(1,0,0);
-    glVertex3f(-1,-1,-10);
+    glVertex3f(-1,-1,-8);
     glColor3d(1,1,0);
-    glVertex3f(1,-1,-10);
+    glVertex3f(1,-1,-8);
     glColor3d(1,1,1);
-    glVertex3f(1,1,-10);
+    glVertex3f(1,1,-8);
     glColor3d(0,1,1);
-    glVertex3f(-1,1,-10);
+    glVertex3f(-1,1,-8);
     glEnd();
     glutSwapBuffers();
     return;
