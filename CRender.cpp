@@ -31,8 +31,8 @@ CTextureData  CRender::textureData2;
 //sImage CRender::texturePlaceholder;
 std::vector<sImage> CRender::texturePlaceholder;
 std::vector<std::vector<float>>  CRender::texturePosition(MAX_FACES, std::vector<float>(2));
-//GLuint CRender::textures[MAX_FACES];
-GLuint CRender::textures;
+GLuint CRender::textures[MAX_FACES];
+//GLuint CRender::textures;
 
 void CRender::ReadPPMImage2( const char* fileName, sImage *image) {
 
@@ -108,7 +108,7 @@ void CRender::Reshape(int width, int height){
         for(int i=0; i<texturePlaceholder.size(); i++) {
 
            // glActiveTexture(GL_TEXTURE0);
-           glBindTexture(GL_TEXTURE_2D, textures);
+           glBindTexture(GL_TEXTURE_2D, textures[i]);
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -139,7 +139,7 @@ void CRender::Display(){
       //  std::cout<<  texturePlaceholder[i].height<<"--<i<<---height\t" <<std::endl;
 
        // glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, textures);
+        glBindTexture(GL_TEXTURE_2D, textures[i]);
       //  glBindTexture(GL_TEXTURE_2D, 1);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
                      texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
@@ -150,7 +150,7 @@ void CRender::Display(){
 
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-        glBindTexture(GL_TEXTURE_2D, textures);
+        glBindTexture(GL_TEXTURE_2D, textures[i]);
 
         glBegin(GL_QUADS);
             glTexCoord2f(0, 0);
@@ -227,14 +227,12 @@ void CRender::Display(){
             glEnable(GL_DEPTH_TEST);
 
 
-            glGenTextures(2, &textures);
+            glGenTextures(MAX_FACES, textures);
             {
-                GLuint tmp[10];
-                glGenTextures(10, tmp);
-                std::cout<<tmp[0] << " " << tmp[1] <<"textures"<<std::endl;
+
+                std::cout<<textures[0] << " " << textures[1] <<"textures"<<std::endl;
             }
 
-            std::cout<<textures<<"textures"<<std::endl;
 
         }
 

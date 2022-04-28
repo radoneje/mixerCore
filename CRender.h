@@ -52,6 +52,7 @@ private:
         int height;
         int numChannels;
     };*/
+
     static void Reshape(int width, int height);
     static void  Display();
     static const int MAX_FACES=1;
