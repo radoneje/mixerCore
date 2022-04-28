@@ -143,7 +143,7 @@ void CRender::Display(){
         glClearColor(0.0, 0.0, 1.0, 0.0);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        continue;
+
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glBindTexture(GL_TEXTURE_2D, textures);
@@ -221,18 +221,14 @@ void CRender::Display(){
         glutInitWindowPosition(-1, -1);
         glutInitWindowSize(1280, 720);
         glutCreateWindow("OpenGL - Rotating Cubes");
-
-        glClearColor(0.0, 0.0, 0.0, 0.0);
-        glEnable(GL_DEPTH_TEST);
-
-
-        glGenTextures(1, &textures);
-
-        std::cout<< textures <<"<--textures"<<std::endl;
+        {
+            glClearColor(0.0, 0.0, 0.0, 0.0);
+            glEnable(GL_DEPTH_TEST);
 
 
-        char buf[1024];
-        snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
+            glGenTextures(1, &textures);
+
+        }
 
         glutDisplayFunc(Display);
         glutReshapeFunc(Reshape);
