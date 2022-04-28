@@ -151,6 +151,8 @@ void CRender::Display(){
         glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yBottom, -8);
         glEnd();
         glDisable(GL_TEXTURE_2D);
+
+        std::cout<<  texturePlaceholder[i].xLeft<<"\t" << texturePlaceholder[i].yTop<<std::endl;
     }
     glutSwapBuffers();
     glFlush();
