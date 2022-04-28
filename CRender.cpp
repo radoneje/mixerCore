@@ -140,6 +140,7 @@ void CRender::Display() {
         if(cell>=4) {
             cell = 0;
             row++;
+            std::cout<<"news row"<<std::endl;
         }
        // std::cout<<cell<<std::endl;
 
