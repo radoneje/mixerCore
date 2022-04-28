@@ -31,7 +31,7 @@ CTextureData  CRender::textureData2;
 //sImage CRender::texturePlaceholder;
 std::vector<sImage> CRender::texturePlaceholder;
 std::vector<std::vector<float>>  CRender::texturePosition(MAX_FACES, std::vector<float>(2));
-//GLuint CRender::textures[MAX_FACES];
+GLuint CRender::textures[MAX_FACES];
 
 void CRender::ReadPPMImage2( const char* fileName, sImage *image) {
 
@@ -105,10 +105,8 @@ void CRender::Reshape(int width, int height){
         glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
 
         for(int i=0; i<texturePlaceholder.size(); i++) {
-          //  glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, 1);
-         //   std::cout<<textures[i]<< "<--textures[i]"<<std::endl;
-
+           // glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, textures);
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -133,11 +131,10 @@ void CRender::Reshape(int width, int height){
 }
 void CRender::Display(){
 
-
     for(int i=0; i<texturePlaceholder.size();i++) {
-        //glActiveTexture(GL_TEXTURE0);
-       // glBindTexture(GL_TEXTURE_2D, 1);
-        glBindTexture(GL_TEXTURE_2D, 1);
+       // glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, textures);
+        glBindTexture(GL_TEXTURE_2D, i+1);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
                      texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      texturePlaceholder[i].pixels);
@@ -145,7 +142,7 @@ void CRender::Display(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-      //  glBindTexture(GL_TEXTURE_2D, 1);
+        glBindTexture(GL_TEXTURE_2D, 1);
 
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0);
@@ -167,8 +164,6 @@ void CRender::Display(){
 }
     void CRender::StartRender(int argc, char **argv){
 
-     //   glGenTextures(MAX_FACES, textures);
-        //std::cout<<textures[0]<<"\t"<<textures[1] <<"<--glGenTextures[i]"<<std::endl;
 
         for(int i=0; i<MAX_FACES; i++) {
 
@@ -223,14 +218,8 @@ void CRender::Display(){
         glutInitWindowSize(1280, 720);
         glutCreateWindow("OpenGL - Rotating Cubes");
 
-        {
-
-            glGenTextures(1, &textures);
-        }
-
         glClearColor(0.0, 0.0, 0.0, 0.0);
         glEnable(GL_DEPTH_TEST);
-
 
 
 
