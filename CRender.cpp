@@ -29,7 +29,8 @@ CTextureData  CRender::textureData2;
 
 
 
-  Image CRender::image;
+sImage CRender::texturePlaceholder;
+
 void CRender::ReadPPMImage2( const char* fileName) {
 
     int tmpint;
@@ -74,7 +75,7 @@ void CRender::ReadPPMImage2( const char* fileName) {
         exit (1);
     }
     else
-        printf("Reading image %s of size %dx%d\n", fn, image.width, image.height);
+        printf("Reading image %s of size %dx%d\n", fileName, image.width, image.height);
 
 
     fread (image.pixels, sizeof (unsigned char), image.numChannels * image.width * image.height, inFile);
@@ -127,9 +128,9 @@ void CRender::Display(){
     char buf[1024];
     snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
     ReadPPMImage2(buf);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width,
-                 image.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 image.pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder.width,
+                 texturePlaceholder.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 texturePlaceholder.pixels);
     glClearColor(0.0, 0.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_TEXTURE_2D);

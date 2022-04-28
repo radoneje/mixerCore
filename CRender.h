@@ -23,7 +23,7 @@ public:
     };
 
 };*/
-struct Image
+struct sImage
 {
     unsigned char* pixels;
     int width;
@@ -47,7 +47,7 @@ private:
 
     static  CTextureData textureData2;
     static void ReadPPMImage2 (  const char * fileName  );
-    static  Image image;
+    static  sImage texturePlaceholder;
 
    //static std::vector<CTextureData> textureImage;
 
