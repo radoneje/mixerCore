@@ -104,7 +104,8 @@ void CRender::Reshape(int width, int height){
         glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
 
         for(int i=0; i<texturePlaceholder.size(); i++) {
-            glBindTexture(GL_TEXTURE_2D, i+1);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, textures[i]);
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -130,6 +131,8 @@ void CRender::Reshape(int width, int height){
 void CRender::Display(){
 
     for(int i=0; i<texturePlaceholder.size();i++) {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, textures[i]);
         glBindTexture(GL_TEXTURE_2D, i+1);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
                      texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
@@ -150,7 +153,7 @@ void CRender::Display(){
         glTexCoord2f(1, 0);
         glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yTop, -8);
         glEnd();
-        glDisable(GL_TEXTURE_2D);
+     //   glDisable(GL_TEXTURE_2D);
 
 
     }
@@ -215,10 +218,8 @@ void CRender::Display(){
         glClearColor(0.0, 0.0, 0.0, 0.0);
         glEnable(GL_DEPTH_TEST);
 
-        for(int i=0; i<MAX_FACES; i++) {
-            GLuint t=i+1;
-            glGenTextures(i+1, &t);
-        }
+        glGenTextures(MAX_FACES, textures);
+
 
 
         char buf[1024];

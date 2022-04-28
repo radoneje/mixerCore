@@ -48,7 +48,7 @@ private:
     static void  Display();
     static const int MAX_FACES=4;
 
-
+    static GLuint textures[MAX_FACES];
     static  CTextureData textureData2;
     static void ReadPPMImage2 (  const char * fileName, sImage *image  );
     static  std::vector<sImage> texturePlaceholder;
