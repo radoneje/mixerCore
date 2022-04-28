@@ -9,6 +9,7 @@
 
 #include "CRender.h"
 #include "CHttp.h"
+#include "Ccmd.h"
 
 // Include GLEW
 #include <GL/glew.h>
@@ -26,14 +27,11 @@ CRender render;
 
 int main(int argc, char* argv[]) {
 
-    std::thread httpThread(httpServer.init,8090);
-
-    std::thread renderThread(render.StartRender, argc,  argv);
+    Ccmd cmd;
+    std::thread httpThread(httpServer.init,8090, &cmd);
+    std::thread renderThread(render.StartRender, argc,  argv, &cmd);
     std::cout << "Hello, World!" << std::endl;
     renderThread.join();
-
-
-
     std::cin.get();
     return 0;
 }
