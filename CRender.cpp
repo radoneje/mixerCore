@@ -157,7 +157,7 @@ void CRender::Display() {
         std::cout << "Max size: " << GL_MAX_TEXTURE_SIZE << std::endl;
         std::cout << "Width: " <<  imgWidth << std::endl;
         std::cout << "Height: " << imgHeight << std::endl;
-        std::cout << "Obj: " << m_texture << std::endl;
+
 
         glTexImage2D(GL_TEXTURE_2D,
                      0,
