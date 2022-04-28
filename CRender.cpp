@@ -133,9 +133,14 @@ void CRender::Reshape(int width, int height){
 }
 void CRender::Display(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     glEnable(GL_TEXTURE_2D);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
     glBindTexture(GL_TEXTURE_2D, textures[0]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[0].width,
+                 texturePlaceholder[0].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 texturePlaceholder[0].pixels);
+
     glBegin(GL_QUADS);
         glColor3d(1,0,0);
          glTexCoord2f(0, 0);
