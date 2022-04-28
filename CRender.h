@@ -6,6 +6,13 @@
 #define MIXERCORE_CRENDER_H
 
 #include <vector>
+// Include GLEW
+#include <GL/glew.h>
+
+// Include GLFW
+#include <GLFW/glfw3.h>
+
+///
 #include <GL/glut.h>
 #include "CTextureData.h"
 
