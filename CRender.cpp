@@ -144,7 +144,7 @@ void CRender::Display(){
     glBegin(GL_QUADS);
         glColor3d(1,0,0);
          glTexCoord2f(0, 0);
-            glVertex3f(-0.3,-0.3,-8);
+         glVertex3f(-0.3,-0.3,-8);
 
         glTexCoord2f(0, 1);
         glColor3d(1,1,0);
@@ -158,6 +158,7 @@ void CRender::Display(){
         glColor3d(0,1,1);
         glVertex3f(-0.3,0,-8);
     glEnd();
+    glDisable(GL_TEXTURE_2D);
 
     glBegin(GL_QUADS);
         glColor3d(1,0,0);
