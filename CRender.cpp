@@ -155,7 +155,7 @@ void CRender::Display(){
         glTexCoord2f(1, 0);
         glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yTop, -8);
         glEnd();
-     //   glDisable(GL_TEXTURE_2D);
+        glDisable(GL_TEXTURE_2D);
 
 
     }
