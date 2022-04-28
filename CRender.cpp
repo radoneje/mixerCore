@@ -153,19 +153,19 @@ void CRender::Display() {
         if(row==0) {
             glColor3d(1, 0, 0);
             glTexCoord2f(0, 0);
-            glVertex3f(-1 + (cell * 0.5), -1 + 0.5, -8);
+            glVertex3f(-1, 0 + 0.5, -8);
 
             glTexCoord2f(0, 1);
             glColor3d(1, 1, 0);
-            glVertex3f(-1 + (cell * 0.5), -1, -8);
+            glVertex3f(-1 , -1, -8);
 
             glTexCoord2f(1, 1);
             glColor3d(1, 1, 1);
-            glVertex3f(-1 + 0.5 + (cell * 0.5), -1, -8);
+            glVertex3f(1 , 0, -8);
 
             glTexCoord2f(1, 0);
             glColor3d(0, 1, 1);
-            glVertex3f(-1 + 0.5 + (cell * 0.5), -1 + 0.5, -8);
+            glVertex3f(1, 1, -8);
         }
         else
         {
