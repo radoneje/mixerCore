@@ -24,7 +24,7 @@ void CHttp::init(int port, Ccmd *pCmd){
         std::string value = req.matches[1];
         {
 
-           // std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+            std::lock_guard<std::mutex> lockGuard(pCmd->locker);
            // pCmd->locker.lock();
             bool find=false;
             for(int i=0; i<pCmd->activeTextureId.size();i++){

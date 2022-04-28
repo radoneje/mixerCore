@@ -226,7 +226,7 @@ void CRender::Display() {
 
     /// make active input
     {
-       // std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+        std::lock_guard<std::mutex> lockGuard(pCmd->locker);
        // pCmd->locker.lock();
         if (pCmd->activeTextureId.size() == 1) {
            // std::cout << "render active cmd " << pCmd->activeTextureId[0] << " "
