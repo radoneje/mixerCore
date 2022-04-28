@@ -228,6 +228,12 @@ void CRender::Display(){
 
 
             glGenTextures(2, &textures);
+            {
+                GLuint tmp;
+                glGenTextures(10, tmp);
+                std::cout<<tmp[0] << " " << tmp[1] <<"textures"<<std::endl;
+            }
+
             std::cout<<textures<<"textures"<<std::endl;
 
         }
