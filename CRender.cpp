@@ -142,13 +142,13 @@ void CRender::Display(){
 
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0);
-        glVertex3f(-1, 1, -8);
+        glVertex3f(texturePlaceholder[i].xLeft, texturePlaceholder[i].yTop, -8);
         glTexCoord2f(0, 1);
-        glVertex3f(-1, -1, -8);
+        glVertex3f(texturePlaceholder[i].xLeft, texturePlaceholder[i].yBottom, -8);
         glTexCoord2f(1, 1);
-        glVertex3f(1, -1, -8);
+        glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yBottom, -8);
         glTexCoord2f(1, 0);
-        glVertex3f(1, 1, -8);
+        glVertex3f(texturePlaceholder[i].xRight, texturePlaceholder[i].yBottom, -8);
         glEnd();
         glDisable(GL_TEXTURE_2D);
     }
@@ -160,10 +160,14 @@ void CRender::Display(){
 
         for(int i=0; i<MAX_FACES; i++) {
             sImage item;
+            item.xRight=1.0f;
+            item.yTop=1.0f;
+            item.xLeft=-1.0f;
+            item.yBottom=-1.0f;
+
             texturePlaceholder.push_back(item);
 
-            texturePosition[i][0]=1.0f;
-            texturePosition[i][1]=1.0f;
+
            // CTextureData tmpData;
            // textureData[i]=&tmpData;
         }

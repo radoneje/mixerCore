@@ -29,6 +29,10 @@ struct sImage
     int width;
     int height;
     int numChannels;
+    float xRight;
+    float yTop;
+    float xLeft;
+    float yBottom;
 };
 
 class CRender {
