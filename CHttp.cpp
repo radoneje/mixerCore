@@ -27,7 +27,7 @@ void CHttp::init(int port, Ccmd *pCmd){
             pCmd->activeTextureId.clear();
             pCmd->activeTextureId.push_back(std::stoi(value));
         }
-        res.set_content(numbers, "text/plain");
+        res.set_content(value, "text/plain");
     });
 
     svr.listen("0.0.0.0", port);
