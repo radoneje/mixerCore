@@ -161,7 +161,7 @@ void CRender::Display(){
         //glDisable(GL_TEXTURE_2D);
 
         auto item=texturePlaceholder[i];
-        std::cout<<  item.xLeft<<"\t" << item.yTop<<std::endl;
+        std::cout<<  texturePlaceholder[i].height<<"\t" << item.yTop<<std::endl;
         std::cout<<  item.xLeft<<"\t" << item.yBottom<<std::endl;
         std::cout<<  item.xRight<<"\t" << item.yBottom<<std::endl;
         std::cout<<  item.xRight<<"\t" << item.yTop<<std::endl;
