@@ -194,16 +194,17 @@ void CRender::Display(){
         glClearColor(0.0, 0.0, 0.0, 0.0);
         glEnable(GL_DEPTH_TEST);
 
-        GLuint t=1;
-        glGenTextures(1, &t);
+
+
+        for(int i=0; i<MAX_FACES; i++) {
+            GLuint t=i+1;
+            glGenTextures(i+1, &t);
+        }
+
 
         char buf[1024];
         snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
-     //   ReadPPMImage2(buf, &texturePlaceholder);
 
-
-
-        // register callbacks
         glutDisplayFunc(Display);
         glutReshapeFunc(Reshape);
         glutIdleFunc(Display);     // used in animation
