@@ -227,7 +227,7 @@ void CRender::Display(){
             glEnable(GL_DEPTH_TEST);
 
 
-            glGenTextures(1, &textures);
+            glGenTextures(2, &textures);
             std::cout<<textures<<"textures"<<std::endl;
 
         }
