@@ -336,7 +336,7 @@ void CRender::Display() {
             fileName.append(std::to_string(i+1));
             fileName.append(".png");
             std::cout<<fileName<<std::endl;
-            item.pixels =SOIL_load_image(fileName,
+            item.pixels =SOIL_load_image(fileName.c_str(),
                                                   &item.width,
                                                   &item.height,
                                                   0,
