@@ -110,9 +110,8 @@ void CRender::Reshape(int width, int height){
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-            char buf[1024];
-            snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/102.ppm");
-            ReadPPMImage2(buf, &texturePlaceholder);
+
+            ReadPPMImage2("/var/www/video-broadcast.space/102.ppm", &texturePlaceholder);
         }
         /*glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder.width,
                      texturePlaceholder.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
