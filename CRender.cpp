@@ -140,6 +140,7 @@ void CRender::Reshape(int width, int height){
     glLoadIdentity();
 }
 void CRender::Display() {
+void CRender::Idle() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     int cell=0, row=0;
     for(int i=0; i<MAX_FACES; i++) {
@@ -325,9 +326,9 @@ void CRender::Display() {
 
 
         glClearColor(0.0, 0.0, 1.0, 0.0);
-       // glutDisplayFunc(Display);
+        glutDisplayFunc(Display);
         glutReshapeFunc(Reshape);
-        glutIdleFunc(Display);     // used in animation
+        glutIdleFunc(Idle);     // used in animation
 
         // enter GLUT event processing cycle
         glutMainLoop();

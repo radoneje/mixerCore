@@ -48,6 +48,7 @@ class CRender {
 private:
     static void Reshape(int width, int height);
     static void  Display();
+    static void  Idle();
     static const int MAX_FACES=7;
    // static GLuint textures;
     static GLuint textures[MAX_FACES+1];
