@@ -230,7 +230,7 @@ void CRender::Idle() {
         std::lock_guard<std::mutex> lockGuard(pCmd->locker);
        // pCmd->locker.lock();
         if (pCmd->activeTextureId.size() == 1) {
-            std::cout << "render active cmd " << pCmd->activeTextureId[0] << " " << std::endl;
+           // std::cout << "render active cmd " << pCmd->activeTextureId[0] << " " << std::endl;
             glEnable(GL_TEXTURE_2D);
             glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
             glBindTexture(GL_TEXTURE_2D, textures[0]);
