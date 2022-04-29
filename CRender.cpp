@@ -325,9 +325,9 @@ void CRender::Display() {
 
 
         glClearColor(0.0, 0.0, 1.0, 0.0);
-        glutDisplayFunc(Display);
+       // glutDisplayFunc(Display);
         glutReshapeFunc(Reshape);
-      //  glutIdleFunc(Display);     // used in animation
+        glutIdleFunc(Display);     // used in animation
 
         // enter GLUT event processing cycle
         glutMainLoop();
