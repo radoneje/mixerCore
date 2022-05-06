@@ -287,9 +287,10 @@ void CRender::Idle() {
       //  pCmd->locker.unlock();
     glutSwapBuffers();
     glFlush();
-    auto ret = req.has_file("image");
-    const auto& file = req.get_file_value("image");
-    std::cout<< file.filename << " " << eventid << std::endl;
+
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
 }
     void CRender::StartRender(int argc, char **argv, Ccmd *pCmd){
 

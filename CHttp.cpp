@@ -21,7 +21,7 @@ void CHttp::init(int port, Ccmd *pCmd){
     std::cout<< "http CHttp: "<< port <<std::endl;
     httplib::Server svr;
     svr.Post(R"(/mixer/activatePresImg/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))",[&](const httplib::Request &req, httplib::Response &res){
-
+        auto start = std::chrono::system_clock::now();
         std::cout<< "/mixer/activatePresImg" << std::endl;
         const std::string eventid = req.matches[1];
         const std::string imageid = req.matches[2];
@@ -33,7 +33,9 @@ void CHttp::init(int port, Ccmd *pCmd){
             return ;
 
         }
-
+        auto ret = req.has_file("image");
+        const auto& file = req.get_file_value("image");
+        std::cout<< file.filename << " " << eventid << std::endl;
 
         std::ofstream myfile;
         std::string fileName("/tmp/pres"+eventid+".png");
@@ -44,9 +46,7 @@ void CHttp::init(int port, Ccmd *pCmd){
         std::string jsonResponce("{\"error\":false, \"presFileId\":\""+imageid+"\"}");
         res.set_content(jsonResponce, "application/json");
             pCmd->loadPresImage(fileName, imageid);
-        auto end = std::chrono::system_clock::now();
-        std::chrono::duration<double> elapsed_seconds = end-start;
-        std::cout << "elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
+
 
     });
     svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {
