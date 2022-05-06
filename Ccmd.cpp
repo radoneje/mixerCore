@@ -41,7 +41,7 @@ void Ccmd::clearPresImage(){
     try {
         free(PresImagePixels);
     }
-    catch{
+    catch(){
         std::cout<< "ERRRO FREE" <<std::endl;
 
     }
