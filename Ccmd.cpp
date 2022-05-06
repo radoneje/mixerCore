@@ -19,7 +19,7 @@ Ccmd::Ccmd(){
 };
 
 void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
- std::cout<<"loadPresImage "  <<filepath <<std::endl;
+ std::cout<<"loadPresImage "  <<filepath << " "<< simageid <<std::endl;
     imageid=simageid;
     clearPresImage();
     std::lock_guard<std::mutex> lockGuard(locker);
