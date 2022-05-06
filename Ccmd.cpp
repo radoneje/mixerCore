@@ -26,7 +26,7 @@ void Ccmd::loadPresImage(std::string filepath){
                                  &PresImageHeight,
                                  0,
                                  SOIL_LOAD_RGB);
-    std::remove(filepath);
+    std::remove(filepath.c_str());
 
 }
 void Ccmd::clearPresImage(){
