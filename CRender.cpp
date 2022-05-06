@@ -158,6 +158,7 @@ void CRender::Idle() {
 
         {
             std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+            std::cout<< "pCmd->FFreader[i].dt.width"<< pCmd->FFreader[i].dt.width<<std::endl;
             if (pCmd->FFreader[i].dt.width == 0) { // затычка
 
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
