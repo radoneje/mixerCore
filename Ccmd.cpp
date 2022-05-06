@@ -19,7 +19,6 @@ Ccmd::Ccmd(){
 };
 
 void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
- std::cout<<"loadPresImage "  <<filepath << " "<< simageid <<std::endl;
 
     clearPresImage();
 
