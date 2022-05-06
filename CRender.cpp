@@ -141,6 +141,7 @@ void CRender::Reshape(int width, int height){
 }
 void CRender::Display() {}
 void CRender::Idle() {
+    auto start = std::chrono::system_clock::now();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     int cell=0, row=0;
     for(int i=0; i<MAX_FACES; i++) {
@@ -286,7 +287,9 @@ void CRender::Idle() {
       //  pCmd->locker.unlock();
     glutSwapBuffers();
     glFlush();
-
+    auto ret = req.has_file("image");
+    const auto& file = req.get_file_value("image");
+    std::cout<< file.filename << " " << eventid << std::endl;
 }
     void CRender::StartRender(int argc, char **argv, Ccmd *pCmd){
 
