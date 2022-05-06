@@ -21,7 +21,6 @@ void CHttp::init(int port, Ccmd *pCmd){
     std::cout<< "http CHttp: "<< port <<std::endl;
     httplib::Server svr;
     svr.Get("/mixer/startInput",[&](const httplib::Request &req, httplib::Response &res){
-
         res.set_content("{\"err\":false}", "application/json");
         pCmd->startReadStream(req.get_param_value("url"),std::stoi( req.get_param_value("id")));
     });
