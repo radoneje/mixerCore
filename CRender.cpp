@@ -248,7 +248,7 @@ void CRender::Idle() {
             glBindTexture(GL_TEXTURE_2D, textures[0]);
 
             {
-                std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+              //  std::lock_guard<std::mutex> lockGuard(pCmd->locker);
                 int i=pCmd->activeTextureId[0];
                 std::cout<< "pCmd->FFreader[i].dt.width"<< pCmd->FFreader[i].dt.width<<std::endl;
 
