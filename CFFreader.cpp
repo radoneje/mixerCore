@@ -3,3 +3,5 @@
 //
 
 #include "CFFreader.h"
+
+CFFreader::CFFreader(){};

@@ -10,6 +10,7 @@ class CFFreader {
 
 public:
     int tmp=1;
+    CFFreader();
 };
 
 
