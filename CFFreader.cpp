@@ -175,6 +175,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 //ppm_save(pRGBFrame->data[0], pRGBFrame->linesize[0], pRGBFrame->width, pRGBFrame->height, buf);
                 {
                     std::lock_guard<std::mutex> lockGuard(*pLocker);
+                    free(pData->pixels);
                     pData->width = pRGBFrame->width;
                     pData->height = pRGBFrame->height;
                     pData->pixels = pRGBFrame->data[0];
