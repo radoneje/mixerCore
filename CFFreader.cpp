@@ -23,7 +23,13 @@ extern "C" {
 
 #include "CFFreader.h"
 
-CFFreader::CFFreader(){};
+CFFreader::CFFreader(){
+    dt.width=0;
+    dt.height=0;
+    dt.frameNumber=-1;
+    dt.numChannels=0;
+
+};
  long CFFreader::nowTime() {
     using namespace std::chrono;
     milliseconds ms = duration_cast<milliseconds>(
