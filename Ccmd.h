@@ -14,12 +14,13 @@ class Ccmd {
         Ccmd();
         std::vector<int> activeTextureId;
         std::mutex locker;
-        void loadPresImage(std::string filepath);
+        void loadPresImage(std::string filepath, const std::string imageid);
         void clearPresImage();
         unsigned char* PresImagePixels;
         int PresImageWidth;
         int PresImageHeight;
         int PresImageNumChannels;
+        std::string imageid;
 };
 
 
