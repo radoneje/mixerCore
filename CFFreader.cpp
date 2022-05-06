@@ -26,12 +26,12 @@ extern "C" {
 CFFreader::CFFreader(){};
 void CFFreader::work(const std::string url, Data *pData){//, Data &pData){
     std::cout <<"in Worker"<<  pData->width << " " <<url << std::endl;
-    /*AVFormatContext *ctx_format = nullptr;
+    AVFormatContext *ctx_format = nullptr;
     AVCodecContext *ctx_codec = nullptr;
     AVCodec *codec = nullptr;
     AVFrame *frame = av_frame_alloc();
     int stream_idx;
-    const char *fin ="/tmp/vcbr.mp4";// url.c_str();;
+    const char *fin =url.c_str();//"/tmp/vcbr.mp4";// url.c_str();;
     AVStream *vid_stream = nullptr;
     AVPacket *pkt = av_packet_alloc();
     int ret;
@@ -40,12 +40,12 @@ void CFFreader::work(const std::string url, Data *pData){//, Data &pData){
 
     if (int ret = avformat_open_input(&ctx_format, fin, nullptr, nullptr) != 0) {
         std::cout << 1 << std::endl;
-        return ret;
+        return ;
     }
     std::cout << 92 << std::endl;
     if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
         std::cout << 2 << std::endl;
-        return -1; // Couldn't find stream information
+        return ; // Couldn't find stream information
     }
     std::cout << 83 << std::endl;
     av_dump_format(ctx_format, 0, fin, false);
@@ -59,14 +59,14 @@ void CFFreader::work(const std::string url, Data *pData){//, Data &pData){
     std::cout << 94 << std::endl;
     if (vid_stream == nullptr) {
         std::cout << 4 << std::endl;
-        return -1;
+        return ;
     }
     std::cout << " framerate: " << vid_stream->avg_frame_rate.num << " " << vid_stream->avg_frame_rate.den << std::endl;
 
 
 
 
-    std::cout<< "CFFreader start work "<< url <<std::endl;*/
+    std::cout<< "CFFreader start work "<< url <<std::endl;
     return ;
 }
 
