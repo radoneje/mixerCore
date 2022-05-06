@@ -23,7 +23,7 @@ void CHttp::init(int port, Ccmd *pCmd){
        std::cout<< "/mixer/activatePresImg" << std::endl;
         auto ret = req.has_file("image");
         const auto& file = req.get_file_value("image");
-        const auto& eventid =req.get_param_value("eventid")
+        const auto& eventid =req.get_param_value("eventid");
         std::cout<< file.filename << " " << eventid << std::endl;
         // file.filename;
         // file.content_type;
