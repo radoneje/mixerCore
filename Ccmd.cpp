@@ -18,7 +18,7 @@
 Ccmd::Ccmd(){
     clearPresImage();
     for(int i=0; i<6; i++){
-        FFreader.push_back( new CFFreader());
+     std::cout<<    FFreader[i].tmp << std::endl;
     }
 };
 
