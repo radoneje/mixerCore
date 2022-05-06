@@ -43,7 +43,9 @@ void CHttp::init(int port, Ccmd *pCmd){
        // res.set_content("Hello World!", "text/plain");
         std::string value = req.matches[1];
         {
+            pCmd->  clearPresImage();
             std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+
            // pCmd->locker.lock();
             bool find=false;
             for(int i=0; i<pCmd->activeTextureId.size();i++){

@@ -29,6 +29,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string imageid){
                                  0,
                                  SOIL_LOAD_RGB);
     std::remove(filepath.c_str());
+    activeTextureId.clear();
 
 }
 void Ccmd::clearPresImage(){

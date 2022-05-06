@@ -284,12 +284,7 @@ void CRender::Idle() {
                  glDisable(GL_TEXTURE_2D);
              }
          }
-
-
-
       //  pCmd->locker.unlock();
-
-
     glutSwapBuffers();
     glFlush();
 
