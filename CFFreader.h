@@ -19,7 +19,7 @@ public:
     static  int tmp;
     CFFreader();
     Data dt;
-    static int work(std::string url, Data  &pData );
+    static int work(std::string url);//, Data  &pData );
 };
 
 
