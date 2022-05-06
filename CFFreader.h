@@ -7,7 +7,8 @@
 
 
 class CFFreader {
-
+private:
+    static long nowTime() ;
 public:
     struct Data { ;
         unsigned char *pixels;

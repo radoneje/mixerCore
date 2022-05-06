@@ -24,6 +24,13 @@ extern "C" {
 #include "CFFreader.h"
 
 CFFreader::CFFreader(){};
+static long CFFreader::nowTime() {
+    using namespace std::chrono;
+    milliseconds ms = duration_cast<milliseconds>(
+            system_clock::now().time_since_epoch()
+    );
+    return ms.count();
+}
 void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//, Data &pData){
     std::cout <<"in Worker"<<  pData->width << " " <<url << std::endl;
     AVFormatContext *ctx_format = nullptr;
