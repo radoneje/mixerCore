@@ -66,6 +66,6 @@ void CFFreader::work(){//, Data &pData){
 
 
     std::cout<< "CFFreader start work "<< url <<std::endl;*/
-    return 0;
+    return ;
 }
 
