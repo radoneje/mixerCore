@@ -13,9 +13,13 @@
 
 #include "Ccmd.h"
 #include "SOIL.h"
+#include "CFFreader.h"
 
 Ccmd::Ccmd(){
     clearPresImage();
+    for(int i=0; i<6; i++){
+        FFreader.push_back( new CFFreader());
+    }
 };
 
 void Ccmd::loadPresImage(std::string filepath, const std::string simageid){

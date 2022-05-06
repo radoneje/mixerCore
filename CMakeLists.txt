@@ -53,7 +53,7 @@ add_definitions(
 
 
 
-add_executable(mixerCore main.cpp CTextureData.cpp CTextureData.h CRender.cpp CRender.h CTexture.cpp CTexture.h CHttp.cpp CHttp.h CConfig.cpp CConfig.h SOIL.h Ccmd.cpp Ccmd.h)
+add_executable(mixerCore main.cpp CTextureData.cpp CTextureData.h CRender.cpp CRender.h CTexture.cpp CTexture.h CHttp.cpp CHttp.h CConfig.cpp CConfig.h SOIL.h Ccmd.cpp Ccmd.h CFFreader.cpp CFFreader.h)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)

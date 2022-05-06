@@ -7,11 +7,13 @@
 #include <vector>
 #include <mutex>
 
+#include "CFFreader.h"
+
 
 class Ccmd {
 
     public:
-        Ccmd();
+        std::vector<CFFreader>  FFreader;
         std::vector<int> activeTextureId;
         std::mutex locker;
         void loadPresImage(std::string filepath, const std::string simageid);
@@ -21,6 +23,7 @@ class Ccmd {
         int PresImageHeight;
         int PresImageNumChannels;
         std::string imageid;
+        Ccmd();
 };
 
 
