@@ -39,17 +39,17 @@ void CFFreader::work(const std::string url, Data *pData){//, Data &pData){
     struct SwsContext *sws_ctx = NULL;
 
     if (int ret = avformat_open_input(&ctx_format, fin, nullptr, nullptr) != 0) {
-        std::cout << 1 << std::endl;
+        std::cout <<"ERROR avformat  " << 1 << std::endl;
         return ;
     }
-    std::cout << 92 << std::endl;
+    std::cout << "avformat finding codec..." << std::endl;
     if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
-        std::cout << 2 << std::endl;
+        std::cout <<"ERROR avformat  " << 2 << std::endl;
         return ; // Couldn't find stream information
     }
-    std::cout << 83 << std::endl;
+
     av_dump_format(ctx_format, 0, fin, false);
-    std::cout << 93 << std::endl;
+
     for (int i = 0; i < ctx_format->nb_streams; i++)
         if (ctx_format->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
             stream_idx = i;
@@ -58,15 +58,11 @@ void CFFreader::work(const std::string url, Data *pData){//, Data &pData){
         }
     std::cout << 94 << std::endl;
     if (vid_stream == nullptr) {
-        std::cout << 4 << std::endl;
+        std::cout<<"ERROR avformat  " << 4 << std::endl;
         return ;
     }
     std::cout << " framerate: " << vid_stream->avg_frame_rate.num << " " << vid_stream->avg_frame_rate.den << std::endl;
 
-
-
-
-    std::cout<< "CFFreader start work "<< url <<std::endl;
     return ;
 }
 
