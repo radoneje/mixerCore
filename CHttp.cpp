@@ -19,11 +19,13 @@ CHttp::CHttp(){
 void CHttp::init(int port, Ccmd *pCmd){
     std::cout<< "http CHttp: "<< port <<std::endl;
     httplib::Server svr;
+    svr.Post("/mixer/activatePresImg",[&](const httplib::Request &req, httplib::Response &res){
+        res.set_content("{\"error\":false}", "application/json");
+    });
     svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {
        // res.set_content("Hello World!", "text/plain");
         std::string value = req.matches[1];
         {
-
             std::lock_guard<std::mutex> lockGuard(pCmd->locker);
            // pCmd->locker.lock();
             bool find=false;
@@ -41,7 +43,6 @@ void CHttp::init(int port, Ccmd *pCmd){
                 res.set_content("-1", "application/json");
            // pCmd->locker.unlock();
         }
-
 
     });
 
