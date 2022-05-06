@@ -165,8 +165,8 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                     std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
                 }
                 lastFrameTime = nowTime();
-                char buf[1024];
-                snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/%s%03d.ppm", "", ctx_codec->frame_number);
+                //char buf[1024];
+                //snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/%s%03d.ppm", "", ctx_codec->frame_number);
                 //ppm_save(pRGBFrame->data[0], pRGBFrame->linesize[0], pRGBFrame->width, pRGBFrame->height, buf);
                 {
                     std::lock_guard<std::mutex> lockGuard(*pLocker);
