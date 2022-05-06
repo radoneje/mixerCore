@@ -23,6 +23,7 @@ class Ccmd {
         int PresImageHeight;
         int PresImageNumChannels;
         std::string imageid;
+        void startReadStream(std::string rtmpURL, int layerNumber )
         Ccmd();
 };
 

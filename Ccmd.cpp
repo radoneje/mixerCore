@@ -20,10 +20,12 @@ Ccmd::Ccmd(){
     for(int i=0; i<6; i++){
         CFFreader cfFreader;
         FFreader.push_back(cfFreader);
-     std::cout<<    FFreader[i].tmp << std::endl;
     }
 };
+void Ccmd::startReadStream(std::string rtmpURL, int layerNumber ){
+    auto worker=FFreader[layerNumber];
 
+}
 void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
 
    // auto start = std::chrono::system_clock::now();
