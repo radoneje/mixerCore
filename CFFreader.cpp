@@ -24,13 +24,13 @@ extern "C" {
 #include "CFFreader.h"
 
 CFFreader::CFFreader(){};
-  int CFFreader::work(std::string url){//, Data &pData){
+  int CFFreader::work(){//, Data &pData){
     AVFormatContext *ctx_format = nullptr;
     AVCodecContext *ctx_codec = nullptr;
     AVCodec *codec = nullptr;
     AVFrame *frame = av_frame_alloc();
     int stream_idx;
-    const char *fin = url.c_str();;
+    const char *fin ="/tmp/vcbr.mp4";// url.c_str();;
     AVStream *vid_stream = nullptr;
     AVPacket *pkt = av_packet_alloc();
     int ret;
