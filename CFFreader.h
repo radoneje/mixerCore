@@ -19,7 +19,7 @@ public:
     static  int tmp;
     CFFreader();
     Data dt;
-    static void work( Data  &pData );
+    static void work( Data  *pData );
 };
 
 

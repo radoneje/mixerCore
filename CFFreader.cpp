@@ -24,7 +24,7 @@ extern "C" {
 #include "CFFreader.h"
 
 CFFreader::CFFreader(){};
-void CFFreader::work(Data &pData){//, Data &pData){
+void CFFreader::work(Data *pData){//, Data &pData){
     std::cout <<"in Worker"<<  &pData.width << std::endl;
     /*AVFormatContext *ctx_format = nullptr;
     AVCodecContext *ctx_codec = nullptr;
