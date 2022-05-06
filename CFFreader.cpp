@@ -72,8 +72,8 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     if (avcodec_parameters_to_context(ctx_codec, vid_stream->codecpar) < 0)
         std::cout << 512;
     if (avcodec_open2(ctx_codec, codec, nullptr) < 0) {
-        std::cout << 5;
-        return -1;
+        std::cout << "ERROR avcodec_open2"<< 5;
+        return ;
     }
     sws_ctx = sws_getContext(ctx_codec->width,
                              ctx_codec->height,
@@ -117,6 +117,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
    // finalFrameData_lock.unlock();
 
     int ii = 0;
+    std::cout<< "av_lib ready to the read" << std::endl;
 
     return ;
 }
