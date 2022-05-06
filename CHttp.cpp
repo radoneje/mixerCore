@@ -19,7 +19,7 @@ CHttp::CHttp(){
 void CHttp::init(int port, Ccmd *pCmd){
     std::cout<< "http CHttp: "<< port <<std::endl;
     httplib::Server svr;
-    svr.Post("/mixer/activatePresImg",[&](const httplib::Request &req, httplib::Response &res){
+    svr.Get("/mixer/activatePresImg",[&](const httplib::Request &req, httplib::Response &res){
         res.set_content("{\"error\":false}", "application/json");
     });
     svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {
