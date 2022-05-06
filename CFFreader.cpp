@@ -156,7 +156,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                                 pRGBFrame->linesize);   //const int dstStride[]);
                 if (sts != frame->height) {
                     std::cout << "sts != frame->height " << std::endl;
-                    return -1;  //Error!
+                    return ;  //Error!
                 }
 
                 // задержка на частоту кадров
