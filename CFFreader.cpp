@@ -176,7 +176,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 {
                     std::lock_guard<std::mutex> lockGuard(*pLocker);
                    if(pData->width>720 && pData->width<1921)
-                       free(pData->pixels)
+                       free(pData->pixels);
                     pData->width = pRGBFrame->width;
                     pData->height = pRGBFrame->height;
                     pData->pixels = pRGBFrame->data[0];
@@ -192,7 +192,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     {
         std::lock_guard<std::mutex> lockGuard(*pLocker);
         if(pData->width>720 && pData->width<1921)
-            free(pData->pixels)
+            free(pData->pixels);
         pData->width = 0;
         pData->height = 0;
         pData->frameNumber = -1;
