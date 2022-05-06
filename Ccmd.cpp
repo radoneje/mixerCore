@@ -43,6 +43,7 @@ void Ccmd::clearPresImage(){
     }
     catch{
         std::cout<< "ERRRO FREE" <<std::endl;
+
     }
        // PresImagePixels=nullptr;
 
