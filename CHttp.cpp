@@ -23,7 +23,7 @@ void CHttp::init(int port, Ccmd *pCmd){
     svr.Post(R"(/mixer/activatePresImg/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))",[&](const httplib::Request &req, httplib::Response &res){
        std::cout<< "/mixer/activatePresImg" << std::endl;
         const std::string eventid = req.matches[1];
-        const std::string imageid = req.matches[1];
+        const std::string imageid = req.matches[2];
         auto ret = req.has_file("image");
         const auto& file = req.get_file_value("image");
        // const auto eventid =req.get_param_value("eventid");
