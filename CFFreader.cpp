@@ -168,6 +168,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                     pData->pixels = pRGBFrame->data[0];
                     pData->linesize = pRGBFrame->linesize[0];
                     pData->frameNumber = ctx_codec->frame_number;
+                    std::cout<< "read frame " << pData->frameNumber << " " << ii<< std::endl;
                 }
             }
 
