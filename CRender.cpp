@@ -259,6 +259,7 @@ void CRender::Idle() {
         //////////makePres
         {
             std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+            std::cout<< "pCmd->PresImageWidth"<< pCmd->PresImageWidth<<std::endl;
             if (pCmd->PresImageWidth>0)
             {
                 glEnable(GL_TEXTURE_2D);
