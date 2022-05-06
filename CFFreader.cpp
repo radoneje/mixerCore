@@ -24,7 +24,7 @@ extern "C" {
 #include "CFFreader.h"
 
 CFFreader::CFFreader(){};
-static long CFFreader::nowTime() {
+ long CFFreader::nowTime() {
     using namespace std::chrono;
     milliseconds ms = duration_cast<milliseconds>(
             system_clock::now().time_since_epoch()
