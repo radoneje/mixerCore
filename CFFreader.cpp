@@ -24,7 +24,7 @@ extern "C" {
 #include "CFFreader.h"
 
 CFFreader::CFFreader(){};
-void CFFreader::work(std::string url){
+int CFFreader::work(std::string url){
     AVFormatContext *ctx_format = nullptr;
     AVCodecContext *ctx_codec = nullptr;
     AVCodec *codec = nullptr;
@@ -33,8 +33,35 @@ void CFFreader::work(std::string url){
     const char *fin = url.c_str();;
     AVStream *vid_stream = nullptr;
     AVPacket *pkt = av_packet_alloc();
+    int ret;
+    int sts;
+    struct SwsContext *sws_ctx = NULL;
+
+    if (int ret = avformat_open_input(&ctx_format, fin, nullptr, nullptr) != 0) {
+        std::cout << 1 << std::endl;
+        return ret;
+    }
+    if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
+        std::cout << 2 << std::endl;
+        return -1; // Couldn't find stream information
+    }
+    av_dump_format(ctx_format, 0, fin, false);
+    for (int i = 0; i < ctx_format->nb_streams; i++)
+        if (ctx_format->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
+            stream_idx = i;
+            vid_stream = ctx_format->streams[i];
+            break;
+        }
+    if (vid_stream == nullptr) {
+        std::cout << 4 << std::endl;
+        return -1;
+    }
+    std::cout << " framerate: " << vid_stream->avg_frame_rate.num << " " << vid_stream->avg_frame_rate.den << std::endl;
+
+
+
 
     std::cout<< "CFFreader start work "<< url <<std::endl;
-
+    return 0;
 }
 

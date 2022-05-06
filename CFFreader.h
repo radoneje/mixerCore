@@ -15,7 +15,7 @@ public:
     int numChannels=0;
     int tmp=1;
     CFFreader();
-    void work(std::string url);
+    int work(std::string url);
 };
 
 
