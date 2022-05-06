@@ -20,7 +20,7 @@ Ccmd::Ccmd(){
 
 void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
 
-    auto start = std::chrono::system_clock::now();
+   // auto start = std::chrono::system_clock::now();
 
     clearPresImage();
 
@@ -34,10 +34,9 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
                                  SOIL_LOAD_RGB);
     std::remove(filepath.c_str());
     activeTextureId.clear();
-    auto end = std::chrono::system_clock::now();
+    /*auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end-start;
-
-    std::cout << "elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s" << std::endl;*/
 
 }
 void Ccmd::clearPresImage(){
