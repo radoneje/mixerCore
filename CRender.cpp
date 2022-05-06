@@ -257,6 +257,7 @@ void CRender::Idle() {
 
 
         //////////makePres
+        /*
         {
             std::lock_guard<std::mutex> lockGuard(pCmd->locker);
             std::cout<< "pCmd->PresImageWidth"<< pCmd->PresImageWidth<<std::endl;
@@ -283,7 +284,7 @@ void CRender::Idle() {
             }
         }
 
-
+*/
 
       //  pCmd->locker.unlock();
     }
