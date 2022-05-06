@@ -10,6 +10,7 @@
 #include <mutex>
 #include <vector>
 
+
 #include "Ccmd.h"
 #include "SOIL.h"
 
@@ -25,6 +26,7 @@ void Ccmd::loadPresImage(std::string filepath){
                                  &PresImageHeight,
                                  0,
                                  SOIL_LOAD_RGB);
+    std::remove(filepath);
 
 }
 void Ccmd::clearPresImage(){
