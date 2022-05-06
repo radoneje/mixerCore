@@ -15,3 +15,12 @@
 Ccmd::Ccmd(){
 
 };
+
+void Ccmd::loadPresImage(std::string filepath){
+ std::cout<<"loadPresImage "  <<filepath <<std::endl;
+}
+void Ccmd::clearPresImage(){
+    std::lock_guard<std::mutex> lockGuard(locker);
+    PresImageWidth=0;
+    PresImageHeight=0;
+};

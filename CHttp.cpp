@@ -34,12 +34,9 @@ void CHttp::init(int port, Ccmd *pCmd){
         myfile.open (fileName);
         myfile << file.content;
         myfile.close();
-
-        // file.filename;
-        // file.content_type;
-        // file.content;
-
         res.set_content("{\"error\":false}", "application/json");
+            pCmd->loadPresImage(fileName);
+
     });
     svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {
        // res.set_content("Hello World!", "text/plain");
