@@ -110,14 +110,82 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         std::lock_guard<std::mutex> lockGuard(*pLocker);
         pData->width = 0;
         pData->height = 0;
-
-
         pData->frameNumber = -1;
     }
    // finalFrameData_lock.unlock();
 
     int ii = 0;
     std::cout<< "av_lib ready to the read" << std::endl;
+    //////////
+    while (av_read_frame(ctx_format, pkt) >= 0) {
+
+        if (pkt->stream_index == stream_idx) {
+
+
+            int ret = avcodec_send_packet(ctx_codec, pkt);
+            if (ret < 0 || ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
+                std::cout << "avcodec_send_packet: " << ret << " " << AVERROR(EAGAIN) << " " << AVERROR_EOF
+                          << std::endl;
+                break;
+            }
+            std::cout << "  av_read_frame " << ret << " " << ii << std::endl;;
+            while (ret >= 0) {
+                ret = avcodec_receive_frame(ctx_codec, frame);
+                if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
+                    //std::cout << "avcodec_receive_frame: " << ret << std::endl;
+                    break;
+                }
+                ii++;
+
+                int64_t pts = av_rescale(frame->pts, 1000000, AV_TIME_BASE);
+                int64_t now = av_gettime_relative();//- frame->start;
+
+                sts = sws_scale(sws_ctx,                //struct SwsContext* c,
+                                frame->data,            //const uint8_t* const srcSlice[],
+                                frame->linesize,        //const int srcStride[],
+                                0,                      //int srcSliceY,
+                                frame->height,          //int srcSliceH,
+                                pRGBFrame->data,        //uint8_t* const dst[],
+                                pRGBFrame->linesize);   //const int dstStride[]);
+                if (sts != frame->height) {
+                    std::cout << "sts != frame->height " << std::endl;
+                    return -1;  //Error!
+                }
+
+                // задержка на частоту кадров
+                long thisFrameTime = lastFrameTime + frameDur;
+                if (thisFrameTime > nowTime()) {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
+                }
+                lastFrameTime = nowTime();
+                char buf[1024];
+                snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/%s%03d.ppm", "", ctx_codec->frame_number);
+                //ppm_save(pRGBFrame->data[0], pRGBFrame->linesize[0], pRGBFrame->width, pRGBFrame->height, buf);
+                {
+                    std::lock_guard<std::mutex> lockGuard(*pLocker);
+                    pData->width = pRGBFrame->width;
+                    pData->height = pRGBFrame->height;
+                    pData->pixels = pRGBFrame->data[0];
+                    pData->linesize = pRGBFrame->linesize[0];
+                    pData->frameNumber = ctx_codec->frame_number;
+                }
+            }
+
+        }
+    }
+    ///////////
+    {
+        std::lock_guard<std::mutex> lockGuard(*pLocker);
+        pData->width = 0;
+        pData->height = 0;
+        pData->frameNumber = -1;
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(frameDur));
+
+    av_packet_unref(pkt);
+    av_frame_free(&pRGBFrame);
+    avcodec_free_context(&ctx_codec);
+    avformat_close_input(&ctx_format);
 
     return ;
 }

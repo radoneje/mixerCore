@@ -14,6 +14,7 @@ public:
         int width;
         int height;
         int numChannels;
+        int linesize;
         long frameNumber;
     };
 public:
