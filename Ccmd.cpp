@@ -24,6 +24,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
 
     std::lock_guard<std::mutex> lockGuard(locker);
     imageid=simageid;
+    free(PresImagePixels);
     PresImagePixels =SOIL_load_image(filepath.c_str(),
                                  &PresImageWidth,
                                  &PresImageHeight,
@@ -38,13 +39,8 @@ void Ccmd::clearPresImage(){
     PresImageWidth=0;
     PresImageHeight=0;
     imageid="";
-    try {
-        free(PresImagePixels);
-    }
-    catch(...){
-        std::cout<< "ERRRO FREE" <<std::endl;
-
-    }
+       // free(PresImagePixels);
+    PresImagePixels;
        // PresImagePixels=nullptr;
 
 };
