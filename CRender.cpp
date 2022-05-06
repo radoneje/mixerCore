@@ -264,7 +264,7 @@ void CRender::Idle() {
 
              if (pCmd->PresImageWidth>0)
              {
-                 std::cout<<pCmd->imageid<<std::endl;
+
                  glEnable(GL_TEXTURE_2D);
                  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
                  glBindTexture(GL_TEXTURE_2D, textures[0]);
