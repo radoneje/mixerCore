@@ -25,7 +25,8 @@ Ccmd::Ccmd(){
 void Ccmd::startReadStream(std::string rtmpURL, int layerNumber ){
     auto worker=FFreader[layerNumber];
     std::cout<< "start input " << rtmpURL<<" " << layerNumber<< std::endl;
-    worker.work(rtmpURL);
+   // worker.work(rtmpURL);
+    std::thread ffmpegThread(CFFreader.work ,rtmpURL,&worker.dt );
 
 }
 void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
