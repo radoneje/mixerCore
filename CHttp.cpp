@@ -38,7 +38,7 @@ void CHttp::init(int port, Ccmd *pCmd){
             pCmd->loadPresImage(fileName);
 
     });
-    svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {
+    svr.Get(R"(/mixer/activeInput/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))", [&](const httplib::Request &req, httplib::Response &res) {
        // res.set_content("Hello World!", "text/plain");
         std::string value = req.matches[1];
         {
