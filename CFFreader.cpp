@@ -64,15 +64,16 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     std::cout << " framerate: " << vid_stream->avg_frame_rate.num << " " << vid_stream->avg_frame_rate.den << std::endl;
     codec = avcodec_find_decoder(vid_stream->codecpar->codec_id);
     if (!codec) {
-        fprintf(stderr, "codec not found\n");
-        exit(1);
+        std::cout << "ERROR codec not found" << std::endl;
+        //exit(1);
+        return ;
     }
     ctx_codec = avcodec_alloc_context3(codec);
 
     if (avcodec_parameters_to_context(ctx_codec, vid_stream->codecpar) < 0)
         std::cout << 512;
     if (avcodec_open2(ctx_codec, codec, nullptr) < 0) {
-        std::cout << "ERROR avcodec_open2"<< 5;
+        std::cout << "ERROR avcodec_open2"<< std::endl;
         return ;
     }
     sws_ctx = sws_getContext(ctx_codec->width,
