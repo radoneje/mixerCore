@@ -26,6 +26,7 @@ void Ccmd::startReadStream(std::string rtmpURL, int layerNumber ){
     auto worker=FFreader[layerNumber];
     worker.dt.width=layerNumber;
     std::cout<< "start input " << rtmpURL<<" " << layerNumber<< std::endl;
+    std::cout<< "start  " << FFreader[layerNumber].dt.width<<" " << layerNumber<< std::endl;
    // worker.work(rtmpURL);
 
     std::thread ffmpegThread(worker.work, &worker.dt );
