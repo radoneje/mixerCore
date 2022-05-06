@@ -41,17 +41,21 @@ int CFFreader::work(std::string url){
         std::cout << 1 << std::endl;
         return ret;
     }
+    std::cout << 92 << std::endl;
     if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
         std::cout << 2 << std::endl;
         return -1; // Couldn't find stream information
     }
+    std::cout << 83 << std::endl;
     av_dump_format(ctx_format, 0, fin, false);
+    std::cout << 93 << std::endl;
     for (int i = 0; i < ctx_format->nb_streams; i++)
         if (ctx_format->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
             stream_idx = i;
             vid_stream = ctx_format->streams[i];
             break;
         }
+    std::cout << 94 << std::endl;
     if (vid_stream == nullptr) {
         std::cout << 4 << std::endl;
         return -1;
