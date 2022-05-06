@@ -15,7 +15,7 @@
 #include "SOIL.h"
 
 Ccmd::Ccmd(){
-
+    clearPresImage();
 };
 
 void Ccmd::loadPresImage(std::string filepath, const std::string imageid){
