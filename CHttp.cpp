@@ -35,7 +35,7 @@ void CHttp::init(int port, Ccmd *pCmd){
         myfile.open (fileName);
         myfile << file.content;
         myfile.close();
-        std::string jsonResponce("{\"error\":false, \"presFileId\":\"+imageid+\"}");
+        std::string jsonResponce("{\"error\":false, \"presFileId\":\""+imageid+"\"}");
         res.set_content("{\"error\":false}", "application/json");
             pCmd->loadPresImage(fileName, imageid);
 
