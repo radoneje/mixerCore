@@ -38,8 +38,12 @@ void Ccmd::clearPresImage(){
     PresImageWidth=0;
     PresImageHeight=0;
     imageid="";
-    if(PresImagePixels!= nullptr)
+    try {
         free(PresImagePixels);
-       // PresImagePixels=nullptr;
     }
+    catch{
+        std::cout<< "ERRRO FREE" <<std::endl;
+    }
+       // PresImagePixels=nullptr;
+
 };
