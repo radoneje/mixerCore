@@ -254,6 +254,36 @@ void CRender::Idle() {
             glDisable(GL_TEXTURE_2D);
 
         }
+
+
+        //////////makePres
+        {
+            std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+            if (pCmd->PresImageWidth>0)
+            {
+                glEnable(GL_TEXTURE_2D);
+                glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+                glBindTexture(GL_TEXTURE_2D, textures[0]);
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pCmd->PresImageWidth,
+                             pCmd->PresImageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                             pCmd->PresImagePixels);
+
+                glBegin(GL_QUADS);
+                glTexCoord2f(0, 0);
+                glVertex3f(-1, 0.5, -6);
+                glTexCoord2f(0, 1);
+                glVertex3f(-1, -1, -6);
+                glTexCoord2f(1, 1);
+                glVertex3f(0.5, -1, -6);
+                glTexCoord2f(1, 0);
+                glVertex3f(0.5, 0.5, -6);
+                glEnd();
+                glDisable(GL_TEXTURE_2D);
+            }
+        }
+
+
+
       //  pCmd->locker.unlock();
     }
 
