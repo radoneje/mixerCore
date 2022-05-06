@@ -25,7 +25,7 @@ extern "C" {
 
 CFFreader::CFFreader(){};
 void CFFreader::work(const std::string url, Data *pData){//, Data &pData){
-    std::cout <<"in Worker"<<  pData->width << std::endl;
+    std::cout <<"in Worker"<<  pData->width << " " <<url << std::endl;
     /*AVFormatContext *ctx_format = nullptr;
     AVCodecContext *ctx_codec = nullptr;
     AVCodec *codec = nullptr;
