@@ -24,13 +24,13 @@ void CHttp::init(int port, Ccmd *pCmd){
        std::cout<< "/mixer/activatePresImg" << std::endl;
         const std::string eventid = req.matches[1];
         const std::string imageid = req.matches[2];
-        std::cout<< imageid << " " << pCmd->imageid << std::endl;
+        std::cout<< imageid << " <--->" << pCmd->imageid << std::endl;
         if(imageid==pCmd->imageid)
         {
             pCmd->clearPresImage();
             std::string jsonResponce("{\"error\":false, \"presFileId\":\"\"}");
             res.set_content(jsonResponce, "application/json");
-            std::cout<<" clear pres image" << " " << pCmd->imageid << std::endl;
+            std::cout<<" clear pres image" << "  " << pCmd->imageid << std::endl;
             return ;
 
         }
