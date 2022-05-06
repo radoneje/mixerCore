@@ -37,9 +37,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
     auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end-start;
 
-    std::cout
-              << "elapsed time: " << elapsed_seconds.count() << "s" <<
-              << std::endl;
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
 
 }
 void Ccmd::clearPresImage(){
