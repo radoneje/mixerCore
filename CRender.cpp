@@ -141,7 +141,7 @@ void CRender::Reshape(int width, int height){
 }
 void CRender::Display() {}
 void CRender::Idle() {
-    auto start = std::chrono::system_clock::now();
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     int cell=0, row=0;
     for(int i=0; i<MAX_FACES; i++) {
@@ -264,6 +264,7 @@ void CRender::Idle() {
 
              if (pCmd->PresImageWidth>0)
              {
+                 std::cout<<pCmd->imageid<<std::endl;
                  glEnable(GL_TEXTURE_2D);
                  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
                  glBindTexture(GL_TEXTURE_2D, textures[0]);
@@ -288,9 +289,7 @@ void CRender::Idle() {
     glutSwapBuffers();
     glFlush();
 
-    auto end = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_seconds = end-start;
-    std::cout << "elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
+
 }
     void CRender::StartRender(int argc, char **argv, Ccmd *pCmd){
 
