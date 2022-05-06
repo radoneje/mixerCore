@@ -39,7 +39,7 @@ void Ccmd::clearPresImage(){
     PresImageHeight=0;
     imageid="";
     if(PresImagePixels!= nullptr)
-        delete PresImagePixels;
-        PresImagePixels=nullptr;
+        free(PresImagePixels);
+       // PresImagePixels=nullptr;
     }
 };
