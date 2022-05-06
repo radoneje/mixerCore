@@ -18,9 +18,9 @@ Ccmd::Ccmd(){
     clearPresImage();
 };
 
-void Ccmd::loadPresImage(std::string filepath, const std::string imageid){
+void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
  std::cout<<"loadPresImage "  <<filepath <<std::endl;
-    this->imageid=imageid;
+    imageid=simageid;
     clearPresImage();
     std::lock_guard<std::mutex> lockGuard(locker);
     PresImagePixels =SOIL_load_image(filepath.c_str(),

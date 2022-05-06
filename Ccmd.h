@@ -14,7 +14,7 @@ class Ccmd {
         Ccmd();
         std::vector<int> activeTextureId;
         std::mutex locker;
-        void loadPresImage(std::string filepath, const std::string imageid);
+        void loadPresImage(std::string filepath, const std::string simageid);
         void clearPresImage();
         unsigned char* PresImagePixels;
         int PresImageWidth;
