@@ -135,7 +135,6 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                           << std::endl;
                 break;
             }
-            std::cout << "  av_read_frame " << ret << " " << ii << std::endl;;
             while (ret >= 0) {
                 ret = avcodec_receive_frame(ctx_codec, frame);
                 if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
