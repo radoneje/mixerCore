@@ -252,18 +252,18 @@ void CRender::Idle() {
                 int i=pCmd->activeTextureId[0];
                 std::cout<< "pCmd->FFreader[i].dt.width"<< pCmd->FFreader[i].dt.width<<std::endl;
 
-               // if (pCmd->FFreader[i].dt.width <720 ||pCmd->FFreader[i].dt.width>1920) { // затычка
+                if (pCmd->FFreader[i].dt.width <720 ||pCmd->FFreader[i].dt.width>1920) { // затычка
 
                     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[pCmd->activeTextureId[0]].width,
                                  texturePlaceholder[pCmd->activeTextureId[0]].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                                  texturePlaceholder[pCmd->activeTextureId[0]].pixels);
-              /*  }
+                }
                 else //video frame
                 {
                     gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, pCmd->FFreader[i].dt.width,
                                       pCmd->FFreader[i].dt.height, GL_RGB, GL_UNSIGNED_BYTE,
                                       pCmd->FFreader[i].dt.pixels);
-                }*/
+                }
             }
 
 
