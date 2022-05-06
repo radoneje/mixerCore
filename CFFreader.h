@@ -15,7 +15,8 @@ public:
         int height;
         int numChannels;
     };
-
+public:
+    static  int tmp;
     CFFreader();
     Data dt;
     static int work(std::string url, Data  *pData );
