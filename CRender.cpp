@@ -156,10 +156,20 @@ void CRender::Idle() {
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glBindTexture(GL_TEXTURE_2D, textures[0]);
 
+        {
+            std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+            if (pCmd->FFreader[i].dt.width == 0) { // затычка
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
-                     texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                     texturePlaceholder[i].pixels);
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
+                             texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                             texturePlaceholder[i].pixels);
+            } else //video frame
+            {
+                gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, pCmd->FFreader[i].dt.width,
+                                  pCmd->FFreader[i].dt.height, GL_RGB, GL_UNSIGNED_BYTE,
+                                  pCmd->FFreader[i].dt.pixels);
+            }
+        }
 
 
         glBegin(GL_QUADS);
@@ -303,11 +313,14 @@ void CRender::Idle() {
             fileName.append(std::to_string(i+1));
             fileName.append(".png");
             std::cout<<fileName<<std::endl;
-            item.pixels =SOIL_load_image(fileName.c_str(),
-                                                  &item.width,
-                                                  &item.height,
-                                                  0,
-                                                  SOIL_LOAD_RGB);
+
+               // std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+
+                item.pixels = SOIL_load_image(fileName.c_str(),
+                                              &item.width,
+                                              &item.height,
+                                              0,
+                                              SOIL_LOAD_RGB);
 
 
             texturePlaceholder.push_back(item);
