@@ -21,7 +21,7 @@ void CHttp::init(int port, Ccmd *pCmd){
     std::cout<< "http CHttp: "<< port <<std::endl;
     httplib::Server svr;
     svr.Post("/mixer/startInput",[&](const httplib::Request &req, httplib::Response &res){
-        std::cout<< "start input " << req.body << std::endl;
+        std::cout<< "start input " << req.get_param_value("id") << std::endl;
     });
     svr.Post(R"(/mixer/activatePresImg/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))",[&](const httplib::Request &req, httplib::Response &res){
         auto start = std::chrono::system_clock::now();
