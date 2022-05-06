@@ -8,6 +8,7 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
+#include <fstream>
 
 #include "CHttp.h"
 #include "httplib.h"
@@ -25,6 +26,14 @@ void CHttp::init(int port, Ccmd *pCmd){
         const auto& file = req.get_file_value("image");
         const auto eventid =req.get_param_value("eventid");
         std::cout<< file.filename << " " << eventid << std::endl;
+
+        std::ofstream myfile;
+        std::string fileName("/tmp/pres"+eventid+".png");
+        std::cout<< fileName << std::endl;
+        myfile.open (fileName);
+        myfile << file.content;
+        myfile.close();
+
         // file.filename;
         // file.content_type;
         // file.content;
