@@ -24,7 +24,7 @@ extern "C" {
 #include "CFFreader.h"
 
 CFFreader::CFFreader(){};
-void CFFreader::work(const std::string url, Data *pData){//, Data &pData){
+void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//, Data &pData){
     std::cout <<"in Worker"<<  pData->width << " " <<url << std::endl;
     AVFormatContext *ctx_format = nullptr;
     AVCodecContext *ctx_codec = nullptr;
@@ -86,6 +86,38 @@ void CFFreader::work(const std::string url, Data *pData){//, Data &pData){
                              NULL,
                              NULL);
     std::cout << 94 << std::endl;
+    //Allocate frame for storing image converted to RGB.
+    ////////////////////////////////////////////////////////////////////////////
+    AVFrame *pRGBFrame = av_frame_alloc();
+
+    pRGBFrame->format = AV_PIX_FMT_RGB24;
+    pRGBFrame->width = ctx_codec->width;
+    pRGBFrame->height = ctx_codec->height;
+
+    sts = av_frame_get_buffer(pRGBFrame, 0);
+
+    if (sts < 0) {
+        std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
+        return ;  //Error!
+    }
+
+    // задержка на частоту кадров
+    int frameDur = (vid_stream->avg_frame_rate.den * 1000) / vid_stream->avg_frame_rate.num;
+    long lastFrameTime = 0;
+
+   // finalFrameData_lock.lock();
+    {
+        std::lock_guard<std::mutex> lockGuard(*pLocker);
+        pData->width = 0;
+        pData->height = 0;
+
+
+        pData->frameNumber = -1;
+    }
+   // finalFrameData_lock.unlock();
+
+    int ii = 0;
+
     return ;
 }
 

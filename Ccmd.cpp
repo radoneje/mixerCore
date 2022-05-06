@@ -29,7 +29,7 @@ void Ccmd::startReadStream(std::string rtmpURL, int layerNumber ){
     std::cout<< "start  " << (FFreader[layerNumber].dt.width) <<" " << layerNumber<< std::endl;
    // worker.work(rtmpURL);
 
-    std::thread ffmpegThread(FFreader[layerNumber].work, rtmpURL, &FFreader[layerNumber].dt );
+    std::thread ffmpegThread(FFreader[layerNumber].work, rtmpURL, &FFreader[layerNumber].dt , &locker);
     ffmpegThread.detach();
 
 

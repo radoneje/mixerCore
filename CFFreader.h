@@ -14,12 +14,13 @@ public:
         int width;
         int height;
         int numChannels;
+        long frameNumber;
     };
 public:
     static  int tmp;
     CFFreader();
     Data dt;
-    static void work(const std::string url, Data  *pData );
+    static void work(const std::string url, Data  *pData , std::mutex *pLocker);
 };
 
 
