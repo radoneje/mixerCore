@@ -133,16 +133,13 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
             AVFrame *frame = av_frame_alloc();
 
-            if (sts < 0) {
-                std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
-                return ;  //Error!
-            }
+
 
             int ret = avcodec_send_packet(ctx_codec, pkt);
             if (ret < 0 || ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
                 std::cout << "avcodec_send_packet: " << ret << " " << AVERROR(EAGAIN) << " " << AVERROR_EOF<<std::endl;
 
-                av_frame_free(&pRGBFrame);
+
                 av_frame_free(&frame);
                 break;
             }
@@ -165,6 +162,10 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 pRGBFrame->width = ctx_codec->width;
                 pRGBFrame->height = ctx_codec->height;
                 int sts = av_frame_get_buffer(pRGBFrame, 0);
+                if (sts < 0) {
+                    std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
+                    return ;  //Error!
+                }
 
                 sts = sws_scale(sws_ctx,                //struct SwsContext* c,
                                 frame->data,            //const uint8_t* const srcSlice[],
