@@ -4,7 +4,7 @@
 
 #ifndef MIXERCORE_CFFREADER_H
 #define MIXERCORE_CFFREADER_H
-
+#include <libavformat/avformat.h>
 
 class CFFreader {
 private:
@@ -17,6 +17,7 @@ public:
         int numChannels;
         int linesize;
         long frameNumber;
+        AVFormatContext *ctx_videoformat;// = nullptr;
     };
 public:
     static  int tmp;

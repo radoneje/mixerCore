@@ -29,6 +29,7 @@ CFFreader::CFFreader(){
     dt.frameNumber=-1;
     dt.numChannels=0;
     dt.pixels=  (unsigned char *) malloc(1 * sizeof(int));
+    dt.ctx_videoformat = nullptr;
 
 };
  long CFFreader::nowTime() {
