@@ -102,7 +102,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         return ;
     }
     if(audio_idx>0){
-        aud_codec = avcodec_find_decoder(aud_stream_stream->codecpar->codec_id);
+        aud_codec = avcodec_find_decoder(aud_stream->codecpar->codec_id);
         if (!aud_codec) {
             std::cout << "ERROR codec not found" << std::endl;
             return ;
