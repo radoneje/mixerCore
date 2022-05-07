@@ -151,6 +151,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 break;
             }
             while (ret >= 0) {
+                std::lock_guard<std::mutex> lockGuard(*pLocker);
 
                 ret = avcodec_receive_frame(ctx_codec, frame);
                 if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
@@ -183,7 +184,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 lastFrameTime = nowTime();
 
                 {
-                    std::lock_guard<std::mutex> lockGuard(*pLocker);
+
                     pData->width = pRGBFrame->width;
                     pData->height = pRGBFrame->height;
                     pData->pixels = pRGBFrame->data[0];
