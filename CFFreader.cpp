@@ -166,7 +166,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
         if (pkt->stream_index == audio_idx) {
 
-            int ret = avcodec_send_packet(audio_idx, &pkt);
+            int ret = avcodec_send_packet(ctx_aud_codec, &pkt);
             if (ret < 0) {
                 std::cout << "Error while sending audio packet to the decoder" <<ret <<std::endl;
                 break;
