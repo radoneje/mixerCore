@@ -42,6 +42,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     std::cout <<"in Worker"<<  pData->width << " " <<url << std::endl;
     AVFormatContext *ctx_format = nullptr;
     AVCodecContext *ctx_codec = nullptr;
+    AVCodecContext *ctx_aud_codec = nullptr;
     AVCodec *codec = nullptr;
     AVCodec *aud_codec = nullptr;
 
@@ -110,14 +111,23 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
     std::cout << "avformat avcodec_alloc_context3..." << std::endl;
     ctx_codec = avcodec_alloc_context3(codec);
+    if(audio_idx>0)
+        ctx_aud_codec=avcodec_alloc_context3(aud_codec);
 
     if (avcodec_parameters_to_context(ctx_codec, vid_stream->codecpar) < 0)
         std::cout << 512;
+
+    if(audio_idx>0)
+        avcodec_parameters_to_context(ctx_aud_codec, aud_stream->codecpar)
+
     std::cout << "avformat avcodec_open2..." << std::endl;
     if (avcodec_open2(ctx_codec, codec, nullptr) < 0) {
         std::cout << "ERROR avcodec_open2"<< std::endl;
         return ;
     }
+    if(audio_idx>0)
+        avcodec_open2(ctx_aud_codec, aud_codec, nullptr);
+
     sws_ctx = sws_getContext(ctx_codec->width,
                              ctx_codec->height,
                              ctx_codec->pix_fmt,
@@ -151,7 +161,9 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
     //////////
     while (av_read_frame(ctx_format, pkt) >= 0) {
-
+        if (pkt->stream_index == audio_idx){
+            std::cout<<"read audio packet"<<std::endl;
+        }
         if (pkt->stream_index == stream_idx) {
             //Allocate frame for storing image converted to RGB.
             ////////////////////////////////////////////////////////////////////////////
