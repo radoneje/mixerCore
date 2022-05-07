@@ -61,6 +61,8 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker, in
     AVPacket *pkt = av_packet_alloc();
     int ret;
 
+    std::cout <<"in Worker 2"<<  pData->width << " " <<url << std::endl;
+
     struct SwsContext *sws_ctx = NULL;
 
     if (int ret = avformat_open_input(&ctx_format, fin, nullptr, nullptr) != 0) {
