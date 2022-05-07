@@ -32,7 +32,7 @@ CFFreader::CFFreader(){
 
 
 };
-AVFormatContext *CFFreader::ctx_videoformat = nullptr;
+AVFormatContext **CFFreader::ctx_videoformat = nullptr;
  long CFFreader::nowTime() {
     using namespace std::chrono;
     milliseconds ms = duration_cast<milliseconds>(
