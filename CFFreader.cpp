@@ -67,7 +67,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
     std::cout << "avformat finding avformat_find_stream_info..." << std::endl;
 
-    ctx_format->probesize=32000;
+    ctx_format->probesize=320000;
     ctx_format->max_analyze_duration=32000;
     std::cout <<"probesize  " << ctx_format->probesize << " max_analyze_duration "<<ctx_format->max_analyze_duration << std::endl;
 
