@@ -194,10 +194,14 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                     std::cout<<"before free"<< std::endl;
                     free(pData->pixels);
                     std::cout<<"before malloc "<< std::endl;
-                    pData->pixels=(unsigned char *) malloc(pRGBFrame->width * pRGBFrame->height * sizeof(unsigned char));
+
+
                     std::cout<<"after malloc"<< std::endl;
-                    std::cout << "Length of array = " << sizeof(&pData->pixels) << "/" <<sizeof(pData->pixels) << std::endl;
-                    pData->pixels = pRGBFrame->data[0];
+                    std::size_t size=pRGBFrame->width * pRGBFrame->height * sizeof(unsigned char);
+                    pData->pixels=(unsigned char *) malloc(size);
+                    std::cout << "Length of array = " << size << std::endl;
+                    memcpy(pData->pixels, pRGBFrame->data[0], size);
+                   // pData->pixels = pRGBFrame->data[0];
                     pData->linesize = pRGBFrame->linesize[0];
                     pData->frameNumber = ctx_codec->frame_number;
 
