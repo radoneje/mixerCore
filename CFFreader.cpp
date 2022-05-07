@@ -170,21 +170,21 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
         if (pkt->stream_index == audio_idx) {
 
-            int ret = avcodec_send_packet(ctx_aud_codec, pkt);
-            if (ret < 0) {
-                std::cout << "Error while sending audio packet to the decoder" <<ret <<std::endl;
-                break;
-            }
-            /*int got_frame = 0;
-            AVFrame *frame = av_frame_alloc();
-            int ret=avcodec_decode_audio4(ctx_aud_codec, frame, &got_frame, pkt);
-            if (ret < 0) {
-                std::cout << "Error decoding audio: " <<ret <<std::endl;
-                av_frame_free(&frame);
-                continue;
-            }
-            std::cout << "audio frame: " <<ret <<std::endl;
-            av_frame_free(&frame);*/
+            /* int ret = avcodec_send_packet(ctx_aud_codec, pkt);
+             if (ret < 0) {
+                 std::cout << "Error while sending audio packet to the decoder" <<ret <<std::endl;
+                 break;
+             }
+             int got_frame = 0;
+             AVFrame *frame = av_frame_alloc();
+             int ret=avcodec_decode_audio4(ctx_aud_codec, frame, &got_frame, pkt);
+             if (ret < 0) {
+                 std::cout << "Error decoding audio: " <<ret <<std::endl;
+                 av_frame_free(&frame);
+                 continue;
+             }
+             std::cout << "audio frame: " <<ret <<std::endl;
+             av_frame_free(&frame);*/
         }
 
 
