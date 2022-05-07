@@ -322,6 +322,7 @@ void CRender::Idle() {
     void CRender::StartRender(int argc, char **argv, Ccmd *pCmd){
 
         CRender::pCmd=pCmd;
+        pCmd->notifyStreamStarted(123);
         for(int i=0; i<MAX_FACES; i++) {
 
             sImage item;

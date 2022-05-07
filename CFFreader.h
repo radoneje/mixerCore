@@ -24,7 +24,7 @@ public:
     static  int tmp;
     CFFreader();
     Data dt;
-    static void work(const std::string url, Data  *pData , std::mutex *pLocker, Ccmd::vFunctionCall notifyStreamStarted);
+    static void work(const std::string url, Data  *pData , std::mutex *pLocker);
 };
 
 
