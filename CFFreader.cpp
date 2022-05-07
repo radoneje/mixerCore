@@ -120,18 +120,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     while (av_read_frame(ctx_format, pkt) >= 0) {
 
         if (pkt->stream_index == stream_idx) {
-            //Allocate frame for storing image converted to RGB.
-            ////////////////////////////////////////////////////////////////////////////
-            AVFrame *pRGBFrame = av_frame_alloc();
-            pRGBFrame->format = AV_PIX_FMT_RGB24;
-            pRGBFrame->width = ctx_codec->width;
-            pRGBFrame->height = ctx_codec->height;
-            int sts = av_frame_get_buffer(pRGBFrame, 0);
 
-            if (sts < 0) {
-                std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
-                return ;  //Error!
-            }
 
             int ret = avcodec_send_packet(ctx_codec, pkt);
             if (ret < 0 || ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
@@ -140,6 +129,19 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 break;
             }
             while (ret >= 0) {
+
+                //Allocate frame for storing image converted to RGB.
+                ////////////////////////////////////////////////////////////////////////////
+                AVFrame *pRGBFrame = av_frame_alloc();
+                pRGBFrame->format = AV_PIX_FMT_RGB24;
+                pRGBFrame->width = ctx_codec->width;
+                pRGBFrame->height = ctx_codec->height;
+                int sts = av_frame_get_buffer(pRGBFrame, 0);
+
+                if (sts < 0) {
+                    std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
+                    return ;  //Error!
+                }
 
                 ret = avcodec_receive_frame(ctx_codec, frame);
                 if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
@@ -179,8 +181,9 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                     pData->frameNumber = ctx_codec->frame_number;
 
                 }*/
+                av_frame_free(&pRGBFrame);
             }
-            av_frame_free(&pRGBFrame);
+
         }
     }
     ///////////
