@@ -59,6 +59,8 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         return ;
     }
     std::cout << "avformat finding avformat_find_stream_info..." << std::endl;
+    av_opt_set_int( ctx_format, "probesize",3200, 0)
+
     if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
         std::cout <<"ERROR avformat  " << 2 << std::endl;
         return ; // Couldn't find stream information
