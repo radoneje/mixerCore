@@ -22,7 +22,16 @@ Ccmd::Ccmd(){
         FFreader.push_back(cfFreader);
     }
 };
-void Ccmd::startReadStream(std::string rtmpURL, int layerNumber ){
+void Ccmd::notifyStreamStarted(int layerNumber){
+    std::cout<< " notifyStreamStarted" << layerNumber<< std::endl;
+};
+void Ccmd::notifyStreamEnded(int layerNumber){
+    std::cout<< " notifyStreamEnded"  << layerNumber << std::endl;
+};
+
+
+void Ccmd::startReadStream(std::string rtmpURL, int layerNumber, vFunctionCall  notifyStreamStarted, vFunctionCall notifyStreamEnded ){
+
     FFreader[layerNumber].dt.width=layerNumber;
 
     std::cout<< "start input " << rtmpURL<<" " << layerNumber<< std::endl;
