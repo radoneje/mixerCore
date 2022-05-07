@@ -80,7 +80,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker, in
             std::cout << "ERROR avformat  " << 2 << std::endl;
             return; // Couldn't find stream information
         }
-
+    std::cout <<"in Worker 4"<<  pData->width << " " <<url << std::endl;
     av_dump_format(ctx_format, 0, fin, false);
 
     for (int i = 0; i < ctx_format->nb_streams; i++) {
