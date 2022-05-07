@@ -76,7 +76,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
             vid_stream = ctx_format->streams[i];
             //break;
         }
-        if (ctx_format->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO && audio_idx<0) {
+        if (ctx_format->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_AUDIO && audio_idx<0) {
             audio_idx = i;
             aud_stream = ctx_format->streams[i];
             //break;
