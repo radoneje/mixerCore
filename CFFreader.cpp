@@ -130,7 +130,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
             ////////////////////////////////////////////////////////////////////////////
             std::lock_guard<std::mutex> lockGuard(*pLocker);
             av_frame_free(&pRGBFrame);
-            *pRGBFrame = av_frame_alloc();
+            pRGBFrame = av_frame_alloc();
             pRGBFrame->format = AV_PIX_FMT_RGB24;
             pRGBFrame->width = ctx_codec->width;
             pRGBFrame->height = ctx_codec->height;
