@@ -76,7 +76,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
             std::cout << "ERROR avformat  " << 2 << std::endl;
             return; // Couldn't find stream information
         }
-        ctx_videoformat = ctx_format;
+        ctx_videoformat = &ctx_format;
     }
     else
         ctx_format=*ctx_videoformat;
