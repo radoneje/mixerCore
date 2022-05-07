@@ -29,7 +29,7 @@ CFFreader::CFFreader(){
     dt.frameNumber=-1;
     dt.numChannels=0;
     dt.pixels=  (unsigned char *) malloc(1 * sizeof(int));
-    dt.ctx_videoformat = nullptr;
+
 
 };
  long CFFreader::nowTime() {
@@ -70,10 +70,16 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     //ctx_format->max_analyze_duration=320000;
     std::cout <<"probesize  " << ctx_format->probesize << " max_analyze_duration "<<ctx_format->max_analyze_duration << std::endl;
 
-    if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
-        std::cout <<"ERROR avformat  " << 2 << std::endl;
-        return ; // Couldn't find stream information
+    if(ctx_videoformat== nullptr) {
+        if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
+            std::cout << "ERROR avformat  " << 2 << std::endl;
+            return; // Couldn't find stream information
+        }
+        ctx_videoformat = ctx_format;
     }
+    else
+        ctx_format=ctx_videoformat;
+
     std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
 
     std::cout << "avformat av_dump_format..." << std::endl;
