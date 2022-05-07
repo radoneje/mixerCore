@@ -131,7 +131,7 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
     // задержка на частоту кадров
     int frameDur = (vid_stream->avg_frame_rate.den * 1000) / vid_stream->avg_frame_rate.num;
     long lastFrameTime = 0;
-
+    std::cout<< "frameDur" <<frameDur  << std::endl;
    // finalFrameData_lock.lock();
     {
         std::lock_guard<std::mutex> lockGuard(*pLocker);
@@ -149,7 +149,7 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
 
 
     while (av_read_frame(ctx_format, pkt) >= 0) {
-
+        std::cout<< "av_read_frame" <<  << std::endl;
 
         if (pkt->stream_index == stream_idx) {
             //Allocate frame for storing image converted to RGB.
@@ -208,7 +208,7 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
                 // задержка на частоту кадров
                 long thisFrameTime = lastFrameTime + frameDur;
                 if (thisFrameTime > nowTime()) {
-                   // std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
+                    std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
                 }
                 lastFrameTime = nowTime();
 
