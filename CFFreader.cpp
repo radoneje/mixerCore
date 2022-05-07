@@ -161,7 +161,6 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 int64_t now = av_gettime_relative();//- frame->start;
 
                 AVFrame *pRGBFrame = av_frame_alloc();
-                pRGBFrame = av_frame_alloc();
                 pRGBFrame->format = AV_PIX_FMT_RGB24;
                 pRGBFrame->width = ctx_codec->width;
                 pRGBFrame->height = ctx_codec->height;
