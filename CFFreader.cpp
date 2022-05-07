@@ -197,9 +197,9 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
 
                     std::cout<<"after malloc"<< std::endl;
-                    std::size_t size=pRGBFrame->width * pRGBFrame->height * pRGBFrame->linesize[0] * sizeof(unsigned char);
+                    std::size_t size=pRGBFrame->width * pRGBFrame->height * (pRGBFrame->linesize[0]/pRGBFrame->width) * sizeof(unsigned char);
                     pData->pixels=(unsigned char *) malloc(size);
-                    std::cout << "Length of array = " << size << " " << pRGBFrame->linesize[0] << std::endl;
+                    std::cout << "Length of array = " << size << " " << pRGBFrame->linesize[0]/pRGBFrame->width << std::endl;
                     memcpy(pData->pixels, pRGBFrame->data[0], size);
                    // pData->pixels = pRGBFrame->data[0];
                     pData->linesize = pRGBFrame->linesize[0];
