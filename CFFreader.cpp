@@ -136,11 +136,11 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
             pRGBFrame->format = AV_PIX_FMT_RGB24;
             pRGBFrame->width = ctx_codec->width;
             pRGBFrame->height = ctx_codec->height;
-           /* int sts = av_frame_get_buffer(pRGBFrame, 0);
+            int sts = av_frame_get_buffer(pRGBFrame, 0);
             if (sts < 0) {
                 std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
                 return ;  //Error!
-            }*/
+            }
 
 
             int ret = avcodec_send_packet(ctx_codec, pkt);
@@ -167,7 +167,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
 
 
-                int sts = sws_scale(sws_ctx,                //struct SwsContext* c,
+                 sts = sws_scale(sws_ctx,                //struct SwsContext* c,
                                 frame->data,            //const uint8_t* const srcSlice[],
                                 frame->linesize,        //const int srcStride[],
                                 0,                      //int srcSliceY,
