@@ -40,6 +40,8 @@ CFFreader::CFFreader(){
 }
 void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//, Data &pData){
     std::cout <<"in Worker"<<  pData->width << " " <<url << std::endl;
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
     AVFormatContext *ctx_format = nullptr;
     AVCodecContext *ctx_codec = nullptr;
     AVCodecContext *ctx_aud_codec = nullptr;
@@ -60,11 +62,13 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         std::cout <<"ERROR avformat  " << 1 << std::endl;
         return ;
     }
+    std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count() << "[µs]" << std::endl;
     std::cout << "avformat finding avformat_find_stream_info..." << std::endl;
-    //av_opt_set_int( ctx_format, "probesize",3200, 0)
+
     //ctx_format->probesize=320000;
     //ctx_format->max_analyze_duration=320000;
     std::cout <<"probesize  " << ctx_format->probesize << " max_analyze_duration "<<ctx_format->max_analyze_duration << std::endl;
+
     if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
         std::cout <<"ERROR avformat  " << 2 << std::endl;
         return ; // Couldn't find stream information
@@ -79,22 +83,14 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
             vid_stream = ctx_format->streams[i];
             //break;
         }
-        if (ctx_format->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_AUDIO && audio_idx<0) {
-            audio_idx = i;
-            aud_stream = ctx_format->streams[i];
-            //break;
-        }
     }
 
     if (vid_stream == nullptr) {
         std::cout<<"ERROR avformat VIDEO " << 4 << std::endl;
         return ;
     }
-    if (aud_stream == nullptr) {
-        std::cout<<"NO AUDIO " << 4 << std::endl;
-        // return ;
-    }
-    std::cout << "audio_idx " << audio_idx <<std::endl;
+
+
     std::cout << " framerate: " << vid_stream->avg_frame_rate.num << " " << vid_stream->avg_frame_rate.den << std::endl;
     std::cout << "avformat avcodec_find_decoder..." << std::endl;
     codec = avcodec_find_decoder(vid_stream->codecpar->codec_id);
@@ -102,35 +98,22 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         std::cout << "ERROR codec not found" << std::endl;
         return ;
     }
-    if(audio_idx>0){
-        aud_codec = avcodec_find_decoder(aud_stream->codecpar->codec_id);
-        if (!aud_codec) {
-            std::cout << "ERROR codec not found" << std::endl;
-            return ;
-        }
-    }
+
 
     std::cout << "avformat avcodec_alloc_context3..." << std::endl;
     ctx_codec = avcodec_alloc_context3(codec);
-    if(audio_idx>0)
-        ctx_aud_codec=avcodec_alloc_context3(aud_codec);
+
 
     if (avcodec_parameters_to_context(ctx_codec, vid_stream->codecpar) < 0)
         std::cout << 512;
 
-    if(audio_idx>0)
-        avcodec_parameters_to_context(ctx_aud_codec, aud_stream->codecpar);
 
     std::cout << "avformat avcodec_open2..." << std::endl;
     if (avcodec_open2(ctx_codec, codec, nullptr) < 0) {
         std::cout << "ERROR avcodec_open2"<< std::endl;
         return ;
     }
-    if(audio_idx>0)
-       if( avcodec_open2(ctx_aud_codec, aud_codec, nullptr)<0){
-           std::cout << "ERROR AUDIO avcodec_open2"<< std::endl;
-           return ;
-       }
+
 
     sws_ctx = sws_getContext(ctx_codec->width,
                              ctx_codec->height,
@@ -167,25 +150,6 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
 
     while (av_read_frame(ctx_format, pkt) >= 0) {
-
-        if (pkt->stream_index == audio_idx) {
-
-            /* int ret = avcodec_send_packet(ctx_aud_codec, pkt);
-             if (ret < 0) {
-                 std::cout << "Error while sending audio packet to the decoder" <<ret <<std::endl;
-                 break;
-             }
-             int got_frame = 0;
-             AVFrame *frame = av_frame_alloc();
-             int ret=avcodec_decode_audio4(ctx_aud_codec, frame, &got_frame, pkt);
-             if (ret < 0) {
-                 std::cout << "Error decoding audio: " <<ret <<std::endl;
-                 av_frame_free(&frame);
-                 continue;
-             }
-             std::cout << "audio frame: " <<ret <<std::endl;
-             av_frame_free(&frame);*/
-        }
 
 
         if (pkt->stream_index == stream_idx) {
