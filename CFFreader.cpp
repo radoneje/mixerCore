@@ -70,7 +70,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     ctx_format->probesize=3200;
    // ctx_format->max_analyze_duration=32000;
     std::cout <<"probesize  " << ctx_format->probesize << " max_analyze_duration "<<ctx_format->max_analyze_duration << std::endl;
-
+    av_dump_format(ctx_format, 0, fin, false);
 
         if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
             std::cout << "ERROR avformat  " << 2 << std::endl;
