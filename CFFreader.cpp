@@ -165,7 +165,8 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     while (av_read_frame(ctx_format, pkt) >= 0) {
         AVStream *st = ctx_format->streams[pkt->stream_index];
         if (/*pkt->stream_index == stream_idx*/st->codecpar->codec_type==AVMEDIA_TYPE_AUDIO) {
-            std::cout << "audio frame: " << std::endl;
+            int data_size = av_get_bytes_per_sample(ctx_format->sample_fmt);
+            std::cout << "audio frame: " <<data_size <<std::endl;
         }
 
 
