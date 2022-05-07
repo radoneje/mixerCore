@@ -94,6 +94,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         std::cout<<"NO AUDIO " << 4 << std::endl;
         // return ;
     }
+    std::cout << "audio_idx " << audio_idx <<std::endl;
     std::cout << " framerate: " << vid_stream->avg_frame_rate.num << " " << vid_stream->avg_frame_rate.den << std::endl;
     std::cout << "avformat avcodec_find_decoder..." << std::endl;
     codec = avcodec_find_decoder(vid_stream->codecpar->codec_id);
