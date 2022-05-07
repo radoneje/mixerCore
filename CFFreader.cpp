@@ -127,7 +127,10 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         return ;
     }
     if(audio_idx>0)
-        avcodec_open2(ctx_aud_codec, aud_codec, nullptr);
+       if( avcodec_open2(ctx_aud_codec, aud_codec, nullptr)<0){
+           std::cout << "ERROR AUDIO avcodec_open2"<< std::endl;
+           return ;
+       }
 
     sws_ctx = sws_getContext(ctx_codec->width,
                              ctx_codec->height,
