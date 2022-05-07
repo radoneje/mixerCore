@@ -42,7 +42,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     AVFormatContext *ctx_format = nullptr;
     AVCodecContext *ctx_codec = nullptr;
     AVCodec *codec = nullptr;
-    AVFrame *frame = av_frame_alloc();
+
     int stream_idx;
     const char *fin =url.c_str();//"/tmp/vcbr.mp4";// url.c_str();;
     AVStream *vid_stream = nullptr;
@@ -127,6 +127,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
             pRGBFrame->width = ctx_codec->width;
             pRGBFrame->height = ctx_codec->height;
             int sts = av_frame_get_buffer(pRGBFrame, 0);
+            AVFrame *frame = av_frame_alloc();
 
             if (sts < 0) {
                 std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
@@ -181,6 +182,8 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 }*/
             }
             av_frame_free(&pRGBFrame);
+            av_frame_free(&frame);
+
         }
     }
     ///////////
