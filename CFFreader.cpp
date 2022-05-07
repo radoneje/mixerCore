@@ -28,9 +28,9 @@ CFFreader::CFFreader(){
     dt.height=0;
     dt.frameNumber=-1;
     dt.numChannels=0;
-    std::cout<<"before constr"<< std::end;
+    std::cout<<"before constr"<< std::endl;
     dt.pixels=  (unsigned char *) malloc(5 * sizeof(int));
-    std::cout<<"after constr"<< std::end;
+    std::cout<<"after constr"<< std::endl;
 
 };
  long CFFreader::nowTime() {
@@ -191,11 +191,11 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                     std::lock_guard<std::mutex> lockGuard(*pLocker);
                     pData->width = pRGBFrame->width;
                     pData->height = pRGBFrame->height;
-                    std::cout<<"before free"<< std::end;
+                    std::cout<<"before free"<< std::endl;
                     free(pData->pixels);
-                    std::cout<<"before malloc "<< std::end;
+                    std::cout<<"before malloc "<< std::endl;
                     pData->pixels=(unsigned char *) malloc(pRGBFrame->width * pRGBFrame->height * sizeof(unsigned char));
-                    std::cout<<"after malloc"<< std::end;
+                    std::cout<<"after malloc"<< std::endl;
                     pData->pixels = pRGBFrame->data[0];
                     pData->linesize = pRGBFrame->linesize[0];
                     pData->frameNumber = ctx_codec->frame_number;
@@ -210,8 +210,8 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     ///////////
     {
         std::lock_guard<std::mutex> lockGuard(*pLocker);
-        if(pData->width>720 && pData->width<1921)
-            free(pData->pixels);
+      //  if(pData->width>720 && pData->width<1921)
+       //     free(pData->pixels);
         pData->width = 0;
         pData->height = 0;
         pData->frameNumber = -1;
