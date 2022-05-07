@@ -167,7 +167,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
 
 
-                sts = sws_scale(sws_ctx,                //struct SwsContext* c,
+                int sts = sws_scale(sws_ctx,                //struct SwsContext* c,
                                 frame->data,            //const uint8_t* const srcSlice[],
                                 frame->linesize,        //const int srcStride[],
                                 0,                      //int srcSliceY,
