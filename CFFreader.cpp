@@ -162,7 +162,19 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     //////////
     while (av_read_frame(ctx_format, pkt) >= 0) {
         if (pkt->stream_index == audio_idx){
-            std::cout<<"read audio packet"<<std::endl;
+
+            AVPacket *aud_pkt = av_packet_alloc();
+            int ret = avcodec_send_packet(ctx_aud_codec, aud_pkt);
+            if (ret < 0 || ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
+                std::cout << "avcodec_send_packet AUDIO: " << ret << " " << AVERROR(EAGAIN) << " " << AVERROR_EOF<<std::endl;
+                break;
+            }
+            while (ret >= 0) {
+                std::cout<<"read audio frame"<<std::endl;
+            }
+
+            av_packet_unref(aud_pkt);
+
         }
         if (pkt->stream_index == stream_idx) {
             //Allocate frame for storing image converted to RGB.
