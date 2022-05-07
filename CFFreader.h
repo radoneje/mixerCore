@@ -18,6 +18,7 @@ public:
         int numChannels;
         int linesize;
         long frameNumber;
+        int layer;
        // AVFormatContext *ctx_videoformat;// = nullptr;
     };
 public:

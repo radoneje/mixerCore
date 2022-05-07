@@ -30,6 +30,7 @@ CFFreader::CFFreader(){
     dt.height=0;
     dt.frameNumber=-1;
     dt.numChannels=0;
+    dt.layer=-1;
     dt.pixels=  (unsigned char *) malloc(1 * sizeof(int));
 
 
@@ -61,7 +62,7 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
     AVPacket *pkt = av_packet_alloc();
     int ret;
 
-    std::cout <<"in Worker00"<<  pData->width << " " <<url << std::endl;
+
 
     struct SwsContext *sws_ctx = NULL;
 
@@ -69,6 +70,7 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
         std::cout <<"ERROR avformat  " << 1 << std::endl;
         return ;
     }
+    std::cout <<"in Worker01"<<  pData->width << " " <<url << std::endl;
 
     ctx_format->probesize=100000;
    // ctx_format->max_analyze_duration=32000;

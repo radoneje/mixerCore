@@ -33,7 +33,7 @@ void Ccmd::notifyStreamEnded(int layerNumber){
 void Ccmd::startReadStream(std::string rtmpURL, int layerNumber, vFunctionCall  notifyStreamStarted, vFunctionCall notifyStreamEnded ){
 
     FFreader[layerNumber].dt.width=layerNumber;
-
+    FFreader[layerNumber].dt.layer=layerNumber;
     std::cout<< "start input " << rtmpURL<<" " << layerNumber<< std::endl;
     std::cout<< "start  " << (FFreader[layerNumber].dt.width) <<" " << layerNumber<< std::endl;
    // worker.work(rtmpURL);
