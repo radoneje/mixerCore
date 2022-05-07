@@ -129,7 +129,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
             //Allocate frame for storing image converted to RGB.
             ////////////////////////////////////////////////////////////////////////////
 
-            int sts = av_frame_get_buffer(pRGBFrame, 0);
+
 
             AVFrame *frame = av_frame_alloc();
 
@@ -164,6 +164,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 pRGBFrame->format = AV_PIX_FMT_RGB24;
                 pRGBFrame->width = ctx_codec->width;
                 pRGBFrame->height = ctx_codec->height;
+                int sts = av_frame_get_buffer(pRGBFrame, 0);
 
                 sts = sws_scale(sws_ctx,                //struct SwsContext* c,
                                 frame->data,            //const uint8_t* const srcSlice[],
