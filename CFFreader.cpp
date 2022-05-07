@@ -190,6 +190,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                     pData->width = pRGBFrame->width;
                     pData->height = pRGBFrame->height;
                     free(pData->pixels);
+                    pData->pixels=(unsigned char *) malloc(pRGBFrame->width * pRGBFrame->height * sizeof(unsigned char));
                     pData->pixels = pRGBFrame->data[0];
                     pData->linesize = pRGBFrame->linesize[0];
                     pData->frameNumber = ctx_codec->frame_number;
