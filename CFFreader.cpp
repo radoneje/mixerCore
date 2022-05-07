@@ -58,12 +58,13 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         std::cout <<"ERROR avformat  " << 1 << std::endl;
         return ;
     }
-    std::cout << "avformat finding codec..." << std::endl;
+    std::cout << "avformat finding avformat_find_stream_info..." << std::endl;
     if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
         std::cout <<"ERROR avformat  " << 2 << std::endl;
         return ; // Couldn't find stream information
     }
 
+    std::cout << "avformat av_dump_format..." << std::endl;
     av_dump_format(ctx_format, 0, fin, false);
 
     for (int i = 0; i < ctx_format->nb_streams; i++)
@@ -78,15 +79,18 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         return ;
     }
     std::cout << " framerate: " << vid_stream->avg_frame_rate.num << " " << vid_stream->avg_frame_rate.den << std::endl;
+    std::cout << "avformat avcodec_find_decoder..." << std::endl;
     codec = avcodec_find_decoder(vid_stream->codecpar->codec_id);
     if (!codec) {
         std::cout << "ERROR codec not found" << std::endl;
         return ;
     }
+    std::cout << "avformat avcodec_alloc_context3..." << std::endl;
     ctx_codec = avcodec_alloc_context3(codec);
 
     if (avcodec_parameters_to_context(ctx_codec, vid_stream->codecpar) < 0)
         std::cout << 512;
+    std::cout << "avformat avcodec_open2..." << std::endl;
     if (avcodec_open2(ctx_codec, codec, nullptr) < 0) {
         std::cout << "ERROR avcodec_open2"<< std::endl;
         return ;
