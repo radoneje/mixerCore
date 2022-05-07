@@ -76,10 +76,10 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
             std::cout << "ERROR avformat  " << 2 << std::endl;
             return; // Couldn't find stream information
         }
-        ctx_videoformat = &ctx_format;
+        ctx_videoformat = ctx_format;
     }
     else
-        ctx_format=&ctx_videoformat;
+        ctx_format=ctx_videoformat;
 
     std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
 
