@@ -62,7 +62,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         std::cout <<"ERROR avformat  " << 1 << std::endl;
         return ;
     }
-    std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count() << "[µs]" << std::endl;
+    std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[µs]" << std::endl;
     std::cout << "avformat finding avformat_find_stream_info..." << std::endl;
 
     //ctx_format->probesize=320000;
