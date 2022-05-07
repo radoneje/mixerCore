@@ -163,10 +163,19 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
 
     while (av_read_frame(ctx_format, pkt) >= 0) {
-        AVStream *st = ctx_format->streams[pkt->stream_index];
+
         if (/*pkt->stream_index == stream_idx*/st->codecpar->codec_type==AVMEDIA_TYPE_AUDIO) {
-            int data_size = av_get_bytes_per_sample(ctx_format->sample_fmt);
-            std::cout << "audio frame: " <<data_size <<std::endl;
+
+            int got_frame = 0;
+            AVFrame *frame = av_frame_alloc();
+            int ret=avcodec_decode_audio4(ctx_aud_codec, frame, &got_frame, &pkt);
+            if (ret < 0) {
+                std::cout << "Error decoding audio: " <<ret <<std::endl;
+                av_frame_free(&frame);
+                continue;
+            }
+            std::cout << "audio frame: " <<ret <<std::endl;
+            av_frame_free(&frame);
         }
 
 
