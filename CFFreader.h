@@ -5,7 +5,6 @@
 #ifndef MIXERCORE_CFFREADER_H
 #define MIXERCORE_CFFREADER_H
 #include <libavformat/avformat.h>
-#include "Ccmd.h"
 
 class CFFreader {
 private:
@@ -24,6 +23,7 @@ public:
     static  int tmp;
     CFFreader();
     Data dt;
+
     static void work(const std::string url, Data  *pData , std::mutex *pLocker);
 };
 
