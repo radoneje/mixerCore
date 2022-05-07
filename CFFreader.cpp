@@ -118,7 +118,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         std::cout << 512;
 
     if(audio_idx>0)
-        avcodec_parameters_to_context(ctx_aud_codec, aud_stream->codecpar)
+        avcodec_parameters_to_context(ctx_aud_codec, aud_stream->codecpar);
 
     std::cout << "avformat avcodec_open2..." << std::endl;
     if (avcodec_open2(ctx_codec, codec, nullptr) < 0) {
