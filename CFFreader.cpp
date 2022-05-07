@@ -61,7 +61,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker, in
     AVPacket *pkt = av_packet_alloc();
     int ret;
 
-    std::cout <<"in Worker 2"<<  pData->width << " " <<url << std::endl;
+
 
     struct SwsContext *sws_ctx = NULL;
 
@@ -72,6 +72,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker, in
 
     ctx_format->probesize=100000;
    // ctx_format->max_analyze_duration=32000;
+    std::cout <<"in Worker 3"<<  pData->width << " " <<url << std::endl;
     std::cout <<"probesize  " << ctx_format->probesize << " max_analyze_duration "<<ctx_format->max_analyze_duration << std::endl;
 
 
