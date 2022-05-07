@@ -22,6 +22,7 @@ extern "C" {
 }
 
 #include "CFFreader.h"
+#include "CConfig.h"
 
 
 CFFreader::CFFreader(){
@@ -43,6 +44,7 @@ CFFreader::CFFreader(){
 }
 void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker, int layerNumber){//, Data &pData){
     std::cout <<"in Worker"<<  pData->width << " " <<url << std::endl;
+
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
     AVFormatContext *ctx_format = nullptr;
@@ -201,7 +203,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker, in
                 // задержка на частоту кадров
                 long thisFrameTime = lastFrameTime + frameDur;
                 if (thisFrameTime > nowTime()) {
-                    std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
+                  //  std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
                 }
                 lastFrameTime = nowTime();
 
