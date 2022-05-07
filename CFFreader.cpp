@@ -176,7 +176,8 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                     //std::cout << "avcodec_receive_frame: " << ret << std::endl;
                     break;
                 }
-                /std::cout << "avcodec_receive_frame: " << aud_frame->size << std::endl;
+                int data_size = av_get_bytes_per_sample(ctx_aud_codec->sample_fmt);
+                std::cout << "avcodec_receive_frame: " << data_size<< std::endl;
                 av_frame_free(&aud_frame);
                 std::cout<<"read audio frame"<<std::endl;
             }
