@@ -119,11 +119,8 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
     int ii = 0;
     std::cout<< "av_lib ready to the read" << std::endl;
-    AVFrame *pRGBFrame = av_frame_alloc();
-    pRGBFrame->format = AV_PIX_FMT_RGB24;
-    pRGBFrame->width = ctx_codec->width;
-    pRGBFrame->height = ctx_codec->height;
-    int sts = av_frame_get_buffer(pRGBFrame, 0);
+
+
 
     //////////
     while (av_read_frame(ctx_format, pkt) >= 0) {
@@ -132,11 +129,6 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
             //Allocate frame for storing image converted to RGB.
             ////////////////////////////////////////////////////////////////////////////
 
-            av_frame_free(&pRGBFrame);
-            pRGBFrame = av_frame_alloc();
-            pRGBFrame->format = AV_PIX_FMT_RGB24;
-            pRGBFrame->width = ctx_codec->width;
-            pRGBFrame->height = ctx_codec->height;
             int sts = av_frame_get_buffer(pRGBFrame, 0);
 
             AVFrame *frame = av_frame_alloc();
@@ -168,6 +160,12 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 int64_t pts = av_rescale(frame->pts, 1000000, AV_TIME_BASE);
                 int64_t now = av_gettime_relative();//- frame->start;
 
+                AVFrame *pRGBFrame = av_frame_alloc();
+                pRGBFrame = av_frame_alloc();
+                pRGBFrame->format = AV_PIX_FMT_RGB24;
+                pRGBFrame->width = ctx_codec->width;
+                pRGBFrame->height = ctx_codec->height;
+
                 sts = sws_scale(sws_ctx,                //struct SwsContext* c,
                                 frame->data,            //const uint8_t* const srcSlice[],
                                 frame->linesize,        //const int srcStride[],
@@ -191,21 +189,15 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                     std::lock_guard<std::mutex> lockGuard(*pLocker);
                     pData->width = pRGBFrame->width;
                     pData->height = pRGBFrame->height;
-                    std::cout<<"before free"<< std::endl;
                     free(pData->pixels);
-                    std::cout<<"before malloc "<< std::endl;
-
-
-                    std::cout<<"after malloc"<< std::endl;
                     std::size_t size=pRGBFrame->width * pRGBFrame->height * (pRGBFrame->linesize[0]/pRGBFrame->width) * sizeof(unsigned char);
                     pData->pixels=(unsigned char *) malloc(size);
-                    std::cout << "Length of array = " << size << " " << pRGBFrame->linesize[0]/pRGBFrame->width << std::endl;
                     memcpy(pData->pixels, pRGBFrame->data[0], size);
-                   // pData->pixels = pRGBFrame->data[0];
                     pData->linesize = pRGBFrame->linesize[0];
                     pData->frameNumber = ctx_codec->frame_number;
 
                 }
+                av_frame_free(&pRGBFrame);
             }
 
             av_frame_free(&frame);
