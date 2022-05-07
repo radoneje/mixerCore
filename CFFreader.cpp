@@ -166,7 +166,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
             AVPacket *aud_pkt = av_packet_alloc();
             int ret = avcodec_send_packet(ctx_aud_codec, aud_pkt);
             if (ret < 0 || ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
-                std::cout << "avcodec_send_packet AUDIO: " << ret << " " << AVERROR(EAGAIN) << " " << AVERROR_EOF<<std::endl;
+              //  std::cout << "avcodec_send_packet AUDIO: " << ret << " " << AVERROR(EAGAIN) << " " << AVERROR_EOF<<std::endl;
             }
 
             while (ret >= 0) {
