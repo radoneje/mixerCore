@@ -22,6 +22,7 @@ extern "C" {
 }
 
 #include "CFFreader.h"
+#include "Ccmd.h"
 
 CFFreader::CFFreader(){
     dt.width=0;
@@ -40,7 +41,7 @@ CFFreader::CFFreader(){
     );
     return ms.count();
 }
-void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//, Data &pData){
+void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker, Ccmd *pCmd){//, Data &pData){
     std::cout <<"in Worker"<<  pData->width << " " <<url << std::endl;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
