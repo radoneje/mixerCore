@@ -208,7 +208,7 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
                 // задержка на частоту кадров
                 long thisFrameTime = lastFrameTime + frameDur;
                 if (thisFrameTime > nowTime()) {
-                    std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
+                   // std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
                 }
                 lastFrameTime = nowTime();
 
