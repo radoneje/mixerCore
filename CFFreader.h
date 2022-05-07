@@ -23,7 +23,7 @@ public:
     static  int tmp;
     CFFreader();
     Data dt;
-    static AVFormatContext *ctx_videoformat;// = nullptr;
+    static AVFormatContext **ctx_videoformat;// = nullptr;
     static void work(const std::string url, Data  *pData , std::mutex *pLocker);
 };
 
