@@ -80,6 +80,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     }
     else
         ctx_format=*ctx_videoformat;
+    std::cout<< "video_codec_id "<< ctx_format->video_codec_id<<std::endl;
 
     std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
 
