@@ -22,7 +22,7 @@ extern "C" {
 }
 
 #include "CFFreader.h"
-#include "Ccmd.h"
+
 
 CFFreader::CFFreader(){
     dt.width=0;
