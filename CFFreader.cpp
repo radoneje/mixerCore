@@ -160,34 +160,11 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
 
     //////////
-    while (av_read_frame(ctx_format, pkt) >= 0) {
-        if (pkt->stream_index == audio_idx){
 
-            AVPacket *aud_pkt = av_packet_alloc();
-            int ret = avcodec_send_packet(ctx_aud_codec, aud_pkt);
-            if (ret < 0 || ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
-                //  std::cout << "avcodec_send_packet AUDIO: " << ret << " " << AVERROR(EAGAIN) << " " << AVERROR_EOF<<std::endl;
-            }
-
-            while (ret >= 0) {
-                AVFrame *aud_frame = av_frame_alloc();
-                ret = avcodec_receive_frame(ctx_aud_codec, aud_frame);
-                if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
-                    //std::cout << "avcodec_receive_frame: " << ret << std::endl;
-                    break;
-                }
-                int data_size = av_get_bytes_per_sample(ctx_aud_codec->sample_fmt);
-                std::cout << "avcodec_receive_frame: " << data_size<< std::endl;
-                av_frame_free(&aud_frame);
-                std::cout<<"read audio frame"<<std::endl;
-            }
-
-            av_packet_unref(aud_pkt);
-
-        }
-    }
 
     while (av_read_frame(ctx_format, pkt) >= 0) {
+
+        AVStream *st = ctx_format->streams[pkt->stream_index];
 
         if (pkt->stream_index == stream_idx) {
             //Allocate frame for storing image converted to RGB.
