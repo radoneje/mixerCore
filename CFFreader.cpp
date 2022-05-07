@@ -128,6 +128,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         if (pkt->stream_index == stream_idx) {
             //Allocate frame for storing image converted to RGB.
             ////////////////////////////////////////////////////////////////////////////
+            std::lock_guard<std::mutex> lockGuard(*pLocker);
             av_frame_free(&pRGBFrame);
             *pRGBFrame = av_frame_alloc();
             pRGBFrame->format = AV_PIX_FMT_RGB24;
@@ -151,7 +152,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 break;
             }
             while (ret >= 0) {
-                std::lock_guard<std::mutex> lockGuard(*pLocker);
+
 
                 ret = avcodec_receive_frame(ctx_codec, frame);
                 if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
