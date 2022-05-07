@@ -25,7 +25,7 @@ public:
     CFFreader();
     Data dt;
 
-    static void work(const std::string url, Data  *pData , std::mutex *pLocker);
+    static void work(const std::string url, Data  *pData , std::mutex *pLocker, int layerNumber);
 };
 
 
