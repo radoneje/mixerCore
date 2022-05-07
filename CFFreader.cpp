@@ -62,7 +62,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         std::cout <<"ERROR avformat  " << 1 << std::endl;
         return ;
     }
-    std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[µs]" << std::endl;
+    std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
     std::cout << "avformat finding avformat_find_stream_info..." << std::endl;
 
     //ctx_format->probesize=320000;
@@ -73,6 +73,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         std::cout <<"ERROR avformat  " << 2 << std::endl;
         return ; // Couldn't find stream information
     }
+    std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
 
     std::cout << "avformat av_dump_format..." << std::endl;
     av_dump_format(ctx_format, 0, fin, false);
@@ -90,6 +91,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         return ;
     }
 
+    std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
 
     std::cout << " framerate: " << vid_stream->avg_frame_rate.num << " " << vid_stream->avg_frame_rate.den << std::endl;
     std::cout << "avformat avcodec_find_decoder..." << std::endl;
@@ -98,6 +100,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         std::cout << "ERROR codec not found" << std::endl;
         return ;
     }
+    std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
 
 
     std::cout << "avformat avcodec_alloc_context3..." << std::endl;
@@ -113,6 +116,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         std::cout << "ERROR avcodec_open2"<< std::endl;
         return ;
     }
+    std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
 
 
     sws_ctx = sws_getContext(ctx_codec->width,
@@ -143,6 +147,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
     int ii = 0;
     std::cout<< "av_lib ready to the read" << std::endl;
+    std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
 
 
 
