@@ -32,7 +32,7 @@ CFFreader::CFFreader(){
 
 
 };
-AVFormatContext **CFFreader::ctx_videoformat = nullptr;
+
  long CFFreader::nowTime() {
     using namespace std::chrono;
     milliseconds ms = duration_cast<milliseconds>(
@@ -67,19 +67,18 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
     std::cout << "avformat finding avformat_find_stream_info..." << std::endl;
 
-    //ctx_format->probesize=320000;
-    //ctx_format->max_analyze_duration=320000;
+    ctx_format->probesize=32;
+    ctx_format->max_analyze_duration=32;
     std::cout <<"probesize  " << ctx_format->probesize << " max_analyze_duration "<<ctx_format->max_analyze_duration << std::endl;
 
-    if(ctx_videoformat== nullptr) {
+
         if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
             std::cout << "ERROR avformat  " << 2 << std::endl;
             return; // Couldn't find stream information
         }
-        ctx_videoformat = &ctx_format;
-    }
-    else
-        ctx_format=*ctx_videoformat;
+
+
+
     std::cout<< "video_codec_id "<< ctx_format->video_codec_id<<std::endl;
 
     std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
