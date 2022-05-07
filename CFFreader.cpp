@@ -48,7 +48,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     AVStream *vid_stream = nullptr;
     AVPacket *pkt = av_packet_alloc();
     int ret;
-    int sts;
+
     struct SwsContext *sws_ctx = NULL;
 
     if (int ret = avformat_open_input(&ctx_format, fin, nullptr, nullptr) != 0) {
@@ -99,20 +99,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                              NULL,
                              NULL);
     std::cout << 94 << std::endl;
-    //Allocate frame for storing image converted to RGB.
-    ////////////////////////////////////////////////////////////////////////////
-    AVFrame *pRGBFrame = av_frame_alloc();
 
-    pRGBFrame->format = AV_PIX_FMT_RGB24;
-    pRGBFrame->width = ctx_codec->width;
-    pRGBFrame->height = ctx_codec->height;
-
-    sts = av_frame_get_buffer(pRGBFrame, 0);
-
-    if (sts < 0) {
-        std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
-        return ;  //Error!
-    }
 
     // задержка на частоту кадров
     int frameDur = (vid_stream->avg_frame_rate.den * 1000) / vid_stream->avg_frame_rate.num;
@@ -133,7 +120,18 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     while (av_read_frame(ctx_format, pkt) >= 0) {
 
         if (pkt->stream_index == stream_idx) {
+            //Allocate frame for storing image converted to RGB.
+            ////////////////////////////////////////////////////////////////////////////
+            AVFrame *pRGBFrame = av_frame_alloc();
+            pRGBFrame->format = AV_PIX_FMT_RGB24;
+            pRGBFrame->width = ctx_codec->width;
+            pRGBFrame->height = ctx_codec->height;
+            int sts = av_frame_get_buffer(pRGBFrame, 0);
 
+            if (sts < 0) {
+                std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
+                return ;  //Error!
+            }
 
             int ret = avcodec_send_packet(ctx_codec, pkt);
             if (ret < 0 || ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
@@ -142,6 +140,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 break;
             }
             while (ret >= 0) {
+
                 ret = avcodec_receive_frame(ctx_codec, frame);
                 if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
                     //std::cout << "avcodec_receive_frame: " << ret << std::endl;
@@ -170,22 +169,18 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                     std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
                 }
                 lastFrameTime = nowTime();
-                //char buf[1024];
-                //snprintf(buf, sizeof(buf), "/var/www/video-broadcast.space/%s%03d.ppm", "", ctx_codec->frame_number);
-                //ppm_save(pRGBFrame->data[0], pRGBFrame->linesize[0], pRGBFrame->width, pRGBFrame->height, buf);
+                /*
                 {
                     std::lock_guard<std::mutex> lockGuard(*pLocker);
-                   //if(pData->width>720 && pData->width<1921)
-                    //   free(pData->pixels);
-                  /*  pData->width = pRGBFrame->width;
+                    pData->width = pRGBFrame->width;
                     pData->height = pRGBFrame->height;
                     pData->pixels = pRGBFrame->data[0];
                     pData->linesize = pRGBFrame->linesize[0];
-                    pData->frameNumber = ctx_codec->frame_number;*/
-                   // std::cout<< "read frame " << pData->frameNumber << " " << ii<< std::endl;
-                }
-            }
+                    pData->frameNumber = ctx_codec->frame_number;
 
+                }*/
+            }
+            av_frame_free(&pRGBFrame);
         }
     }
     ///////////
@@ -200,7 +195,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     std::this_thread::sleep_for(std::chrono::milliseconds(frameDur));
 
     av_packet_unref(pkt);
-    av_frame_free(&pRGBFrame);
+
     avcodec_free_context(&ctx_codec);
     avformat_close_input(&ctx_format);
 
