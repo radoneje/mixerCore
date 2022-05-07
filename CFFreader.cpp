@@ -136,8 +136,10 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
 
             int ret = avcodec_send_packet(ctx_codec, pkt);
             if (ret < 0 || ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
-                std::cout << "avcodec_send_packet: " << ret << " " << AVERROR(EAGAIN) << " " << AVERROR_EOF
+                std::cout << "avcodec_send_packet: " << ret << " " << AVERROR(EAGAIN) << " " << AVERROR_EOF<<std::endl;
                           << std::endl;
+                av_frame_free(&pRGBFrame);
+                av_frame_free(&frame);
                 break;
             }
             while (ret >= 0) {
@@ -145,8 +147,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                 ret = avcodec_receive_frame(ctx_codec, frame);
                 if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
                     //std::cout << "avcodec_receive_frame: " << ret << std::endl;
-                    av_frame_free(&pRGBFrame);
-                    av_frame_free(&frame);
+
                     break;
                 }
                 ii++;
@@ -172,7 +173,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                     std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
                 }
                 lastFrameTime = nowTime();
-                /*
+
                 {
                     std::lock_guard<std::mutex> lockGuard(*pLocker);
                     pData->width = pRGBFrame->width;
@@ -181,7 +182,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
                     pData->linesize = pRGBFrame->linesize[0];
                     pData->frameNumber = ctx_codec->frame_number;
 
-                }*/
+                }
             }
             av_frame_free(&pRGBFrame);
             av_frame_free(&frame);
