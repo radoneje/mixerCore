@@ -43,6 +43,7 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     AVFormatContext *ctx_format = nullptr;
     AVCodecContext *ctx_codec = nullptr;
     AVCodec *codec = nullptr;
+    AVCodec *aud_codec = nullptr;
 
     int stream_idx=-1;
     int audio_idx=-1;
@@ -99,6 +100,14 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
         std::cout << "ERROR codec not found" << std::endl;
         return ;
     }
+    if(audio_idx>0){
+        aud_codec = avcodec_find_decoder(aud_stream_stream->codecpar->codec_id);
+        if (!aud_codec) {
+            std::cout << "ERROR codec not found" << std::endl;
+            return ;
+        }
+    }
+
     std::cout << "avformat avcodec_alloc_context3..." << std::endl;
     ctx_codec = avcodec_alloc_context3(codec);
 
