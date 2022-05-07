@@ -211,7 +211,7 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
                     std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
                 }
                 lastFrameTime = nowTime();
-                std::cout<< "av_read_frame: "   << ii << std::endl;
+               // std::cout<< "av_read_frame: "   << ii << std::endl;
                 {
                     std::lock_guard<std::mutex> lockGuard(*pLocker);
                     pData->width = pRGBFrame->width;
