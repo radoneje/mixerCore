@@ -28,9 +28,7 @@ CFFreader::CFFreader(){
     dt.height=0;
     dt.frameNumber=-1;
     dt.numChannels=0;
-    std::cout<<"before constr"<< std::endl;
-    dt.pixels=  (unsigned char *) malloc(5 * sizeof(int));
-    std::cout<<"after constr"<< std::endl;
+    dt.pixels=  (unsigned char *) malloc(1 * sizeof(int));
 
 };
  long CFFreader::nowTime() {
@@ -46,9 +44,11 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     AVCodecContext *ctx_codec = nullptr;
     AVCodec *codec = nullptr;
 
-    int stream_idx;
+    int stream_idx=-1;
+    int audio_idx=-1;
     const char *fin =url.c_str();//"/tmp/vcbr.mp4";// url.c_str();;
     AVStream *vid_stream = nullptr;
+    AVStream *aud_stream = nullptr;
     AVPacket *pkt = av_packet_alloc();
     int ret;
 
@@ -70,16 +70,26 @@ void CFFreader::work(const std::string url, Data *pData, std::mutex *pLocker){//
     std::cout << "avformat av_dump_format..." << std::endl;
     av_dump_format(ctx_format, 0, fin, false);
 
-    for (int i = 0; i < ctx_format->nb_streams; i++)
-        if (ctx_format->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
+    for (int i = 0; i < ctx_format->nb_streams; i++) {
+        if (ctx_format->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO && stream_idx<0) {
             stream_idx = i;
             vid_stream = ctx_format->streams[i];
-            break;
+            //break;
         }
+        if (ctx_format->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO && audio_idx<0) {
+            audio_idx = i;
+            aud_stream = ctx_format->streams[i];
+            //break;
+        }
+    }
 
     if (vid_stream == nullptr) {
-        std::cout<<"ERROR avformat  " << 4 << std::endl;
+        std::cout<<"ERROR avformat VIDEO " << 4 << std::endl;
         return ;
+    }
+    if (aud_stream == nullptr) {
+        std::cout<<"NO AUDIO " << 4 << std::endl;
+        // return ;
     }
     std::cout << " framerate: " << vid_stream->avg_frame_rate.num << " " << vid_stream->avg_frame_rate.den << std::endl;
     std::cout << "avformat avcodec_find_decoder..." << std::endl;
