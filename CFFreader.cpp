@@ -28,6 +28,7 @@ CFFreader::CFFreader(){
     dt.height=0;
     dt.frameNumber=-1;
     dt.numChannels=0;
+    dt.pixels=  (unsigned char *) malloc(5 * sizeof(int));
 
 };
  long CFFreader::nowTime() {
