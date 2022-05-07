@@ -5,7 +5,7 @@
 #ifndef MIXERCORE_CFFREADER_H
 #define MIXERCORE_CFFREADER_H
 #include <libavformat/avformat.h>
-#include "Ccmd.h"
+
 
 class CFFreader {
 private:

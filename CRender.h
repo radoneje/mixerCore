@@ -15,7 +15,7 @@
 ///
 #include <GL/glut.h>
 #include "CTextureData.h"
-
+#include "Ccmd.h"
 
 /*class sTextureImage {
 public:
