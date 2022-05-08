@@ -45,6 +45,8 @@ cd /var/www/mixerCore/build
 ./run
 ####ctrl+a+D exit screen
 
+https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#ubuntu-installation
+
 
 
 
