@@ -132,9 +132,11 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
                              NULL);
     std::cout << 94 << std::endl;
 
-    std::cout << "95: " <<vid_stream->avg_frame_rate << " "<< vid_stream->avg_frame_rate.num<<std::endl;
+
     // задержка на частоту кадров
-    int frameDur = (vid_stream->avg_frame_rate.den * 1000) / vid_stream->avg_frame_rate.num;
+    int frameDur=100/6;
+    if(vid_stream->avg_frame_rate.num>0)
+     frameDur = (vid_stream->avg_frame_rate.den * 1000) / vid_stream->avg_frame_rate.num;
     long lastFrameTime = 0;
     std::cout<< "frameDur" <<frameDur  << std::endl;
    // finalFrameData_lock.lock();
