@@ -19,7 +19,7 @@ extern "C" {
 #include <libavutil/opt.h>
 #include <libavutil/time.h>
 #include <libswscale/swscale.h>
-#include <libswscale/internal.h>
+
 }
 
 #include "CFFreader.h"
@@ -110,7 +110,7 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
 
     if (avcodec_parameters_to_context(ctx_codec, vid_stream->codecpar) < 0)
         std::cout << 512 << ctx_codec->pix_fmt << std::endl;
-    ctx_codec->hwaccel = ff_find_hwaccel(ctx_codec->codec->id, ctx_codec->pix_fmt);
+   // ctx_codec->hwaccel = ff_find_hwaccel(ctx_codec->codec->id, ctx_codec->pix_fmt);
 
     std::cout << 514 << ctx_codec->hwaccel << std::endl;
 
