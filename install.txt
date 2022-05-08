@@ -1,0 +1,38 @@
+Visit https://cmake.org/download/ and download the latest bash script. (https://github.com/Kitware/CMake/releases/download/v3.23.1/cmake-3.23.1-linux-x86_64.sh)
+cd /opt/
+wget https://github.com/Kitware/CMake/releases/download/v3.23.1/cmake-3.23.1-linux-x86_64.sh
+chmod +x /opt/cmake-3.23.1-linux-x86_64.sh
+/opt/cmake-3.23.1-linux-x86_64.sh
+ln -s /opt/cmake-3.23.1-linux-x86_64/bin/* /usr/local/bin
+apt install build-essential
+apt install xorg-dev libglu1-mesa-dev
+apt install -y libavcodec-dev libavformat-dev libavdevice-dev libavfilter-dev
+apt-get install freeglut3-dev
+apt-get install libsoil-dev
+apt  install xvfb
+apt install joe
+joe /var/www/mixerCore/build/run
+    //////
+        export DISPLAY=:1
+        cd /var/www/mixerCore/
+        git pull
+        cd /var/www/mixerCore/build
+        cmake ..
+        make all
+        /var/www/mixerCore/build/mixerCoreroot@vps08154:/var/www/mixerCore#
+    /////
+chmod 777  /var/www/mixerCore/build/run
+cd /var/www/mixerCore/build/
+cmake ..
+make
+mkdir /etc/mixerCore/
+joe /etc/mixerCore/mixerCore.conf
+//////////                                                                                                                                                     Row 4    Col 1
+window = MixerCore
+windowW = 1280
+windowH =720
+callBackUrl=http://localhost:3000/
+//////////
+
+
+
