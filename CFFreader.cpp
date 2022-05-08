@@ -134,7 +134,7 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
 
 
     // задержка на частоту кадров
-    int frameDur=100/6;
+    int frameDur=0;
     if(vid_stream->avg_frame_rate.num>0)
      frameDur = (vid_stream->avg_frame_rate.den * 1000) / vid_stream->avg_frame_rate.num;
     long lastFrameTime = 0;
