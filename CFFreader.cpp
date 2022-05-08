@@ -111,6 +111,9 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
         std::cout << 512 << ctx_codec->pix_fmt << std::endl;
     ctx_codec->hwaccel = ff_find_hwaccel(ctx_codec->codec->id, ctx_codec->pix_fmt);
 
+    std::cout << 514 << ctx_codec->hwaccel << std::endl;
+
+
     if (avcodec_open2(ctx_codec, codec, nullptr) < 0) {
         std::cout << "ERROR avcodec_open2"<< std::endl;
         return ;
