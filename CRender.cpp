@@ -176,9 +176,7 @@ void CRender::Idle() {
                                   pCmd->FFreader[i].dt.height, GL_RGB, GL_UNSIGNED_BYTE,
                                   pCmd->FFreader[i].dt.pixels);
             }
-            int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
-            if(timeDiff>80)
-                std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
+
         }
 
 
@@ -222,6 +220,9 @@ void CRender::Idle() {
         cell++;
     }
 
+    int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
+    if(timeDiff>80)
+        std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
      std::cout<<"idle ";
      return;
 
@@ -331,7 +332,7 @@ void CRender::Idle() {
       //  pCmd->locker.unlock();
     glutSwapBuffers();
     glFlush();
-    int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
+    //int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
     if(timeDiff>80)
         std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
 
