@@ -54,15 +54,15 @@ void CHttp::init(int port, Ccmd *pCmd){
         myfile.open (fileName);
         myfile << file.content;
         myfile.close();
-        std::string jsonResponce("{\"error\":false, \"presFileId\":\""+imageid+"\"}");
-        res.set_content(jsonResponce, "application/json");
+
 
         pCmd->loadPresImage(fileName, imageid);
 
         std::remove(fileName.c_str());
         int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
         std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
-
+        std::string jsonResponce("{\"error\":false, \"presFileId\":\""+imageid+"\"}");
+        res.set_content(jsonResponce, "application/json");
 
     });
     svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {
