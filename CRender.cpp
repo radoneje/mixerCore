@@ -141,8 +141,11 @@ void CRender::Reshape(int width, int height){
 }
 void CRender::Display() {}
 void CRender::Idle() {
+
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    std::cout<<"idle ";
+    return;
     int cell=0, row=0;
     for(int i=0; i<MAX_FACES; i++) {
 
