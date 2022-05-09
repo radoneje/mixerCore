@@ -150,7 +150,7 @@ void CRender::Idle() {
     glBindTexture(GL_TEXTURE_2D, textures[0]);
 
     int cell=0, row=0;
-    for(int i=0; i<MAX_FACES; i++) {
+    for(int i=0; i<1/*MAX_FACES*/; i++) {
 
         if(cell>=4) {
             cell = 0;
