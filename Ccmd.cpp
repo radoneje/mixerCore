@@ -66,7 +66,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
     PresImagePixels=(unsigned char *) malloc(PresImageWidth*PresImageHeight*3* sizeof(unsigned char ));
     std::cout<<"PresImagePixels"<<" "<< PresImageWidth << ""<< std::endl;
     int i=0;
-    srand(1792);
+    srand(std::chrono::system_clock::now().time_since_epoch().count());
     do{
       //  std::cout<<i<<std::endl;
 
