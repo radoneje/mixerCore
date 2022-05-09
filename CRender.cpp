@@ -300,12 +300,12 @@ void CRender::Idle() {
         //////////makePres
 
         {
-            std::cout<<"pres";
+           // std::cout<<"pres";
             std::lock_guard<std::mutex> lockGuard(pCmd->locker);
 
              if (pCmd->PresImageWidth>0)
              {
-                 std::cout<<" lock" << std::endl;
+                // std::cout<<" lock" << std::endl;
 
                  glEnable(GL_TEXTURE_2D);
                  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
