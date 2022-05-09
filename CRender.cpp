@@ -139,7 +139,9 @@ void CRender::Reshape(int width, int height){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
-void CRender::Display() {}
+void CRender::Display() {
+    std::cout<<" display ";
+}
 void CRender::Idle() {
 
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
