@@ -64,7 +64,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
     PresImagePixels=(unsigned char *) malloc(PresImageWidth*PresImageHeight*3* sizeof(unsigned char ));
     std::cout<<"PresImagePixels"<<std::endl;
     int i=0;
-    do( ){
+    do{
         std::cout<<i<<std::endl;
         PresImagePixels[i+0]=0xff;
         PresImagePixels[i+1]=0x00;
