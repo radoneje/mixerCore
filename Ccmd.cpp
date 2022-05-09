@@ -75,7 +75,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
         PresImagePixels[i+2]= (int)((double)rand() / RAND_MAX)*16;;
         i=i+3;
     }while(i< PresImageWidth*PresImageHeight*3);
-    std::cout<<"PresImagePixels complite "<<" "<< (int)((double)rand() / RAND_MAX)*16 << ""<< std::endl;
+    std::cout<<"PresImagePixels complite "<<" "<< ((double)rand() / RAND_MAX)*16 << ""<< std::endl;
     std::remove(filepath.c_str());
     activeTextureId.clear();
     /*auto end = std::chrono::system_clock::now();
