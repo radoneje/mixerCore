@@ -70,9 +70,9 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
     do{
       //  std::cout<<i<<std::endl;
 
-        PresImagePixels[i+0]= (int)((double)rand() / RAND_MAX)*16;;
-        PresImagePixels[i+1]= (int)((double)rand() / RAND_MAX)*16;;
-        PresImagePixels[i+2]= (int)((double)rand() / RAND_MAX)*16;;
+        PresImagePixels[i+0]= ((double)rand() / RAND_MAX)*254;;
+        PresImagePixels[i+1]= ((double)rand() / RAND_MAX)*254;;
+        PresImagePixels[i+2]= ((double)rand() / RAND_MAX)*254;;
         i=i+3;
     }while(i< PresImageWidth*PresImageHeight*3);
     std::cout<<"PresImagePixels complite "<<" "<< ((double)rand() / RAND_MAX)*16 << ""<< std::endl;
