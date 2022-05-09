@@ -168,9 +168,7 @@ void CRender::Idle() {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
                              texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                              texturePlaceholder[i].pixels);
-                int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
-                if(timeDiff>80)
-                    std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
+
 
             } else //video frame
             {
@@ -178,6 +176,9 @@ void CRender::Idle() {
                                   pCmd->FFreader[i].dt.height, GL_RGB, GL_UNSIGNED_BYTE,
                                   pCmd->FFreader[i].dt.pixels);
             }
+            int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
+            if(timeDiff>80)
+                std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
         }
 
 
