@@ -289,8 +289,9 @@ void CRender::Idle() {
         //////////makePres
 
         {
+            std::cout<<"pres";
             std::lock_guard<std::mutex> lockGuard(pCmd->locker);
-
+            std::cout<<" lock" << std::endl;
              if (pCmd->PresImageWidth>0)
              {
 
