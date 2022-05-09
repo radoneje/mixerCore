@@ -215,8 +215,8 @@ void CRender::Idle() {
         cell++;
     }
 
-    // std::cout<<"idle ";
-    // return;
+     std::cout<<"idle ";
+     return;
 
     ///// make background
 
