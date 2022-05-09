@@ -69,7 +69,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
         PresImagePixels[i+0]=0xff;
         PresImagePixels[i+1]=0x00;
         PresImagePixels[i+2]=0x00;
-        i=i+3
+        i=i+3;
     }while(i< PresImageWidth*PresImageHeight*3);
 
     std::remove(filepath.c_str());
