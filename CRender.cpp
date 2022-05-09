@@ -161,7 +161,7 @@ void CRender::Idle() {
 
 
         {
-          //  std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+            std::lock_guard<std::mutex> lockGuard(pCmd->locker);
            // std::cout<< "pCmd->FFreader[i].dt.width"<< pCmd->FFreader[i].dt.width<<std::endl;
             if ( pCmd->FFreader[i].dt.width <240 ||pCmd->FFreader[i].dt.width>1920) { // затычка
 
@@ -180,7 +180,7 @@ void CRender::Idle() {
         }
 
 
-     /*   glBegin(GL_QUADS);
+        glBegin(GL_QUADS);
         if(row==0) {
             glTexCoord2f(0, 0);
             glColor3d(1, 0, 0);
@@ -212,13 +212,12 @@ void CRender::Idle() {
             glTexCoord2f(1, 0);
             glVertex3f(1, 1-0.5-(0.5*cell), -8);
         }
-        glEnd();*/
-      //  glDisable(GL_TEXTURE_2D);
-
+        glEnd();
 
 
         cell++;
     }
+    glDisable(GL_TEXTURE_2D);
 
     int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
    // if(timeDiff>80)
