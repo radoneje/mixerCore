@@ -159,7 +159,7 @@ void CRender::Idle() {
         glBindTexture(GL_TEXTURE_2D, textures[0]);
 
         {
-            std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+          //  std::lock_guard<std::mutex> lockGuard(pCmd->locker);
            // std::cout<< "pCmd->FFreader[i].dt.width"<< pCmd->FFreader[i].dt.width<<std::endl;
             if (true || pCmd->FFreader[i].dt.width <240 ||pCmd->FFreader[i].dt.width>1920) { // затычка
 
