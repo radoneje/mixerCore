@@ -62,6 +62,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
                                   0,
                                   SOIL_LOAD_RGB);*/
     PresImagePixels=(unsigned char *) malloc(PresImageWidth*PresImageHeight*3* sizeof(unsigned char ));
+    std::cout<<"PresImagePixels"<<std::endl;
     for(int i=0; i< PresImageWidth*PresImageHeight*3;i=i+3){
         std::cout<<i<<std::endl;
         PresImagePixels[i+0]=0xff;
