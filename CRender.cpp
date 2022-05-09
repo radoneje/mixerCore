@@ -165,9 +165,13 @@ void CRender::Idle() {
            // std::cout<< "pCmd->FFreader[i].dt.width"<< pCmd->FFreader[i].dt.width<<std::endl;
             if ( pCmd->FFreader[i].dt.width <240 ||pCmd->FFreader[i].dt.width>1920) { // затычка
 
-            /*    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
                              texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                             texturePlaceholder[i].pixels);*/
+                             texturePlaceholder[i].pixels);
+                int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
+                if(timeDiff>80)
+                    std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
+
             } else //video frame
             {
                 gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, pCmd->FFreader[i].dt.width,
