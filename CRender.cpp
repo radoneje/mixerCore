@@ -260,9 +260,9 @@ void CRender::Idle() {
                 }
                 else //video frame
                 {
-                   /* gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, pCmd->FFreader[i].dt.width,
+                    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, pCmd->FFreader[i].dt.width,
                                       pCmd->FFreader[i].dt.height, GL_RGB, GL_UNSIGNED_BYTE,
-                                      pCmd->FFreader[i].dt.pixels);*/
+                                      pCmd->FFreader[i].dt.pixels);
 
                 }
             }
