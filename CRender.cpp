@@ -150,7 +150,7 @@ void CRender::Idle() {
     glBindTexture(GL_TEXTURE_2D, textures[0]);
 
     int cell=0, row=0;
-    for(int i=0; i<1/*MAX_FACES*/; i++) {
+    for(int i=0; i<MAX_FACES; i++) {
 
         if(cell>=4) {
             cell = 0;
@@ -177,7 +177,7 @@ void CRender::Idle() {
         }
 
 
-        glBegin(GL_QUADS);
+     /*   glBegin(GL_QUADS);
         if(row==0) {
             glTexCoord2f(0, 0);
             glColor3d(1, 0, 0);
@@ -209,7 +209,7 @@ void CRender::Idle() {
             glTexCoord2f(1, 0);
             glVertex3f(1, 1-0.5-(0.5*cell), -8);
         }
-        glEnd();
+        glEnd();*/
       //  glDisable(GL_TEXTURE_2D);
 
 
