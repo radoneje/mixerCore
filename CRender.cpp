@@ -145,7 +145,11 @@ void CRender::Idle() {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    int cell=0, row=0;/*
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    glBindTexture(GL_TEXTURE_2D, textures[0]);
+
+    int cell=0, row=0;
     for(int i=0; i<MAX_FACES; i++) {
 
         if(cell>=4) {
@@ -154,9 +158,7 @@ void CRender::Idle() {
 
         }
 
-        glEnable(GL_TEXTURE_2D);
-        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-        glBindTexture(GL_TEXTURE_2D, textures[0]);
+
 
         {
           //  std::lock_guard<std::mutex> lockGuard(pCmd->locker);
@@ -208,13 +210,13 @@ void CRender::Idle() {
             glVertex3f(1, 1-0.5-(0.5*cell), -8);
         }
         glEnd();
-        glDisable(GL_TEXTURE_2D);
+      //  glDisable(GL_TEXTURE_2D);
 
 
 
         cell++;
     }
-*/
+
      std::cout<<"idle ";
      return;
 
