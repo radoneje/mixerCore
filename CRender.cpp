@@ -317,7 +317,9 @@ void CRender::Idle() {
       //  pCmd->locker.unlock();
     glutSwapBuffers();
     glFlush();
-    std::cout << "Time difference = " <<( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000 << "[ms]" << std::endl;
+    int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
+    if(timeDiff>60)
+        std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
 
 }
     void CRender::StartRender(int argc, char **argv, Ccmd *pCmd){
