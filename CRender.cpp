@@ -311,12 +311,12 @@ void CRender::Idle() {
                 // glEnable(GL_TEXTURE_2D);
                 // glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
                 // glBindTexture(GL_TEXTURE_2D, textures[0]);
-                /* glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pCmd->PresImageWidth,
+                /glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pCmd->PresImageWidth,
                               pCmd->PresImageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                              pCmd->PresImagePixels);*/
-                 gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, pCmd->PresImageWidth,
+                              pCmd->PresImagePixels);
+                /* gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, pCmd->PresImageWidth,
                                    pCmd->PresImageHeight, GL_RGB, GL_UNSIGNED_BYTE,
-                                   pCmd->PresImagePixels);
+                                   pCmd->PresImagePixels);*/
 
                  if (glGetError() != GL_NO_ERROR)
                      std::cout<<"OpenGL error"<<std::endl;
