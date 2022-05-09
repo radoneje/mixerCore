@@ -145,7 +145,7 @@ void CRender::Idle() {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    int cell=0, row=0;
+    int cell=0, row=0;/*
     for(int i=0; i<MAX_FACES; i++) {
 
         if(cell>=4) {
@@ -161,7 +161,7 @@ void CRender::Idle() {
         {
           //  std::lock_guard<std::mutex> lockGuard(pCmd->locker);
            // std::cout<< "pCmd->FFreader[i].dt.width"<< pCmd->FFreader[i].dt.width<<std::endl;
-            if (true || pCmd->FFreader[i].dt.width <240 ||pCmd->FFreader[i].dt.width>1920) { // затычка
+            if ( pCmd->FFreader[i].dt.width <240 ||pCmd->FFreader[i].dt.width>1920) { // затычка
 
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texturePlaceholder[i].width,
                              texturePlaceholder[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
@@ -214,7 +214,7 @@ void CRender::Idle() {
 
         cell++;
     }
-
+*/
      std::cout<<"idle ";
      return;
 
