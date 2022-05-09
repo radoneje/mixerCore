@@ -315,7 +315,7 @@ void CRender::Idle() {
                               pCmd->PresImageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE,
                               pCmd->PresImagePixels);*/
                  gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, pCmd->PresImageWidth,
-                                   ppCmd->PresImageHeight, GL_RGB, GL_UNSIGNED_BYTE,
+                                   pCmd->PresImageHeight, GL_RGB, GL_UNSIGNED_BYTE,
                                    pCmd->PresImagePixels);
 
                  glBegin(GL_QUADS);
