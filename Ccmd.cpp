@@ -55,6 +55,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
     std::lock_guard<std::mutex> lockGuard(locker);
     imageid=simageid;
     free(PresImagePixels);
+
     PresImagePixels =SOIL_load_image(filepath.c_str(),
                                  &PresImageWidth,
                                  &PresImageHeight,
