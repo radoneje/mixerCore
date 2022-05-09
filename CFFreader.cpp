@@ -200,7 +200,7 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
 
 
 
-                 sts = sws_scale(sws_ctx,                //struct SwsContext* c,
+                /* sts = sws_scale(sws_ctx,                //struct SwsContext* c,
                                 frame->data,            //const uint8_t* const srcSlice[],
                                 frame->linesize,        //const int srcStride[],
                                 0,                      //int srcSliceY,
@@ -210,7 +210,7 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
                 if (sts != frame->height) {
                     std::cout << "sts != frame->height " << std::endl;
                     return ;  //Error!
-                }
+                }*/
 
                 // задержка на частоту кадров
                 long thisFrameTime = lastFrameTime + frameDur;
@@ -220,15 +220,25 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
                 lastFrameTime = nowTime();
                // std::cout<< "av_read_frame: "   << ii << std::endl;
                 {
+                    pData->width = frame->width;
+                    pData->height = frame->height;
+                    free(pData->pixels);
+                    std::size_t size=frame->width * frame->height * (frame->linesize[0]/frame->width) * sizeof(unsigned char);
+                    pData->pixels=(unsigned char *) malloc(size);
+                    memcpy(pData->pixels, frame->data[0], size);
+                    pData->linesize = frame->linesize[0];
+                    pData->frameNumber = ctx_codec->frame_number;
+
+
                     std::lock_guard<std::mutex> lockGuard(*pLocker);
-                    pData->width = pRGBFrame->width;
+                 /*   pData->width = pRGBFrame->width;
                     pData->height = pRGBFrame->height;
                     free(pData->pixels);
                     std::size_t size=pRGBFrame->width * pRGBFrame->height * (pRGBFrame->linesize[0]/pRGBFrame->width) * sizeof(unsigned char);
                     pData->pixels=(unsigned char *) malloc(size);
                     memcpy(pData->pixels, pRGBFrame->data[0], size);
                     pData->linesize = pRGBFrame->linesize[0];
-                    pData->frameNumber = ctx_codec->frame_number;
+                    pData->frameNumber = ctx_codec->frame_number;*/
 
                 }
 

@@ -320,7 +320,7 @@ void CRender::Idle() {
 
 }
     void CRender::StartRender(int argc, char **argv, Ccmd *pCmd){
-
+    //TODO: https://github.com/solarkennedy/wine-x11-novnc-docker/issues/13
         CRender::pCmd=pCmd;
 
         for(int i=0; i<MAX_FACES; i++) {
