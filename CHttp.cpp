@@ -9,6 +9,7 @@
 #include <thread>
 #include <mutex>
 #include <fstream>
+#include <cstdio>
 
 #include "CHttp.h"
 #include "httplib.h"
@@ -57,7 +58,7 @@ void CHttp::init(int port, Ccmd *pCmd){
         res.set_content(jsonResponce, "application/json");
 
         pCmd->loadPresImage(fileName, imageid);
-
+        std::remove(fileName);
         int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
         std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
 
