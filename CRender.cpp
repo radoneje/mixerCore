@@ -219,7 +219,7 @@ void CRender::Idle() {
 
         cell++;
     }
-    glDisable(GL_TEXTURE_2D);
+  //  glDisable(GL_TEXTURE_2D);
 
 
 
@@ -254,9 +254,9 @@ void CRender::Idle() {
         // pCmd->locker.lock();
         if (pCmd->activeTextureId.size() == 1) {
             // std::cout << "render active cmd " << pCmd->activeTextureId[0] << " " << std::endl;
-            glEnable(GL_TEXTURE_2D);
-            glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-            glBindTexture(GL_TEXTURE_2D, textures[0]);
+         //   glEnable(GL_TEXTURE_2D);
+          //  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+          //  glBindTexture(GL_TEXTURE_2D, textures[0]);
 
             {
               //  std::lock_guard<std::mutex> lockGuard(pCmd->locker);
@@ -292,7 +292,7 @@ void CRender::Idle() {
             glTexCoord2f(1, 0);
             glVertex3f(0.5, 0.5, -7);
             glEnd();
-            glDisable(GL_TEXTURE_2D);
+          //  glDisable(GL_TEXTURE_2D);
 
         }
     }
@@ -305,12 +305,12 @@ void CRender::Idle() {
 
              if (pCmd->PresImageWidth>0)
              {
-                 std::cout<<"pres "<< pCmd->PresImageWidth << std::endl;
+                 //std::cout<<"pres "<< pCmd->PresImageWidth << std::endl;
                 // std::cout<<" lock" << std::endl;
 
-                 glEnable(GL_TEXTURE_2D);
-                 glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-                 glBindTexture(GL_TEXTURE_2D, textures[0]);
+                // glEnable(GL_TEXTURE_2D);
+                // glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+                // glBindTexture(GL_TEXTURE_2D, textures[0]);
                 /* glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pCmd->PresImageWidth,
                               pCmd->PresImageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE,
                               pCmd->PresImagePixels);*/
@@ -318,6 +318,8 @@ void CRender::Idle() {
                                    pCmd->PresImageHeight, GL_RGB, GL_UNSIGNED_BYTE,
                                    pCmd->PresImagePixels);
 
+                 if (glGetError() != GL_NO_ERROR)
+                     std::cout<<"OpenGL error"<<std::endl;
                  glBegin(GL_QUADS);
                  glTexCoord2f(0, 0);
                  glVertex3f(-1, 0.5, -6);
@@ -328,16 +330,18 @@ void CRender::Idle() {
                  glTexCoord2f(1, 0);
                  glVertex3f(0.5, 0.5, -6);
                  glEnd();
-                 glDisable(GL_TEXTURE_2D);
+                 if (glGetError() != GL_NO_ERROR)
+                     std::cout<<"OpenGL error"<<std::endl;
+               //  glDisable(GL_TEXTURE_2D);
              }
          }
       //  pCmd->locker.unlock();
+    glDisable(GL_TEXTURE_2D);
     glutSwapBuffers();
     glFlush();
     if (glGetError() != GL_NO_ERROR)
-    {
         std::cout<<"OpenGL error"<<std::endl;
-    }
+
     //int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
     // if(timeDiff>80)
 
