@@ -56,11 +56,19 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
     imageid=simageid;
     free(PresImagePixels);
 
-    PresImagePixels =SOIL_load_image(filepath.c_str(),
-                                 &PresImageWidth,
-                                 &PresImageHeight,
-                                 0,
-                                 SOIL_LOAD_RGB);
+    /* PresImagePixels =SOIL_load_image(filepath.c_str(),
+                                  &PresImageWidth,
+                                  &PresImageHeight,
+                                  0,
+                                  SOIL_LOAD_RGB);*/
+    PresImagePixels=(unsigned char *) malloc(PresImageWidth*PresImageHeight*3* sizeof(char ));
+    for(int i=0; i< PresImageWidth*PresImageHeight*3;i=i+3){
+        PresImagePixels[i+0]=0x0f;
+        PresImagePixels[i+1]=0x0f;
+        PresImagePixels[i+2]=0x0f;
+
+    }
+
     std::remove(filepath.c_str());
     activeTextureId.clear();
     /*auto end = std::chrono::system_clock::now();
