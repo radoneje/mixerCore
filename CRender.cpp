@@ -305,6 +305,7 @@ void CRender::Idle() {
 
              if (pCmd->PresImageWidth>0)
              {
+                 std::cout<<"pres "<< pCmd->PresImageWidth << std::endl;
                 // std::cout<<" lock" << std::endl;
 
                  glEnable(GL_TEXTURE_2D);
