@@ -331,7 +331,6 @@ void CRender::Idle() {
     glutSwapBuffers();
     glFlush();
     //int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
-    int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
     // if(timeDiff>80)
 
 

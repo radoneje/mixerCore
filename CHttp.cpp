@@ -57,8 +57,10 @@ void CHttp::init(int port, Ccmd *pCmd){
         res.set_content(jsonResponce, "application/json");
 
         pCmd->loadPresImage(fileName, imageid);
+
+        int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
         std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
-        std::cout<<"idle ";
+
 
     });
     svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {
