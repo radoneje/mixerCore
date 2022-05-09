@@ -221,7 +221,7 @@ void CRender::Idle() {
     }
 
     int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
-    if(timeDiff>80)
+   // if(timeDiff>80)
         std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
      std::cout<<"idle ";
      return;
