@@ -225,7 +225,7 @@ void CRender::Idle() {
 
 
     ///// make background
-
+/*
     glEnable(GL_TEXTURE_2D);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
     glBindTexture(GL_TEXTURE_2D, textures[0]);
@@ -247,7 +247,7 @@ void CRender::Idle() {
     glVertex3f(0.5, 0.5, -8);
     glEnd();
     glDisable(GL_TEXTURE_2D);
-
+*/
     /// make active input
     {
         std::lock_guard<std::mutex> lockGuard(pCmd->locker);
