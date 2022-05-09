@@ -250,7 +250,7 @@ void CRender::Idle() {
             {
               //  std::lock_guard<std::mutex> lockGuard(pCmd->locker);
                 int i=pCmd->activeTextureId[0];
-               // std::cout<< "pCmd->FFreader[i].dt.width"<< pCmd->FFreader[i].dt.width<<std::endl;
+                std::cout<< "pCmd->FFreader[i].dt.width"<< pCmd->FFreader[i].dt.width<<std::endl;
 
                 if (pCmd->FFreader[i].dt.width <240 ||pCmd->FFreader[i].dt.width>1920) { // затычка
 
