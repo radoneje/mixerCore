@@ -30,6 +30,7 @@ void CHttp::init(int port, Ccmd *pCmd){
                 );
     });
     svr.Post(R"(/mixer/activatePresImg/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))",[&](const httplib::Request &req, httplib::Response &res){
+        std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         auto start = std::chrono::system_clock::now();
         std::cout<< "/mixer/activatePresImg" << std::endl;
         const std::string eventid = req.matches[1];
@@ -54,8 +55,10 @@ void CHttp::init(int port, Ccmd *pCmd){
         myfile.close();
         std::string jsonResponce("{\"error\":false, \"presFileId\":\""+imageid+"\"}");
         res.set_content(jsonResponce, "application/json");
-            pCmd->loadPresImage(fileName, imageid);
 
+        pCmd->loadPresImage(fileName, imageid);
+        std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
+        std::cout<<"idle ";
 
     });
     svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {
