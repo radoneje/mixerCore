@@ -43,25 +43,9 @@ int CffmpegStreamer::init() {
 void CffmpegStreamer::encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *pkt,
                    FILE *outfile)
 {
-    int ret;
-    /* send the frame to the encoder */
-    ret = avcodec_send_frame(enc_ctx, frame);
-    if (ret < 0) {
-        fprintf(stderr, "error sending a frame for encoding\n");
-        exit(1);
-    }
-    while (ret >= 0) {
-        ret = avcodec_receive_packet(enc_ctx, pkt);
-        if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
-            return;
-        else if (ret < 0) {
-            fprintf(stderr, "error during encoding\n");
-            exit(1);
-        }
-        printf("encoded frame %3"PRId64" (size=%5d)\n", pkt->pts, pkt->size);
-        fwrite(pkt->data, 1, pkt->size, outfile);
-        av_packet_unref(pkt);
-    }
+    if (frame)
+        printf("Send frame %3" PRId64 "\n", frame->pts);
+
 }
 void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, std::map<std::string, SstreamData *> *pStreamers){
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -153,23 +137,11 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             }
         }
         picture->pts = i;
-        ret = avcodec_encode_video2(codecContext, pkt, picture, &got_output);
-        if (ret < 0) {
-            fprintf(stderr, "Error encoding frame\n");
-            EndCallback(eventid, pStreamers);
-            return;
-        }
-        if (got_output) {
-            printf("Write frame %3d (size=%5d)\n", i, pkt->size);
-            fwrite(pkt->data, 1, pkt->size, f);
-            av_packet_unref(pkt);
-        }
-
-
+        encode(codecContext, picture, pkt, f);
 
     }
     std::cout <<"encode all frames " <<std::endl;
-
+    /* flush the encoder */
     encode(codecContext, NULL, pkt, f);
 
     fwrite(endcode, 1, sizeof(endcode), f);
