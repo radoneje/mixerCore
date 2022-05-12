@@ -115,7 +115,7 @@ int Ccmd::startStream(const std::string eventid){
 
 
     std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData,  (std::function<void(std::string)>) notifyStreamStarted,  (std::function<void(std::string)> )notifyStreamEnded);
-    int threadId=streamThread.get_id()
+    std::thread::id threadId=streamThread.get_id()
     streamThread.join();
     streamers.insert(std::pair<std::string, int> ( eventid, threadId ));
 
