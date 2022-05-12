@@ -164,9 +164,8 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     {
         std::cout<<"ERROR avformat_alloc_output_context2"<<std::endl;
     }
-
+    long long startTime = av_gettime();
     /* encode 1 second of video */
-
     for (i = 0; i < 25; i++) {
         fflush(stdout);
         /* make sure the frame data is writable */
