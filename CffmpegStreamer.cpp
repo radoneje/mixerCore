@@ -24,6 +24,8 @@ extern "C" {
 #include <libavutil/opt.h>
 #include <libavutil/time.h>
 #include <libswscale/swscale.h>
+#include <libavutil/timestamp.h>
+
 
 
 }
