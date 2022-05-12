@@ -102,6 +102,7 @@ int Ccmd::startStream(const std::string eventid){
    CffmpegStreamer *streamer= new  CffmpegStreamer();
    // streamers.insert(std::pair<std::string, CffmpegStreamer*> ( eventid, streamer ));
     std::thread streamThread(CffmpegStreamer::startStream, eventid);
+    streamThread.join();
 
     return 0;
 }
