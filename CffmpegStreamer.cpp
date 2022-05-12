@@ -42,6 +42,7 @@ using namespace std;
 {
     AVRational *time_base = &fmt_ctx->streams[pkt->stream_index]->time_base;
 
+    std::cout<<" packet: " <<pkt->duration<< " "<< pkt->dts<<std::endl;
   /*  printf("pts:%s pts_time:%s dts:%s dts_time:%s duration:%s duration_time:%s stream_index:%d\n",
            av_ts2str(pkt->pts), av_ts2timestr(pkt->pts, time_base),
            av_ts2str(pkt->dts), av_ts2timestr(pkt->dts, time_base),
