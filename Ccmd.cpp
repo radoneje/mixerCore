@@ -33,7 +33,7 @@ Ccmd::Ccmd(){
 void Ccmd::notifyStreamStarted(std::string eventid){
     std::cout<< " notifyStreamStarted" << eventid<< std::endl;
 };
-void Ccmd::notifyStreamEnded(std::string evantid){
+void Ccmd::notifyStreamEnded(std::string eventid){
     std::cout<< " notifyStreamEnded"  << eventid << std::endl;
 };
 
