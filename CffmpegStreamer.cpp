@@ -124,7 +124,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     }
     enc_ctx = avcodec_alloc_context3(encoder);
     /* put sample parameters */
-    enc_ctx->bit_rate = 400000;
+    enc_ctx->bit_rate = 1024*1024*1.5;
     /* resolution must be a multiple of two */
     enc_ctx->width = 1280;
     enc_ctx->height = 720;
