@@ -30,6 +30,7 @@ int main(int argc, char* argv[]) {
 
 
     Ccmd *cmd= new Ccmd();
+    cmd->startStream("==event ID==")
     std::cin.get();
 
     return 0;
