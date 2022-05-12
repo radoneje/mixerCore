@@ -42,7 +42,7 @@ int CffmpegStreamer::init() {
 }
 void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, std::map<std::string, SstreamData *> *pStreamers){
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    startCallback( eventid, pStreamers);
+
 
     AVCodec *codec;
          AVCodecContext *c= NULL;
@@ -51,6 +51,13 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
          AVFrame *picture;
          uint8_t *outbuf, *picture_buf;
          printf("Video encoding\n");
+
+    codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
+         if (!codec) {
+                 fprintf(stderr, "codec not found\n");
+             EndCallback( eventid, pStreamers);
+             return;
+             }
 
     //startCallback(eventid, pStreamers);
 }
