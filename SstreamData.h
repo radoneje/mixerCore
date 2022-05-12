@@ -6,6 +6,7 @@
 #define MIXERCORE_SSTREAMDATA_H
 
 #include <thread>
+#include <map>
 
 struct SstreamData {
     std::string eventid;
