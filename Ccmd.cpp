@@ -35,15 +35,19 @@ Ccmd::Ccmd(){
 };
 void Ccmd::notifyStreamStarted(std::string eventid, streamersDataType *pStreamers){
     auto find=pStreamers->find(eventid);
-    if(find==pStreamers->end()){
-        std::cout<< " stream Not Found: " << eventid<< std::endl;
-        return;
-    }
+
     std::cout<< " notifyStreamStarted" << eventid<< std::endl;
 
 };
 void Ccmd::notifyStreamEnded(std::string eventid, streamersDataType *pStreamers){
     std::cout<< " notifyStreamEnded"  << eventid << std::endl;
+
+    auto find=pStreamers->find(eventid);
+    if(find==pStreamers->end()){
+        std::cout<< " stream Not Found: " << eventid<< std::endl;
+        return;
+    }
+    pStreamers->erase(find);
 
 };
 
