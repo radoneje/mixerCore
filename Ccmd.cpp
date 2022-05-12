@@ -124,6 +124,6 @@ int Ccmd::startStream(const std::string eventid,  std::map<std::string, SstreamD
     dt.eventid=eventid;
     dt.thread=&streamThread;
     pStreamers->insert(std::pair<std::string, SstreamData *> ( eventid, &dt ));
-
+    std::cout<< pStreamers->count(eventid)<<std::endl;
     return 0;
 }
