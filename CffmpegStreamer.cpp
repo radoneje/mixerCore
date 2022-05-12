@@ -40,7 +40,7 @@ using namespace std;
 
  void CffmpegStreamer::log_packet(const AVFormatContext *fmt_ctx, const AVPacket *pkt)
 {
-    AVRational *time_base = &fmt_ctx->streams[pkt->stream_index]->time_base;
+   // AVRational *time_base = &fmt_ctx->streams[pkt->stream_index]->time_base;
 
     std::cout<<" packet: " <<pkt->duration<< " "<< pkt->dts<<std::endl;
   /*  printf("pts:%s pts_time:%s dts:%s dts_time:%s duration:%s duration_time:%s stream_index:%d\n",
@@ -245,7 +245,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
            // pkt->stream_index = st->index;
 
             /* Write the compressed frame to the media file. */
-            log_packet(pFormatCtx, pkt);
+          //  log_packet(pFormatCtx, pkt);
            // ret = av_interleaved_write_frame(octx, pkt);
             std::cout<<"av_interleaved_write_frame"<<std::endl;
         }
