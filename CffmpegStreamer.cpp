@@ -225,7 +225,10 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                 fprintf(stderr, "Error encoding a frame: \n");
                 return ;
             }
-            std::cout<<"avcodec_receive_packet "<< ret <<std::endl;
+            std::cout<<"avcodec_receive_packet " <<std::endl;
+            log_packet(octx, pkt);
+            ret = av_interleaved_write_frame(octx, pkt);
+            std::cout<<"av_interleaved_write_frame"<<std::endl;
         }
 
 
