@@ -19,7 +19,7 @@ class Ccmd {
     private:
         std::map<std::string, SstreamData*> *_pStreamers;
     public:
-
+        typedef  std::map<std::string, SstreamData*> streamersDataType;
         int startStream(const std::string eventid, std::map<std::string, SstreamData*> *pStreamers);
 
         std::vector<CFFreader>  FFreader;
@@ -35,8 +35,8 @@ class Ccmd {
         CFFreader meReader;
       //  typedef void (* vFunctionCall)(std::string args);
         void startReadStream(std::string rtmpURL, int layerNumber);
-        static void notifyStreamStarted(std::string eventid, std::map<std::string, SstreamData*> *pStreamers);
-        static void notifyStreamEnded(std::string eventid, std::map<std::string, SstreamData*> *pStreamers);
+        static void notifyStreamStarted(std::string eventid, streamersDataType *pStreamers);
+        static void notifyStreamEnded(std::string eventid, streamersDataType *pStreamers);
         unsigned char* mainImageData;
 
         Ccmd();
