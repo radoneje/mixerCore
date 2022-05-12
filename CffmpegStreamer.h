@@ -26,7 +26,7 @@ private:
     static void encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *pkt,
                        FILE *outfile);
     static double r2d(AVRational r);
-    static void log_packet(const AVFormatContext *fmt_ctx, const AVPacket *pkt)
+    static void log_packet(const AVFormatContext *fmt_ctx, const AVPacket *pkt);
 public:
     CffmpegStreamer();
     static void startStream( const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, streamersDataType *pStreamers);
