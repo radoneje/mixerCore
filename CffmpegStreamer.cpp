@@ -92,6 +92,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     AVStream *out_stream;
     AVFormatContext * ofmt_ctx = NULL;
     std::string outUrl="rtmp://wowza01.onevent.online/live/t";
+    std::string codec_name = "libx264";
+
+    const AVCodec *codec;
 
 
     avformat_alloc_output_context2(&ofmt_ctx, NULL, "flv", outUrl.c_str());
@@ -100,11 +103,20 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         return ;
     }
 
-
+    codec = avcodec_find_encoder_by_name(codec_name);
+    if (!codec) {
+        fprintf(stderr, "Codec '%s' not found\n", codec_name);
+        exit(1);
+    }
 
     out_stream = avformat_new_stream(ofmt_ctx, NULL);
     if (!out_stream) {
         av_log(NULL, AV_LOG_ERROR, "Failed allocating output stream\n");
+        return ;
+    }
+    codec = avcodec_find_encoder_by_name(codec_name);
+    if (!codec) {
+        fprintf(stderr, "Codec '%s' not found\n", codec_name);
         return ;
     }
 
