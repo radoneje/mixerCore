@@ -102,7 +102,18 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             EndCallback( eventid, pStreamers);
             return;
         }
-        std::cout<< picture->linesize[0]<<std::endl;
+        for(y=0;y<codecContext->height;y++) {
+            for(x=0;x<codecContext->width;x++) {
+                picture->data[0][y * picture->linesize[0] + x] = x + y + i * 3;
+            }
+        }
+        /* Cb and Cr */
+        for(y=0;y<codecContext->height/2;y++) {
+            for(x=0;x<codecContext->width/2;x++) {
+                picture->data[1][y * picture->linesize[1] + x] = 128 + y + i * 2;
+                picture->data[2][y * picture->linesize[2] + x] = 64 + x + i * 5;
+            }
+        }
     }
 
     //startCallback(eventid, pStreamers);
