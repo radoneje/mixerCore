@@ -16,7 +16,7 @@
 #include "CffmpegStreamer.h"
 
 using namespace std;
-CffmpegStreamer::CffmpegStreamer(const std::string eventid) {
+CffmpegStreamer::CffmpegStreamer(const std::string &eventid) {
 
 }
 int CffmpegStreamer::init() {

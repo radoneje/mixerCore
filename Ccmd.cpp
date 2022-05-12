@@ -95,6 +95,13 @@ void Ccmd::clearPresImage(){
 
 };
 int Ccmd::startStream(const std::string eventid){
-    CffmpegStreamer streamer= CffmpegStreamer(eventid);
-    streamers.insert(std::pair<std::string, CffmpegStreamer> ( eventid,streamer ));
+    if(streamers.find(eventid)==streamers.end()) {
+        return  -1;
+    }
+
+    CffmpegStreamer *streamer= new  CffmpegStreamer(eventid);
+    streamers.insert(std::pair<std::string, CffmpegStreamer*> ( eventid, streamer ));
+    std::thread streamThread(streamer->init);
+
+    return 0;
 }
