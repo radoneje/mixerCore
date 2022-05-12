@@ -212,7 +212,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         }
         int got_packet=0;
         ret = avcodec_encode_video2(c, pkt, frame, &got_packet);{
-            fprintf(stderr, " Error avcodec_encode_video2 \n",);
+            fprintf(stderr, " Error avcodec_encode_video2 \n");
             exit(1);
         }
        /* ret = av_interleaved_write_frame(octx, &pkt);
