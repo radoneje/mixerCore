@@ -38,7 +38,7 @@ void Ccmd::notifyStreamEnded(int layerNumber){
 };
 
 
-void Ccmd::startReadStream(std::string rtmpURL, int layerNumber, vFunctionCall  notifyStreamStarted, vFunctionCall notifyStreamEnded ){
+void Ccmd::startReadStream(std::string rtmpURL, int layerNumber ){
 
     FFreader[layerNumber].dt.width=layerNumber;
     FFreader[layerNumber].dt.layer=layerNumber;
