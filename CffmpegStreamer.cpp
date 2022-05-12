@@ -102,7 +102,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     std::string codec_name = "libx264";
 
     int ret;
-
+    av_log_set_level(AV_LOG_DEBUG);
     avformat_alloc_output_context2(&ofmt_ctx, NULL, "flv", outUrl.c_str());
     if (!ofmt_ctx) {
         av_log(NULL, AV_LOG_ERROR, "Could not create output context\n");
