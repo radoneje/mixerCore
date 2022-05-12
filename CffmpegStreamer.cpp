@@ -91,8 +91,6 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
 
-
-
     AVStream video_stream = { 0 };
     const AVOutputFormat *fmt;
 
@@ -122,7 +120,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         return;
     }
     fmt = octx->oformat;
-    avformat_write_header(pFormatCtx, &opt);
+  //  avformat_write_header(pFormatCtx, &opt);
 
 
     filename = "/var/www/mixerControl/public/1.mp4";
