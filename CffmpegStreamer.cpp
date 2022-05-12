@@ -69,7 +69,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
     AVCodec *codec;
          AVCodecContext *codecContext= NULL;
-         int i, out_size, size, x, y, outbuf_size, ret;
+         int i, out_size, size, x, y, outbuf_size, ret, got_output;
          FILE *f;
          AVFrame *picture;
          AVPacket *pkt;
@@ -153,6 +153,12 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             }
         }
         picture->pts = i;
+        ret = avcodec_encode_video2(codecContext, &pkt, picture, &got_output);
+        if (ret < 0) {
+            fprintf(stderr, "Error encoding frame\n");
+            EndCallback(eventid, pStreamers);
+            return;
+        }
 
 
 
