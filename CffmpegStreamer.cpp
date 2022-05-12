@@ -143,6 +143,11 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         av_log(NULL, AV_LOG_ERROR, "Cannot open video encoder for stream \n" );
         return ;
     }
+    ret = avcodec_parameters_from_context(out_stream->codecpar, enc_ctx);
+    if (ret < 0) {
+        av_log(NULL, AV_LOG_ERROR, "Failed to copy encoder parameters to output stream #%u\n", i);
+        return ;
+    }
 
     return ;
 }
