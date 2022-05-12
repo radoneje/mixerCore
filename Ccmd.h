@@ -17,7 +17,7 @@ class Ccmd {
 
     public:
         std::map<std::string, CffmpegStreamer*> streamers;
-        int startStream(const std::string eventid);
+        int startStream(const std::string eventid, unsigned char * data);
         std::vector<CFFreader>  FFreader;
         std::vector<int> activeTextureId;
         std::mutex locker;
