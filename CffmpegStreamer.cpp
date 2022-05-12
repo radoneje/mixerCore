@@ -88,6 +88,21 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     picture->width  = codecContext->width;
     picture->height = codecContext->height;
     ret = av_frame_get_buffer(picture, 32);
+    if (ret < 0) {
+        fprintf(stderr, "could not alloc the frame data\n");
+        EndCallback(eventid, pStreamers);
+        return;
+    }
+    for(i=0;i<25;i++) {
+        fflush(stdout);
+        ret = av_frame_make_writable(picture);
+        if (ret < 0)
+        {
+            fprintf(stderr, "Error av_frame_make_writable\n");
+            EndCallback( eventid, pStreamers);
+            return;
+        }
+    }
 
     //startCallback(eventid, pStreamers);
 }
