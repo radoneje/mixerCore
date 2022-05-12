@@ -95,9 +95,11 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
 
     avformat_alloc_output_context2(&ofmt_ctx, NULL, "flv", outUrl.c_str());
-    av_log(NULL, AV_LOG_ERROR, "Could not create output context\n");
-    return ;
-}
+    if (!ofmt_ctx) {
+        av_log(NULL, AV_LOG_ERROR, "Could not create output context\n");
+        return ;
+    }
+
 
 
     out_stream = avformat_new_stream(ofmt_ctx, NULL);
