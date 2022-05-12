@@ -12,6 +12,7 @@
 #include "CHttp.h"
 #include "Ccmd.h"
 #include "CffmpegStreamer.h"
+#include "SstreamData.h"
 
 // Include GLEW
 #include <GL/glew.h>
@@ -32,7 +33,7 @@ int main(int argc, char* argv[]) {
 
     Ccmd *cmd= new Ccmd();
     printf("startStream 0 \n");
-     std::map<std::string, std::thread *> streamers;
+     std::map<std::string, SstreamData *> streamers;
     cmd->startStream("==event ID==", &streamers);
     std::cin.get();
 

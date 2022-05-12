@@ -11,14 +11,17 @@
 
 #include "CFFreader.h"
 #include "CffmpegStreamer.h"
+#include "SstreamData.h"
 
 using namespace std;
 
 class Ccmd {
-
+    private:
+        std::map<std::string, SstreamData> *_pStreamers;
     public:
 
-        int startStream(const std::string eventid, std::map<std::string, std::thread *> *streamers);
+        int startStream(const std::string eventid, std::map<std::string, SstreamData*> *pStreamers);
+
         std::vector<CFFreader>  FFreader;
         std::vector<int> activeTextureId;
         std::mutex locker;

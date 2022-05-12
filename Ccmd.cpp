@@ -38,7 +38,7 @@ void Ccmd::notifyStreamStarted(std::string eventid){
 };
 void Ccmd::notifyStreamEnded(std::string eventid){
     std::cout<< " notifyStreamEnded"  << eventid << std::endl;
-  //  Ccmd::streamers.erase(Ccmd::streamers.find(eventid));
+
 };
 
 
@@ -105,20 +105,20 @@ void Ccmd::clearPresImage(){
        // PresImagePixels=nullptr;
 
 };
-int Ccmd::startStream(const std::string eventid,  std::map<std::string, std::thread *> *streamers){
-    if(streamers->find(eventid)!=streamers->end()) {
+int Ccmd::startStream(const std::string eventid,  std::map<std::string, SstreamData *> *pStreamers){
+    //_pStreamers=pStreamers;
+    if(pStreamers->find(eventid)!=pStreamers->end()) {
         std::cout<<  "Error : straamer already created" <<std::endl;
         return  -1;
     }
-
     printf("startStream\n");
-
-
     std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData,  (std::function<void(std::string)>) notifyStreamStarted,  (std::function<void(std::string)> )notifyStreamEnded);
 
-
     streamThread.join();
-    streamers->insert(std::pair<std::string, std::thread *> ( eventid, &streamThread ));
+    SstreamData dt;
+    dt.eventid=eventid;
+    dt.thread=&streamThread;
+    pStreamers->insert(std::pair<std::string, SstreamData *> ( eventid, &dt ));
 
     return 0;
 }
