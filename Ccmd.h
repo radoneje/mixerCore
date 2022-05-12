@@ -29,7 +29,7 @@ class Ccmd {
         int PresImageNumChannels;
         std::string imageid;
         CFFreader meReader;
-        typedef void (* vFunctionCall)(int args);
+        typedef void (* vFunctionCall)(std::string args);
         void startReadStream(std::string rtmpURL, int layerNumber);
         static void notifyStreamStarted(std::string eventid);
         static void notifyStreamEnded(std::string eventid);

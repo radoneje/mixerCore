@@ -24,6 +24,7 @@ extern "C" {
 }
 
 #include "CffmpegStreamer.h"
+#include "Ccmd.h"
 
 using namespace std;
 CffmpegStreamer::CffmpegStreamer() {
@@ -33,7 +34,7 @@ int CffmpegStreamer::init() {
     cout<<"CffmpegStreamer init"<<endl;
     return  1;
 }
-void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image){
+void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image, Ccmd::vFunctionCall startCallback,  Ccmd::vFunctionCall EndCallback){
 
     cout<<"CffmpegStreamer thread: "<< eventid <<endl;
 }
