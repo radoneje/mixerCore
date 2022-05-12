@@ -69,6 +69,21 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         EndCallback( eventid, pStreamers);
         return;
     }
+    codecContext->bit_rate = 400000;
+    /* resolution must be a multiple of two */
+    codecContext->width = 1280;
+    codecContext->height = 720;
+    /* frames per second */
+    codecContext->time_base = (AVRational){1, 30};
+    codecContext->framerate = (AVRational){30, 1};
+    codecContext->gop_size = 30; /* emit one intra frame every 30 frames */
+    codecContext->max_b_frames=1;
+    codecContext->pix_fmt = AV_PIX_FMT_YUV420P;
+    if (avcodec_open2(codecContext, codec, NULL) < 0) {
+        fprintf(stderr, "could not open codec\n");
+        EndCallback( eventid, pStreamers);
+        return;
+    }
 
     //startCallback(eventid, pStreamers);
 }
