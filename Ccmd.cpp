@@ -14,6 +14,7 @@
 #include "Ccmd.h"
 #include "SOIL.h"
 #include "CFFreader.h"
+#include "CffmpegStreamer.h"
 
 Ccmd::Ccmd(){
     clearPresImage();
@@ -93,3 +94,7 @@ void Ccmd::clearPresImage(){
        // PresImagePixels=nullptr;
 
 };
+int Ccmd::startStream(const std::string eventid){
+    auto streamer=  new CffmpegStreamer(eventid);
+    streamers.insert(std::pair<std::string, CffmpegStreamer>(eventid,streamer ));
+}

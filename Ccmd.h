@@ -5,14 +5,19 @@
 #ifndef MIXERCORE_CCMD_H
 #define MIXERCORE_CCMD_H
 #include <vector>
+#include <map>
 #include <mutex>
 
 #include "CFFreader.h"
+#include "CffmpegStreamer.h"
 
+using namespace std;
 
 class Ccmd {
 
     public:
+        std::map<std::string, CffmpegStreamer> streamers;
+        int startStream(const std::string eventid);
         std::vector<CFFreader>  FFreader;
         std::vector<int> activeTextureId;
         std::mutex locker;
