@@ -27,7 +27,6 @@ extern "C" {
 #include <libavutil/timestamp.h>
 
 
-
 }
 
 
@@ -91,7 +90,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
 
-    AVStream video_stream = { 0 };
+    OutputStream video_stream = { 0 };
     const AVOutputFormat *fmt;
 
     const char *filename, *codec_name;
@@ -200,7 +199,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                              NULL);
 
     std::cout<<"fmt->video_codec: "<<fmt->video_codec<<std::endl;
-  //  add_stream(&video_stream, octx, codec, fmt->video_codec);
+   // add_stream(&video_stream, octx, codec, fmt->video_codec);
 
     long long startTime = av_gettime();
     /* encode 1 second of video */
