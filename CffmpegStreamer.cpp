@@ -206,8 +206,10 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         long long dts = 0;
         dts = (frame->pts) * ( r2d(c->time_base )*1000*1000);
         std::cout<<dts << " " << now<<std::endl;
-        if (dts > now)
+        if (dts > now) {
+            std::cout<<dts - now << " sleep" <<std::endl;
             av_usleep(dts - now);
+        }
 
         /* encode the image */
         encode(c, frame, pkt, f);
