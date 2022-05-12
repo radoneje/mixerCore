@@ -87,8 +87,10 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     int i, ret, x, y;
     FILE *f;
     AVFrame *frame;
+
     AVPacket *pkt;
     uint8_t endcode[] = { 0, 0, 1, 0xb7 };
+    struct SwsContext *sws_ctx = NULL;
 
     filename = "/var/www/mixerControl/public/1.mp4";
     codec_name = "libx264";
@@ -144,11 +146,24 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     frame->format = c->pix_fmt;
     frame->width  = c->width;
     frame->height = c->height;
+    std::cout<< "frame lainesixe: "<< frame->linesize<<std::endl;
     ret = av_frame_get_buffer(frame, 32);
     if (ret < 0) {
         fprintf(stderr, "Could not allocate the video frame data\n");
         exit(1);
     }
+    sws_ctx = sws_getContext(c->width,
+                             c->height,
+                             AV_PIX_FMT_RGB24,
+                             c->width,
+                             c->height,
+                             AV_PIX_FMT_YUV420P,
+                             SWS_BICUBIC,
+                             NULL,
+                             NULL,
+                             NULL);
+
+
     /* encode 1 second of video */
     for (i = 0; i < 25; i++) {
         fflush(stdout);
@@ -158,18 +173,27 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             exit(1);
         /* prepare a dummy image */
         /* Y */
-        for (y = 0; y < c->height; y++) {
+      /*  for (y = 0; y < c->height; y++) {
             for (x = 0; x < c->width; x++) {
                 frame->data[0][y * frame->linesize[0] + x] = x + y + i * 3;
             }
         }
-        /* Cb and Cr */
+        // Cb and Cr
         for (y = 0; y < c->height/2; y++) {
             for (x = 0; x < c->width/2; x++) {
                 frame->data[1][y * frame->linesize[1] + x] = 128 + y + i * 2;
                 frame->data[2][y * frame->linesize[2] + x] = 64 + x + i * 5;
             }
-        }
+        }*/
+
+        ret = sws_scale(sws_ctx,                //struct SwsContext* c,
+                        frame->data,            //const uint8_t* const srcSlice[],
+                        frame->linesize,        //const int srcStride[],
+                        0,                      //int srcSliceY,
+                        frame->height,          //int srcSliceH,
+                        image,        //uint8_t* const dst[],
+                        frame->linesize);   //const int dstStride[]);
+
         frame->pts = i;
         /* encode the image */
         encode(c, frame, pkt, f);
