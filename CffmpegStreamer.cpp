@@ -221,7 +221,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
        //
             ret = sws_scale(sws_ctx,                //struct SwsContext* c,
                             &image,            //const uint8_t* const srcSlice[],
-                            frame->linesize,        //const int srcStride[],
+                            1280*3,        //const int srcStride[],
                             0,                      //int srcSliceY,
                             frame->height,          //int srcSliceH,
                             frame->data,        //uint8_t* const dst[],
