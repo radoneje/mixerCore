@@ -102,6 +102,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             EndCallback( eventid, pStreamers);
             return;
         }
+        std::cout<< picture->linesize<<std::endl;
     }
 
     //startCallback(eventid, pStreamers);
