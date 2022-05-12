@@ -162,7 +162,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     ret = avformat_alloc_output_context2(&octx, 0, "flv", "rtmp://wowza01.onevent.online/live/t");
     if (!octx)
     {
-        return ff_Error(ret);
+       sdt::cout<<"ERROR avformat_alloc_output_context2"<<std::endl;
     }
 
     /* encode 1 second of video */
