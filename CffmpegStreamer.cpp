@@ -140,7 +140,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     enc_ctx->max_b_frames = 1;
     enc_ctx->profile=FF_PROFILE_H264_HIGH;
    // enc_ctx->level=4.0;
-    enc_ctx->pix_fmt = AV_PIX_FMT_YUYV422;
+    enc_ctx->pix_fmt = AV_PIX_FMT_YUV422P;
     if (encoder->id == AV_CODEC_ID_H264)
         av_opt_set(enc_ctx->priv_data, "preset", "slow", 0);
     /* open it */
@@ -190,7 +190,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                              AV_PIX_FMT_RGB24,
                              enc_ctx->width,
                              enc_ctx->height,
-                             AV_PIX_FMT_YUYV422,
+                             AV_PIX_FMT_YUV422P,
                              SWS_BICUBIC,
                              NULL,
                              NULL,
