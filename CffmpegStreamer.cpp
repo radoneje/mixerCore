@@ -16,9 +16,12 @@
 #include "CffmpegStreamer.h"
 
 using namespace std;
-CffmpegStreamer::CffmpegStreamer(const std::string &eventid) {
+CffmpegStreamer::CffmpegStreamer() {
 
 }
 int CffmpegStreamer::init() {
     cout<<"CffmpegStreamer init"<<endl;
+}
+static void CffmpegStreamer::startStream(const std::string &eventid){
+    cout<<"CffmpegStreamer thread: "<< eventid <<endl;
 }

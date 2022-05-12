@@ -8,8 +8,8 @@
 
 class CffmpegStreamer {
 public:
-    CffmpegStreamer(const std::string &eventid);
-
+    CffmpegStreamer();
+    static void startStream(const std::string &eventid)
     int init();
 };
 
