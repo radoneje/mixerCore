@@ -96,6 +96,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
     const AVCodec *encoder;
     const AVCodecContext *enc_ctx;
+    int ret;
 
 
     avformat_alloc_output_context2(&ofmt_ctx, NULL, "flv", outUrl.c_str());
@@ -117,6 +118,31 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         return ;
     }
     enc_ctx = avcodec_alloc_context3(encoder);
+    /* put sample parameters */
+    enc_ctx->bit_rate = 400000;
+    /* resolution must be a multiple of two */
+    enc_ctx->width = 1280;
+    enc_ctx->height = 720;
+    /* frames per second */
+    enc_ctx->time_base = (AVRational){1, 25};
+    enc_ctx->framerate = (AVRational){25, 1};
+    /* emit one intra frame every ten frames
+     * check frame pict_type before passing frame
+     * to encoder, if frame->pict_type is AV_PICTURE_TYPE_I
+     * then gop_size is ignored and the output of encoder
+     * will always be I frame irrespective to gop_size
+     */
+    enc_ctx->gop_size = 10;
+    enc_ctx->max_b_frames = 1;
+    enc_ctx->pix_fmt = AV_PIX_FMT_YUV420P;
+    if (encoder->id == AV_CODEC_ID_H264)
+        av_opt_set(enc_ctx->priv_data, "preset", "slow", 0);
+    /* open it */
+    ret = avcodec_open2(enc_ctx, encoder, NULL);
+    if (ret < 0) {
+        av_log(NULL, AV_LOG_ERROR, "Cannot open video encoder for stream #%u\n", i);
+        return ;
+    }
 
     return ;
 }
