@@ -93,6 +93,8 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
 
 
+    OutputStream video_stream = { 0 };
+    const AVOutputFormat *fmt;
     const char *filename, *codec_name;
     const AVCodec *codec;
     AVCodecContext *c= NULL;
@@ -104,6 +106,17 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     AVPacket *pkt;
     uint8_t endcode[] = { 0, 0, 1, 0xb7 };
     struct SwsContext *sws_ctx = NULL;
+// Выходной поток
+    // Создаем контекст выходного потока
+    AVFormatContext *octx = NULL;
+    ret = avformat_alloc_output_context2(&octx, 0, "flv", "rtmp://wowza01.onevent.online/live/t");
+    if (!octx)
+    {
+        std::cout<<"ERROR avformat_alloc_output_context2"<<std::endl;
+        retrurn;
+    }
+    fmt = octx->oformat;
+
 
     filename = "/var/www/mixerControl/public/1.mp4";
     codec_name = "libx264";
@@ -176,14 +189,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                              NULL,
                              NULL);
 
-// Выходной поток
-    // Создаем контекст выходного потока
-    AVFormatContext *octx = NULL;
-    ret = avformat_alloc_output_context2(&octx, 0, "flv", "rtmp://wowza01.onevent.online/live/t");
-    if (!octx)
-    {
-        std::cout<<"ERROR avformat_alloc_output_context2"<<std::endl;
-    }
+
     long long startTime = av_gettime();
     /* encode 1 second of video */
     for (i = 0; i < 100; i++) {
