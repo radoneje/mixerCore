@@ -114,6 +114,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     codecContext->max_b_frames=1;
     codecContext->pix_fmt = AV_PIX_FMT_YUV420P;
 
+    av_dict_set(&This->opts, "vprofile", "baseline", 0)
+    av_opt_set(codecContext->priv_data, "preset", "slow", 0);
+
     if (avcodec_open2(codecContext, codec, NULL) < 0) {
         fprintf(stderr, "could not open codec\n");
         EndCallback( eventid, pStreamers);
@@ -130,29 +133,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         return;
     }
     for(i=0;i<30*10;i++) {
-        fflush(stdout);
-        ret = av_frame_make_writable(picture);
-        if (ret < 0)
-        {
-            fprintf(stderr, "Error av_frame_make_writable\n");
-            EndCallback( eventid, pStreamers);
-            return;
-        }
-        for(y=0;y<codecContext->height;y++) {
-            for(x=0;x<codecContext->width;x++) {
-                picture->data[0][y * picture->linesize[0] + x] = x + y + i * 3;
-            }
-        }
-        /* Cb and Cr */
-        for(y=0;y<codecContext->height/2;y++) {
-            for(x=0;x<codecContext->width/2;x++) {
-                picture->data[1][y * picture->linesize[1] + x] = 128 + y + i * 2;
-                picture->data[2][y * picture->linesize[2] + x] = 64 + x + i * 5;
-            }
-        }
-        picture->pts = i;
-        std::cout <<"encode frame "<< i <<std::endl;
-        encode(codecContext, picture, pkt, f);
+        av_init_packet(&pkt);
+
+
     }
     std::cout <<"encode all frames " <<std::endl;
 
