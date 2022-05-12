@@ -102,7 +102,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     std::string codec_name = "libx264";
 
     int ret;
-    av_log_set_level(AV_LOG_DEBUG);
+  //  av_log_set_level(AV_LOG_DEBUG);
     avformat_alloc_output_context2(&ofmt_ctx, NULL, "flv", outUrl.c_str());
     if (!ofmt_ctx) {
         av_log(NULL, AV_LOG_ERROR, "Could not create output context\n");
@@ -241,7 +241,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                             frame->data,        //uint8_t* const dst[],
                             frame->linesize);   //const int dstStride[]);
         frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
-        std::cout<<"pts "<<frame->pts;
+        //std::cout<<"pts "<<frame->pts;
         long long now = av_gettime() - startTime;
         long long dts = 0;
         dts = (frame->pts)*1000;// * ( r2d(enc_ctx->time_base )*1000*1000);
