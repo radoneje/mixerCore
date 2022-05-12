@@ -162,7 +162,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         if (got_output) {
             printf("Write frame %3d (size=%5d)\n", i, pkt.size);
             fwrite(pkt->data, 1, pkt->size, f);
-            av_free_packet(pkt);
+            av_packet_unref(pkt);
         }
 
 
