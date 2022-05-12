@@ -26,10 +26,7 @@ extern "C" {
 #include <libswscale/swscale.h>
 
 }
-av_always_inline std::string av_err2string(int errnum) {
-    char str[AV_ERROR_MAX_STRING_SIZE];
-    return av_make_error_string(str, AV_ERROR_MAX_STRING_SIZE, errnum);
-}
+
 
 #include "CffmpegStreamer.h"
 #include "Ccmd.h"
@@ -121,7 +118,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     /* open it */
     ret = avcodec_open2(c, codec, NULL);
     if (ret < 0) {
-        fprintf(stderr, "Could not open codec: %s\n", av_err2str(ret));
+        fprintf(stderr, "Could not open codec: %s\n");//, av_err2str(ret));
         exit(1);
     }
     f = fopen(filename, "wb");
