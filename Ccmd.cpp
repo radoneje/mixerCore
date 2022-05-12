@@ -95,7 +95,7 @@ void Ccmd::clearPresImage(){
 
 };
 int Ccmd::startStream(const std::string eventid){
-    if(streamers.find(eventid)==streamers.end()) {
+    if(streamers.find(eventid)!=streamers.end()) {
         return  -1;
     }
 
