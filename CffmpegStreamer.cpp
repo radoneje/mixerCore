@@ -224,6 +224,14 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                 fprintf(stderr, "Error encoding a frame: %s\n");
                 exit(1);
             }
+            /* rescale output packet timestamp values from codec to stream timebase */
+            av_packet_rescale_ts(pkt, c->time_base, st->time_base);
+            pkt->stream_index = st->index;
+
+            /* Write the compressed frame to the media file. */
+            log_packet(pFormatCtx, pkt);
+            ret = av_interleaved_write_frame(octx, &pkt);
+            std::cout<<"av_interleaved_write_frame"<<std::endl;
         }
        /* ret = av_interleaved_write_frame(octx, &pkt);
         if (ret<0)
