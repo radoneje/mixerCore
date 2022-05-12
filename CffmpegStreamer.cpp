@@ -46,7 +46,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
     AVCodec *codec;
          AVCodecContext *codecContext= NULL;
-         int i, out_size, size, x, y, outbuf_size;
+         int i, out_size, size, x, y, outbuf_size, ret;
          FILE *f;
          AVFrame *picture;
          AVPacket *pkt;
@@ -84,6 +84,10 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         EndCallback( eventid, pStreamers);
         return;
     }
+    picture->format = codecContext->pix_fmt;
+    picture->width  = codecContext->width;
+    picture->height = codecContext->height;
+    ret = av_frame_get_buffer(picture, 32);
 
     //startCallback(eventid, pStreamers);
 }
