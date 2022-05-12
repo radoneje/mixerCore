@@ -5,12 +5,13 @@
 #ifndef MIXERCORE_CFFMPEGSTREAMER_H
 #define MIXERCORE_CFFMPEGSTREAMER_H
 #include <functional>
+#include "SstreamData.h"
 
 
 class CffmpegStreamer {
 public:
     CffmpegStreamer();
-    static void startStream( std::string eventid, unsigned char * image,  std::function<void(std::string)> startCallback,   std::function<void(std::string)> EndCallback);
+    static void startStream( const std::string eventid, unsigned char * image,  std::function<void(std::string, SstreamData *)> startCallback,   std::function<void(std::string, SstreamData *)> EndCallback, std::map<std::string, SstreamData *> *pStreamers);
     int init();
 };
 

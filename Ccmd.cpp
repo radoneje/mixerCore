@@ -33,11 +33,11 @@ Ccmd::Ccmd(){
     }
 
 };
-void Ccmd::notifyStreamStarted(std::string eventid){
+void Ccmd::notifyStreamStarted(std::string eventid, std::map<std::string, SstreamData*> *pStreamers){
     std::cout<< " notifyStreamStarted" << eventid<< std::endl;
 
 };
-void Ccmd::notifyStreamEnded(std::string eventid){
+void Ccmd::notifyStreamEnded(std::string eventid, std::map<std::string, SstreamData*> *pStreamers){
     std::cout<< " notifyStreamEnded"  << eventid << std::endl;
 
 };
@@ -113,7 +113,7 @@ int Ccmd::startStream(const std::string eventid,  std::map<std::string, SstreamD
         return  -1;
     }
     printf("startStream\n");
-    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData,  (std::function<void(std::string)>) notifyStreamStarted,  (std::function<void(std::string)> )notifyStreamEnded);
+    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData,  (std::function<void(std::string)>) notifyStreamStarted,  (std::function<void(std::string)> )notifyStreamEnded, pStreamers);
 
     streamThread.join();
     SstreamData dt;

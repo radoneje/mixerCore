@@ -26,6 +26,7 @@ extern "C" {
 
 #include "CffmpegStreamer.h"
 #include "Ccmd.h"
+#include "SstreamData.h"
 
 using namespace std;
 CffmpegStreamer::CffmpegStreamer() {
@@ -35,8 +36,7 @@ int CffmpegStreamer::init() {
     cout<<"CffmpegStreamer init"<<endl;
     return  1;
 }
-void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string)> startCallback,   std::function<void(std::string)> EndCallback){
-    startCallback("eventid");
-
+void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string, SstreamData *)> startCallback,   std::function<void(std::string, SstreamData *)> EndCallback, std::map<std::string, SstreamData *> *pStreamers){
+    startCallback("eventid", pStreamers);
     cout<<"CffmpegStreamer thread: "<< eventid <<endl;
 }

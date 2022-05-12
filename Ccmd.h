@@ -33,10 +33,10 @@ class Ccmd {
         int PresImageNumChannels;
         std::string imageid;
         CFFreader meReader;
-        typedef void (* vFunctionCall)(std::string args);
+      //  typedef void (* vFunctionCall)(std::string args);
         void startReadStream(std::string rtmpURL, int layerNumber);
-        static void notifyStreamStarted(std::string eventid);
-        static void notifyStreamEnded(std::string eventid);
+        static void notifyStreamStarted(std::string eventid, std::map<std::string, SstreamData*> *pStreamers);
+        static void notifyStreamEnded(std::string eventid, std::map<std::string, SstreamData*> *pStreamers);
         unsigned char* mainImageData;
 
         Ccmd();
