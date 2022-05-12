@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
 
     Ccmd *cmd= new Ccmd();
 
-    return;
+    return 0;
     std::thread httpThread(httpServer.init,8090, cmd);
     std::thread renderThread(render.StartRender, argc,  argv, cmd);
     std::cout << "Hello, World!" << std::endl;
