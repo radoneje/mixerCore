@@ -114,8 +114,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     codecContext->max_b_frames=1;
     codecContext->pix_fmt = AV_PIX_FMT_YUV420P;
 
-    av_dict_set(&This->opts, "vprofile", "baseline", 0)
+   // av_dict_set(&This->opts, "vprofile", "baseline", 0)
     av_opt_set(codecContext->priv_data, "preset", "slow", 0);
+    av_opt_set(codecContext->priv_data, "vprofile", "baseline", 0);
 
     if (avcodec_open2(codecContext, codec, NULL) < 0) {
         fprintf(stderr, "could not open codec\n");
