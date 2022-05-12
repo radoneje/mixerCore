@@ -96,7 +96,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     AVPacket *pkt;
     AVFrame *frame;
     SwsContext *sws_ctx = NULL;
-    std::string outUrl="rtmp://wowza01.onevent.online/live/t";
+    std::string outUrl="rtmp://wowza02.onevent.online/live/mixerCore";
     std::string codec_name = "libx264";
 
 
