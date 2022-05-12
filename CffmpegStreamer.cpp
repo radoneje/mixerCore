@@ -154,6 +154,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         return ;
     }
     out_stream->time_base = enc_ctx->time_base;
+    out_stream->avg_frame_rate=enc_ctx->framerate;
+    out_stream->time_base=enc_ctx->time_base;
+
    // stream_ctx[i].enc_ctx = enc_ctx;
     ret=avio_open2(&ofmt_ctx->pb, outUrl.c_str(), AVIO_FLAG_WRITE , NULL, NULL);
     if (ret < 0) {
