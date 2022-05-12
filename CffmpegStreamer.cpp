@@ -235,11 +235,11 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
             if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
                 break;
-            std::cout<<"avcodec_receive_packet "<< ret <<std::endl;
             else if (ret < 0) {
                 fprintf(stderr, "Error encoding a frame: %s\n");
                 exit(1);
             }
+            std::cout<<"avcodec_receive_packet "<< ret <<std::endl;
             /* rescale output packet timestamp values from codec to stream timebase */
            // av_packet_rescale_ts(pkt, c->time_base, st->time_base);
            // pkt->stream_index = st->index;
