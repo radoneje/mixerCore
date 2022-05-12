@@ -129,8 +129,8 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     enc_ctx->width = 1280;
     enc_ctx->height = 720;
     /* frames per second */
-    enc_ctx->time_base = (AVRational){1, 25};
-    enc_ctx->framerate = (AVRational){25, 1};
+    enc_ctx->time_base = (AVRational){1, 30};
+    enc_ctx->framerate = (AVRational){30, 1};
     /* emit one intra frame every ten frames
      * check frame pict_type before passing frame
      * to encoder, if frame->pict_type is AV_PICTURE_TYPE_I
