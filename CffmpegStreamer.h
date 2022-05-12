@@ -24,7 +24,7 @@ extern "C" {
 class CffmpegStreamer {
 private:
     static void encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *pkt,
-                       FILE *outfile)
+                       FILE *outfile);
 public:
     CffmpegStreamer();
     static void startStream( const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, streamersDataType *pStreamers);
