@@ -210,9 +210,10 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             std::cout<<dts - now << " sleep" <<std::endl;
             av_usleep(dts - now);
         }
-        int got_packet=0;
-        ret = avcodec_encode_video2(c, pkt, frame, &got_packet);{
-            fprintf(stderr, " Error avcodec_encode_video2 \n");
+        ret = avcodec_send_frame(c, frame);
+        if (ret < 0) {
+            fprintf(stderr, "Error sending a frame to the encoder: %s\n"
+                   );
             exit(1);
         }
        /* ret = av_interleaved_write_frame(octx, &pkt);
