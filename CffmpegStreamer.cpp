@@ -95,6 +95,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
     AVStream video_stream = { 0 };
     const AVOutputFormat *fmt;
+
     const char *filename, *codec_name;
     const AVCodec *codec;
     AVCodecContext *c= NULL;
@@ -103,6 +104,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     FILE *f;
     AVFrame *frame;
     AVFormatContext *octx = NULL;
+
+    AVDictionary *opt = NULL;
+   // av_dict_set(&opt, argv[i]+1, argv[i+1], 0);
 
     AVPacket *pkt;
 
@@ -118,6 +122,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         retrurn;
     }
     fmt = octx->oformat;
+    avformat_write_header(pFormatCtx, &opt);
 
 
     filename = "/var/www/mixerControl/public/1.mp4";
@@ -133,7 +138,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         fprintf(stderr, "Could not allocate video codec context\n");
         exit(1);
     }
-    video_stream->tmp_pkt = av_packet_alloc();
+
 
 
 
@@ -197,7 +202,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                              NULL);
 
     std::cout<<"fmt->video_codec: "<<fmt->video_codec<<std::endl;
-    add_stream(&video_stream, octx, codec, fmt->video_codec);
+  ///  add_stream(&video_stream, octx, codec, fmt->video_codec);
 
     long long startTime = av_gettime();
     /* encode 1 second of video */
