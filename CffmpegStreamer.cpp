@@ -129,7 +129,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         EndCallback(eventid, pStreamers);
         return;
     }
-    for(i=0;i<25;i++) {
+    for(i=0;i<30*10;i++) {
         fflush(stdout);
         ret = av_frame_make_writable(picture);
         if (ret < 0)
