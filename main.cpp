@@ -30,6 +30,7 @@ int main(int argc, char* argv[]) {
 
 
     Ccmd *cmd= new Ccmd();
+    std::cin.get();
 
     return 0;
     std::thread httpThread(httpServer.init,8090, cmd);
