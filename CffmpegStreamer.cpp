@@ -37,5 +37,6 @@ int CffmpegStreamer::init() {
 }
 void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string)> startCallback,   std::function<void(std::string)> EndCallback){
 
+    startCallback("eventid");
     cout<<"CffmpegStreamer thread: "<< eventid <<endl;
 }
