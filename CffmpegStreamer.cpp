@@ -219,7 +219,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
           }*/
 
        //
-            int j=0;
+          /*  int j=0;
             free(image);
             image=(unsigned  char*) malloc(1280*720*3*sizeof(unsigned  char));
             srand(std::chrono::system_clock::now().time_since_epoch().count());
@@ -230,7 +230,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                 image[j+1]= ((double)rand() / RAND_MAX)*254;;
                 image[j+2]= ((double)rand() / RAND_MAX)*254;;
                 j=j+3;
-            } while(j< 1280*720*3);
+            } while(j< 1280*720*3);*/
 
        int linesize=1280*3;
             ret = sws_scale(sws_ctx,                //struct SwsContext* c,
