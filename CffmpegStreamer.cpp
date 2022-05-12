@@ -13,6 +13,8 @@
 #include <cctype>
 #include <locale>
 #include <functional>
+
+
 extern "C" {
 // Get declaration for f(int i, char c, float x)
 #include <libavcodec/avcodec.h>
@@ -38,6 +40,7 @@ int CffmpegStreamer::init() {
     return  1;
 }
 void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, std::map<std::string, SstreamData *> *pStreamers){
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     startCallback("eventid", pStreamers);
     cout<<"CffmpegStreamer thread: "<< eventid <<endl;
 }
