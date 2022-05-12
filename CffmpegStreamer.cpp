@@ -96,6 +96,8 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     AVPacket *pkt;
     AVFrame *frame;
     SwsContext *sws_ctx = NULL;
+    AVDictionary *opts = nullptr;
+
     std::string outUrl="rtmp://wowza01.onevent.online/live/mixerCore3";
     std::string codec_name = "libx264";
 
@@ -140,7 +142,12 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     if (encoder->id == AV_CODEC_ID_H264)
         av_opt_set(enc_ctx->priv_data, "preset", "slow", 0);
     /* open it */
-    ret = avcodec_open2(enc_ctx, encoder, NULL);
+
+
+    av_dict_set(&opts, "preset", "superfast", 0);
+    av_dict_set(&opts, "tune", "zerolatency", 0);
+
+    ret = avcodec_open2(enc_ctx, encoder, opts);
     if (ret < 0) {
         av_log(NULL, AV_LOG_ERROR, "Cannot open video encoder for stream \n" );
         return ;
