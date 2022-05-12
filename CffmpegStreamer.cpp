@@ -226,9 +226,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
        // encode(c, frame, pkt, f);
     }
     /* flush the encoder */
-    encode(c, NULL, pkt, f);
+   // encode(c, NULL, pkt, f);
     /* add sequence end code to have a real MPEG file */
-    fwrite(endcode, 1, sizeof(endcode), f);
+   // fwrite(endcode, 1, sizeof(endcode), f);
     fclose(f);
     avcodec_free_context(&c);
     av_frame_free(&frame);
