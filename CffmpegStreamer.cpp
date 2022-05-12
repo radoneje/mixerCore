@@ -210,9 +210,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         long long now = av_gettime() - startTime;
         long long dts = 0;
         dts = (frame->pts) * ( r2d(enc_ctx->time_base )*1000*1000);
-        std::cout<<dts << " " << now<<std::endl;
+       // std::cout<<dts << " " << now<<std::endl;
         if (dts > now) {
-            std::cout<<dts - now << " sleep" <<std::endl;
+          //  std::cout<<dts - now << " sleep" <<std::endl;
             av_usleep(dts - now);
         }
         ret = avcodec_send_frame(enc_ctx, frame);
@@ -228,10 +228,10 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                 fprintf(stderr, "Error encoding a frame: \n");
                 return ;
             }
-            std::cout<<"avcodec_receive_packet " <<std::endl;
+          //  std::cout<<"avcodec_receive_packet " <<std::endl;
             log_packet(ofmt_ctx, pkt);
             ret = av_interleaved_write_frame(ofmt_ctx, pkt);
-            std::cout<<"av_interleaved_write_frame"<<std::endl;
+            std::cout<<"av_interleaved_write_frame "<< i <<std::endl;
         }
 
 
