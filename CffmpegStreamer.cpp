@@ -211,7 +211,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             av_usleep(dts - now);
         }
         int got_packet=0;
-        ret = avcodec_encode_video2(c, &pkt, frame, &got_packet);{
+        ret = avcodec_encode_video2(c, pkt, frame, &got_packet);{
             fprintf(stderr, " Error avcodec_encode_video2 \n",);
             exit(1);
         }
