@@ -135,6 +135,25 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     }
     for(i=0;i<30*10;i++) {
         av_init_packet(pkt);
+        pkt->data = NULL;    // packet data will be allocated by the encoder
+        pkt->size = 0;
+        fflush(stdout);
+
+        /* Y */
+        for(y=0;y<codecContext->height;y++) {
+            for(x=0;x<codecContext->width;x++) {
+                picture->data[0][y * picture->linesize[0] + x] = x + y + i * 3;
+            }
+        }
+        /* Cb and Cr */
+        for(y=0;y<codecContext->height/2;y++) {
+            for(x=0;x<codecContext->width/2;x++) {
+                picture->data[1][y * picture->linesize[1] + x] = 128 + y + i * 2;
+                picture->data[2][y * picture->linesize[2] + x] = 64 + x + i * 5;
+            }
+        }
+        picture->pts = i;
+
 
 
     }
