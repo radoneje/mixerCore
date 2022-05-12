@@ -114,7 +114,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         av_log(NULL, AV_LOG_ERROR, "Failed allocating output stream\n");
         return ;
     }
-    codec = avcodec_find_encoder_by_name(codec_name);
+    codec = avcodec_find_encoder_by_name(codec_name.c_str());
     if (!codec) {
         fprintf(stderr, "Codec '%s' not found\n", codec_name.c_str());
         return ;
