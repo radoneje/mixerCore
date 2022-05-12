@@ -76,6 +76,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     const char *filename, *codec_name;
     const AVCodec *codec;
     AVCodecContext *c= NULL;
+    AVFormatContext *pFormatCtx = NULL;
     int i, ret, x, y;
     FILE *f;
     AVFrame *frame;
@@ -155,8 +156,17 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                              NULL,
                              NULL);
 
+// Выходной поток
+    // Создаем контекст выходного потока
+    AVFormatContext *octx = NULL;
+    ret = avformat_alloc_output_context2(&octx, 0, "flv", "rtmp://wowza01.onevent.online/live/t");
+    if (!octx)
+    {
+        return ff_Error(ret);
+    }
 
     /* encode 1 second of video */
+
     for (i = 0; i < 25; i++) {
         fflush(stdout);
         /* make sure the frame data is writable */
