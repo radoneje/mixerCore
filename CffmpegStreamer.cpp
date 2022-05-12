@@ -112,8 +112,8 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     /* put sample parameters */
     c->bit_rate = 400000;
     /* resolution must be a multiple of two */
-    c->width = 352;
-    c->height = 288;
+    c->width = 1280;
+    c->height = 720;
     /* frames per second */
     c->time_base = (AVRational){1, 25};
     c->framerate = (AVRational){25, 1};
