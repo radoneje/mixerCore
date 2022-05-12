@@ -113,7 +113,7 @@ int Ccmd::startStream(const std::string eventid,  std::map<std::string, SstreamD
         return  -1;
     }
     printf("startStream\n");
-    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData,  (std::function<void(std::string)>) notifyStreamStarted,  (std::function<void(std::string)> )notifyStreamEnded, pStreamers);
+    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData,  (std::function<void(std::string, SstreamData*)>) notifyStreamStarted,  (std::function<void(std::string , SstreamData*)> )notifyStreamEnded, pStreamers);
 
     streamThread.join();
     SstreamData dt;
