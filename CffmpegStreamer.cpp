@@ -42,7 +42,7 @@ int CffmpegStreamer::init() {
 }
 void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, std::map<std::string, SstreamData *> *pStreamers){
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    std::cout<<"cout" << pStreamers->count()<<std::endl;
+    std::cout<<"cout" << pStreamers->count(eventid)<<std::endl;
     startCallback("eventid", pStreamers);
     cout<<"CffmpegStreamer thread: "<< eventid <<endl;
 }
