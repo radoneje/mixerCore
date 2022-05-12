@@ -27,9 +27,9 @@ Ccmd::Ccmd(){
     }
     mainImageData= (unsigned char*)malloc(1280*720*3*sizeof (unsigned char));
     for(int i=0;i<1280*720;i++){
-        mainImageData[i*3+0]=0xff;
         mainImageData[i*3+0]=0x0f;
-        mainImageData[i*3+0]=0xff;
+        mainImageData[i*3+1]=0x0f;
+        mainImageData[i*3+2]=0xff;
     }
 
 };
