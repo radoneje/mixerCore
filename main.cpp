@@ -6,6 +6,7 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
+#include <map>
 
 #include "CRender.h"
 #include "CHttp.h"
