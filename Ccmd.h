@@ -17,8 +17,8 @@ using namespace std;
 class Ccmd {
 
     public:
-        static std::map<std::string, std::thread *> streamers;
-        int startStream(const std::string eventid);
+
+        int startStream(const std::string eventid, std::map<std::string, std::thread *> *streamers);
         std::vector<CFFreader>  FFreader;
         std::vector<int> activeTextureId;
         std::mutex locker;
