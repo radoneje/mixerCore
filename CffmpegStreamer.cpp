@@ -140,7 +140,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     enc_ctx->max_b_frames = 1;
     enc_ctx->profile=FF_PROFILE_H264_HIGH;
    // enc_ctx->level=4.0;
-    enc_ctx->pix_fmt = AV_PIX_FMT_YUV422P;
+    enc_ctx->pix_fmt = AV_PIX_FMT_YUV420P;
     if (encoder->id == AV_CODEC_ID_H264)
         av_opt_set(enc_ctx->priv_data, "preset", "slow", 0);
     /* open it */
@@ -190,7 +190,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                              AV_PIX_FMT_RGB24,
                              enc_ctx->width,
                              enc_ctx->height,
-                             AV_PIX_FMT_YUV422P,
+                             AV_PIX_FMT_YUV420P,
                              SWS_BICUBIC,
                              NULL,
                              NULL,
@@ -205,7 +205,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         ret = av_frame_make_writable(frame);
         /* prepare a dummy image */
         /* Y */
-         for (int y = 0; y < enc_ctx->height; y++) {
+       /*  for (int y = 0; y < enc_ctx->height; y++) {
               for (int x = 0; x < enc_ctx->width; x++) {
                   frame->data[0][y * frame->linesize[0] + x] = x + y + i * 3;
               }
@@ -216,7 +216,16 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                   frame->data[1][y * frame->linesize[1] + x] = 128 + y + i * 2;
                   frame->data[2][y * frame->linesize[2] + x] = 64 + x + i * 5;
               }
-          }
+          }*/
+
+       //
+            ret = sws_scale(sws_ctx,                //struct SwsContext* c,
+                            &image,            //const uint8_t* const srcSlice[],
+                            frame->linesize,        //const int srcStride[],
+                            0,                      //int srcSliceY,
+                            frame->height,          //int srcSliceH,
+                            frame->data,        //uint8_t* const dst[],
+                            frame->linesize);   //const int dstStride[]);
         frame->pts = i;
         long long now = av_gettime() - startTime;
         long long dts = 0;
