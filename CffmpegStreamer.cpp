@@ -274,7 +274,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
            // pkt->stream_index = st->index;
 
             /* Write the compressed frame to the media file. */
-            log_packet(pFormatCtx, pkt);
+            log_packet(octx, pkt);
             ret = av_interleaved_write_frame(octx, pkt);
             std::cout<<"av_interleaved_write_frame"<<std::endl;
         }
