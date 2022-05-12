@@ -9,7 +9,7 @@
 class CffmpegStreamer {
 public:
     CffmpegStreamer();
-    static void startStream(const std::string eventid , unsigned char * image);
+    static void startStream( std::string eventid, unsigned char * image, const std::function<void(int)>* startCallback,  const std::function<void(int)>* EndCallback);
     int init();
 };
 
