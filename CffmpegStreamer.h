@@ -4,6 +4,7 @@
 
 #ifndef MIXERCORE_CFFMPEGSTREAMER_H
 #define MIXERCORE_CFFMPEGSTREAMER_H
+#include <functional>
 
 
 class CffmpegStreamer {

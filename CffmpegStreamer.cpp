@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <cctype>
 #include <locale>
+#include <functional>
 extern "C" {
 // Get declaration for f(int i, char c, float x)
 #include <libavcodec/avcodec.h>
