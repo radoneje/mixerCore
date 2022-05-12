@@ -96,6 +96,7 @@ void Ccmd::clearPresImage(){
 };
 int Ccmd::startStream(const std::string eventid){
     if(streamers.find(eventid)!=streamers.end()) {
+        std::cout<<  "Error : straamer already created" <<std::endl;
         return  -1;
     }
 
