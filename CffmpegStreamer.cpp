@@ -45,12 +45,14 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
 
     AVCodec *codec;
-         AVCodecContext *c= NULL;
+         AVCodecContext *codecContext= NULL;
          int i, out_size, size, x, y, outbuf_size;
          FILE *f;
          AVFrame *picture;
+         AVPacket *pkt;
          uint8_t *outbuf, *picture_buf;
          printf("Video encoding\n");
+
 
     codec = avcodec_find_encoder(AV_CODEC_ID_H264);
          if (!codec) {
@@ -58,6 +60,15 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
              EndCallback( eventid, pStreamers);
              return;
              }
+    codecContext = avcodec_alloc_context3(codec);
+    picture = av_frame_alloc();
+    pkt = av_packet_alloc();
+    if (!pkt)
+    {
+        fprintf(stderr, "Error av_packet_alloc\n");
+        EndCallback( eventid, pStreamers);
+        return;
+    }
 
     //startCallback(eventid, pStreamers);
 }
