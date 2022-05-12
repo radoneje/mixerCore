@@ -42,6 +42,6 @@ int CffmpegStreamer::init() {
 }
 void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, std::map<std::string, SstreamData *> *pStreamers){
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    std::thread startCallBackThread(startCallback, eventid, pStreamers)
+    std::thread startCallBackThread(startCallback, eventid, pStreamers);
     //startCallback(eventid, pStreamers);
 }
