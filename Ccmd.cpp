@@ -119,7 +119,7 @@ int Ccmd::startStream(const std::string eventid){
 
 
     streamThread.join();
-    streamers.insert(std::pair<std::string, std::thread> ( eventid, &streamThread ));
+    streamers.insert(std::pair<std::string, std::thread> ( eventid, &streamThread );
 
     return 0;
 }
