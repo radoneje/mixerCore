@@ -52,7 +52,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
          uint8_t *outbuf, *picture_buf;
          printf("Video encoding\n");
 
-    codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
+    codec = avcodec_find_encoder(AV_CODEC_ID_H264);
          if (!codec) {
                  fprintf(stderr, "codec not found\n");
              EndCallback( eventid, pStreamers);
