@@ -33,9 +33,11 @@ Ccmd::Ccmd(){
 };
 void Ccmd::notifyStreamStarted(std::string eventid){
     std::cout<< " notifyStreamStarted" << eventid<< std::endl;
+
 };
 void Ccmd::notifyStreamEnded(std::string eventid){
     std::cout<< " notifyStreamEnded"  << eventid << std::endl;
+    streamers.erase(streamers.find(eventid));
 };
 
 
@@ -109,11 +111,12 @@ int Ccmd::startStream(const std::string eventid){
     }
 
     printf("startStream\n");
-   CffmpegStreamer *streamer= new  CffmpegStreamer();
-   // streamers.insert(std::pair<std::string, CffmpegStreamer*> ( eventid, streamer ));
+
+
 
     std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData,  (std::function<void(std::string)>) notifyStreamStarted,  (std::function<void(std::string)> )notifyStreamEnded);
     streamThread.join();
+    streamers.insert(std::pair<std::string, std::thread*> ( eventid, streamThread ));
 
     return 0;
 }
