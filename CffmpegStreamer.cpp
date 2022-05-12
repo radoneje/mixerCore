@@ -202,7 +202,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                              NULL);
 
     std::cout<<"fmt->video_codec: "<<fmt->video_codec<<std::endl;
-  ///  add_stream(&video_stream, octx, codec, fmt->video_codec);
+  //  add_stream(&video_stream, octx, codec, fmt->video_codec);
 
     long long startTime = av_gettime();
     /* encode 1 second of video */
