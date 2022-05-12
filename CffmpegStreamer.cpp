@@ -91,12 +91,17 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
     AVStream *out_stream;
     AVFormatContext * ofmt_ctx = NULL;
+    const AVCodec *encoder;
+    AVCodecContext *enc_ctx;
+    AVPacket *pkt;
+    AVFrame *frame;
+    SwsContext *sws_ctx = NULL;
     std::string outUrl="rtmp://wowza01.onevent.online/live/t";
     std::string codec_name = "libx264";
 
-    const AVCodec *encoder;
-     AVCodecContext *enc_ctx;
+
     int ret;
+
 
 
     avformat_alloc_output_context2(&ofmt_ctx, NULL, "flv", outUrl.c_str());
@@ -160,7 +165,56 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         fprintf(stderr, "Error avformat_write_header\n");
         return;
     }
+    //////////////////
 
+    pkt = av_packet_alloc();
+    frame = av_frame_alloc();
+    frame->format = enc_ctx->pix_fmt;
+    frame->width  = enc_ctx->width;
+    frame->height = enc_ctx->height;
+    ret = av_frame_get_buffer(frame, 32);
+
+    sws_ctx = sws_getContext(enc_ctx->width,
+                             enc_ctx->height,
+                             AV_PIX_FMT_RGB24,
+                             enc_ctx->width,
+                             enc_ctx->height,
+                             AV_PIX_FMT_YUV420P,
+                             SWS_BICUBIC,
+                             NULL,
+                             NULL,
+                             NULL);
+
+    long long startTime = av_gettime();
+    for (int i = 0; i < 50; i++) {
+        fflush(stdout);
+        ret = av_frame_make_writable(frame);
+        /* prepare a dummy image */
+        /* Y */
+         for (int y = 0; y < enc_ctx->height; y++) {
+              for (int x = 0; x < enc_ctx->width; x++) {
+                  frame->data[0][y * frame->linesize[0] + x] = x + y + i * 3;
+              }
+          }
+          // Cb and Cr
+          for (int y = 0; y < enc_ctx->height/2; y++) {
+              for (int x = 0; x < enc_ctx->width/2; x++) {
+                  frame->data[1][y * frame->linesize[1] + x] = 128 + y + i * 2;
+                  frame->data[2][y * frame->linesize[2] + x] = 64 + x + i * 5;
+              }
+          }
+        frame->pts = i;
+        long long now = av_gettime() - startTime;
+        long long dts = 0;
+        dts = (frame->pts) * ( r2d(enc_ctx->time_base )*1000*1000);
+        std::cout<<dts << " " << now<<std::endl;
+        if (dts > now) {
+            std::cout<<dts - now << " sleep" <<std::endl;
+            av_usleep(dts - now);
+        }
+
+
+    }
 
 
     return ;
