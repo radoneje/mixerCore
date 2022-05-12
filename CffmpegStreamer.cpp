@@ -74,6 +74,8 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
          AVFrame *picture;
          AVPacket *pkt;
          uint8_t *outbuf, *picture_buf;
+    uint8_t endcode[] = { 0, 0, 1, 0xb7 };
+
          printf("Video encoding\n");
 
          std::string filename="/var/www/mixerControl/public/1.mp4";
@@ -149,8 +151,21 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             }
         }
         picture->pts = i;
+        std::cout <<"encode frame "<< i <<std::endl;
         encode(codecContext, picture, pkt, f);
     }
+    std::cout <<"encode all frames " <<std::endl;
+
+    encode(codecContext, NULL, pkt, f);
+
+    fwrite(endcode, 1, sizeof(endcode), f);
+    fclose(f);
+
+    avcodec_free_context(&codecContext);
+    av_frame_free(&picture);
+    av_packet_free(&pkt);
+
+    EndCallback(eventid, pStreamers);
 
     //startCallback(eventid, pStreamers);
 }
