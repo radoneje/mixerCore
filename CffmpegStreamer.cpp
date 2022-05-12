@@ -44,5 +44,13 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     startCallback( eventid, pStreamers);
 
+    AVCodec *codec;
+         AVCodecContext *c= NULL;
+         int i, out_size, size, x, y, outbuf_size;
+         FILE *f;
+         AVFrame *picture;
+         uint8_t *outbuf, *picture_buf;
+         printf("Video encoding\n");
+
     //startCallback(eventid, pStreamers);
 }
