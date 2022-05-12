@@ -185,7 +185,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     }
     long long startTime = av_gettime();
     /* encode 1 second of video */
-    for (i = 0; i < 25; i++) {
+    for (i = 0; i < 100; i++) {
         fflush(stdout);
         /* make sure the frame data is writable */
         ret = av_frame_make_writable(frame);
