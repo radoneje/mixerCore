@@ -93,7 +93,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
 
 
-    OutputStream video_stream = { 0 };
+    AVStream video_stream = { 0 };
     const AVOutputFormat *fmt;
     const char *filename, *codec_name;
     const AVCodec *codec;
