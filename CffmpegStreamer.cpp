@@ -133,6 +133,11 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         fprintf(stderr, "Could not allocate video codec context\n");
         exit(1);
     }
+    video_stream->tmp_pkt = av_packet_alloc();
+
+
+
+
     pkt = av_packet_alloc();
     if (!pkt)
         exit(1);
