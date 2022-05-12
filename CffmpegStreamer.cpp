@@ -186,7 +186,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                              NULL);
 
     long long startTime = av_gettime();
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 50*1000000; i++) {
         fflush(stdout);
         ret = av_frame_make_writable(frame);
         /* prepare a dummy image */
