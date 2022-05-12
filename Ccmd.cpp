@@ -36,7 +36,7 @@ Ccmd::Ccmd(){
 void Ccmd::notifyStreamStarted(std::string eventid, streamersDataType *pStreamers){
     auto find=pStreamers->find(eventid);
     if(find==pStreamers->end()){
-        std::cout<< " stream Not FoundЖ " << eventid<< std::endl;
+        std::cout<< " stream Not Found: " << eventid<< std::endl;
         return;
     }
     std::cout<< " notifyStreamStarted" << eventid<< std::endl;

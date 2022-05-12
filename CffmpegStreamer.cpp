@@ -45,6 +45,6 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     std::cout<<"cout" << pStreamers->count(eventid)<<std::endl;
 
-    startCallback("eventid", pStreamers);
+    startCallback(eventid, pStreamers);
     cout<<"CffmpegStreamer thread: "<< eventid <<endl;
 }
