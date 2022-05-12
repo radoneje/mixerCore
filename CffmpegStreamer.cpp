@@ -103,16 +103,16 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     AVFormatContext *octx = NULL;
 
     AVDictionary *opt = NULL;
-   // av_dict_set(&opt, argv[i]+1, argv[i+1], 0);
-
     AVPacket *pkt;
+    sdt::string outUrl="rtmp://wowza01.onevent.online/live/t";
 
     uint8_t endcode[] = { 0, 0, 1, 0xb7 };
     struct SwsContext *sws_ctx = NULL;
 // Выходной поток
     // Создаем контекст выходного потока
 
-    ret = avformat_alloc_output_context2(&octx, 0, "flv", "rtmp://wowza01.onevent.online/live/t");
+
+    ret = avformat_alloc_output_context2(&octx, 0, "flv", outUrl);
     if (!octx)
     {
         std::cout<<"ERROR avformat_alloc_output_context2"<<std::endl;
@@ -200,6 +200,16 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
     std::cout<<"fmt->video_codec: "<<fmt->video_codec<<std::endl;
    // add_stream(&video_stream, octx, codec, fmt->video_codec);
+    ret=avio_open(&octx->pb, outUrl, AVIO_FLAG_WRITE);
+    if (ret < 0) {
+        fprintf(stderr, "Error avio_open\n");
+        return;
+    }
+    ret = avformat_write_header(octx, 0);
+    if (ret < 0) {
+        fprintf(stderr, "Error avformat_write_header\n");
+        return;
+    }
 
     long long startTime = av_gettime();
     /* encode 1 second of video */
