@@ -137,7 +137,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
      * will always be I frame irrespective to gop_size
      */
     enc_ctx->gop_size = 30;
-    enc_ctx->max_b_frames = 5;
+    enc_ctx->max_b_frames = 1;
     enc_ctx->profile=FF_PROFILE_H264_HIGH;
    // enc_ctx->level=4.0;
     enc_ctx->pix_fmt = AV_PIX_FMT_YUV420P;
