@@ -85,28 +85,30 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
              return;
              }
     codecContext = avcodec_alloc_context3(codec);
+
     picture = av_frame_alloc();
     pkt = av_packet_alloc();
+
     if (!pkt)
     {
         fprintf(stderr, "Error av_packet_alloc\n");
         EndCallback( eventid, pStreamers);
         return;
     }
-    codecContext->bit_rate = 400000;
+    codecContext->bit_rate = 4000000;
     /* resolution must be a multiple of two */
     codecContext->width = 1280;
     codecContext->height = 720;
     /* frames per second */
     codecContext->time_base = (AVRational){1, 30};
     codecContext->framerate = (AVRational){30, 1};
-    codecContext->gop_size = 30; /* emit one intra frame every 30 frames */
+    codecContext->gop_size = 10; /* emit one intra frame every 30 frames */
     codecContext->max_b_frames=1;
     codecContext->pix_fmt = AV_PIX_FMT_YUV420P;
 
    // av_dict_set(&This->opts, "vprofile", "baseline", 0)
     av_opt_set(codecContext->priv_data, "preset", "slow", 0);
-    av_opt_set(codecContext->priv_data, "vprofile", "baseline", 0);
+    //av_opt_set(codecContext->priv_data, "vprofile", "baseline", 0);
 
     if (avcodec_open2(codecContext, codec, NULL) < 0) {
         fprintf(stderr, "could not open codec\n");
@@ -114,15 +116,26 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         return;
     }
 
-    picture->format = codecContext->pix_fmt;
-    picture->width  = codecContext->width;
-    picture->height = codecContext->height;
-    ret = av_frame_get_buffer(picture, 32);
-    if (ret < 0) {
+    picture = av_frame_alloc();
+    if (!picture) {
         fprintf(stderr, "could not alloc the frame data\n");
         EndCallback(eventid, pStreamers);
         return;
     }
+
+    picture->format = codecContext->pix_fmt;
+    picture->width  = codecContext->width;
+    picture->height = codecContext->height;
+
+    ret = av_frame_get_buffer(frame, 32);
+    if (ret < 0) {
+        fprintf(stderr, "Could not allocate the video frame data\n");
+        EndCallback(eventid, pStreamers);
+        return;
+    }
+
+    //ret = av_frame_get_buffer(picture, 32);
+
     for(i=0;i<30*10;i++) {
         av_init_packet(pkt);
         pkt->data = NULL;    // packet data will be allocated by the encoder
