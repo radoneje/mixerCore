@@ -199,9 +199,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                              NULL);
 
     std::cout<<"fmt->video_codec: "<<fmt->video_codec<<std::endl;
-   // add_stream(&video_stream, octx, codec, fmt->video_codec);
+    //add_stream(&video_stream, octx, codec, video_stream->codecpar);
 
-    video_stream= avformat_new_stream(octx, video_stream->codecpar);
+    video_stream= avformat_new_stream(octx, codec);
     video_stream->time_base=c->time_base;
 
     ret=avio_open(&octx->pb, outUrl.c_str(), AVIO_FLAG_WRITE);
@@ -209,11 +209,11 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         fprintf(stderr, "Error avio_open\n");
         return;
     }
-    ret = avformat_write_header(octx, 0);
+ /*   ret = avformat_write_header(octx, 0);
     if (ret < 0) {
         fprintf(stderr, "Error avformat_write_header\n");
         return;
-    }
+    }*/
 
     long long startTime = av_gettime();
     /* encode 1 second of video */
