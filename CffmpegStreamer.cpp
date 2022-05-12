@@ -13,6 +13,7 @@
 #include <cctype>
 #include <locale>
 #include <functional>
+#include <map>
 
 
 extern "C" {
