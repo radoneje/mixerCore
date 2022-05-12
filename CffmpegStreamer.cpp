@@ -209,11 +209,11 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         fprintf(stderr, "Error avio_open\n");
         return;
     }
- /*   ret = avformat_write_header(octx, 0);
+    ret = avformat_write_header(octx, 0);
     if (ret < 0) {
         fprintf(stderr, "Error avformat_write_header\n");
         return;
-    }*/
+    }
 
     long long startTime = av_gettime();
     /* encode 1 second of video */
