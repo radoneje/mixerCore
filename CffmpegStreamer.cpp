@@ -147,7 +147,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     av_dict_set(&opts, "preset", "superfast", 0);
     av_dict_set(&opts, "tune", "zerolatency", 0);
 
-    ret = avcodec_open2(enc_ctx, encoder, opts);
+    ret = avcodec_open2(enc_ctx, encoder, &opts);
     if (ret < 0) {
         av_log(NULL, AV_LOG_ERROR, "Cannot open video encoder for stream \n" );
         return ;
