@@ -95,7 +95,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     std::string codec_name = "libx264";
 
     const AVCodec *encoder;
-    const AVCodecContext *enc_ctx;
+     AVCodecContext *enc_ctx;
     int ret;
 
 
