@@ -225,8 +225,8 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                 exit(1);
             }
             /* rescale output packet timestamp values from codec to stream timebase */
-            av_packet_rescale_ts(pkt, c->time_base, st->time_base);
-            pkt->stream_index = st->index;
+           // av_packet_rescale_ts(pkt, c->time_base, st->time_base);
+           // pkt->stream_index = st->index;
 
             /* Write the compressed frame to the media file. */
             log_packet(pFormatCtx, pkt);
