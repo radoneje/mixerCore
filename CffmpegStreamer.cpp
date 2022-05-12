@@ -240,12 +240,13 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                             frame->height,          //int srcSliceH,
                             frame->data,        //uint8_t* const dst[],
                             frame->linesize);   //const int dstStride[]);
-        frame->pts = i*r2d(enc_ctx->time_base )*1000;
+        frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
         std::cout<<"pts "<<frame->pts;
         long long now = av_gettime() - startTime;
         long long dts = 0;
-        dts = (frame->pts)*1000;// * ( r2d(enc_ctx->time_base )*1000*1000);
-       // std::cout<<dts << " " << now<<std::endl;
+        dts = (frame->pts)*1000*1000;// * ( r2d(enc_ctx->time_base )*1000*1000);
+
+       //  std::cout<<frame->pts << " " << now<<std::endl;
         if (dts > now) {
           //  std::cout<<dts - now << " sleep" <<std::endl;
             av_usleep(dts - now);
