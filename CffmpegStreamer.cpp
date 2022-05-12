@@ -119,7 +119,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     if (!octx)
     {
         std::cout<<"ERROR avformat_alloc_output_context2"<<std::endl;
-        retrurn;
+        return;
     }
     fmt = octx->oformat;
     avformat_write_header(pFormatCtx, &opt);
