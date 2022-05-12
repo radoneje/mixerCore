@@ -23,7 +23,7 @@ int CffmpegStreamer::init() {
     cout<<"CffmpegStreamer init"<<endl;
     return  1;
 }
-void CffmpegStreamer::startStream(const std::string eventid){
+void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image){
 
     cout<<"CffmpegStreamer thread: "<< eventid <<endl;
 }

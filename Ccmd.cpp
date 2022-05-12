@@ -22,6 +22,12 @@ Ccmd::Ccmd(){
         CFFreader cfFreader;
         FFreader.push_back(cfFreader);
     }
+    mainImageData= (unsigned char*)malloc(1280*720*3*sizeof (unsigned char));
+    for(int i=0;i<1280*720;i++){
+        mainImageData[i*3+0]=0xff;
+        mainImageData[i*3+0]=0x0f;
+        mainImageData[i*3+0]=0xff;
+    }
 };
 void Ccmd::notifyStreamStarted(int layerNumber){
     std::cout<< " notifyStreamStarted" << layerNumber<< std::endl;
@@ -75,7 +81,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid){
         PresImagePixels[i+1]= ((double)rand() / RAND_MAX)*254;;
         PresImagePixels[i+2]= ((double)rand() / RAND_MAX)*254;;
         i=i+3;
-    }while(i< PresImageWidth*PresImageHeight*3);
+    } while(i< PresImageWidth*PresImageHeight*3);
     std::cout<<"PresImagePixels complite "<<" "<< ((double)rand() / RAND_MAX)*16 << ""<< std::endl;
     std::remove(filepath.c_str());
     activeTextureId.clear();
@@ -103,7 +109,8 @@ int Ccmd::startStream(const std::string eventid){
     printf("startStream\n");
    CffmpegStreamer *streamer= new  CffmpegStreamer();
    // streamers.insert(std::pair<std::string, CffmpegStreamer*> ( eventid, streamer ));
-    std::thread streamThread(CffmpegStreamer::startStream, eventid);
+
+    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData);
     streamThread.join();
 
     return 0;
