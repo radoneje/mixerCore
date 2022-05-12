@@ -127,7 +127,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     picture->width  = codecContext->width;
     picture->height = codecContext->height;
 
-    ret = av_frame_get_buffer(frame, 32);
+    ret = av_frame_get_buffer(picture, 32);
     if (ret < 0) {
         fprintf(stderr, "Could not allocate the video frame data\n");
         EndCallback(eventid, pStreamers);
