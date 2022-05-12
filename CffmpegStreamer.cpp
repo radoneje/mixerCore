@@ -70,15 +70,6 @@ void CffmpegStreamer::encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *
 void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, std::map<std::string, SstreamData *> *pStreamers){
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-    //free(image);
-     uint8_t * img;//
-    img= (uint8_t *)malloc(1920*720*3 * sizeof(uint8_t) );
-    for(int i=0;i<1920*720*3; i=i+3){
-        img[i+0]=0xf0;
-        img[i+2]=0x00;
-        img[i+1]=0x00;
-
-    }
 
 
 
@@ -188,7 +179,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         }*/
 
         ret = sws_scale(sws_ctx,                //struct SwsContext* c,
-                        &img,            //const uint8_t* const srcSlice[],
+                        &image,            //const uint8_t* const srcSlice[],
                         frame->linesize,        //const int srcStride[],
                         0,                      //int srcSliceY,
                         frame->height,          //int srcSliceH,
