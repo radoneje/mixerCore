@@ -76,6 +76,15 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
          uint8_t *outbuf, *picture_buf;
          printf("Video encoding\n");
 
+         std::string filename="/var/www/mixerControl/public/1.mp4";
+    f = fopen(filename.c_str(), "wb");
+    if (!f) {
+        fprintf(stderr, "could not open %s\n", filename.c_str());
+        fprintf(stderr, "could not open codec\n");
+        EndCallback( eventid, pStreamers);
+        return;
+        exit(1);
+    }
 
     codec = avcodec_find_encoder(AV_CODEC_ID_H264);
          if (!codec) {
@@ -102,11 +111,13 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     codecContext->gop_size = 30; /* emit one intra frame every 30 frames */
     codecContext->max_b_frames=1;
     codecContext->pix_fmt = AV_PIX_FMT_YUV420P;
+
     if (avcodec_open2(codecContext, codec, NULL) < 0) {
         fprintf(stderr, "could not open codec\n");
         EndCallback( eventid, pStreamers);
         return;
     }
+
     picture->format = codecContext->pix_fmt;
     picture->width  = codecContext->width;
     picture->height = codecContext->height;
