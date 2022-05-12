@@ -17,7 +17,7 @@ using namespace std;
 
 class Ccmd {
     private:
-        std::map<std::string, SstreamData> *_pStreamers;
+        std::map<std::string, SstreamData*> *_pStreamers;
     public:
 
         int startStream(const std::string eventid, std::map<std::string, SstreamData*> *pStreamers);
