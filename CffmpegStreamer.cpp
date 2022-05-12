@@ -212,6 +212,11 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             std::cout<<dts - now << " sleep" <<std::endl;
             av_usleep(dts - now);
         }
+        ret = avcodec_send_frame(enc_ctx, frame);
+        if (ret < 0) {
+            fprintf(stderr, "Error sending a frame to the encoder: %s\n", i);
+            return;
+        }
 
 
     }
