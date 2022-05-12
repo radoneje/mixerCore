@@ -189,8 +189,8 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                              NULL);
 
     long long startTime = av_gettime();
-    av_dump_format(ofmt_ctx, 0, outUrl, 1);
-    int i=0;
+    av_dump_format(ofmt_ctx, 0, outUrl.c_str(), 1);
+    long long i=0;
         while(true) {
             i++;
         fflush(stdout);
