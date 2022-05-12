@@ -40,6 +40,29 @@ int CffmpegStreamer::init() {
     cout<<"CffmpegStreamer init"<<endl;
     return  1;
 }
+void encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *pkt,
+                   FILE *outfile)
+{
+    int ret;
+    /* send the frame to the encoder */
+    ret = avcodec_send_frame(enc_ctx, frame);
+    if (ret < 0) {
+        fprintf(stderr, "error sending a frame for encoding\n");
+        exit(1);
+    }
+    while (ret >= 0) {
+        ret = avcodec_receive_packet(enc_ctx, pkt);
+        if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+            return;
+        else if (ret < 0) {
+            fprintf(stderr, "error during encoding\n");
+            exit(1);
+        }
+        printf("encoded frame %3"PRId64" (size=%5d)\n", pkt->pts, pkt->size);
+        fwrite(pkt->data, 1, pkt->size, outfile);
+        av_packet_unref(pkt);
+    }
+}
 void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, std::map<std::string, SstreamData *> *pStreamers){
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
@@ -114,6 +137,8 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                 picture->data[2][y * picture->linesize[2] + x] = 64 + x + i * 5;
             }
         }
+        picture->pts = i;
+        encode(codecContext, picture, pkt, f);
     }
 
     //startCallback(eventid, pStreamers);
