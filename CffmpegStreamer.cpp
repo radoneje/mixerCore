@@ -99,10 +99,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     std::string outUrl="rtmp://wowza02.onevent.online/live/mixerCore2";
     std::string codec_name = "libx264";
 
-
     int ret;
-
-
 
     avformat_alloc_output_context2(&ofmt_ctx, NULL, "flv", outUrl.c_str());
     if (!ofmt_ctx) {
