@@ -21,7 +21,9 @@ CffmpegStreamer::CffmpegStreamer() {
 }
 int CffmpegStreamer::init() {
     cout<<"CffmpegStreamer init"<<endl;
+    return  1;
 }
-static void CffmpegStreamer::startStream(const std::string eventid){
+void CffmpegStreamer::startStream(const std::string eventid){
+
     cout<<"CffmpegStreamer thread: "<< eventid <<endl;
 }
