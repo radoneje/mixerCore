@@ -201,7 +201,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     std::cout<<"fmt->video_codec: "<<fmt->video_codec<<std::endl;
    // add_stream(&video_stream, octx, codec, fmt->video_codec);
 
-    video_stream= avformat_new_stream(octx, codec);
+    video_stream= avformat_new_stream(octx, video_stream->codecpar);
     video_stream->time_base=c->time_base;
 
     ret=avio_open(&octx->pb, outUrl.c_str(), AVIO_FLAG_WRITE);
