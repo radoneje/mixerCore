@@ -231,6 +231,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         }
         while (ret >= 0) {
             ret = avcodec_receive_packet(c, pkt);
+            std::cout<<"avcodec_receive_packet "<< ret <<std::endl;
             if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
                 break;
             else if (ret < 0) {
