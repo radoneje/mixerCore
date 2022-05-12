@@ -116,7 +116,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     }
     codec = avcodec_find_encoder_by_name(codec_name);
     if (!codec) {
-        fprintf(stderr, "Codec '%s' not found\n", codec_name);
+        fprintf(stderr, "Codec '%s' not found\n", codec_name.c_str());
         return ;
     }
 
