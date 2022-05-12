@@ -190,7 +190,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                              AV_PIX_FMT_RGB24,
                              enc_ctx->width,
                              enc_ctx->height,
-                             AV_PIX_FMT_YUV420P,
+                             AV_PIX_FMT_YUYV422,
                              SWS_BICUBIC,
                              NULL,
                              NULL,
