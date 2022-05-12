@@ -71,7 +71,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     //free(image);
-    uint8_t * img;//
+    const uint8_t * img;//
     img= (uint8_t *)malloc(1920*720*3 * sizeof(uint8_t) );
     for(int i=0;i<1920*720*3; i=i+3){
         img[i+0]=0xf0;
