@@ -31,8 +31,8 @@ class Ccmd {
         CFFreader meReader;
         typedef void (* vFunctionCall)(int args);
         void startReadStream(std::string rtmpURL, int layerNumber);
-        static void notifyStreamStarted(int layerNumber);
-        static void notifyStreamEnded(int layerNumber);
+        static void notifyStreamStarted(std::string eventid);
+        static void notifyStreamEnded(std::string eventid);
         unsigned char* mainImageData;
 
         Ccmd();
