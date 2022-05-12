@@ -221,7 +221,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
                 break;
             else if (ret < 0) {
-                fprintf(stderr, "Error encoding a frame: %s\n", av_err2str(ret));
+                fprintf(stderr, "Error encoding a frame: %s\n");
                 exit(1);
             }
         }
