@@ -44,12 +44,25 @@ void CffmpegStreamer::encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *
                    FILE *outfile)
 {
     int ret;
+    /* send the frame to the encoder */
     if (frame)
-        printf("Send frame %3" PRId64 "\n", frame->pts);
+        printf("Send frame %3"PRId64"\n", frame->pts);
     ret = avcodec_send_frame(enc_ctx, frame);
     if (ret < 0) {
         fprintf(stderr, "Error sending a frame for encoding\n");
-       // exit(1);
+        exit(1);
+    }
+    while (ret >= 0) {
+        ret = avcodec_receive_packet(enc_ctx, pkt);
+        if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+            return;
+        else if (ret < 0) {
+            fprintf(stderr, "Error during encoding\n");
+            exit(1);
+        }
+        printf("Write packet %3"PRId64" (size=%5d)\n", pkt->pts, pkt->size);
+        fwrite(pkt->data, 1, pkt->size, outfile);
+        av_packet_unref(pkt);
     }
 
 }
@@ -57,125 +70,106 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
 
-    AVCodec *codec;
-         AVCodecContext *codecContext= NULL;
-         int i, out_size, size, x, y, outbuf_size, ret, got_output;
-         FILE *f;
-         AVFrame *picture;
-         AVPacket *pkt;
-         uint8_t *outbuf, *picture_buf;
+    const char *filename, *codec_name;
+    const AVCodec *codec;
+    AVCodecContext *c= NULL;
+    int i, ret, x, y;
+    FILE *f;
+    AVFrame *frame;
+    AVPacket *pkt;
     uint8_t endcode[] = { 0, 0, 1, 0xb7 };
 
-         printf("Video encoding\n");
-
-         std::string filename="/var/www/mixerControl/public/1.mp4";
-    f = fopen(filename.c_str(), "wb");
-    if (!f) {
-        fprintf(stderr, "could not open %s\n", filename.c_str());
-        fprintf(stderr, "could not open codec\n");
-        EndCallback( eventid, pStreamers);
-        return;
+    filename = "/var/www/mixerControl/public/1.mp4";
+    codec_name = "libx264";
+    /* find the mpeg1video encoder */
+    codec = avcodec_find_encoder_by_name(codec_name);
+    if (!codec) {
+        fprintf(stderr, "Codec '%s' not found\n", codec_name);
         exit(1);
     }
-
-    codec = avcodec_find_encoder(AV_CODEC_ID_H264);
-         if (!codec) {
-                 fprintf(stderr, "codec not found\n");
-             EndCallback( eventid, pStreamers);
-             return;
-             }
-    codecContext = avcodec_alloc_context3(codec);
-
-    picture = av_frame_alloc();
+    c = avcodec_alloc_context3(codec);
+    if (!c) {
+        fprintf(stderr, "Could not allocate video codec context\n");
+        exit(1);
+    }
     pkt = av_packet_alloc();
-
     if (!pkt)
-    {
-        fprintf(stderr, "Error av_packet_alloc\n");
-        EndCallback( eventid, pStreamers);
-        return;
-    }
-    codecContext->bit_rate = 4000000;
+        exit(1);
+    /* put sample parameters */
+    c->bit_rate = 400000;
     /* resolution must be a multiple of two */
-    codecContext->width = 1280;
-    codecContext->height = 720;
+    c->width = 352;
+    c->height = 288;
     /* frames per second */
-    codecContext->time_base = (AVRational){1, 30};
-    codecContext->framerate = (AVRational){30, 1};
-    codecContext->gop_size = 10; /* emit one intra frame every 30 frames */
-    codecContext->max_b_frames=1;
-    codecContext->pix_fmt = AV_PIX_FMT_YUV420P;
-
-   // av_dict_set(&This->opts, "vprofile", "baseline", 0)
-    av_opt_set(codecContext->priv_data, "preset", "slow", 0);
-    //av_opt_set(codecContext->priv_data, "vprofile", "baseline", 0);
-
-    if (avcodec_open2(codecContext, codec, NULL) < 0) {
-        fprintf(stderr, "could not open codec\n");
-        EndCallback( eventid, pStreamers);
-        return;
+    c->time_base = (AVRational){1, 25};
+    c->framerate = (AVRational){25, 1};
+    /* emit one intra frame every ten frames
+     * check frame pict_type before passing frame
+     * to encoder, if frame->pict_type is AV_PICTURE_TYPE_I
+     * then gop_size is ignored and the output of encoder
+     * will always be I frame irrespective to gop_size
+     */
+    c->gop_size = 10;
+    c->max_b_frames = 1;
+    c->pix_fmt = AV_PIX_FMT_YUV420P;
+    if (codec->id == AV_CODEC_ID_H264)
+        av_opt_set(c->priv_data, "preset", "slow", 0);
+    /* open it */
+    ret = avcodec_open2(c, codec, NULL);
+    if (ret < 0) {
+        fprintf(stderr, "Could not open codec: %s\n", av_err2str(ret));
+        exit(1);
     }
-
-    picture = av_frame_alloc();
-    if (!picture) {
-        fprintf(stderr, "could not alloc the frame data\n");
-        EndCallback(eventid, pStreamers);
-        return;
+    f = fopen(filename, "wb");
+    if (!f) {
+        fprintf(stderr, "Could not open %s\n", filename);
+        exit(1);
     }
-
-    picture->format = codecContext->pix_fmt;
-    picture->width  = codecContext->width;
-    picture->height = codecContext->height;
-
-    ret = av_frame_get_buffer(picture, 32);
+    frame = av_frame_alloc();
+    if (!frame) {
+        fprintf(stderr, "Could not allocate video frame\n");
+        exit(1);
+    }
+    frame->format = c->pix_fmt;
+    frame->width  = c->width;
+    frame->height = c->height;
+    ret = av_frame_get_buffer(frame, 32);
     if (ret < 0) {
         fprintf(stderr, "Could not allocate the video frame data\n");
-        EndCallback(eventid, pStreamers);
-        return;
+        exit(1);
     }
-
-    //ret = av_frame_get_buffer(picture, 32);
-
-    for(i=0;i<30*10;i++) {
-        av_init_packet(pkt);
-        pkt->data = NULL;    // packet data will be allocated by the encoder
-        pkt->size = 0;
+    /* encode 1 second of video */
+    for (i = 0; i < 25; i++) {
         fflush(stdout);
-
+        /* make sure the frame data is writable */
+        ret = av_frame_make_writable(frame);
+        if (ret < 0)
+            exit(1);
+        /* prepare a dummy image */
         /* Y */
-        for(y=0;y<codecContext->height;y++) {
-            for(x=0;x<codecContext->width;x++) {
-                picture->data[0][y * picture->linesize[0] + x] = x + y + i * 3;
+        for (y = 0; y < c->height; y++) {
+            for (x = 0; x < c->width; x++) {
+                frame->data[0][y * frame->linesize[0] + x] = x + y + i * 3;
             }
         }
         /* Cb and Cr */
-        for(y=0;y<codecContext->height/2;y++) {
-            for(x=0;x<codecContext->width/2;x++) {
-                picture->data[1][y * picture->linesize[1] + x] = 128 + y + i * 2;
-                picture->data[2][y * picture->linesize[2] + x] = 64 + x + i * 5;
+        for (y = 0; y < c->height/2; y++) {
+            for (x = 0; x < c->width/2; x++) {
+                frame->data[1][y * frame->linesize[1] + x] = 128 + y + i * 2;
+                frame->data[2][y * frame->linesize[2] + x] = 64 + x + i * 5;
             }
         }
-        picture->pts = i;
-      //  encode(codecContext, picture, pkt, f);
-        ret = avcodec_send_frame(codecContext, picture);
-        if (ret < 0) {
-            fprintf(stderr, "Error sending a frame for encoding\n");
-            // exit(1);
-        }
-
+        frame->pts = i;
+        /* encode the image */
+        encode(c, frame, pkt, f);
     }
-    std::cout <<"encode all frames " <<std::endl;
     /* flush the encoder */
-    encode(codecContext, NULL, pkt, f);
-
+    encode(c, NULL, pkt, f);
+    /* add sequence end code to have a real MPEG file */
     fwrite(endcode, 1, sizeof(endcode), f);
     fclose(f);
-
-    avcodec_free_context(&codecContext);
-    av_frame_free(&picture);
+    avcodec_free_context(&c);
+    av_frame_free(&frame);
     av_packet_free(&pkt);
-
-    EndCallback(eventid, pStreamers);
-
-    //startCallback(eventid, pStreamers);
+    return ;
 }
