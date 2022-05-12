@@ -12,6 +12,16 @@
 #include <algorithm>
 #include <cctype>
 #include <locale>
+extern "C" {
+// Get declaration for f(int i, char c, float x)
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#include <libavutil/frame.h>
+#include <libavutil/opt.h>
+#include <libavutil/time.h>
+#include <libswscale/swscale.h>
+
+}
 
 #include "CffmpegStreamer.h"
 

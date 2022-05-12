@@ -28,6 +28,7 @@ Ccmd::Ccmd(){
         mainImageData[i*3+0]=0x0f;
         mainImageData[i*3+0]=0xff;
     }
+
 };
 void Ccmd::notifyStreamStarted(int layerNumber){
     std::cout<< " notifyStreamStarted" << layerNumber<< std::endl;
@@ -100,7 +101,7 @@ void Ccmd::clearPresImage(){
        // PresImagePixels=nullptr;
 
 };
-int Ccmd::startStream(const std::string eventid){
+int Ccmd::startStream(const std::string eventid, unsigned char * data){
     if(streamers.find(eventid)!=streamers.end()) {
         std::cout<<  "Error : straamer already created" <<std::endl;
         return  -1;

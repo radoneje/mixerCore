@@ -33,8 +33,7 @@ class Ccmd {
         void startReadStream(std::string rtmpURL, int layerNumber, vFunctionCall  notifyStreamStarted, vFunctionCall notifyStreamEnded);
         static void notifyStreamStarted(int layerNumber);
         static void notifyStreamEnded(int layerNumber);
-
-        static unsigned char* mainImageData;
+        unsigned char* mainImageData;
 
         Ccmd();
 };
