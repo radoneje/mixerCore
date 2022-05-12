@@ -31,10 +31,10 @@ Ccmd::Ccmd(){
 
 };
 void Ccmd::notifyStreamStarted(std::string eventid){
-    std::cout<< " notifyStreamStarted" << layerNumber<< std::endl;
+    std::cout<< " notifyStreamStarted" << eventid<< std::endl;
 };
 void Ccmd::notifyStreamEnded(std::string evantid){
-    std::cout<< " notifyStreamEnded"  << layerNumber << std::endl;
+    std::cout<< " notifyStreamEnded"  << eventid << std::endl;
 };
 
 
