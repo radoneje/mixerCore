@@ -133,7 +133,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         return;
     }
     for(i=0;i<30*10;i++) {
-        av_init_packet(&pkt);
+        av_init_packet(pkt);
 
 
     }
