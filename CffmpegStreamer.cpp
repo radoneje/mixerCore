@@ -43,8 +43,14 @@ int CffmpegStreamer::init() {
 void CffmpegStreamer::encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *pkt,
                    FILE *outfile)
 {
+    int ret;
     if (frame)
         printf("Send frame %3" PRId64 "\n", frame->pts);
+    ret = avcodec_send_frame(enc_ctx, frame);
+    if (ret < 0) {
+        fprintf(stderr, "Error sending a frame for encoding\n");
+       // exit(1);
+    }
 
 }
 void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, std::map<std::string, SstreamData *> *pStreamers){
