@@ -101,7 +101,7 @@ void Ccmd::clearPresImage(){
        // PresImagePixels=nullptr;
 
 };
-int Ccmd::startStream(const std::string eventid, unsigned char * data){
+int Ccmd::startStream(const std::string eventid){
     if(streamers.find(eventid)!=streamers.end()) {
         std::cout<<  "Error : straamer already created" <<std::endl;
         return  -1;
