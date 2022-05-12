@@ -24,6 +24,7 @@ extern "C" {
 #include <libavutil/opt.h>
 #include <libavutil/time.h>
 #include <libswscale/swscale.h>
+#include <Libavutil/time.h>
 
 }
 
@@ -196,6 +197,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                         frame->linesize);   //const int dstStride[]);
 
         frame->pts = i;
+        long long now = av_gettime() - startTime;
+        long long dts = 0;
+        dts = pkt->dts * (1000 * 1000 * r2d(c->time_base ));
         /* encode the image */
         encode(c, frame, pkt, f);
     }
