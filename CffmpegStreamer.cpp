@@ -148,6 +148,18 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         av_log(NULL, AV_LOG_ERROR, "Failed to copy encoder parameters to output stream \n");
         return ;
     }
+    out_stream->time_base = enc_ctx->time_base;
+   // stream_ctx[i].enc_ctx = enc_ctx;
+    ret=avio_open2(&ofmt_ctx->pb, outUrl.c_str(), AVIO_FLAG_WRITE , NULL, NULL);
+    if (ret < 0) {
+        fprintf(stderr, "Error avio_open\n");
+        return;
+    }
+    ret = avformat_write_header(ofmt_ctx, 0);
+    if (ret < 0) {
+        fprintf(stderr, "Error avformat_write_header\n");
+        return;
+    }
 
     return ;
 }
