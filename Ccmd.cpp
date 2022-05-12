@@ -38,7 +38,7 @@ void Ccmd::notifyStreamStarted(std::string eventid){
 };
 void Ccmd::notifyStreamEnded(std::string eventid){
     std::cout<< " notifyStreamEnded"  << eventid << std::endl;
-    streamers.erase(streamers.find(eventid));
+    Ccmd::streamers.erase(Ccmd::streamers.find(eventid));
 };
 
 
@@ -106,7 +106,7 @@ void Ccmd::clearPresImage(){
 
 };
 int Ccmd::startStream(const std::string eventid){
-    if(streamers.find(eventid)!=streamers.end()) {
+    if(Ccmd::streamers.find(eventid)!=streamers.end()) {
         std::cout<<  "Error : straamer already created" <<std::endl;
         return  -1;
     }
@@ -119,7 +119,7 @@ int Ccmd::startStream(const std::string eventid){
 
 
     streamThread.join();
-    streamers.insert(std::pair<std::string, std::thread *> ( eventid, &streamThread ));
+    Ccmd::streamers.insert(std::pair<std::string, std::thread *> ( eventid, &streamThread ));
 
     return 0;
 }
