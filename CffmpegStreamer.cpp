@@ -221,6 +221,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
        //
             int j=0;
             free(image);
+            image=(unsigned  char*) malloc(1280*720*3*sizeof(unsigned  char));
             srand(std::chrono::system_clock::now().time_since_epoch().count());
             do{
                 //  std::cout<<i<<std::endl;
