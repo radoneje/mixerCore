@@ -11,6 +11,7 @@ struct SstreamData {
     std::string eventid;
     std::thread *thread;
 };
+typedef  std::map<std::string, SstreamData*> streamersDataType;
 
 
 #endif //MIXERCORE_SSTREAMDATA_H

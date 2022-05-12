@@ -19,7 +19,7 @@ class Ccmd {
     private:
         std::map<std::string, SstreamData*> *_pStreamers;
     public:
-        typedef  std::map<std::string, SstreamData*> streamersDataType;
+
         int startStream(const std::string eventid, std::map<std::string, SstreamData*> *pStreamers);
 
         std::vector<CFFreader>  FFreader;
