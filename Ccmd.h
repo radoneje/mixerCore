@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <mutex>
+#include <thread>
 
 #include "CFFreader.h"
 #include "CffmpegStreamer.h"
