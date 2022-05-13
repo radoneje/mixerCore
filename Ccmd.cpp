@@ -66,7 +66,7 @@ Ccmd::Ccmd(){
 
      auto end = std::chrono::high_resolution_clock::now();
      std::chrono::duration<double, std::milli> elapsed = end-start;
-     std::cout<<"render image "<< i <<" "<< (int)( std::chrono::milliseconds(1000/FRAMERATE).count()- elapsed.count() )<< (int) buf[1]<<endl;
+     std::cout<<"render image "<< i <<" "<< (int)( std::chrono::milliseconds(10000/FRAMERATE).count()- elapsed.count() )<< (int) buf[1]<<endl;
      std::this_thread::sleep_for(std::chrono::milliseconds((int)((1000/FRAMERATE)- elapsed.count())));
 
      locker->lock();
