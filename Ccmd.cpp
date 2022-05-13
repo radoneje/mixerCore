@@ -73,7 +73,7 @@ Ccmd::Ccmd(){
     // locker->lock();
     // memcpy(mainImageData,buf, memorySize);
 
-     free(buf);
+   //  free(buf);
      std::cout<<"render image "<< i <<endl;
      std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMERATE));
  }
