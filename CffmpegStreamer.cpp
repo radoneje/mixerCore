@@ -180,7 +180,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     AVDictionary* options = nullptr;
     av_dict_set( &options, "movflags", "frag_keyframe+empty_moov+default_base_moof", 0 );
 
-    ret=avio_open2(&ofmt_ctx->pb, outUrl.c_str(), AVIO_FLAG_WRITE , NULL, NULL);
+    ret=avio_open(&ofmt_ctx->pb, outUrl.c_str(), AVIO_FLAG_WRITE);// , NULL, NULL);
     if (ret < 0) {
         fprintf(stderr, "Error avio_open\n");
         return;
