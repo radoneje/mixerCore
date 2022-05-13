@@ -260,7 +260,14 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         //frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
         frame->pts +=   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);\
 
-            if(frame->pts<0)
+            AVRational time_base=ofmt_ctx->streams[0]->time_base;
+            AVRational time_base_q={1,AV_TIME_BASE};
+            int64_t pts_time = av_rescale_q(pkt->dts, time_base, time_base_q);
+            int64_t now_time = av_gettime() - startTime;
+            if (pts_time > now_time)
+                av_usleep(pts_time - now_time);
+
+        /*    if(frame->pts<0)
                 frame->pts=0;
         //std::cout<<"pts "<<frame->pts;
         long long now = av_gettime() - startTime;
@@ -271,7 +278,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         if (dts > now) {
             std::cout<<dts - now << " sleep" <<std::endl;
             av_usleep(dts - now);
-        }
+        }*/
 
 
             std::cout<<"avcodec_receive_packet " << frame->pts <<std::endl;
