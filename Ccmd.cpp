@@ -31,7 +31,7 @@ Ccmd::Ccmd() {
     for (int i = 0; i < MAX_FACES; i++) {
         previewImageData.push_back(loadNotConnected(i));
     }
-    previewImageData.push_back(nullptr);
+   // previewImageData.push_back(nullptr);
     /* mainImageData= (unsigned char*)malloc(1280*720*3*sizeof (unsigned char));
      for(int i=0;i<1280*720;i++){
          mainImageData[(i*3)+0]=0x0f;
