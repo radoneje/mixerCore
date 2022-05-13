@@ -59,7 +59,7 @@ Ccmd::Ccmd(){
              buf[x+y+2]=mainImageData[x+y+2];*/
             // if(x<ww && y<hh){
 
-             buf[x+y+0]=0xff;
+             buf[x+y+0]=0xfe;
              buf[x+y+1]=0x00;
              buf[x+y+2]=0x00;
 
@@ -76,7 +76,7 @@ Ccmd::Ccmd(){
     // memcpy(mainImageData,buf, memorySize);
 
 
-     std::cout<<"render image "<< i <<" "<< std::hex <<mainImageData[1] << " " << std::hex << (int) buf[1]<<endl;
+     std::cout<<"render image "<< i <<" "<< std::hex << (int)mainImageData[0] << " " << std::hex << (int) buf[0]<<endl;
      free(buf);
      std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMERATE));
  }
