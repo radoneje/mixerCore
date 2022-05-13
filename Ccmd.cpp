@@ -76,7 +76,7 @@ Ccmd::Ccmd(){
     // memcpy(mainImageData,buf, memorySize);
 
 
-     std::cout<<"render image "<< i <<" "<<(int) mainImageData[5] << " " << (int) buf[5]<<endl;
+     std::cout<<"render image "<< i <<" "<<(int) mainImageData[6] << " " << (int) buf[6]<<endl;
      free(buf);
      std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMERATE));
  }
