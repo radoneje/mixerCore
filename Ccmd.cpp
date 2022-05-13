@@ -45,7 +45,7 @@ Ccmd::Ccmd(){
  int ww=WIDTH/4;
  int hh=HEIGHT/4;
  int memorySize=WIDTH * HEIGHT * 3 * sizeof(unsigned char);
-     std::cout<<"render image start" <<endl;
+
  long long i=0;
  while(true) {
      i++;
@@ -63,7 +63,9 @@ Ccmd::Ccmd(){
              }
 
          }
+     std::cout<<"render image frame" <<endl;
      locker->lock();
+     std::cout<<"render image frame lock" <<endl;
      memccpy(mainImageData,buf,' ', memorySize);
      locker->unlock();
      free(buf);
