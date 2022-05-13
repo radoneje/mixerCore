@@ -288,7 +288,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     avcodec_free_context(&enc_ctx);
     av_frame_free(&frame);
     av_packet_free(&pkt);
-
+    avio_closep(&ofmt_ctx->pb);
 
     return ;
 }
