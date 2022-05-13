@@ -264,13 +264,15 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                 startTime = av_gettime();
             }
             int64_t now_time = av_gettime();// - startTime;
+
             int  dts= now_time-startTime;
+            av_usleep(1000000 );
             std::cout<< frame->pts*1000<< " " <<dts  << " " <<std::endl;
 
-            if(dts<(frame->pts*1000))
+            //if(dts<(frame->pts*1000))
             {
-                std::cout<< (frame->pts*1000)-dts<<" sleeo"<<std::endl;
-                av_usleep(1000000 );
+              //  std::cout<< (frame->pts*1000)-dts<<" sleeo"<<std::endl;
+
             }
            /* AVRational time_base=ofmt_ctx->streams[0]->time_base;
             AVRational time_base_q={1,AV_TIME_BASE};
