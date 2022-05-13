@@ -115,9 +115,11 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
     out_stream = avformat_new_stream(ofmt_ctx, NULL);
     AVDictionary *format_opts = NULL;
-    av_dict_set(&format_opts, "movflags", "frag_keyframe+empty_moov", 0);
 
-    ret = avformat_write_header( ofmt_ctx, &format_opts );
+
+    av_opt_set(ofmt_ctx, "movflags", "frag_keyframe+empty_moov", 0);
+
+
 
     if (!out_stream) {
         av_log(NULL, AV_LOG_ERROR, "Failed allocating output stream\n");
