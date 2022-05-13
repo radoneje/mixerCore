@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 3.22)
 project(mixerCore)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+
+
+
+target_link_libraries(Blah ${ImageMagick_LIBRARIES})
 
 add_subdirectory (external)
 
@@ -13,7 +19,13 @@ find_library(SWSCALE_LIBRARIES swscale)
 find_library(GLUT_LIBRARIES glut)
 find_library(SOIL_LIBRARIES SOIL)
 
+find_package(ImageMagick)
+find_package(ImageMagick COMPONENTS convert)
+find_package(ImageMagick COMPONENTS convert mogrify display)
+find_package(ImageMagick COMPONENTS Magick++)
+find_package(ImageMagick COMPONENTS Magick++ convert)
 
+include_directories(${ImageMagick_INCLUDE_DIRS})
 
 
 
@@ -49,17 +61,9 @@ add_definitions(
         -DTW_NO_DIRECT3D
         -DGLEW_STATIC
         -D_CRT_SECURE_NO_WARNINGS
+        -DMAGICKCORE_QUANTUM_DEPTH=16
+        -DMAGICKCORE_HDRI_ENABLE=0
 )
-
-find_program(MAGICK_CONFIG "Magick++-config")
-# Ask about CXX and lib flags/locations
-execute_process(COMMAND "${MAGICK_CONFIG}" "--cxxflags" OUTPUT_VARIABLE MAGICK_CXX_FLAGS)
-execute_process(COMMAND "${MAGICK_CONFIG}" "--libs" OUTPUT_VARIABLE MAGICK_LD_FLAGS)
-# Remove trailing whitespace (CMAKE warns about this)
-string(STRIP "${MAGICK_CXX_FLAGS}" MAGICK_CXX_FLAGS)
-string(STRIP "${MAGICK_LD_FLAGS}" MAGICK_LD_FLAGS)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ${MAGICK_CXX_FLAGS} ${MAGICK_LD_FLAGS}")
-
 
 
 
@@ -68,4 +72,4 @@ add_executable(mixerCore main.cpp CTextureData.cpp CTextureData.h CRender.cpp CR
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
-target_link_libraries( mixerCore PRIVATE Threads::Threads ${ALL_LIBS})
+target_link_libraries( mixerCore PRIVATE Threads::Threads ${ALL_LIBS} ${ImageMagick_LIBRARIES})
