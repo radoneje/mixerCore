@@ -258,7 +258,10 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                             frame->linesize);   //const int dstStride[]);
        locker->unlock();
        // frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
-            frame->pts +=   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);
+            frame->pts +=   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);\
+
+            if(frame->pts<0)
+                frame->pts=0;
         //std::cout<<"pts "<<frame->pts;
         long long now = av_gettime() - startTime;
         long long dts = 0;
