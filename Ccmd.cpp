@@ -39,7 +39,7 @@ Ccmd::Ccmd(){
     }*/
 
 };
-void Ccmd::makeMainImage(unsigned char * mainImageData, std::vector<unsigned char*>* previewImageData, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd ){
+void Ccmd::makeMainImage(unsigned char * mainImageData, std::vector<unsigned char*>* previewImageData);//, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd ){
 
     onEnd("");
 }
@@ -152,7 +152,7 @@ int Ccmd::startStream(const std::string eventid){
 
     printf("startStream\n");
 
-    std::thread streamThread(CffmpegStreamer::startStream, eventid, &mainImageData,  (std::function<void(std::string)>) notifyStreamStarted,  (std::function<void(std::string)>) notifyStreamEnded);
+    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData  (std::function<void(std::string)>) notifyStreamStarted,  (std::function<void(std::string)>) notifyStreamEnded);
     streamThread.detach();
 
     SstreamData dt;
@@ -160,7 +160,7 @@ int Ccmd::startStream(const std::string eventid){
     dt.thread=&streamThread;
 
 
-    std::thread makeMainImageThread(Ccmd::makeMainImage, &previewImageData,(std::function<void(std::string eventid)>) notifyMakeMainImageStarted, (std::function<void(std::string eventid)>) notifyStreamEnded);
+    std::thread makeMainImageThread(Ccmd::makeMainImage, mainImageData, &previewImageData);//,(std::function<void(std::string eventid)>) notifyMakeMainImageStarted, (std::function<void(std::string eventid)>) notifyStreamEnded);
     makeMainImageThread.detach();
 
     return 0;
