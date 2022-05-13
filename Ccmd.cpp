@@ -47,6 +47,15 @@ Ccmd::Ccmd(){
  int hh=HEIGHT/4;
  int memorySize=WIDTH * HEIGHT * 3 * sizeof(unsigned char);
 
+ unsigned char * blankImage= unsigned char *malloc(memorySize);
+ for(int i=0;i<memorySize;i++){
+     blankImage[i]=0xff;
+ }
+     Magick::InitializeMagick(nullptr);
+     Magick::Image image;
+     image.read(  WIDTH, HEIGHT,"RGB", MagickLib::CharPixel,blankImage);// 0,0,WIDTH,HEIGHT,"RGB",MagickLib::CharPixel,pixels);
+
+
  long long i=0;
      auto start = std::chrono::high_resolution_clock::now();
  while(true) {
@@ -80,7 +89,8 @@ Ccmd::Ccmd(){
      std::this_thread::sleep_for(std::chrono::milliseconds((int)((1000/FRAMERATE)- elapsed.count())));
 
      locker->lock();
-     memcpy(mainImageData,buf, memorySize);
+    // memcpy(mainImageData,buf, memorySize);
+     image.write(0,0,WIDTH,HEIGHT,"RGB",MagickLib::CharPixel,mainImageData);
      locker->unlock();
 
      free(buf);
