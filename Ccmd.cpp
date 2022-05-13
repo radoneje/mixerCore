@@ -39,7 +39,8 @@ Ccmd::Ccmd(){
     }*/
 
 };
- void Ccmd::makeMainImage(unsigned char * mainImageData, std::vector<unsigned char*> previewImageData);//, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd ){
+
+ void Ccmd::makeMainImage(unsigned char * mainImageData, std::vector<unsigned char*> previewImageData){//, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd ){
 
 }
 void Ccmd::notifyMakeMainImageStarted(std::string eventid){
