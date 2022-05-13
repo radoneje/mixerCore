@@ -57,11 +57,12 @@ Ccmd::Ccmd(){
 
      for (int y = 0; y < HEIGHT; y++)
          for (int x = 0; x < WIDTH; x++) {
-             buf[(x*3)+(WIDTH*3*y)+0]=0xfe;
-             buf[(x*3)+(WIDTH*3*y)+1]=0x00;
-             buf[(x*3)+(WIDTH*3*y)+2]=0x00;
 
-            // }
+             int  j=(x*3)+(WIDTH*3*y);
+
+             buf[j+0]=mainImageData[j+0];
+             buf[j+1]=mainImageData[j+1];
+             buf[j+2]=mainImageData[j+2];
 
          }
 
