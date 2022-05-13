@@ -100,12 +100,12 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     AVDictionary *opts = nullptr;
 
     std::string outUrl="rtmp://wowza01.onevent.online/live/mixerCore1";
-    outUrl="/var/www/mixerControl/public/1.mp4";
+    //outUrl="/var/www/mixerControl/public/1.mp4";
     std::string codec_name = "libx264";
 
     int ret;
   //  av_log_set_level(AV_LOG_DEBUG);
-    avformat_alloc_output_context2(&ofmt_ctx, NULL, /*"flv"*/NULL, outUrl.c_str());
+    avformat_alloc_output_context2(&ofmt_ctx, NULL, "flv", outUrl.c_str());
     if (!ofmt_ctx) {
         av_log(NULL, AV_LOG_ERROR, "Could not create output context\n");
         return ;
@@ -213,7 +213,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     long long startTime = av_gettime();
     av_dump_format(ofmt_ctx, 0, outUrl.c_str(), 1);
     long long i=0;
-        while(/*true &&*/ i<60) {
+        while(true ||  i<60) {
             i++;
         fflush(stdout);
         ret = av_frame_make_writable(frame);
