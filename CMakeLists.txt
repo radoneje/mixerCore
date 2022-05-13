@@ -4,6 +4,11 @@ project(mixerCore)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+# Find where Magick++-config lives
+find_program(MAGICK_CONFIG "Magick++-config")
+# Ask about CXX and lib flags/locations
+execute_process(COMMAND "${MAGICK_CONFIG}" "--cxxflags" OUTPUT_VARIABLE MAGICK_CXX_FLAGS)
+execute_process(COMMAND "${MAGICK_CONFIG}" "--libs" OUTPUT_VARIABLE MAGICK_LD_FLAGS)
 
 
 add_subdirectory (external)
