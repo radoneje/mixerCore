@@ -45,7 +45,9 @@ Ccmd::Ccmd(){
  int ww=WIDTH/4;
  int hh=HEIGHT/4;
  int memorySize=WIDTH * HEIGHT * 3 * sizeof(unsigned char);
+ long long i=0;
  while(true) {
+     i++;
      unsigned char *buf = (unsigned char *) malloc(memorySize);
      for (int y = 0; y < HEIGHT; y++)
          for (int x = 0; x < WIDTH; x=x+3) {
@@ -64,6 +66,7 @@ Ccmd::Ccmd(){
      memccpy(mainImageData,buf,' ', memorySize);
      locker->unlock();
      free(buf);
+     std::cout<<"render image "<< i <<endl;
  }
 }
 void Ccmd::notifyMakeMainImageStarted(std::string eventid){
