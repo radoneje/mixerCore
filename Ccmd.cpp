@@ -40,8 +40,8 @@ Ccmd::Ccmd(){
 
 };
 
- void Ccmd::makeMainImage(unsigned char * mainImageData, std::vector<unsigned char*> previewImageData,std::mutex *locker, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd ){
-
+ void Ccmd::makeMainImage(std::string eventid, unsigned char * mainImageData, std::vector<unsigned char*> previewImageData,std::mutex *locker, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd ){
+ onEnd(eventid)
 }
 void Ccmd::notifyMakeMainImageStarted(std::string eventid){
 std::cout<<"notifyMakeMainImageStarted"<<std::endl;
@@ -160,8 +160,8 @@ int Ccmd::startStream(const std::string eventid){
     dt.thread=&streamThread;
 
 
-    std::thread makeMainThread(Ccmd::makeMainImage, mainImageData, previewImageData, &locker, (std::function<void(std::string eventid)>) notifyMakeMainImageStarted, (std::function<void(std::string eventid)>) notifyStreamEnded);
-    makeMainThread.detach();
+    std::thread makeMainImageThread(Ccmd::makeMainImage, eventid, mainImageData, previewImageData, &locker, (std::function<void(std::string eventid)>) notifyMakeMainImageStarted, (std::function<void(std::string eventid)>) notifyStreamEnded);
+    makeMainImageThread.detach();
 
     return 0;
 }
