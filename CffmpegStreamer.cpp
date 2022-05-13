@@ -33,6 +33,7 @@ extern "C" {
 #include "CffmpegStreamer.h"
 #include "Ccmd.h"
 #include "SstreamData.h"
+#include "settings.h"
 
 
 using namespace std;
@@ -98,7 +99,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     SwsContext *sws_ctx = NULL;
     AVDictionary *opts = nullptr;
 
-    std::string outUrl="rtmp://wowza01.onevent.online/live/mixerCore4";
+    std::string outUrl="rtmp://wowza02.onevent.online/live/mixerCore1";
     std::string codec_name = "libx264";
 
     int ret;
@@ -232,7 +233,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                 j=j+3;
             } while(j< 1280*720*3);*/
 
-       int linesize=1280*3;
+       int linesize=WIDTH*3;
        locker->lock();
             ret = sws_scale(sws_ctx,                //struct SwsContext* c,
                             &image,            //const uint8_t* const srcSlice[],

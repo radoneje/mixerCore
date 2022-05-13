@@ -23,21 +23,11 @@
 
 Ccmd::Ccmd() {
     clearPresImage();
-    /*
-    for(int i=0; i<MAX_FACES; i++){
-        CFFreader cfFreader;
-        FFreader.push_back(cfFreader);
-    }*/
+
     for (int i = 0; i < MAX_FACES; i++) {
         previewImageData.push_back(loadNotConnected(i));
     }
-   // previewImageData.push_back(nullptr);
-    /* mainImageData= (unsigned char*)malloc(1280*720*3*sizeof (unsigned char));
-     for(int i=0;i<1280*720;i++){
-         mainImageData[(i*3)+0]=0x0f;
-         mainImageData[(i*3)+1]=0x0f;
-         mainImageData[(i*3)+2]=0xff;
-     }*/
+
 
 };
 
@@ -59,9 +49,6 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
     image.read(WIDTH, HEIGHT, "RGB", MagickLib::CharPixel, blankImage);
 
     using namespace Magick;
-
-
-
 
     long long i = 0;
     auto start = std::chrono::high_resolution_clock::now();
