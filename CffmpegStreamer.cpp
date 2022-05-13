@@ -285,9 +285,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                 return ;
             }
           //  std::cout<<"avcodec_receive_packet " <<std::endl;
-          /*  av_packet_rescale_ts(pkt,
+            av_packet_rescale_ts(pkt,
                                  enc_ctx->time_base,
-                                 ofmt_ctx->streams[0]->time_base);*/
+                                 ofmt_ctx->streams[0]->time_base);
             pkt->stream_index = 0;
 
             log_packet(ofmt_ctx, pkt);
