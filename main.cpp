@@ -9,7 +9,7 @@
 #include <map>
 #include <Magick++.h>
 
-#include "CRender.h"
+
 #include "CHttp.h"
 #include "Ccmd.h"
 #include "CffmpegStreamer.h"
