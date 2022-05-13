@@ -44,7 +44,7 @@ unsigned  char* Ccmd::loadNotConnected(int input){
     fileName.append(std::to_string(input+1));
     fileName.append(".png");
     int h=HEIGHT;
-    int w=WIDTH
+    int w=WIDTH;
     return  SOIL_load_image(fileName.c_str(),
                     &h,
                     &w,
