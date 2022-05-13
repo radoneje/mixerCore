@@ -47,7 +47,7 @@ private:
     } OutputStream;*/
 public:
     CffmpegStreamer();
-    static void startStream( const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, streamersDataType *pStreamers);
+    static void startStream( const std::string eventid, unsigned char * image,  std::function<void(std::string )> onStart,   std::function<void(std::string)> onEnd);
     int init();
 
 

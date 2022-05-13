@@ -37,15 +37,15 @@ class Ccmd {
       //  typedef void (* vFunctionCall)(std::string args);
         void startReadStream(std::string rtmpURL, int layerNumber); // TODO: Delete!!!!
 
-        int startStream(const std::string eventid, std::map<std::string, SstreamData*> *pStreamers);
-        static void notifyStreamStarted(std::string eventid, streamersDataType *pStreamers);
-        static void notifyStreamEnded(std::string eventid, streamersDataType *pStreamers);
+        int startStream(const std::string eventid);
+        static void notifyStreamStarted(std::string eventid);
+        static void notifyStreamEnded(std::string eventid);
 
         unsigned char * mainImageData; // главная картинка
         std::vector<unsigned char*> previewImageData;
-static  void makeMainImage(unsigned char * mainImageData, std::vector<unsigned char*> previewImageData,std::mutex locker, std::function<void(std::string eventid, streamersDataType *pStreamers)> onStart, std::function<void(std::string eventid, streamersDataType *pStreamers)> onEnd );
-        static void notifyMakeMainImageStarted(std::string eventid, streamersDataType *pStreamers);
-        static void notifyMakeMainImageEnded(std::string eventid, streamersDataType *pStreamers);
+static  void makeMainImage(unsigned char * mainImageData, std::vector<unsigned char*> previewImageData,std::mutex locker, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd );
+        static void notifyMakeMainImageStarted(std::string eventid);
+        static void notifyMakeMainImageEnded(std::string eventid);
         Ccmd();
 };
 

@@ -86,7 +86,7 @@ void CffmpegStreamer::encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *
     }
 
 }
-void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, std::map<std::string, SstreamData *> *pStreamers){
+void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string)> onStart,   std::function<void(std::string)> onEnd){
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     AVStream *out_stream;

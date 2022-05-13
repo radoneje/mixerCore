@@ -39,13 +39,13 @@ Ccmd::Ccmd(){
     }*/
 
 };
-void Ccmd::makeMainImage(unsigned char * mainImageData, std::vector<unsigned char*> * previewImageData,std::mutex locker, std::function<void(std::string eventid, streamersDataType *pStreamers)> onStart, std::function<void(std::string eventid, streamersDataType *pStreamers)> onEnd ){
+void Ccmd::makeMainImage(unsigned char * mainImageData, std::vector<unsigned char*> * previewImageData,std::mutex locker, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd ){
 
   }
-void Ccmd::notifyMakeMainImageStarted(std::string eventid, streamersDataType *pStreamers){
+void Ccmd::notifyMakeMainImageStarted(std::string eventid){
 
   }
-void Ccmd::notifyMakeMainImageEnded(std::string eventid, streamersDataType *pStreamers){
+void Ccmd::notifyMakeMainImageEnded(std::string eventid){
 
   }
 
@@ -61,21 +61,14 @@ unsigned  char* Ccmd::loadNotConnected(int input){
                     0,
                     SOIL_LOAD_RGB);
 }
-void Ccmd::notifyStreamStarted(std::string eventid, streamersDataType *pStreamers){
-    auto find=pStreamers->find(eventid);
+void Ccmd::notifyStreamStarted(std::string eventid){
 
     std::cout<< " notifyStreamStarted" << eventid<< std::endl;
 
 };
-void Ccmd::notifyStreamEnded(std::string eventid, streamersDataType *pStreamers){
+void Ccmd::notifyStreamEnded(std::string eventid){
     std::cout<< " notifyStreamEnded"  << eventid << std::endl;
 
-    auto find=pStreamers->find(eventid);
-    if(find==pStreamers->end()){
-        std::cout<< " stream Not Found: " << eventid<< std::endl;
-        return;
-    }
-    pStreamers->erase(find);
 
 };
 
@@ -90,8 +83,8 @@ void Ccmd::startReadStream(std::string rtmpURL, int layerNumber ){ // TODO: Dele
 
     std::thread ffmpegThread(FFreader[layerNumber].work, rtmpURL, &FFreader[layerNumber].dt , &locker );
     ffmpegThread.detach();
-    std::thread makeMainImageThread(makeMainImage,&previewImageData, locker,(std::function<void(std::string eventid, streamersDataType *pStreamers)>)notifyMakeMainImageStarted, (std::function<void(std::string eventid, streamersDataType *pStreamers)>)notifyStreamEnded);
-    makeMainImageThread.detach();
+
+
 
 
 
@@ -145,15 +138,7 @@ void Ccmd::clearPresImage(){
        // PresImagePixels=nullptr;
 
 };
-int Ccmd::startStream(const std::string eventid,  std::map<std::string, SstreamData *> *pStreamers){
-    _pStreamers = pStreamers;
-
-
-    if(pStreamers->find(eventid)!=pStreamers->end()) {
-        std::cout<<  "Error : straamer already created" <<std::endl;
-        return  -1;
-    }
-
+int Ccmd::startStream(const std::string eventid){
 
        int w=WIDTH;
        int h=HEIGHT;
@@ -166,13 +151,16 @@ int Ccmd::startStream(const std::string eventid,  std::map<std::string, SstreamD
 
     printf("startStream\n");
 
-    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData,  (std::function<void(std::string, streamersDataType*)>) notifyStreamStarted,  (std::function<void(std::string, streamersDataType*)>) notifyStreamEnded, pStreamers);
+    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData,  (std::function<void(std::string)>) notifyStreamStarted,  (std::function<void(std::string)>) notifyStreamEnded);
     streamThread.detach();
 
     SstreamData dt;
     dt.eventid=eventid;
     dt.thread=&streamThread;
-    pStreamers->insert(std::pair<std::string, SstreamData *> ( eventid, &dt ));
-    std::cout<< pStreamers->count(eventid)<<std::endl;
+
+
+    std::thread makeMainImageThread(makeMainImage,&previewImageData, locker,(std::function<void(std::string eventid)>) notifyMakeMainImageStarted, (std::function<void(std::string eventid)>) notifyStreamEnded);
+    makeMainImageThread.detach();
+
     return 0;
 }
