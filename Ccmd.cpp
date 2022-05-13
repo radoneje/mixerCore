@@ -47,7 +47,7 @@ Ccmd::Ccmd(){
  int hh=HEIGHT/4;
  int memorySize=WIDTH * HEIGHT * 3 * sizeof(unsigned char);
 
- unsigned char * blankImage= unsigned char *malloc(memorySize);
+ unsigned char * blankImage=(unsigned char *)malloc(memorySize);
  for(int i=0;i<memorySize;i++){
      blankImage[i]=0xff;
  }
