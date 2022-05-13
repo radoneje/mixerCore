@@ -18,7 +18,7 @@ using namespace std;
 class Ccmd {
     private:
         std::map<std::string, SstreamData*> *_pStreamers;
-        unsigned  char* loadNotConnected(int input)
+        unsigned  char* loadNotConnected(int input);
     public:
 
 
