@@ -49,7 +49,9 @@ Ccmd::Ccmd(){
  long long i=0;
  while(true) {
      i++;
+     std::cout<<"==0 render image frame" <<endl;
      unsigned char *buf = (unsigned char *) malloc(memorySize);
+     std::cout<<"==1 render image frame" <<endl;
      for (int y = 0; y < HEIGHT; y++)
          for (int x = 0; x < WIDTH; x=x+3) {
              std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMERATE));
