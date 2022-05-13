@@ -39,6 +39,16 @@ Ccmd::Ccmd(){
     }*/
 
 };
+void Ccmd::makeMainImage(unsigned char * mainImageData, std::vector<unsigned char*> * previewImageData,std::mutex locker, std::function<void(std::string eventid, streamersDataType *pStreamers)> onStart, std::function<void(std::string eventid, streamersDataType *pStreamers)> onEnd ){
+
+  }
+void Ccmd::notifyMakeMainImageStarted(std::string eventid, streamersDataType *pStreamers){
+
+  }
+void Ccmd::notifyMakeMainImageEnded(std::string eventid, streamersDataType *pStreamers){
+
+  }
+
 unsigned  char* Ccmd::loadNotConnected(int input){
     std::string fileName("/etc/mixerCore/images/notconnected");
     fileName.append(std::to_string(input+1));
@@ -80,6 +90,8 @@ void Ccmd::startReadStream(std::string rtmpURL, int layerNumber ){ // TODO: Dele
 
     std::thread ffmpegThread(FFreader[layerNumber].work, rtmpURL, &FFreader[layerNumber].dt , &locker );
     ffmpegThread.detach();
+    std::thread makeMainImageThread(makeMainImage,&previewImageData, locker,(std::function<void(std::string eventid, streamersDataType *pStreamers)>)notifyMakeMainImageStarted, (std::function<void(std::string eventid, streamersDataType *pStreamers)>)notifyStreamEnded);
+    makeMainImageThread.detach();
 
 
 
@@ -141,20 +153,20 @@ int Ccmd::startStream(const std::string eventid,  std::map<std::string, SstreamD
         std::cout<<  "Error : straamer already created" <<std::endl;
         return  -1;
     }
-    if(mainImageData.find(eventid)==mainImageData.end()){
-       // unsigned char* buf=( unsigned char*)malloc(1920*1080*3*sizeof(unsigned char*));
-       int w=1280;
-       int h=720;
-        unsigned char* buf=SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
+
+
+       int w=WIDTH;
+       int h=HEIGHT;
+     mainImageData =SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
                         &w,
                         &h,
                         0,
                         SOIL_LOAD_RGB);
-        mainImageData.insert(std::pair<std::string,unsigned char* >(eventid, buf) );
-    }
+
+
     printf("startStream\n");
 
-    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData[eventid],  (std::function<void(std::string, streamersDataType*)>) notifyStreamStarted,  (std::function<void(std::string, streamersDataType*)>) notifyStreamEnded, pStreamers);
+    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData,  (std::function<void(std::string, streamersDataType*)>) notifyStreamStarted,  (std::function<void(std::string, streamersDataType*)>) notifyStreamEnded, pStreamers);
     streamThread.detach();
 
     SstreamData dt;
