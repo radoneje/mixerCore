@@ -106,7 +106,7 @@ unsigned  char* Ccmd::loadNotConnected(int input){
     image.read( fileName.c_str() );
     image.crop( Magick::Geometry(0,0, WIDTH, HEIGHT) );
     unsigned  char* pixels;
-    image.write(0,0,WIDTH,HEIGHT,"RGB",0,pixels);
+    image.write(0,0,WIDTH,HEIGHT,"RGB",MagickLib::CharPixel,pixels);
 
     return pixels;
     /*SOIL_load_image(fileName.c_str(),
