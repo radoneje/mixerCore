@@ -22,7 +22,7 @@ find_library(AVUTIL_LIBRARY avutil)
 find_library(SWSCALE_LIBRARIES swscale)
 find_library(GLUT_LIBRARIES glut)
 find_library(SOIL_LIBRARIES SOIL)
-find_library(MAGIC_LIB ImageMagick)
+find_library(MAGIC_LB ImageMagick)
 
 
 
@@ -54,7 +54,7 @@ set(ALL_LIBS
         ${GLUT_LIBRARIES}
         ${CONFIG_LIBRARIES}
         ${SOIL_LIBRARIES}
-        ${MAGIC_LIB}
+        ${MAGIC_LB}
 
         glfw
         GLEW_1130
