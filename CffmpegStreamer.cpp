@@ -269,7 +269,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
             if(dts<(frame->pts*1000))
             {
-                std::cout<< dts - (frame->pts*1000)<<" sleeo"<<std::endl;
+                std::cout<< (frame->pts*1000)-dts<<" sleeo"<<std::endl;
                 av_usleep((frame->pts*1000)-dts );
             }
            /* AVRational time_base=ofmt_ctx->streams[0]->time_base;
