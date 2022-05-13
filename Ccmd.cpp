@@ -67,7 +67,7 @@ Ccmd::Ccmd(){
 
          }
      locker->lock();
-     free(mainImageData);
+     //free(mainImageData);
      //&mainImageData=buf;
      memcpy(&mainImageData,&buf, memorySize);
      locker->unlock();
