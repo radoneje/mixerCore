@@ -102,13 +102,13 @@ unsigned  char* Ccmd::loadNotConnected(int input){
     fileName.append(".png");
     int h=HEIGHT;
     int w=WIDTH;
-    Magic::Image image;
+    Magick::Image image;
     image.read( fileName.c_str() );
-    image.crop( Magic::Geometry(0,0, WIDTH, HEIGHT) );
+    image.crop( Magick::Geometry(0,0, WIDTH, HEIGHT) );
     unsigned  char* pixels;
     image.write(0,0,WIDTH,HEIGHT,"RGB",0,pixels);
 
-    return pixels
+    return pixels;
     /*SOIL_load_image(fileName.c_str(),
                     &h,
                     &w,
