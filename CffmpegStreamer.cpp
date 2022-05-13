@@ -258,19 +258,19 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                             frame->linesize);   //const int dstStride[]);
        locker->unlock();
         //frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
-        frame->pts +=   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base)*1000;
+        frame->pts +=   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);
             if(frame->pts<0) {
                 frame->pts = 0;
                 startTime = av_gettime();
             }
             int64_t now_time = av_gettime();// - startTime;
             int  dts= now_time-startTime;
-            std::cout<< frame->pts<< " " <<dts  << " " <<std::endl;
+            std::cout<< frame->pts*1000<< " " <<dts  << " " <<std::endl;
 
-            if(dts<(frame->pts))
+            if(dts<(frame->pts*1000))
             {
-                std::cout<< (frame->pts)-dts<<" sleeo"<<std::endl;
-                av_usleep((frame->pts)-dts );
+                std::cout<< (frame->pts*1000)-dts<<" sleeo"<<std::endl;
+                av_usleep((frame->pts*1000)-dts );
             }
            /* AVRational time_base=ofmt_ctx->streams[0]->time_base;
             AVRational time_base_q={1,AV_TIME_BASE};
