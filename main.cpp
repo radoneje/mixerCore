@@ -15,19 +15,11 @@
 #include "CffmpegStreamer.h"
 #include "SstreamData.h"
 
-// Include GLEW
-#include <GL/glew.h>
-
-// Include GLFW
-#include <GLFW/glfw3.h>
-
-///
-#include <GL/glut.h>
 
 
 
 CHttp httpServer;
-CRender render;
+//CRender render;
 
 int main(int argc, char* argv[]) {
 
@@ -43,7 +35,7 @@ int main(int argc, char* argv[]) {
 
     return 0;
     std::thread httpThread(httpServer.init,8090, cmd);
-    std::thread renderThread(render.StartRender, argc,  argv, cmd);
+  //  std::thread renderThread(render.StartRender, argc,  argv, cmd);
     std::cout << "Hello, World!" << std::endl;
     renderThread.join();
     std::cin.get();

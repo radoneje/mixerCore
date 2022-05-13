@@ -20,7 +20,6 @@ find_library(AVCODEC_LIBRARY avcodec)
 find_library(AVFORMAT_LIBRARY avformat)
 find_library(AVUTIL_LIBRARY avutil)
 find_library(SWSCALE_LIBRARIES swscale)
-find_library(GLUT_LIBRARIES glut)
 find_library(SOIL_LIBRARIES SOIL)
 find_library(IM_LIBRARIES Magick++)
 
@@ -32,12 +31,7 @@ find_library(IM_LIBRARIES Magick++)
 
 
 include_directories(
-        external/AntTweakBar-1.16/include/
-        external/glfw-3.1.2/include/
-        external/glm-0.9.7.1/
-        external/glew-1.13.0/include/
-        external/assimp-3.0.1270/include/
-        external/bullet-2.81-rev2613/src/
+
         external/ffmpeg
         /usr/include/x86_64-linux-gnu/
         /usr/local/include/
@@ -51,7 +45,6 @@ set(ALL_LIBS
         ${AVFORMAT_LIBRARY}
         ${AVUTIL_LIBRARY}
         ${SWSCALE_LIBRARIES}
-        ${GLUT_LIBRARIES}
         ${CONFIG_LIBRARIES}
         ${SOIL_LIBRARIES}
         ${IM_LIBRARIES}
@@ -72,7 +65,7 @@ add_definitions(
 
 
 
-add_executable(mixerCore main.cpp CTextureData.cpp CTextureData.h CRender.cpp CRender.h CTexture.cpp CTexture.h CHttp.cpp CHttp.h CConfig.cpp CConfig.h SOIL.h Ccmd.cpp Ccmd.h CFFreader.cpp CFFreader.h CffmpegStreamer.cpp CffmpegStreamer.h SstreamData.cpp SstreamData.h CffmpegDecoder.cpp CffmpegDecoder.h settings.h)
+add_executable(mixerCore main.cpp CTextureData.cpp CTextureData.h  CHttp.cpp CHttp.h CConfig.cpp CConfig.h SOIL.h Ccmd.cpp Ccmd.h CFFreader.cpp CFFreader.h CffmpegStreamer.cpp CffmpegStreamer.h SstreamData.cpp SstreamData.h CffmpegDecoder.cpp CffmpegDecoder.h settings.h)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
