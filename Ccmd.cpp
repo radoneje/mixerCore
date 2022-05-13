@@ -75,7 +75,7 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
     }
 
 
-    image.composite(imageInput1,Magick::Geometry(0, 0));//, AtopCompositeOp);
+
 
 
 
