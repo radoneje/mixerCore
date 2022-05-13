@@ -70,7 +70,7 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
         if(i<4)
             image.composite(imageInput,ww*i, 0);
         else
-            image.composite(imageInput,ww*1, (hh*(i-3)));
+            image.composite(imageInput,ww*3, (hh*(i-3)));
 
     }
 
