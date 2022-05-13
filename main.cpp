@@ -7,7 +7,7 @@
 #include <thread>
 #include <mutex>
 #include <map>
-#include <Magick++.h>
+
 
 
 #include "CHttp.h"
@@ -30,8 +30,8 @@ int main(int argc, char* argv[]) {
     cmd->startStream("==event ID==");
     std::cin.get();
 
-    using namespace Magick;
-    InitializeMagick(*argv);
+
+
 
     return 0;
     std::thread httpThread(httpServer.init,8090, cmd);

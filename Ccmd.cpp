@@ -102,6 +102,7 @@ unsigned  char* Ccmd::loadNotConnected(int input){
     fileName.append(".png");
     int h=HEIGHT;
     int w=WIDTH;
+    Magick::InitializeMagick(nullptr);
     Magick::Image image;
     image.read( fileName.c_str() );
     image.crop( Magick::Geometry(0,0, WIDTH, HEIGHT) );
