@@ -64,7 +64,6 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
     {
         std::cout<< "previewImageData.size()"<< previewImageData.size()<< std::endl;
         Magick::Image imageInput;
-        previewImageData[i];
         imageInput.read(WIDTH, HEIGHT, "RGB", MagickLib::CharPixel, previewImageData[i]);
         imageInput.resize( Magick::Geometry(ww, hh));
 
