@@ -272,6 +272,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             std::cout<<dts << " "<< now << " sleep" <<std::endl;
             av_usleep(dts - now);
         }
+            frame->pts +=   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);
 
 
             std::cout<<"avcodec_receive_packet " << frame->pts <<std::endl;
