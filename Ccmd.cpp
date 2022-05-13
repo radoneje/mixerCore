@@ -68,9 +68,9 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
         imageInput.resize( Magick::Geometry(ww, hh));
 
         if(i<4)
-            image.composite(imageInput,Magick::Geometry(ww*i, 0));
+            image.composite(imageInput,ww*i, 0);
         else
-            image.composite(imageInput,Magick::Geometry(ww*1, (hh*(i-3))));
+            image.composite(imageInput,ww*1, (hh*(i-3)));
 
     }
 
