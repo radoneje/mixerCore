@@ -7,6 +7,7 @@
 #include <thread>
 #include <mutex>
 #include <map>
+#include <Magick++.h>
 
 #include "CRender.h"
 #include "CHttp.h"
@@ -36,6 +37,8 @@ int main(int argc, char* argv[]) {
     //std::map<std::string, SstreamData *> streamers;
     cmd->startStream("==event ID==");
     std::cin.get();
+
+    Magick::InitializeMagick(*argv);
 
     return 0;
     std::thread httpThread(httpServer.init,8090, cmd);

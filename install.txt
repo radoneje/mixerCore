@@ -47,6 +47,10 @@ cd /var/www/mixerCore/build
 
 https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#ubuntu-installation
 
+////////////
+
+apt-get install graphicsmagick-libmagick-dev-compat
+
 
 
 
