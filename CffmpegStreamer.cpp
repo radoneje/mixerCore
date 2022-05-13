@@ -266,7 +266,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             int64_t now_time = av_gettime();// - startTime;
 
             int  dts= now_time-startTime;
-            av_usleep(1000000 );
+            av_usleep((1000000)/out_stream->time_base.den );
             std::cout<< frame->pts*1000<< " " <<dts  << " " <<std::endl;
 
             //if(dts<(frame->pts*1000))
