@@ -60,22 +60,6 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
 
     using namespace Magick;
 
-    for(int i=0;i< previewImageData.size();i++)
-    {
-        std::cout<< "previewImageData.size()"<< i<< std::endl;
-        Magick::Image imageInput;
-        imageInput.read(WIDTH, HEIGHT, "RGB", MagickLib::CharPixel, previewImageData[i]);
-        imageInput.resize( Magick::Geometry(ww, hh));
-
-        if(i<4)
-            image.composite(imageInput,ww*i, 0);
-        else
-            image.composite(imageInput,ww*3, (hh*(i-3)));
-
-    }
-
-
-
 
 
 
@@ -86,6 +70,19 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
 
         i++;
 
+        for(int i=0;i< previewImageData.size();i++)
+        {
+            std::cout<< "previewImageData.size()"<< i<< std::endl;
+            Magick::Image imageInput;
+            imageInput.read(WIDTH, HEIGHT, "RGB", MagickLib::CharPixel, previewImageData[i]);
+            imageInput.resize( Magick::Geometry(ww, hh));
+
+            if(i<4)
+                image.composite(imageInput,ww*i, 0);
+            else
+                image.composite(imageInput,ww*3, (hh*(i-3)));
+
+        }
 
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> elapsed = end - start;
