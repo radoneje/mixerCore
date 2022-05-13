@@ -20,7 +20,6 @@
 #include "CFFreader.h"
 #include "CffmpegStreamer.h"
 #include "SstreamData.h"
-#include "SOIL.h"
 
 Ccmd::Ccmd(){
     clearPresImage();
@@ -110,11 +109,7 @@ unsigned  char* Ccmd::loadNotConnected(int input){
     image.write(0,0,WIDTH,HEIGHT,"RGB",MagickLib::CharPixel,pixels);
 
     return pixels;
-    /*SOIL_load_image(fileName.c_str(),
-                    &h,
-                    &w,
-                    0,
-                    SOIL_LOAD_RGB);*/
+
 }
 void Ccmd::notifyStreamStarted(std::string eventid){
 
