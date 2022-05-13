@@ -48,9 +48,6 @@ set(ALL_LIBS
         ${CONFIG_LIBRARIES}
         ${SOIL_LIBRARIES}
         ${IM_LIBRARIES}
-
-        glfw
-        GLEW_1130
         )
 add_definitions(
         -DTW_STATIC
