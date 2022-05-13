@@ -257,8 +257,8 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                             frame->data,        //uint8_t* const dst[],
                             frame->linesize);   //const int dstStride[]);
        locker->unlock();
-       // frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
-            frame->pts +=   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);\
+        frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
+          //  frame->pts +=   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);\
 
             if(frame->pts<0)
                 frame->pts=0;
@@ -270,7 +270,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
        //  std::cout<<frame->pts << " " << now<<std::endl;
         if (dts > now) {
             std::cout<<dts << " "<< now << " sleep" <<std::endl;
-         //   av_usleep(dts - now);
+            av_usleep(dts - now);
         }
 
 
