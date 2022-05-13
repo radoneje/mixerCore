@@ -269,7 +269,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
        //  std::cout<<frame->pts << " " << now<<std::endl;
         if (dts > now) {
-            std::cout<<dts - now << " sleep" <<std::endl;
+            std::cout<<dts << " "<< now << " sleep" <<std::endl;
             av_usleep(dts - now);
         }
 
