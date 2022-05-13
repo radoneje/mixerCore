@@ -202,7 +202,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     long long startTime = av_gettime();
     av_dump_format(ofmt_ctx, 0, outUrl.c_str(), 1);
     long long i=0;
-        while(true) {
+        while(i<90) {
             i++;
         fflush(stdout);
         ret = av_frame_make_writable(frame);
