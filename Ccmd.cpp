@@ -11,7 +11,6 @@
 #include <mutex>
 #include <vector>
 #include <functional>
-#include <math.h>
 
 #include "settings.h"
 #include "Ccmd.h"
@@ -48,9 +47,10 @@ Ccmd::Ccmd(){
  int memorySize=WIDTH * HEIGHT * 3 * sizeof(unsigned char);
 
  long long i=0;
+     auto start = std::chrono::high_resolution_clock::now();
  while(true) {
      using namespace std::chrono_literals;
-     auto start = std::chrono::high_resolution_clock::now();
+
      i++;
 
      unsigned char *buf = (unsigned char *) malloc(memorySize);
@@ -76,7 +76,7 @@ Ccmd::Ccmd(){
 
      free(buf);
 
-
+     start = std::chrono::high_resolution_clock::now();
  }
 }
 void Ccmd::notifyMakeMainImageStarted(std::string eventid){
