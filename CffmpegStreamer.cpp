@@ -86,7 +86,7 @@ void CffmpegStreamer::encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *
     }
 
 }
-void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,  std::function<void(std::string)> onStart,   std::function<void(std::string)> onEnd){
+void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,std::mutex *locker,  std::function<void(std::string)> onStart,   std::function<void(std::string)> onEnd){
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     AVStream *out_stream;
@@ -233,6 +233,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             } while(j< 1280*720*3);*/
 
        int linesize=1280*3;
+       locker->lock();
             ret = sws_scale(sws_ctx,                //struct SwsContext* c,
                             &image,            //const uint8_t* const srcSlice[],
                             &linesize,        //const int srcStride[],
@@ -240,6 +241,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                             frame->height,          //int srcSliceH,
                             frame->data,        //uint8_t* const dst[],
                             frame->linesize);   //const int dstStride[]);
+       locker->unlock();
         frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
         //std::cout<<"pts "<<frame->pts;
         long long now = av_gettime() - startTime;

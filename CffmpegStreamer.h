@@ -47,7 +47,7 @@ private:
     } OutputStream;*/
 public:
     CffmpegStreamer();
-    static void startStream( const std::string eventid, unsigned char * image,  std::function<void(std::string )> onStart,   std::function<void(std::string)> onEnd);
+    static void startStream( const std::string eventid, unsigned char * image,std::mutex *locker,  std::function<void(std::string )> onStart,   std::function<void(std::string)> onEnd);
     int init();
 
 
