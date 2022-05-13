@@ -17,10 +17,6 @@ find_library(GLUT_LIBRARIES glut)
 find_library(SOIL_LIBRARIES SOIL)
 
 find_package(ImageMagick)
-find_package(ImageMagick COMPONENTS convert)
-find_package(ImageMagick COMPONENTS convert mogrify display)
-find_package(ImageMagick COMPONENTS Magick++)
-find_package(ImageMagick COMPONENTS Magick++ convert)
 
 include_directories(${ImageMagick_INCLUDE_DIRS})
 
