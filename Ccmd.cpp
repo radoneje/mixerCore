@@ -64,9 +64,7 @@ Ccmd::Ccmd(){
              }
 
          }
-     std::cout<<"render image frame before lock" <<endl;
      locker->lock();
-     std::cout<<"render image frame ufter lock" <<endl;
      memccpy(mainImageData,buf,' ', memorySize);
      locker->unlock();
      free(buf);
