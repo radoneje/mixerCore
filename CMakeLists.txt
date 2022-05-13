@@ -16,9 +16,9 @@ find_library(SWSCALE_LIBRARIES swscale)
 find_library(GLUT_LIBRARIES glut)
 find_library(SOIL_LIBRARIES SOIL)
 
-find_package(ImageMagick)
+find_package(ImageMagick COMPONENTS Magick++)
 
-include_directories(${ImageMagick_INCLUDE_DIRS})
+
 
 
 
@@ -33,6 +33,7 @@ include_directories(
         /usr/include/x86_64-linux-gnu/
         /usr/local/include/
         /usr/include/
+        ${ImageMagick_INCLUDE_DIRS}
         .
 )
 
