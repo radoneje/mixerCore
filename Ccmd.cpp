@@ -59,9 +59,9 @@ Ccmd::Ccmd(){
              buf[x+y+2]=mainImageData[x+y+2];*/
             // if(x<ww && y<hh){
 
-             buf[x+(WIDTH*3*y)+0]=0xfe;
-             buf[x+(WIDTH*3*y)+1]=0x00;
-             buf[x+(WIDTH*3*y)+2]=0x00;
+             buf[x+(WIDTH*HEIGHT*3*y)+0]=0xfe;
+             buf[x+(WIDTH*HEIGHT*3*y)+1]=0x00;
+             buf[x+(WIDTH*HEIGHT*3*y)+2]=0x00;
 
             // }
 
