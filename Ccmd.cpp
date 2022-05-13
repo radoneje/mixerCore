@@ -11,6 +11,7 @@
 #include <mutex>
 #include <vector>
 #include <functional>
+#include <Magick++.h>
 
 
 #include "settings.h"
@@ -101,11 +102,18 @@ unsigned  char* Ccmd::loadNotConnected(int input){
     fileName.append(".png");
     int h=HEIGHT;
     int w=WIDTH;
-    return  SOIL_load_image(fileName.c_str(),
+    Magic::Image image;
+    image.read( fileName.c_str() );
+    image.crop( Magic::Geometry(0,0, WIDTH, HEIGHT) );
+    unsigned  char* pixels;
+    image.write(0,0,WIDTH,HEIGHT,"RGB",0,pixels);
+
+    return pixels
+    /*SOIL_load_image(fileName.c_str(),
                     &h,
                     &w,
                     0,
-                    SOIL_LOAD_RGB);
+                    SOIL_LOAD_RGB);*/
 }
 void Ccmd::notifyStreamStarted(std::string eventid){
 
