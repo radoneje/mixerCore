@@ -115,7 +115,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
     out_stream = avformat_new_stream(ofmt_ctx, NULL);
     AVDictionary *format_opts = NULL;
-    av_dict_set(&format_opts, "movflags", "faststart+empty_moov", 0);
+    av_dict_set(&format_opts, "movflags", "frag_keyframe+empty_moov", 0);
 
     ret = avformat_write_header( ofmt_ctx, &format_opts );
 
