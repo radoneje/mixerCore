@@ -60,9 +60,16 @@ Ccmd::Ccmd(){
 
              int  j=(x*3)+(WIDTH*3*y);
 
-             buf[j+0]=mainImageData[j+0];
-             buf[j+1]=mainImageData[j+1];
-             buf[j+2]=mainImageData[j+2];
+             if(x<ww && y<hh){
+                 buf[j+0]=0xff;
+                 buf[j+1]=0x1f;
+                 buf[j+2]=0x23;;
+             }
+             else{
+                 buf[j+0]=mainImageData[j+0];
+                 buf[j+1]=mainImageData[j+1];
+                 buf[j+2]=mainImageData[j+2];
+             }
 
          }
 
