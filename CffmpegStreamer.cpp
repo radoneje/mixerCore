@@ -264,6 +264,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             AVRational time_base_q={1,AV_TIME_BASE};
             int64_t pts_time = av_rescale_q(pkt->dts, time_base, time_base_q);
             int64_t now_time = av_gettime() - startTime;
+            std::cout<<pts_time - now_time << " sleep" <<std::endl;
             if (pts_time > now_time)
                 av_usleep(pts_time - now_time);
 
