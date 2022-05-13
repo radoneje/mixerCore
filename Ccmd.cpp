@@ -67,7 +67,7 @@ Ccmd::Ccmd(){
 
          }
      locker->lock();
-     std::copy(buf, buf+memorySize, mainImageData);
+    /// std::copy(buf, buf+memorySize, mainImageData);
      //free(mainImageData);
   //   mainImageData=buf;
     // memcpy(mainImageData,buf, memorySize);
