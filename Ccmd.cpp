@@ -43,9 +43,11 @@ unsigned  char* Ccmd::loadNotConnected(int input){
     std::string fileName("/etc/mixerCore/images/notconnected");
     fileName.append(std::to_string(input+1));
     fileName.append(".png");
+    int h=HEIGHT;
+    int w=WIDTH
     return  SOIL_load_image(fileName.c_str(),
-                    &WIDTH,
-                    &HEIGHT,
+                    &h,
+                    &w,
                     0,
                     SOIL_LOAD_RGB);
 }
