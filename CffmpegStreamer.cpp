@@ -264,7 +264,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                 startTime = av_gettime();
             }
             int64_t now_time = av_gettime();// - startTime;
-            std::cout<< frame->pts<<" "<< (now_time-startTime)/1000 << " " <<startTime << " sleep" <<std::endl;
+            std::cout<< frame->pts<<" "<< ( (now_time-startTime)/1000 )+(i*30)<< " " <<startTime << " sleep" <<std::endl;
 
            /* AVRational time_base=ofmt_ctx->streams[0]->time_base;
             AVRational time_base_q={1,AV_TIME_BASE};
