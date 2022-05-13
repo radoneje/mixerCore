@@ -48,17 +48,14 @@ Ccmd::Ccmd(){
 
  long long i=0;
  while(true) {
+     using namespace std::chrono_literals;
+     auto start = std::chrono::high_resolution_clock::now();
      i++;
 
      unsigned char *buf = (unsigned char *) malloc(memorySize);
 
      for (int y = 0; y < HEIGHT; y++)
          for (int x = 0; x < WIDTH; x++) {
-          /*   buf[x+y+0]=mainImageData[x+y+0];
-             buf[x+y+1]=mainImageData[x+y+1];
-             buf[x+y+2]=mainImageData[x+y+2];*/
-            // if(x<ww && y<hh){
-
              buf[(x*3)+(WIDTH*3*y)+0]=0xfe;
              buf[(x*3)+(WIDTH*3*y)+1]=0x00;
              buf[(x*3)+(WIDTH*3*y)+2]=0x00;
@@ -67,17 +64,17 @@ Ccmd::Ccmd(){
 
          }
      locker->lock();
-    /// std::copy(buf, buf+memorySize, mainImageData);
-     //free(mainImageData);
-  //   mainImageData=buf;
+
+
      memcpy(mainImageData,buf, memorySize);
      locker->unlock();
-    // locker->lock();
-    // memcpy(mainImageData,buf, memorySize);
 
-
-     std::cout<<"render image "<< i <<" "<< std::hex << (int)mainImageData[1] << " " << std::hex << (int) buf[1]<<endl;
      free(buf);
+
+     auto end = std::chrono::high_resolution_clock::now();
+     std::chrono::duration<double, std::milli> elapsed = end-start;
+     std::cout<<"render image "<< i <<" "<<  elapsed.count() << (int) buf[1]<<endl;
+
      std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMERATE));
  }
 }
