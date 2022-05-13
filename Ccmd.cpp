@@ -68,13 +68,15 @@ Ccmd::Ccmd(){
          }
      locker->lock();
      free(mainImageData);
-     mainImageData=buf;
+     //&mainImageData=buf;
+     memcpy(&mainImageData,&buf, memorySize);
      locker->unlock();
     // locker->lock();
     // memcpy(mainImageData,buf, memorySize);
 
-   //  free(buf);
+
      std::cout<<"render image "<< i <<" "<< &mainImageData << " " << &buf<<endl;
+     free(buf);
      std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMERATE));
  }
 }
