@@ -52,7 +52,7 @@ void Ccmd::notifyStreamEnded(std::string eventid, streamersDataType *pStreamers)
 };
 
 
-void Ccmd::startReadStream(std::string rtmpURL, int layerNumber ){
+void Ccmd::startReadStream(std::string rtmpURL, int layerNumber ){ // TODO: Delete!!!!
 
     FFreader[layerNumber].dt.width=layerNumber;
     FFreader[layerNumber].dt.layer=layerNumber;
@@ -117,12 +117,26 @@ void Ccmd::clearPresImage(){
 };
 int Ccmd::startStream(const std::string eventid,  std::map<std::string, SstreamData *> *pStreamers){
     _pStreamers = pStreamers;
+
+
     if(pStreamers->find(eventid)!=pStreamers->end()) {
         std::cout<<  "Error : straamer already created" <<std::endl;
         return  -1;
     }
+    if(mainImageData.find(eventid)==mainImageData.end()){
+       // unsigned char* buf=( unsigned char*)malloc(1920*1080*3*sizeof(unsigned char*));
+       int w=1280;
+       int h=720;
+        unsigned char* buf=SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
+                        &w,
+                        &h,
+                        0,
+                        SOIL_LOAD_RGB);
+        mainImageData.insert(std::pair<std::string,unsigned char* >(eventid, buf) );
+    }
     printf("startStream\n");
-    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData,  (std::function<void(std::string, streamersDataType*)>) notifyStreamStarted,  (std::function<void(std::string, streamersDataType*)>) notifyStreamEnded, pStreamers);
+
+    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData[eventid],  (std::function<void(std::string, streamersDataType*)>) notifyStreamStarted,  (std::function<void(std::string, streamersDataType*)>) notifyStreamEnded, pStreamers);
     streamThread.detach();
 
     SstreamData dt;

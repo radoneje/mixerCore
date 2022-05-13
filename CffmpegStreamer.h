@@ -27,11 +27,11 @@ private:
                        FILE *outfile);
     static double r2d(AVRational r);
     static void log_packet(const AVFormatContext *fmt_ctx, const AVPacket *pkt);
-    typedef struct OutputStream {
+    /*typedef struct OutputStream {
         AVStream *st;
         AVCodecContext *enc;
 
-        /* pts of the next frame that will be generated */
+        ///* pts of the next frame that will be generated
         int64_t next_pts;
         int samples_count;
 
@@ -44,7 +44,7 @@ private:
 
         struct SwsContext *sws_ctx;
         struct SwrContext *swr_ctx;
-    } OutputStream;
+    } OutputStream;*/
 public:
     CffmpegStreamer();
     static void startStream( const std::string eventid, unsigned char * image,  std::function<void(std::string, streamersDataType *)> startCallback,   std::function<void(std::string, streamersDataType *)> EndCallback, streamersDataType *pStreamers);

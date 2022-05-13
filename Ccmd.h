@@ -20,7 +20,7 @@ class Ccmd {
         std::map<std::string, SstreamData*> *_pStreamers;
     public:
 
-        int startStream(const std::string eventid, std::map<std::string, SstreamData*> *pStreamers);
+
 
         std::vector<CFFreader>  FFreader;
         std::vector<int> activeTextureId;
@@ -34,10 +34,13 @@ class Ccmd {
         std::string imageid;
         CFFreader meReader;
       //  typedef void (* vFunctionCall)(std::string args);
-        void startReadStream(std::string rtmpURL, int layerNumber);
+        void startReadStream(std::string rtmpURL, int layerNumber); // TODO: Delete!!!!
+
+        int startStream(const std::string eventid, std::map<std::string, SstreamData*> *pStreamers);
         static void notifyStreamStarted(std::string eventid, streamersDataType *pStreamers);
         static void notifyStreamEnded(std::string eventid, streamersDataType *pStreamers);
-        unsigned char* mainImageData;
+
+        std::map<std::string ,unsigned char*> mainImageData; // главная картинка // TODO:: сделать мфссив
 
         Ccmd();
 };
