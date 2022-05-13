@@ -39,11 +39,12 @@ Ccmd::Ccmd(){
     }*/
 
 };
-void Ccmd::makeMainImage(unsigned char * mainImageData, std::vector<unsigned char*> * previewImageData,std::mutex locker, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd ){
+void Ccmd::makeMainImage(unsigned char * mainImageData, std::vector<unsigned char*> previewImageData,std::mutex locker, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd ){
 
-  }
+    onEnd("")
+}
 void Ccmd::notifyMakeMainImageStarted(std::string eventid){
-
+std::cout<<"notifyMakeMainImageStarted"<<std::endl;
   }
 void Ccmd::notifyMakeMainImageEnded(std::string eventid){
 
