@@ -257,22 +257,21 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                             frame->data,        //uint8_t* const dst[],
                             frame->linesize);   //const int dstStride[]);
        locker->unlock();
-        frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
-          //  frame->pts +=   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);\
+        //frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
+        frame->pts +=   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);\
 
             if(frame->pts<0)
                 frame->pts=0;
         //std::cout<<"pts "<<frame->pts;
         long long now = av_gettime() - startTime;
         long long dts = 0;
-        dts = (frame->pts)*(1000/r2d(enc_ctx->time_base ));// * ( r2d(enc_ctx->time_base )*1000*1000);
-
+      //  dts = (frame->pts)*(1000/r2d(enc_ctx->time_base ));// * ( r2d(enc_ctx->time_base )*1000*1000);
+            dts = (i)*(1000/r2d(enc_ctx->time_base ));
        //  std::cout<<frame->pts << " " << now<<std::endl;
         if (dts > now) {
             std::cout<<dts << " "<< now << " sleep" <<std::endl;
             av_usleep(dts - now);
         }
-            frame->pts +=   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);
 
 
             std::cout<<"avcodec_receive_packet " << frame->pts <<std::endl;
