@@ -25,12 +25,12 @@ Ccmd::Ccmd(){
         CFFreader cfFreader;
         FFreader.push_back(cfFreader);
     }
-    mainImageData= (unsigned char*)malloc(1280*720*3*sizeof (unsigned char));
+   /* mainImageData= (unsigned char*)malloc(1280*720*3*sizeof (unsigned char));
     for(int i=0;i<1280*720;i++){
         mainImageData[(i*3)+0]=0x0f;
         mainImageData[(i*3)+1]=0x0f;
         mainImageData[(i*3)+2]=0xff;
-    }
+    }*/
 
 };
 void Ccmd::notifyStreamStarted(std::string eventid, streamersDataType *pStreamers){
