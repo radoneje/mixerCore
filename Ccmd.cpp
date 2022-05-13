@@ -60,9 +60,21 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
 
     using namespace Magick;
 
-    Magick::Image imageInput1;
-    imageInput1.read(WIDTH, HEIGHT, "RGB", MagickLib::CharPixel, previewImageData[0]);
-    imageInput1.resize( Magick::Geometry(ww, hh));
+    for(int i=0;i< previewImageData.size();i++)
+    {
+        Magick::Image imageInput;
+        previewImageData[i];
+        imageInput.read(WIDTH, HEIGHT, "RGB", MagickLib::CharPixel, previewImageData[0]);
+        imageInput.resize( Magick::Geometry(ww, hh));
+
+        if(i<4)
+            image.composite(imageInput,Magick::Geometry(ww*i, 0));
+        else
+            image.composite(imageInput,Magick::Geometry(ww*2, (hh*(i-3))));
+
+    }
+
+
     image.composite(imageInput1,Magick::Geometry(0, 0));//, AtopCompositeOp);
 
 
