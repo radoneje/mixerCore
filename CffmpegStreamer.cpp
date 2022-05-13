@@ -257,7 +257,8 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                             frame->data,        //uint8_t* const dst[],
                             frame->linesize);   //const int dstStride[]);
        locker->unlock();
-        frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
+       // frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
+            frame->pts +=   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);
         //std::cout<<"pts "<<frame->pts;
         long long now = av_gettime() - startTime;
         long long dts = 0;
@@ -284,10 +285,10 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                 fprintf(stderr, "Error encoding a frame: \n");
                 return ;
             }
-            std::cout<<"avcodec_receive_packet " << pkt->pts <<std::endl;
-            av_packet_rescale_ts(pkt,
+          //  std::cout<<"avcodec_receive_packet " << pkt->pts <<std::endl;
+           /* av_packet_rescale_ts(pkt,
                                  enc_ctx->time_base,
-                                 ofmt_ctx->streams[0]->time_base);
+                                 ofmt_ctx->streams[0]->time_base);*/
             pkt->stream_index = 0;
 
             log_packet(ofmt_ctx, pkt);
