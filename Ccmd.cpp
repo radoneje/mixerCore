@@ -58,15 +58,16 @@ Ccmd::Ccmd(){
              buf[x+y+1]=mainImageData[x+y+1];
              buf[x+y+2]=mainImageData[x+y+2];*/
             // if(x<ww && y<hh){
-             locker->lock();
-             mainImageData[x+y+0]=0xff;
-             mainImageData[x+y+1]=0x00;
-             mainImageData[x+y+2]=0x00;
-             locker->unlock();
+
+             buf[x+y+0]=0xff;
+             buf[x+y+1]=0x00;
+             buf[x+y+2]=0x00;
+
             // }
 
          }
      locker->lock();
+     std::copy(buf, buf+memorySize, mainImageData);
      //free(mainImageData);
   //   mainImageData=buf;
     // memcpy(mainImageData,buf, memorySize);
