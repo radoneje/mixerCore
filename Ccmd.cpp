@@ -54,9 +54,6 @@ Ccmd::Ccmd(){
 
      for (int y = 0; y < HEIGHT; y++)
          for (int x = 0; x < WIDTH; x=x+3) {
-             std::cout<<"==1 render image frame" << 1000/FRAMERATE <<endl;
-             std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMERATE));
-             std::cout<<"==2 render image frame" <<endl;
              buf[x+y+0]=mainImageData[x+y+0];
              buf[x+y+1]=mainImageData[x+y+1];
              buf[x+y+1]=mainImageData[x+y+1];
@@ -67,13 +64,14 @@ Ccmd::Ccmd(){
              }
 
          }
-     std::cout<<"render image frame" <<endl;
+     std::cout<<"render image frame before lock" <<endl;
      locker->lock();
-     std::cout<<"render image frame lock" <<endl;
+     std::cout<<"render image frame ufter lock" <<endl;
      memccpy(mainImageData,buf,' ', memorySize);
      locker->unlock();
      free(buf);
      std::cout<<"render image "<< i <<endl;
+     std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMERATE));
  }
 }
 void Ccmd::notifyMakeMainImageStarted(std::string eventid){
