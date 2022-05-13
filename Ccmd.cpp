@@ -74,7 +74,7 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
         {
             Magick::Image imageInput;
             imageInput.read(WIDTH, HEIGHT, "RGB", MagickLib::CharPixel, previewImageData[i]);
-            imageInput.resize( Magick::Geometry(ww, hh));
+          //  imageInput.resize( Magick::Geometry(ww, hh));
             if(i<4)
                 image.composite(imageInput,ww*i, 0);
             else
