@@ -65,7 +65,7 @@ Ccmd::Ccmd(){
 
          }
      locker->lock();
-     memccpy(mainImageData,buf,' ', memorySize);
+     memcpy(mainImageData,buf, memorySize);
      locker->unlock();
      free(buf);
      std::cout<<"render image "<< i <<endl;
