@@ -41,10 +41,10 @@ Ccmd::Ccmd(){
 };
 
  void Ccmd::makeMainImage(std::string eventid, unsigned char * mainImageData, std::vector<unsigned char*> previewImageData,std::mutex *locker, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd ){
- onEnd(eventid)
+ onEnd(eventid);
 }
 void Ccmd::notifyMakeMainImageStarted(std::string eventid){
-std::cout<<"notifyMakeMainImageStarted"<<std::endl;
+std::cout<<"notifyMakeMainImageStarted "<<eventid << std::endl;
   }
 void Ccmd::notifyMakeMainImageEnded(std::string eventid){
 
