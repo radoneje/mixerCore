@@ -12,19 +12,25 @@
 #include <vector>
 #include <functional>
 
-
+#include "settings.h"
 #include "Ccmd.h"
 #include "SOIL.h"
 #include "CFFreader.h"
 #include "CffmpegStreamer.h"
 #include "SstreamData.h"
+#include "SOIL.h"
 
 Ccmd::Ccmd(){
     clearPresImage();
-    for(int i=0; i<6; i++){
+    /*
+    for(int i=0; i<MAX_FACES; i++){
         CFFreader cfFreader;
         FFreader.push_back(cfFreader);
+    }*/
+    for(int i=0; i<MAX_FACES; i++){
+        previewImageData.push_back(loadNotConnected(i));
     }
+    previewImageData.push_back(nullptr);
    /* mainImageData= (unsigned char*)malloc(1280*720*3*sizeof (unsigned char));
     for(int i=0;i<1280*720;i++){
         mainImageData[(i*3)+0]=0x0f;
@@ -33,6 +39,16 @@ Ccmd::Ccmd(){
     }*/
 
 };
+unsigned  char* Ccmd::loadNotConnected(int input){
+    std::string fileName("/etc/mixerCore/images/notconnected");
+    fileName.append(std::to_string(input+1));
+    fileName.append(".png");
+    return  SOIL_load_image(fileName.c_str(),
+                    &WIDTH,
+                    &HEIGHT,
+                    0,
+                    SOIL_LOAD_RGB);
+}
 void Ccmd::notifyStreamStarted(std::string eventid, streamersDataType *pStreamers){
     auto find=pStreamers->find(eventid);
 

@@ -18,6 +18,7 @@ using namespace std;
 class Ccmd {
     private:
         std::map<std::string, SstreamData*> *_pStreamers;
+        unsigned  char* loadNotConnected(int input)
     public:
 
 
@@ -41,7 +42,7 @@ class Ccmd {
         static void notifyStreamEnded(std::string eventid, streamersDataType *pStreamers);
 
         std::map<std::string ,unsigned char*> mainImageData; // главная картинка // TODO:: сделать мфссив
-
+        std::vector<unsigned char*> previewImageData;
         Ccmd();
 };
 
