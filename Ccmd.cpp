@@ -160,7 +160,7 @@ int Ccmd::startStream(const std::string eventid){
     dt.thread=&streamThread;
 
 
-    std::thread makeMainThread(Ccmd::makeMainImage, mainImageData, &previewImageData);//,(std::function<void(std::string eventid)>) notifyMakeMainImageStarted, (std::function<void(std::string eventid)>) notifyStreamEnded);
+    std::thread makeMainThread(Ccmd::makeMainImage, mainImageData, previewImageData);//,(std::function<void(std::string eventid)>) notifyMakeMainImageStarted, (std::function<void(std::string eventid)>) notifyStreamEnded);
     makeMainThread.detach();
 
     return 0;
