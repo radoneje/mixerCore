@@ -54,14 +54,14 @@ Ccmd::Ccmd(){
 
      for (int y = 0; y < HEIGHT; y++)
          for (int x = 0; x < WIDTH; x=x+3) {
-             buf[x+y+0]=mainImageData[x+y+0];
+          /*   buf[x+y+0]=mainImageData[x+y+0];
              buf[x+y+1]=mainImageData[x+y+1];
-             buf[x+y+2]=mainImageData[x+y+2];
-             if(x<ww && y<hh){
+             buf[x+y+2]=mainImageData[x+y+2];*/
+            // if(x<ww && y<hh){
                  buf[x+y+0]=0xff;
                  buf[x+y+1]=0x00;
                  buf[x+y+2]=0x00;
-             }
+            // }
 
          }
      locker->lock();
