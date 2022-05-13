@@ -52,7 +52,7 @@ Ccmd::Ccmd(){
 
      unsigned char *buf = (unsigned char *) malloc(memorySize);
 
-     locker->lock();
+
      for (int y = 0; y < HEIGHT; y++)
          for (int x = 0; x < WIDTH; x=x+3) {
           /*   buf[x+y+0]=mainImageData[x+y+0];
@@ -60,12 +60,15 @@ Ccmd::Ccmd(){
              buf[x+y+2]=mainImageData[x+y+2];*/
             // if(x<ww && y<hh){
 
-             mainImageData[x+y+0]=0xff;
-             mainImageData[x+y+1]=0x00;
-             mainImageData[x+y+2]=0x00;
+                 buf[x+y+0]=0xff;
+                 buf[x+y+1]=0x00;
+                 buf[x+y+2]=0x00;
             // }
 
          }
+     locker->lock();
+     free(mainImageData);
+     mainImageData=buf;
      locker->unlock();
     // locker->lock();
     // memcpy(mainImageData,buf, memorySize);
