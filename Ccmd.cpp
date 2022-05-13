@@ -71,7 +71,7 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
 
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> elapsed = end - start;
-        std::cout << "render image " << i << " sleep: "
+    //    std::cout << "render image " << i << " sleep: "
                   << (int) (std::chrono::milliseconds(1000 / FRAMERATE).count() - elapsed.count()) << endl;
         std::this_thread::sleep_for(std::chrono::milliseconds((int) ((1000 / FRAMERATE) - elapsed.count())));
 
