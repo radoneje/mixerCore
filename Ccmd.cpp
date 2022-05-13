@@ -48,9 +48,17 @@ Ccmd::Ccmd(){
  while(true) {
      unsigned char *buf = (unsigned char *) malloc(memorySize);
      for (int y = 0; y < HEIGHT; y++)
-         for (int x = 0; x < WIDTH; x++) {
+         for (int x = 0; x < WIDTH; x=x+3) {
              std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMERATE));
-             buf[x+y]=mainImageData[x+y];
+             buf[x+y+0]=mainImageData[x+y+0];
+             buf[x+y+1]=mainImageData[x+y+1];
+             buf[x+y+1]=mainImageData[x+y+1];
+             if(x<ww && y<hh){
+                 buf[x+y+0]=0xff;
+                 buf[x+y+1]=0x00;
+                 buf[x+y+1]=0x00;
+             }
+
          }
      locker->lock();
      memccpy(mainImageData,buf,' ', memorySize);
