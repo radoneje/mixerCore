@@ -105,7 +105,7 @@ unsigned  char* Ccmd::loadNotConnected(int input){
     Magick::InitializeMagick(nullptr);
     Magick::Image image;
     image.read( fileName.c_str() );
-    image.crop( Magick::Geometry(0,0, WIDTH, HEIGHT) );
+   // image.crop( Magick::Geometry(0,0, WIDTH, HEIGHT) );
     unsigned  char* pixels;
     image.write(0,0,WIDTH,HEIGHT,"RGB",MagickLib::CharPixel,pixels);
 
