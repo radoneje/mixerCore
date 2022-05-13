@@ -51,9 +51,10 @@ Ccmd::Ccmd(){
      i++;
      std::cout<<"==0 render image frame" <<endl;
      unsigned char *buf = (unsigned char *) malloc(memorySize);
-     std::cout<<"==1 render image frame" <<endl;
+
      for (int y = 0; y < HEIGHT; y++)
          for (int x = 0; x < WIDTH; x=x+3) {
+             std::cout<<"==1 render image frame" << 1000/FRAMERATE <<endl;
              std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMERATE));
              buf[x+y+0]=mainImageData[x+y+0];
              buf[x+y+1]=mainImageData[x+y+1];
