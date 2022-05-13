@@ -11,3 +11,5 @@ const int MAX_FACES=7;
 const int WIDTH=1280;
 const int HEIGHT=720;
 
+const int FRAMERATE=30;
+

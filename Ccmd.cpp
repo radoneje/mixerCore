@@ -42,6 +42,21 @@ Ccmd::Ccmd(){
 
  void Ccmd::makeMainImage(std::string eventid, unsigned char * mainImageData, std::vector<unsigned char*> previewImageData,std::mutex *locker, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd ){
  onStart(eventid);
+ int ww=WIDTH/4;
+ int hh=HEIGHT/4;
+ int memorySize=WIDTH * HEIGHT * 3 * sizeof(unsigned char);
+ while(true) {
+     unsigned char *buf = (unsigned char *) malloc(memorySize);
+     for (int y = 0; y < HEIGHT; y++)
+         for (int x = 0; x < WIDTH; x++) {
+             std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMERATE));
+             buf[x+y]=mainImageData[x+y];
+         }
+     locker->lock();
+     memccpy(mainImageData,buf,' ', memorySize);
+     locker->unlock();
+     free(buf);
+ }
 }
 void Ccmd::notifyMakeMainImageStarted(std::string eventid){
 std::cout<<"notifyMakeMainImageStarted "<<eventid << std::endl;
