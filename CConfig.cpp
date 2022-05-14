@@ -14,11 +14,11 @@
 #include <locale>
 
 #include "CConfig.h"
-#include "CSettings.h"
+//#include "CSettings.h"
 
 CConfig::CConfig() {};
 int CConfig::getGlobalValues(){
-        try {
+   /*     try {
             std::string buf;
             GetConfig("MAX_FACES", buf);
             MAX_FACES= atoi(buf.c_str());
@@ -45,7 +45,7 @@ int CConfig::getGlobalValues(){
         catch (...){
             std::cout<< "error read config file"<<std::endl;
             return 1;
-        }
+        }*/
         return 0;
 }
 
