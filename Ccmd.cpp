@@ -48,7 +48,7 @@ void Ccmd::makeMainImage(std::string eventid,
         Magick::Image image;
         image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, blankImage);
 
-        using namespace Magick;
+       // using namespace Magick;
 
         long long i = 0;
         auto start = std::chrono::high_resolution_clock::now();
