@@ -271,6 +271,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             }
             pkt->stream_index = 0;
             pkt->duration=(1000/enc_ctx->time_base.den)*(j+1);
+            pkt->pos=-1;
             std::cout<<"avcodec_receive_packet " << pkt->pts<<" "<< pkt->dts<< " "<< pkt->duration <<std::endl;
 
 
