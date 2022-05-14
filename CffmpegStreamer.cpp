@@ -91,7 +91,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     /* must be called before using avcodec lib */
-    avcodec_init();
+
 
     /* register all the codecs */
     avcodec_register_all();
