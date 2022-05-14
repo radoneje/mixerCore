@@ -34,6 +34,18 @@ void CHttp::init(int port, Ccmd *pCmd){
         }
 
     });
+    svr.Get(R"(/mixer/stopEvent/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))", [&](const httplib::Request &req, httplib::Response &res) {
+        // res.set_content("Hello World!", "text/plain");
+        std::string eventid = req.matches[1];
+        {
+            pCmd->  clearPresImage();
+            //std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+            pCmd->stopEvent(eventid);
+            res.set_content("{\"error\":false}", "application/json");
+            // pCmd->locker.lock();
+        }
+
+    });
 
     svr.Get("/mixer/startInput",[&](const httplib::Request &req, httplib::Response &res){
         res.set_content("{\"err\":false}", "application/json");

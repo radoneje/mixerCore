@@ -147,9 +147,6 @@ void Ccmd::startReadStream(std::string rtmpURL, int layerNumber) { // TODO: Dele
     ffmpegThread.detach();
 
 
-
-
-
     // ffmpegThread
 
 }
