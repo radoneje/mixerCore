@@ -64,7 +64,7 @@ public: CConfig();
     {
         auto end = std::chrono::system_clock::now();
         std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-        std::cout << BLUE << t << " <<-"<< << std::ctime(&end_time)<< RESET;//<< std::endl ;
+        std::cout << BLUE << t << " <<-" << std::ctime(&end_time)<< RESET;//<< std::endl ;
     }
     template<typename T, typename... Args>
     static void log(T t, Args... args) // recursive variadic function
