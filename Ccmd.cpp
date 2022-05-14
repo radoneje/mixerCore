@@ -33,6 +33,7 @@ std::mutex Ccmd::_locker;
 void Ccmd::makeMainImage(std::string eventid,
                     CEvent *pEvent, std::function<void(std::string eventid)> onStart,
                     std::function<void(std::string eventid)> onEnd) {
+    return;
     try {
         onStart(eventid);
         int ww = CConfig::WIDTH / 4;
