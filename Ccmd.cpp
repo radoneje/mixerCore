@@ -137,7 +137,7 @@ void Ccmd::notifyMakeMainImageEnded(std::string eventid) {
 
 void Ccmd::startReadStream(std::string rtmpURL, int layerNumber) { // TODO: Delete!!!!
 
-    FFreader[layerNumber].dt.width = layerNumber;
+ /*   FFreader[layerNumber].dt.width = layerNumber;
     FFreader[layerNumber].dt.layer = layerNumber;
     std::cout << "start input " << rtmpURL << " " << layerNumber << std::endl;
     std::cout << "start  " << (FFreader[layerNumber].dt.width) << " " << layerNumber << std::endl;
@@ -145,7 +145,7 @@ void Ccmd::startReadStream(std::string rtmpURL, int layerNumber) { // TODO: Dele
 
     std::thread ffmpegThread(FFreader[layerNumber].work, rtmpURL, &FFreader[layerNumber].dt, &locker);
     ffmpegThread.detach();
-
+*/
 
     // ffmpegThread
 
@@ -157,7 +157,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid) {
 
     clearPresImage();
 
-    std::lock_guard<std::mutex> lockGuard(locker);
+   // std::lock_guard<std::mutex> lockGuard(locker);
     imageid = simageid;
     free(PresImagePixels);
 
@@ -190,7 +190,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid) {
 }
 
 void Ccmd::clearPresImage() {
-    std::lock_guard<std::mutex> lockGuard(locker);
+   // std::lock_guard<std::mutex> lockGuard(locker);
     PresImageWidth = 0;
     PresImageHeight = 0;
     imageid = "";
