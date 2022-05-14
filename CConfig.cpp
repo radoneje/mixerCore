@@ -19,6 +19,15 @@
 
 
 CConfig::CConfig() {};
+
+ int CConfig::MAX_FACES=7;
+ int CConfig::WIDTH=1280;
+ int CConfig::HEIGHT=720;
+ std::string CConfig::RTMP_MAIN="rtmp://wowza02.onevent.online/live/";
+ int CConfig::FRAMERATE=30;
+ int CConfig::MIXER_BITRATE=1024*1024*1.5;
+ int CConfig::MIXER_GOP=30;
+
 int CConfig::getGlobalValues(){
    /*     try {
             std::string buf;

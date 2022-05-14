@@ -31,13 +31,14 @@ private:
 public: CConfig();
     static int GetConfig(const char *name, std::string &str);
     static int getGlobalValues();
-    static int MAX_FACES=7;
-    static int WIDTH=1280;
-    static int HEIGHT=720;
-    static std::string RTMP_MAIN="rtmp://wowza02.onevent.online/live/";
-    static int FRAMERATE=30;
-    static int MIXER_BITRATE=1024*1024*1.5;
-    static int MIXER_GOP=30;
+
+    static int MAX_FACES;
+    static int WIDTH;
+    static int HEIGHT;
+    static std::string RTMP_MAIN;
+    static int FRAMERATE;
+    static int MIXER_BITRATE;
+    static int MIXER_GOP;
 };
 
 
