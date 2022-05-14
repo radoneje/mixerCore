@@ -214,14 +214,14 @@ int Ccmd::startEvent(const std::string eventid) {
                              (std::function<void(std::string)>) notifyStreamStarted,
                              (std::function<void(std::string)>) notifyStreamEnded);
     streamThread.detach();
- /*
+
 
     event->thread = &streamThread;
 
     std::thread makeMainImageThread(Ccmd::makeMainImage, eventid, event->mainImageData, event->previewImageData, & event->locker,
                                     (std::function<void(std::string eventid)>) notifyMakeMainImageStarted,
                                     (std::function<void(std::string eventid)>) notifyMakeMainImageEnded);
-    makeMainImageThread.detach();*/
+    makeMainImageThread.detach();
 
     return 0;
 }
