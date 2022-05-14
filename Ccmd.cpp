@@ -51,7 +51,7 @@ void Ccmd::makeMainImage(std::string eventid,
 
         long long i = 0;
         auto start = std::chrono::high_resolution_clock::now();
-        while (true && !pEvent->stop) {
+        while (true ) {
             using namespace std::chrono_literals;
 
             i++;
