@@ -38,7 +38,6 @@ void CHttp::init(int port, Ccmd *pCmd){
         // res.set_content("Hello World!", "text/plain");
         std::string eventid = req.matches[1];
         {
-            pCmd->  clearPresImage();
             //std::lock_guard<std::mutex> lockGuard(pCmd->locker);
             pCmd->stopEvent(eventid);
             res.set_content("{\"error\":false}", "application/json");
