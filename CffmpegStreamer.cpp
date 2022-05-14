@@ -160,9 +160,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
 
     av_dict_set(&opts, "preset", "ultrafast", 0);
-    av_dict_set(&opts, "tune", "zerolatency", 0);
+  /*  av_dict_set(&opts, "tune", "zerolatency", 0);
    // av_dict_set(&opts, "profile", "hi", 0);
-    av_dict_set(&opts, "lavel", "4.0", 0);
+    av_dict_set(&opts, "lavel", "4.0", 0);*/
 
 
     ret = avcodec_open2(enc_ctx, encoder, &opts);
