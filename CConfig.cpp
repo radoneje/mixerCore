@@ -36,6 +36,7 @@ int CConfig::getGlobalValues(){
 
             GetConfig("WIDTH", buf);
             WIDTH= atoi(buf.c_str());
+            log("WIDTH",WIDTH );
 
             GetConfig("HEIGHT", buf);
             HEIGHT= atoi(buf.c_str());
