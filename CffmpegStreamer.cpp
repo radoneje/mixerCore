@@ -113,7 +113,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     //outUrl="/var/www/mixerControl/public/1.mp4";
     std::string codec_name = "libx264";
 ///////////
-    oformat = av_guess_format("flv", 'test.mp4', NULL);//, "test.mp4", nullptr);
+    oformat = av_guess_format("flv", "test.mp4", NULL);//, "test.mp4", nullptr);
     if (!oformat)
     {
         std::cout << "can't create output format" << std::endl;
