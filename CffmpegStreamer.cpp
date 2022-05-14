@@ -103,7 +103,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     //outUrl="rtmp://ovsu.mycdn.me/input/4453867858802_2584093788786_simjnawoum";
     //outUrl="/var/www/mixerControl/public/1.mp4";
    // std::string codec_name = "libx264";
-    std::string codec_name = "vp8";
+    std::string codec_name = "libvpx";
 
     int ret;
   //  av_log_set_level(AV_LOG_DEBUG);
