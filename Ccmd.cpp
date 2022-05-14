@@ -188,24 +188,24 @@ void Ccmd::clearPresImage() {
 int Ccmd::startEvent(const std::string eventid) {
 
 
-    if(Ccmd::_Events.find(eventid)!=_Events.end())
-    {
-        CConfig::log("start Event:: already started", eventid);
-        return 0;
-    }
-  /*  CConfig::log("startEvent", eventid);
+    /*   if(Ccmd::_Events.find(eventid)!=_Events.end())
+      {
+          CConfig::log("start Event:: already started", eventid);
+          return 0;
+      }
+     CConfig::log("startEvent", eventid);
 
-    CEvent *event=new CEvent(eventid);
+      CEvent *event=new CEvent(eventid);
 
-    Ccmd::_Events.insert({eventid, event});
+      Ccmd::_Events.insert({eventid, event});
 
-    int w = CConfig::WIDTH;
-    int h = CConfig::HEIGHT;
-    event->mainImageData = SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
-                                    &w,
-                                    &h,
-                                    0,
-                                    SOIL_LOAD_RGB);*/
+      int w = CConfig::WIDTH;
+      int h = CConfig::HEIGHT;
+      event->mainImageData = SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
+                                      &w,
+                                      &h,
+                                      0,
+                                      SOIL_LOAD_RGB);*/
 
   /*  std::thread streamThread(CffmpegStreamer::startStream, eventid, event->mainImageData, & event->locker,
                              (std::function<void(std::string)>) notifyStreamStarted,
