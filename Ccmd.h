@@ -25,6 +25,7 @@ class Ccmd {
 
         static std::map<std::string, CEvent*> _Events;
         unsigned  char* loadNotConnected(int input);
+        static void _stopEvent(std::string eventid);
     public:
 
 
@@ -44,6 +45,7 @@ class Ccmd {
         void startReadStream(std::string rtmpURL, int layerNumber); // TODO: Delete!!!!
 
         int startEvent(const std::string eventid);
+        int stopEvent(const std::string eventid);
         static void notifyStreamStarted(std::string eventid);
         static void notifyStreamEnded(std::string eventid);
 

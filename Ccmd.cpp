@@ -89,13 +89,7 @@ void Ccmd::makeMainImage(std::string eventid,
     onEnd(eventid);
 }
 
-void Ccmd::notifyMakeMainImageStarted(std::string eventid) {
-    std::cout << "notifyMakeMainImageStarted " << eventid << std::endl;
-}
 
-void Ccmd::notifyMakeMainImageEnded(std::string eventid) {
-
-}
 
 unsigned char *Ccmd::loadNotConnected(int input) {
     std::string fileName("/etc/mixerCore/images/notconnected");
@@ -113,14 +107,31 @@ unsigned char *Ccmd::loadNotConnected(int input) {
     return pixels;
 
 }
-
+void Ccmd::_stopEvent(std::string eventid){
+    if(_Events.find(eventid)==_Events.end())
+        return;
+    _Events[eventid]->stop=true;
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    _Events.erase(eventid);
+}
 void Ccmd::notifyStreamStarted(std::string eventid) {
-    std::cout << " notifyStreamStarted" << eventid << std::endl;
+    CConfig::log("Main stream loop started", eventid);
 };
 
 void Ccmd::notifyStreamEnded(std::string eventid) {
-    std::cout << " notifyStreamEnded" << eventid << std::endl;
+    CConfig::log("Main stream loop stopped", eventid);
+    _stopEvent(eventid);
+
 };
+void Ccmd::notifyMakeMainImageStarted(std::string eventid) {
+    CConfig::log("Main image loop Started", eventid);
+}
+
+void Ccmd::notifyMakeMainImageEnded(std::string eventid) {
+    CConfig::log("Main image loop stopped", eventid);
+
+    _stopEvent(eventid);
+}
 
 
 void Ccmd::startReadStream(std::string rtmpURL, int layerNumber) { // TODO: Delete!!!!
@@ -190,6 +201,9 @@ void Ccmd::clearPresImage() {
     // PresImagePixels=nullptr;
 
 };
+int Ccmd::stopEvent(const std::string eventid){
+    _stopEvent(eventid);
+}
 
 int Ccmd::startEvent(const std::string eventid) {
 
