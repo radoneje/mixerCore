@@ -14,4 +14,5 @@
 #include "CEvent.h"
 CEvent::CEvent(std::string eventid) {
     _eventid=eventid;
+    stop= false;
 }

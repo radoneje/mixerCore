@@ -30,7 +30,7 @@ Ccmd::Ccmd() {
 std::map<std::string, CEvent*> Ccmd::_Events;
 
 void Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vector<unsigned char *> *previewImageData,
-                    std::mutex *locker, std::function<void(std::string eventid)> onStart,
+                    CEvent *pEvent, std::function<void(std::string eventid)> onStart,
                     std::function<void(std::string eventid)> onEnd) {
     onStart(eventid);
     int ww = CConfig::WIDTH / 4;
@@ -49,7 +49,7 @@ void Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std:
 
     long long i = 0;
     auto start = std::chrono::high_resolution_clock::now();
-    while (true) {
+    while (true && !pEvent->stop) {
         using namespace std::chrono_literals;
 
         i++;
@@ -72,10 +72,9 @@ void Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std:
                //   << (int) (std::chrono::milliseconds(1000 / FRAMERATE).count() - elapsed.count()) << endl;
         std::this_thread::sleep_for(std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())));
 
-        locker->lock();
+        pEvent->locker.lock();
         image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, mainImageData);
-        locker->unlock();
-
+        pEvent->locker.unlock();
 
         start = std::chrono::high_resolution_clock::now();
     }
@@ -107,15 +106,11 @@ unsigned char *Ccmd::loadNotConnected(int input) {
 }
 
 void Ccmd::notifyStreamStarted(std::string eventid) {
-
     std::cout << " notifyStreamStarted" << eventid << std::endl;
-
 };
 
 void Ccmd::notifyStreamEnded(std::string eventid) {
     std::cout << " notifyStreamEnded" << eventid << std::endl;
-
-
 };
 
 
@@ -222,7 +217,7 @@ int Ccmd::startEvent(const std::string eventid) {
                                     eventid,
                                     event->mainImageData,
                                     &event->previewImageData,
-                                    &event->locker,
+                                    event,
                                     (std::function<void(std::string eventid)>) notifyMakeMainImageStarted,
                                     (std::function<void(std::string eventid)>) notifyMakeMainImageEnded);
 

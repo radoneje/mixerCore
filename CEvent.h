@@ -23,6 +23,7 @@ public:
     std::thread *thread;
     unsigned char* mainImageData; // главная картинка
     std::vector<unsigned char *>  previewImageData;
+    bool  stop;
 };
 
 
