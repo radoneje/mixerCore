@@ -16,6 +16,7 @@
 #include "CConfig.h"
 //#include "CSettings.h"
 
+
 CConfig::CConfig() {};
 int CConfig::getGlobalValues(){
    /*     try {
