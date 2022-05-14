@@ -101,6 +101,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     AVOutputFormat * oformat = nullptr;
     AVFormatContext * ofmt_ctx = NULL;
     const AVCodec *encoder;
+
     AVCodecContext *enc_ctx;
     AVPacket *pkt;
     AVFrame *frame;
@@ -112,29 +113,19 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     //outUrl="/var/www/mixerControl/public/1.mp4";
     std::string codec_name = "libx264";
 ///////////
-    oformat = av_guess_format("flv", NULL, NULL);//, "test.mp4", nullptr);
+    oformat = av_guess_format("flv", 'test.mp4', NULL);//, "test.mp4", nullptr);
     if (!oformat)
     {
         std::cout << "can't create output format" << std::endl;
         return;
     }
-    //oformat->video_codec = AV_CODEC_ID_H265;
-
-  //  int err = avformat_alloc_output_context2(&ofmt_ctx, oformat, nullptr, "test.mp4");
-
-   // if (err)
-   // {
-   //     std::cout << "can't create output context" << std::endl;
- //       return;
-  //  }
-    //av_dump_format(ofmt_ctx, 0, "test.mp4", 1);
-  //  return;
+    oformat->video_codec = AV_CODEC_ID_H264;
 
     int ret;
   //  av_log_set_level(AV_LOG_DEBUG);
   //  av_log_set_level(AV_LOG_DEBUG);
 
-    avformat_alloc_output_context2(&ofmt_ctx, oformat, "flv", outUrl.c_str());
+    avformat_alloc_output_context2(&ofmt_ctx, oformat, NULL, outUrl.c_str());
     if (!ofmt_ctx) {
         av_log(NULL, AV_LOG_ERROR, "Could not create output context\n");
         return ;
@@ -143,17 +134,15 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
 
     out_stream = avformat_new_stream(ofmt_ctx, NULL);
-
-
-
-  //  av_opt_set(ofmt_ctx, "movflags", "frag_keyframe+empty_moov", 0);
-
-
+    out_stream->id = 0;
+    out_stream->time_base = AVRational { 1, 30};
+    out_stream->avg_frame_rate = AVRational{ 30, 1 };
 
     if (!out_stream) {
         av_log(NULL, AV_LOG_ERROR, "Failed allocating output stream\n");
         return ;
     }
+
     //encoder = avcodec_find_encoder_by_name(codec_name.c_str());
 
     encoder=  avcodec_find_encoder(AV_CODEC_ID_H264);
