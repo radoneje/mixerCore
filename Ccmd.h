@@ -49,7 +49,7 @@ class Ccmd {
 
        // unsigned char * mainImageData; // главная картинка
       //  std::vector<unsigned char*> previewImageData;
-        static  void makeMainImage  (std::string eventid, unsigned char * mainImageData, std::vector<unsigned char*> *previewImageData, CEvent *pEvent, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd );
+        static  void makeMainImage  (std::string eventid, CEvent *pEvent, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd );
         static void notifyMakeMainImageStarted(std::string eventid);
         static void notifyMakeMainImageEnded(std::string eventid);
         Ccmd();

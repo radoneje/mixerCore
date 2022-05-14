@@ -29,7 +29,7 @@ Ccmd::Ccmd() {
 
 std::map<std::string, CEvent*> Ccmd::_Events;
 
-void Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vector<unsigned char *> *previewImageData,
+void Ccmd::makeMainImage(std::string eventid,
                     CEvent *pEvent, std::function<void(std::string eventid)> onStart,
                     std::function<void(std::string eventid)> onEnd) {
     onStart(eventid);
@@ -57,15 +57,15 @@ void Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std:
         for(int i=0;i< /*previewImageData.size()*/1;i++)//TODO: uncomment
         {
             //TODO: previewImageData-> заполнить и взять
-         /*   Magick::Image imageInput;
+            Magick::Image imageInput;
             imageInput.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel,
-                            std::find(previewImageData->begin(), previewImageData->)[i]);
+                            pEvent->previewImageData[i]);
             imageInput.resize( Magick::Geometry(ww, hh));
             if(i<4)
                 image.composite(imageInput,ww*i, 0);
             else
                 image.composite(imageInput,ww*3, (hh*(i-3)));
-*/
+
         }
 
         auto end = std::chrono::high_resolution_clock::now();
@@ -75,7 +75,7 @@ void Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std:
         std::this_thread::sleep_for(std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())));
 
         pEvent->locker.lock();
-        image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, mainImageData);
+        image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, pEvent->mainImageData);
         pEvent->locker.unlock();
 
         start = std::chrono::high_resolution_clock::now();
@@ -217,8 +217,6 @@ int Ccmd::startEvent(const std::string eventid) {
 
     std::thread makeMainImageThread(Ccmd::makeMainImage,
                                     eventid,
-                                    event->mainImageData,
-                                    &event->previewImageData,
                                     event,
                                     (std::function<void(std::string eventid)>) notifyMakeMainImageStarted,
                                     (std::function<void(std::string eventid)>) notifyMakeMainImageEnded);
