@@ -39,11 +39,11 @@ int main(int argc, char* argv[]) {
 
 
     return 0;
-    std::thread httpThread(httpServer.init,8090, cmd);
+ /*   std::thread httpThread(httpServer.init,8090, cmd);
   //  std::thread renderThread(render.StartRender, argc,  argv, cmd);
     std::cout << "Hello, World!" << std::endl;
    // renderThread.join();
     std::cin.get();
     delete cmd;
-    return 0;
+    return 0;*/
 }
