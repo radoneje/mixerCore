@@ -291,7 +291,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             }
 
             pkt->stream_index = 0;
-            std::cout<<"avcodec_receive_packet " << pkt->pts <<std::endl;
+            std::cout<<"avcodec_receive_packet " << pkt->pts<<" "<< pkt->dts<< " "<<pkt->duration <<std::endl;
 
             log_packet(ofmt_ctx, pkt);
             ret = av_interleaved_write_frame(ofmt_ctx, pkt);
