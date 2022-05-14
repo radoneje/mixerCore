@@ -9,11 +9,9 @@
 #include <map>
 
 struct SstreamData {
-    std::string eventid;
-    int inputNo;
-    std::thread *thread;
+
 };
-typedef  std::map<std::string, SstreamData*> streamersDataType;
+
 
 
 #endif //MIXERCORE_SSTREAMDATA_H

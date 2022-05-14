@@ -19,7 +19,7 @@
 #include "SOIL.h"
 #include "CFFreader.h"
 #include "CffmpegStreamer.h"
-#include "SstreamData.h" // TODO:for delete
+//#include "SstreamData.h" // TODO:for delete
 #include "CEvent.h"
 
 
@@ -193,9 +193,18 @@ void Ccmd::clearPresImage() {
 };
 
 int Ccmd::startEvent(const std::string eventid) {
+
+
+    if(_Events.find(eventid)!=_Events.end())
+    {
+        CConfig::log("start Event:: already started", eventid);
+        return 0;
+    }
     CConfig::log("startEvent", eventid);
-    CEvent *event=new CEvent();
-    _pEvents->insert(std::pair{eventid, new CEvent()});
+
+    CEvent *event=new CEvent(eventid);
+
+    _Events.insert(std::pair{eventid, &event);
 
     int w = CConfig::WIDTH;
     int h = CConfig::HEIGHT;
@@ -205,18 +214,13 @@ int Ccmd::startEvent(const std::string eventid) {
                                     0,
                                     SOIL_LOAD_RGB);
 
-    printf("startStream\n");
-
     std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData, &locker,
                              (std::function<void(std::string)>) notifyStreamStarted,
                              (std::function<void(std::string)>) notifyStreamEnded);
     streamThread.detach();
 
 
-
-    SstreamData dt;
-    dt.eventid = eventid;
-    dt.thread = &streamThread;
+    event->thread = &streamThread;
 
     std::thread makeMainImageThread(Ccmd::makeMainImage, eventid, mainImageData, previewImageData, &locker,
                                     (std::function<void(std::string eventid)>) notifyMakeMainImageStarted,
