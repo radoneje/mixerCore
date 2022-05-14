@@ -121,6 +121,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     }
     oformat->video_codec = AV_CODEC_ID_H264;
 
+
     int ret;
   //  av_log_set_level(AV_LOG_DEBUG);
   //  av_log_set_level(AV_LOG_DEBUG);
@@ -170,6 +171,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     enc_ctx->profile=FF_PROFILE_H264_BASELINE;
    // enc_ctx->level=4.0;
     enc_ctx->pix_fmt = AV_PIX_FMT_YUV420P;
+    enc_ctx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
    /* if (encoder->id == AV_CODEC_ID_H264)
         av_opt_set(enc_ctx->priv_data, "preset", "slow", 0);*/
     /* open it */
@@ -186,7 +188,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         av_log(NULL, AV_LOG_ERROR, "Cannot open video encoder for stream \n" );
         return ;
     }
-    enc_ctx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+
     ret = avcodec_parameters_from_context(out_stream->codecpar, enc_ctx);
     if (ret < 0) {
         av_log(NULL, AV_LOG_ERROR, "Failed to copy encoder parameters to output stream \n");
