@@ -28,7 +28,7 @@ Ccmd::Ccmd() {
 };
 
 std::map<std::string, CEvent*> Ccmd::_Events;
-std::mutex _locker;
+std::mutex Ccmd::_locker;
 
 void Ccmd::makeMainImage(std::string eventid,
                     CEvent *pEvent, std::function<void(std::string eventid)> onStart,
