@@ -14,12 +14,13 @@
 #include <Magick++.h>
 
 
-#include "CSettings.h"
+//#include "CSettings.h"
 #include "Ccmd.h"
 #include "SOIL.h"
 #include "CFFreader.h"
 #include "CffmpegStreamer.h"
 #include "SstreamData.h"
+
 
 Ccmd::Ccmd() {
     clearPresImage();
