@@ -106,7 +106,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
     int ret;
   //  av_log_set_level(AV_LOG_DEBUG);
-    av_log_set_level(AV_LOG_DEBUG);
+  //  av_log_set_level(AV_LOG_DEBUG);
 
     avformat_alloc_output_context2(&ofmt_ctx, NULL, "flv", outUrl.c_str());
     if (!ofmt_ctx) {
@@ -275,34 +275,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             }
 
 
-            //if(dts<(frame->pts*1000))
-            {
-              //  std::cout<< (frame->pts*1000)-dts<<" sleeo"<<std::endl;
 
-            }
-           /* AVRational time_base=ofmt_ctx->streams[0]->time_base;
-            AVRational time_base_q={1,AV_TIME_BASE};
-            int64_t pts_time = av_rescale_q(pkt->dts, time_base, time_base_q);
-            int64_t now_time = av_gettime() - startTime;
-
-            if (pts_time > now_time)
-                av_usleep(pts_time - now_time);*/
-
-        /*    if(frame->pts<0)
-                frame->pts=0;
-        //std::cout<<"pts "<<frame->pts;
-        long long now = av_gettime() - startTime;
-        long long dts = 0;
-      //  dts = (frame->pts)*(1000/r2d(enc_ctx->time_base ));// * ( r2d(enc_ctx->time_base )*1000*1000);
-            dts = (i)*(1000/r2d(enc_ctx->time_base ));
-       //  std::cout<<frame->pts << " " << now<<std::endl;
-        if (dts > now) {
-            std::cout<<dts - now << " sleep" <<std::endl;
-            av_usleep(dts - now);
-        }*/
-
-
-           // std::cout<<"avcodec_receive_packet " << frame->pts <<std::endl;
         ret = avcodec_send_frame(enc_ctx, frame);
         if (ret < 0) {
             fprintf(stderr, "Error sending a frame to the encoder: %s\n", i);
@@ -316,11 +289,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                 fprintf(stderr, "Error encoding a frame: \n");
                 return ;
             }
-          //  std::cout<<"avcodec_receive_packet " << pkt->pts <<std::endl;
-           /* av_packet_rescale_ts(pkt,
-                                 enc_ctx->time_base,
-                                 ofmt_ctx->streams[0]->time_base);*/
+
             pkt->stream_index = 0;
+            std::cout<<"avcodec_receive_packet " << pkt->pts <<std::endl;
 
             log_packet(ofmt_ctx, pkt);
             ret = av_interleaved_write_frame(ofmt_ctx, pkt);
