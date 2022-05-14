@@ -106,6 +106,8 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
     int ret;
   //  av_log_set_level(AV_LOG_DEBUG);
+    av_log_set_level(AV_LOG_DEBUG);
+
     avformat_alloc_output_context2(&ofmt_ctx, NULL, "flv", outUrl.c_str());
     if (!ofmt_ctx) {
         av_log(NULL, AV_LOG_ERROR, "Could not create output context\n");
@@ -146,13 +148,13 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
      * then gop_size is ignored and the output of encoder
      * will always be I frame irrespective to gop_size
      */
-    enc_ctx->gop_size = 30;
+    enc_ctx->gop_size = 12;
     enc_ctx->max_b_frames = 1;
     enc_ctx->profile=FF_PROFILE_H264_HIGH;
    // enc_ctx->level=4.0;
     enc_ctx->pix_fmt = AV_PIX_FMT_YUV420P;
-    if (encoder->id == AV_CODEC_ID_H264)
-        av_opt_set(enc_ctx->priv_data, "preset", "slow", 0);
+   /* if (encoder->id == AV_CODEC_ID_H264)
+        av_opt_set(enc_ctx->priv_data, "preset", "slow", 0);*/
     /* open it */
 
 
