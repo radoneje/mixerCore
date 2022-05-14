@@ -14,7 +14,7 @@
 #include "Ccmd.h"
 #include "CffmpegStreamer.h"
 #include "SstreamData.h"
-#include "CConfig.h"
+//#include "CConfig.h"
 
 
 
@@ -25,8 +25,8 @@ CHttp httpServer;
 int main(int argc, char* argv[]) {
 
 
-    if(CConfig::getGlobalValues()>0)
-        exit(1);
+   // if(CConfig::getGlobalValues()>0)
+    //    exit(1);
     Ccmd *cmd= new Ccmd();
     printf("startStream 0 \n");
     //std::map<std::string, SstreamData *> streamers;
