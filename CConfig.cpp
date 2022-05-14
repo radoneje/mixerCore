@@ -27,6 +27,7 @@ CConfig::CConfig() {};
  int CConfig::FRAMERATE=30;
  int CConfig::MIXER_BITRATE=1024*1024*1.5;
  int CConfig::MIXER_GOP=30;
+ int CConfig::HTTP_SERVER_PORT=8090;
 
 int CConfig::getGlobalValues(){
        try {
@@ -52,6 +53,9 @@ int CConfig::getGlobalValues(){
 
             GetConfig("RTMP_MAIN", buf);
             RTMP_MAIN= buf;
+
+           GetConfig("HTTP_SERVER_PORT", buf);
+           HTTP_SERVER_PORT= atoi(buf.c_str());
 
         }
         catch (...){

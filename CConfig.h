@@ -39,6 +39,7 @@ public: CConfig();
     static int FRAMERATE;
     static int MIXER_BITRATE;
     static int MIXER_GOP;
+    static int HTTP_SERVER_PORT;
 
     template <typename T>
     static void log(T t)

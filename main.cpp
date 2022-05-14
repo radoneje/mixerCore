@@ -28,9 +28,11 @@ int main(int argc, char* argv[]) {
     if(CConfig::getGlobalValues()>0)
         exit(1);
     Ccmd *cmd= new Ccmd();
-    printf("startStream 0 \n");
+    std::thread httpThread(httpServer.init,CConfig::HTTP_SERVER_PORT, cmd);
+    httpThread.join();
+    //printf("startStream 0 \n");
     //std::map<std::string, SstreamData *> streamers;
-    cmd->startEvent("15dcce20-eec2-4a95-b556-26404597d218");
+   // cmd->startEvent("15dcce20-eec2-4a95-b556-26404597d218");
     std::cin.get();
 
 
