@@ -302,7 +302,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         }*/
 
 
-            std::cout<<"avcodec_receive_packet " << frame->pts <<std::endl;
+           // std::cout<<"avcodec_receive_packet " << frame->pts <<std::endl;
         ret = avcodec_send_frame(enc_ctx, frame);
         if (ret < 0) {
             fprintf(stderr, "Error sending a frame to the encoder: %s\n", i);
