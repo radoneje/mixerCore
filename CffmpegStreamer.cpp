@@ -94,9 +94,11 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
 
     /* register all the codecs */
+    av_register_all();
     avcodec_register_all();
 
     AVStream *out_stream;
+    AVOutputFormat * oformat = nullptr;
     AVFormatContext * ofmt_ctx = NULL;
     const AVCodec *encoder;
     AVCodecContext *enc_ctx;
@@ -109,13 +111,30 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     //outUrl="rtmp://ovsu.mycdn.me/input/4453867858802_2584093788786_simjnawoum";
     //outUrl="/var/www/mixerControl/public/1.mp4";
     std::string codec_name = "libx264";
+///////////
+    oformat = av_guess_format(nullptr, "test.mp4", nullptr);
+    if (!oformat)
+    {
+        std::cout << "can't create output format" << std::endl;
+        return;
+    }
+    //oformat->video_codec = AV_CODEC_ID_H265;
 
+    int err = avformat_alloc_output_context2(&ofmt_ctx, oformat, nullptr, "test.mp4");
+
+    if (err)
+    {
+        std::cout << "can't create output context" << std::endl;
+        return;
+    }
+    av_dump_format(ofmt_ctx, 0, "test.mp4", 1);
+    return;
 
     int ret;
   //  av_log_set_level(AV_LOG_DEBUG);
   //  av_log_set_level(AV_LOG_DEBUG);
 
-    avformat_alloc_output_context2(&ofmt_ctx, NULL, "webm", outUrl.c_str());
+    avformat_alloc_output_context2(&ofmt_ctx, NULL, "flv", outUrl.c_str());
     if (!ofmt_ctx) {
         av_log(NULL, AV_LOG_ERROR, "Could not create output context\n");
         return ;
