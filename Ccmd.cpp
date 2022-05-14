@@ -14,7 +14,7 @@
 #include <Magick++.h>
 
 
-#include "CConfig.h"
+#include "CSettings.h"
 #include "Ccmd.h"
 #include "SOIL.h"
 #include "CFFreader.h"
