@@ -208,7 +208,6 @@ int Ccmd::stopEvent(const std::string eventid){
 
 int Ccmd::startEvent(const std::string eventid) {
 
-
       if(Ccmd::_Events.find(eventid)!=_Events.end())
       {
           CConfig::log("start Event:: already started", eventid);
@@ -245,6 +244,5 @@ int Ccmd::startEvent(const std::string eventid) {
 
 
     makeMainImageThread.detach();
-
     return 0;
 }
