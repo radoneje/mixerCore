@@ -26,13 +26,14 @@ class Ccmd {
         static std::map<std::string, CEvent*> _Events;
         unsigned  char* loadNotConnected(int input);
         static void _stopEvent(std::string eventid);
+        static std::mutex _locker;
     public:
 
 
 
         std::vector<CFFreader>  FFreader;
         std::vector<int> activeTextureId;
-        std::mutex locker;
+
         void loadPresImage(std::string filepath, const std::string simageid);
         void clearPresImage();
         unsigned char* PresImagePixels;
