@@ -120,15 +120,15 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     }
     //oformat->video_codec = AV_CODEC_ID_H265;
 
-    int err = avformat_alloc_output_context2(&ofmt_ctx, oformat, nullptr, "test.mp4");
+  //  int err = avformat_alloc_output_context2(&ofmt_ctx, oformat, nullptr, "test.mp4");
 
-    if (err)
-    {
-        std::cout << "can't create output context" << std::endl;
-        return;
-    }
-    av_dump_format(ofmt_ctx, 0, "test.mp4", 1);
-    return;
+   // if (err)
+   // {
+   //     std::cout << "can't create output context" << std::endl;
+ //       return;
+  //  }
+    //av_dump_format(ofmt_ctx, 0, "test.mp4", 1);
+  //  return;
 
     int ret;
   //  av_log_set_level(AV_LOG_DEBUG);
