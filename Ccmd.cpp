@@ -109,6 +109,7 @@ unsigned char *Ccmd::loadNotConnected(int input) {
 
 }
 void Ccmd::_stopEvent(std::string eventid){
+    return;
     std::lock_guard<std::mutex> lock(_locker);
     if(_Events.find(eventid)==_Events.end())
         return;
