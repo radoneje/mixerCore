@@ -209,11 +209,12 @@ int Ccmd::startEvent(const std::string eventid) {
                                       0,
                                       SOIL_LOAD_RGB);
 
-  /*  std::thread streamThread(CffmpegStreamer::startStream, eventid, event->mainImageData, & event->locker,
+
+   std::thread streamThread(CffmpegStreamer::startStream, eventid, event->mainImageData, & event->locker,
                              (std::function<void(std::string)>) notifyStreamStarted,
                              (std::function<void(std::string)>) notifyStreamEnded);
     streamThread.detach();
-
+ /*
 
     event->thread = &streamThread;
 
