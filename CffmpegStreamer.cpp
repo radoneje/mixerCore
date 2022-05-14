@@ -33,7 +33,7 @@ extern "C" {
 #include "CffmpegStreamer.h"
 #include "Ccmd.h"
 #include "SstreamData.h"
-//#include "CSettings.h"
+#include "CConfig.h"
 
 
 using namespace std;
@@ -69,7 +69,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     SwsContext *sws_ctx = NULL;
     AVDictionary *opts = nullptr;
 
-    std::string outUrl=RTMP_MAIN;
+    std::string outUrl=CConfig::RTMP_MAIN;
     outUrl.append(eventid);
 
     oformat = av_guess_format("flv", "test.mp4", NULL);//, "test.mp4", nullptr);
@@ -110,15 +110,15 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     }
     enc_ctx = avcodec_alloc_context3(encoder);
     /* put sample parameters */
-    enc_ctx->bit_rate = MIXER_BITRATE;
+    enc_ctx->bit_rate = CConfig::MIXER_BITRATE;
     /* resolution must be a multiple of two */
-    enc_ctx->width = WIDTH;
-    enc_ctx->height = HEIGHT;
+    enc_ctx->width = CConfig::WIDTH;
+    enc_ctx->height = CConfig::HEIGHT;
     /* frames per second */
-    enc_ctx->time_base = (AVRational){1, FRAMERATE};
-    enc_ctx->framerate = (AVRational){FRAMERATE, 1};
+    enc_ctx->time_base = (AVRational){1, CConfig::FRAMERATE};
+    enc_ctx->framerate = (AVRational){CConfig::FRAMERATE, 1};
 
-    enc_ctx->gop_size = MIXER_GOP;
+    enc_ctx->gop_size = CConfig::MIXER_GOP;
     enc_ctx->max_b_frames = 1;
     enc_ctx->profile=FF_PROFILE_H264_BASELINE;
     enc_ctx->pix_fmt = AV_PIX_FMT_YUV420P;
@@ -183,7 +183,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         fflush(stdout);
         ret = av_frame_make_writable(frame);
 
-       int linesize=WIDTH*3;
+       int linesize=CConfig::WIDTH*3;
        locker->lock();
             ret = sws_scale(sws_ctx,                //struct SwsContext* c,
                             &image,            //const uint8_t* const srcSlice[],
