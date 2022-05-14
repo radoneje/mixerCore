@@ -62,7 +62,7 @@ add_definitions(
 
 
 
-add_executable(mixerCore main.cpp CTextureData.cpp CTextureData.h  CHttp.cpp CHttp.h CConfig.cpp CConfig.h SOIL.h Ccmd.cpp Ccmd.h CFFreader.cpp CFFreader.h CffmpegStreamer.cpp CffmpegStreamer.h SstreamData.cpp SstreamData.h CffmpegDecoder.cpp CffmpegDecoder.h settings.h)
+add_executable(mixerCore main.cpp CTextureData.cpp CTextureData.h  CHttp.cpp CHttp.h CConfig.cpp CConfig.h SOIL.h Ccmd.cpp Ccmd.h CFFreader.cpp CFFreader.h CffmpegStreamer.cpp CffmpegStreamer.h SstreamData.cpp SstreamData.h CffmpegDecoder.cpp CffmpegDecoder.h)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)

@@ -37,7 +37,7 @@ class Ccmd {
       //  typedef void (* vFunctionCall)(std::string args);
         void startReadStream(std::string rtmpURL, int layerNumber); // TODO: Delete!!!!
 
-        int startStream(const std::string eventid);
+        int startEvent(const std::string eventid);
         static void notifyStreamStarted(std::string eventid);
         static void notifyStreamEnded(std::string eventid);
 

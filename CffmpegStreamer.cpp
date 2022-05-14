@@ -33,7 +33,7 @@ extern "C" {
 #include "CffmpegStreamer.h"
 #include "Ccmd.h"
 #include "SstreamData.h"
-#include "settings.h"
+#include "CConfig.h"
 
 
 using namespace std;

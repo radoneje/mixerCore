@@ -16,11 +16,41 @@
 #include "CConfig.h"
 
 
-
-
-
-
 CConfig::CConfig() {};
+int CConfig::getGlobalValues(){
+        try {
+            std::string buf;
+            GetConfig("MAX_FACES", buf);
+            MAX_FACES= atoi(buf.c_str());
+
+            GetConfig("WIDTH", buf);
+            WIDTH= atoi(buf.c_str());
+
+            GetConfig("HEIGHT", buf);
+            HEIGHT= atoi(buf.c_str());
+
+            GetConfig("FRAMERATE", buf);
+            WIDTH= atoi(buf.c_str());
+
+            GetConfig("MIXER_BITRATE", buf);
+            MIXER_BITRATE= atoi(buf.c_str());
+
+            GetConfig("MIXER_GOP", buf);
+            MIXER_GOP= atoi(buf.c_str());
+
+            GetConfig("RTMP_MAIN", buf);
+            RTMP_MAIN= buf;
+
+
+
+
+        }
+        catch (...){
+            std::cout<< "error read config file"<<std::endl;
+            return 1;
+        }
+        return 0;
+)}
 
 int CConfig::GetConfig(const char *name, std::string &str) {
 

@@ -19,8 +19,6 @@ extern "C" {
 
 #include "SstreamData.h"
 
-
-
 class CffmpegStreamer {
 private:
     static double r2d(AVRational r);

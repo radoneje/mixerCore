@@ -14,7 +14,7 @@
 #include <Magick++.h>
 
 
-#include "settings.h"
+#include "CConfig.h"
 #include "Ccmd.h"
 #include "SOIL.h"
 #include "CFFreader.h"
@@ -190,7 +190,7 @@ void Ccmd::clearPresImage() {
 
 };
 
-int Ccmd::startStream(const std::string eventid) {
+int Ccmd::startEvent(const std::string eventid) {
 
     int w = WIDTH;
     int h = HEIGHT;
@@ -199,7 +199,6 @@ int Ccmd::startStream(const std::string eventid) {
                                     &h,
                                     0,
                                     SOIL_LOAD_RGB);
-
 
     printf("startStream\n");
 
@@ -211,7 +210,6 @@ int Ccmd::startStream(const std::string eventid) {
     SstreamData dt;
     dt.eventid = eventid;
     dt.thread = &streamThread;
-
 
     std::thread makeMainImageThread(Ccmd::makeMainImage, eventid, mainImageData, previewImageData, &locker,
                                     (std::function<void(std::string eventid)>) notifyMakeMainImageStarted,
