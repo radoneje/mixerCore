@@ -39,6 +39,18 @@ public: CConfig();
     static int FRAMERATE;
     static int MIXER_BITRATE;
     static int MIXER_GOP;
+
+    template <typename T>
+    static void log(T t)
+    {
+        std::cout << t << std::endl ;
+    }
+    template<typename T, typename... Args>
+    static void log(T t, Args... args) // recursive variadic function
+    {
+        std::cout << t  ;
+        log(args...) ;
+    }
 };
 
 
