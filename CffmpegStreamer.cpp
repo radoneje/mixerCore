@@ -259,19 +259,20 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         while (ret >= 0) {
 
             ret = avcodec_receive_packet(enc_ctx, pkt);
-            std::cout<<"avcodec_receive_packet " << pkt->pts<<" "<< pkt->dts<< " "<<j <<std::endl;
+
             if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
                 fprintf(stderr, "EAGAIN \n");
                 break;
-                fprintf(stderr, "EAGAIN 2 \n");
+
             }
             else  if (ret < 0) {
                 fprintf(stderr, "Error encoding a frame: \n");
                 return ;
             }
-            fprintf(stderr, "NO EAGAIN  \n");
             pkt->stream_index = 0;
             pkt->duration=(1000/enc_ctx->time_base.den)*(j+1);
+            std::cout<<"avcodec_receive_packet " << pkt->pts<<" "<< pkt->dts<< " "<< pkt->duration <<std::endl;
+
 
 
             j=0;
