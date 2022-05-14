@@ -19,7 +19,8 @@
 #include "SOIL.h"
 #include "CFFreader.h"
 #include "CffmpegStreamer.h"
-#include "SstreamData.h"
+#include "SstreamData.h" // TODO:for delete
+#include "CEvent.h"
 
 
 Ccmd::Ccmd() {
@@ -193,6 +194,9 @@ void Ccmd::clearPresImage() {
 
 int Ccmd::startEvent(const std::string eventid) {
     CConfig::log("startEvent", eventid);
+    CEvent *event=new CEvent();
+    _pEvents->insert(std::pair{eventid, new CEvent()});
+
     int w = CConfig::WIDTH;
     int h = CConfig::HEIGHT;
     mainImageData = SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
@@ -207,6 +211,8 @@ int Ccmd::startEvent(const std::string eventid) {
                              (std::function<void(std::string)>) notifyStreamStarted,
                              (std::function<void(std::string)>) notifyStreamEnded);
     streamThread.detach();
+
+
 
     SstreamData dt;
     dt.eventid = eventid;

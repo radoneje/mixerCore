@@ -11,7 +11,10 @@
 
 #include "CFFreader.h"
 #include "CffmpegStreamer.h"
-#include "SstreamData.h"
+#include "SstreamData.h"//TODO:: for delete
+#include "CEvent.h"
+
+
 
 
 
@@ -19,7 +22,7 @@ using namespace std;
 
 class Ccmd {
     private:
-        std::map<std::string, SstreamData*> *_pStreamers;
+        std::map<std::string, CEvent> *_pEvents;
         unsigned  char* loadNotConnected(int input);
     public:
 

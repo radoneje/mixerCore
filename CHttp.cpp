@@ -27,10 +27,9 @@ void CHttp::init(int port, Ccmd *pCmd){
         std::string eventid = req.matches[1];
         {
             pCmd->  clearPresImage();
-
             //std::lock_guard<std::mutex> lockGuard(pCmd->locker);
             pCmd->startEvent(eventid);
-            res.set_content("\"error\":false", "application/json");
+            res.set_content("{\"error\":false}", "application/json");
             // pCmd->locker.lock();
         }
 
