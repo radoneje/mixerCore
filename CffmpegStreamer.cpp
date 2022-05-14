@@ -148,7 +148,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
      * then gop_size is ignored and the output of encoder
      * will always be I frame irrespective to gop_size
      */
-    enc_ctx->gop_size = 12;
+    enc_ctx->gop_size = 30;
     enc_ctx->max_b_frames = 1;
     enc_ctx->profile=FF_PROFILE_H264_HIGH;
    // enc_ctx->level=4.0;
