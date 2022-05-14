@@ -100,7 +100,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     AVDictionary *opts = nullptr;
 
     std::string outUrl="rtmp://wowza01.onevent.online/live/mixerCore1";
-   // outUrl="rtmp://a.rtmp.youtube.com/live2/w0wa-hcba-raqz-880p-7v0h";
+    outUrl="rtmp://ovsu.mycdn.me/input/4453867858802_2584093788786_simjnawoum";
     //outUrl="/var/www/mixerControl/public/1.mp4";
     std::string codec_name = "libx264";
 
