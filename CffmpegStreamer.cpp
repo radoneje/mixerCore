@@ -38,17 +38,6 @@ extern "C" {
 
 using namespace std;
 
- void CffmpegStreamer::log_packet(const AVFormatContext *fmt_ctx, const AVPacket *pkt)
-{
-   // AVRational *time_base = &fmt_ctx->streams[pkt->stream_index]->time_base;
-
-   // std::cout<<" packet: " <<pkt->duration<< " "<< pkt->dts<<std::endl;
-  /*  printf("pts:%s pts_time:%s dts:%s dts_time:%s duration:%s duration_time:%s stream_index:%d\n",
-           av_ts2str(pkt->pts), av_ts2timestr(pkt->pts, time_base),
-           av_ts2str(pkt->dts), av_ts2timestr(pkt->dts, time_base),
-           av_ts2str(pkt->duration), av_ts2timestr(pkt->duration, time_base),
-           pkt->stream_index);*/
-}
 
  double CffmpegStreamer::r2d(AVRational r)
 {
@@ -61,39 +50,11 @@ int CffmpegStreamer::init() {
     cout<<"CffmpegStreamer init"<<endl;
     return  1;
 }
-void CffmpegStreamer::encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *pkt,
-                   FILE *outfile)
-{
-    int ret;
-    /* send the frame to the encoder */
-    if (frame)
-        printf("Send frame %3"PRId64"\n", frame->pts);
-    ret = avcodec_send_frame(enc_ctx, frame);
-    if (ret < 0) {
-        fprintf(stderr, "Error sending a frame for encoding\n");
-        exit(1);
-    }
-    while (ret >= 0) {
-        ret = avcodec_receive_packet(enc_ctx, pkt);
-        if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
-            return;
-        else if (ret < 0) {
-            fprintf(stderr, "Error during encoding\n");
-            exit(1);
-        }
-        printf("Write packet %3"PRId64" (size=%5d)\n", pkt->pts, pkt->size);
-        fwrite(pkt->data, 1, pkt->size, outfile);
-        av_packet_unref(pkt);
-    }
 
-}
 void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,std::mutex *locker,  std::function<void(std::string)> onStart,   std::function<void(std::string)> onEnd){
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-    /* must be called before using avcodec lib */
 
-
-    /* register all the codecs */
     av_register_all();
     avcodec_register_all();
 
@@ -108,12 +69,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     SwsContext *sws_ctx = NULL;
     AVDictionary *opts = nullptr;
 
-    std::string outUrl="rtmp://wowza02.onevent.online/live/";
+    std::string outUrl=RTMP_MAIN;
     outUrl.append(eventid);
-    //outUrl="rtmp://ovsu.mycdn.me/input/4453867858802_2584093788786_simjnawoum";
-    //outUrl="/var/www/mixerControl/public/1.mp4";
-    std::string codec_name = "libx264";
-///////////
+
     oformat = av_guess_format("flv", "test.mp4", NULL);//, "test.mp4", nullptr);
     if (!oformat)
     {
@@ -124,15 +82,13 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
 
     int ret;
-  //  av_log_set_level(AV_LOG_DEBUG);
-  //  av_log_set_level(AV_LOG_DEBUG);
+
 
     avformat_alloc_output_context2(&ofmt_ctx, oformat, NULL, outUrl.c_str());
     if (!ofmt_ctx) {
         av_log(NULL, AV_LOG_ERROR, "Could not create output context\n");
         return ;
     }
-
 
 
     out_stream = avformat_new_stream(ofmt_ctx, NULL);
@@ -149,40 +105,27 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
     encoder=  avcodec_find_encoder(AV_CODEC_ID_H264);
     if (!encoder) {
-        fprintf(stderr, "Codec '%s' not found\n", codec_name.c_str());
+        fprintf(stderr, "Codec AV_CODEC_ID_H264 not found\n");
         return ;
     }
     enc_ctx = avcodec_alloc_context3(encoder);
     /* put sample parameters */
-    enc_ctx->bit_rate = 1024*1024*1.5;
+    enc_ctx->bit_rate = MIXER_BITRATE;
     /* resolution must be a multiple of two */
-    enc_ctx->width = 1280;
-    enc_ctx->height = 720;
+    enc_ctx->width = WIDTH;
+    enc_ctx->height = HEIGHT;
     /* frames per second */
-    enc_ctx->time_base = (AVRational){1, 30};
-    enc_ctx->framerate = (AVRational){30, 1};
-    /* emit one intra frame every ten frames
-     * check frame pict_type before passing frame
-     * to encoder, if frame->pict_type is AV_PICTURE_TYPE_I
-     * then gop_size is ignored and the output of encoder
-     * will always be I frame irrespective to gop_size
-     */
-    enc_ctx->gop_size = 30;
+    enc_ctx->time_base = (AVRational){1, FRAMERATE};
+    enc_ctx->framerate = (AVRational){FRAMERATE, 1};
+
+    enc_ctx->gop_size = MIXER_GOP;
     enc_ctx->max_b_frames = 1;
     enc_ctx->profile=FF_PROFILE_H264_BASELINE;
-   // enc_ctx->level=4.0;
     enc_ctx->pix_fmt = AV_PIX_FMT_YUV420P;
     enc_ctx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
-   /* if (encoder->id == AV_CODEC_ID_H264)
-        av_opt_set(enc_ctx->priv_data, "preset", "slow", 0);*/
-    /* open it */
 
-
-  //av_dict_set(&opts, "preset", "ultrafast", 0);
-  /*  av_dict_set(&opts, "tune", "zerolatency", 0);
-   // av_dict_set(&opts, "profile", "hi", 0);
-    av_dict_set(&opts, "lavel", "4.0", 0);*/
-
+    av_dict_set(&opts, "preset", "fast", 0);
+    av_dict_set(&opts, "tune", "zerolatency", 0);
 
     ret = avcodec_open2(enc_ctx, encoder, &opts);
     if (ret < 0) {
@@ -199,7 +142,6 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
     out_stream->avg_frame_rate=enc_ctx->framerate;
     out_stream->time_base=enc_ctx->time_base;
 
-   // stream_ctx[i].enc_ctx = enc_ctx;
     AVDictionary* options = nullptr;
     av_dict_set( &options, "movflags", "frag_keyframe+empty_moov+default_base_moof", 0 );
 
@@ -213,7 +155,6 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         fprintf(stderr, "Error avformat_write_header\n");
         return;
     }
-    //////////////////
 
     pkt = av_packet_alloc();
     frame = av_frame_alloc();
@@ -242,7 +183,6 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         fflush(stdout);
         ret = av_frame_make_writable(frame);
 
-
        int linesize=WIDTH*3;
        locker->lock();
             ret = sws_scale(sws_ctx,                //struct SwsContext* c,
@@ -253,19 +193,16 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
                             frame->data,        //uint8_t* const dst[],
                             frame->linesize);   //const int dstStride[]);
        locker->unlock();
-        //frame->pts=i;// = i*r2d(enc_ctx->time_base )*1000;
         frame->pts +=1000/enc_ctx->time_base.den;//   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);
             if(frame->pts<0) {
                 frame->pts = 0;
                 startTime = av_gettime();
             }
             int64_t now_time = av_gettime();// - startTime;
-            int mast=(1000)*frame->pts;
+            int must=(1000)*frame->pts;
             int  fact = now_time-startTime;
-        //    std::cout<<frame->pts<<" "<< mast-fact    << " "<< fact<< ""<<std::endl;
-            if(mast>fact) {
-              //  std::cout<<" "<< mast-fact    << " sleep "<<std::endl;
-                av_usleep(mast - fact);
+            if(must>fact) {
+                av_usleep(must - fact);
             }
 
 
@@ -275,16 +212,12 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             fprintf(stderr, "Error sending a frame to the encoder: %s\n", i);
             return;
         }
-            std::cout<<"avcodec_send frame "<<std::endl;
         while (ret >= 0) {
 
             ret = avcodec_receive_packet(enc_ctx, pkt);
 
-            if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
-                fprintf(stderr, "EAGAIN \n");
+            if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
                 break;
-
-            }
             else  if (ret < 0) {
                 fprintf(stderr, "Error encoding a frame: \n");
                 return ;
@@ -292,22 +225,23 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             pkt->stream_index = 0;
             pkt->duration=(1000/enc_ctx->time_base.den)*(j+1);
             pkt->pos=-1;
-            std::cout<<"avcodec_receive_packet " << pkt->pts<<" "<< pkt->dts<< " "<< pkt->duration <<std::endl;
-
-
 
             j=0;
             av_interleaved_write_frame(ofmt_ctx, pkt);
-           // std::cout<<"av_interleaved_write_frame "<< i <<std::endl;
         }
-
 
     }
     av_write_trailer(ofmt_ctx);
-    avcodec_free_context(&enc_ctx);
+
+
+    avio_closep(&ofmt_ctx->pb);
+
     av_frame_free(&frame);
     av_packet_free(&pkt);
-    avio_closep(&ofmt_ctx->pb);
+    av_dict_free(&opts);
+    avcodec_free_context(&enc_ctx);
+    avformat_close_input(&ofmt_ctx);
+    sws_freeContext(sws_ctx);
 
     return ;
 }
