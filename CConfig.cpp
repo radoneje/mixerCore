@@ -82,7 +82,8 @@ int CConfig::GetConfig(const char *name, std::string &str) {
             if(sKey.compare(key)==0) {
                 trim(value);
                 str = value;
-                std::cout<< "value: "<< value << std::endl;
+                log("load config:",name, value)
+               // std::cout<< "value: "<< value << std::endl;
                 return 0;
             }
         }
