@@ -113,9 +113,9 @@ void Ccmd::_stopEvent(std::string eventid){
     std::lock_guard<std::mutex> lock(_locker);
     if(_Events.find(eventid)==_Events.end())
         return;
-    _Events[eventid]->stop=true;
+  //  _Events[eventid]->stop=true;
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    _Events.erase(eventid);
+  //  _Events.erase(eventid);
 }
 void Ccmd::notifyStreamStarted(std::string eventid) {
     CConfig::log("Main stream loop started", eventid);
