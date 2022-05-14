@@ -274,7 +274,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             //pkt->duration=(1000/enc_ctx->time_base.den)*j;
 
 
-            j=0;
+          //  j=0;
             av_interleaved_write_frame(ofmt_ctx, pkt);
            // std::cout<<"av_interleaved_write_frame "<< i <<std::endl;
         }
