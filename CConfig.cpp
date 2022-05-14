@@ -42,7 +42,7 @@ int CConfig::getGlobalValues(){
             HEIGHT= atoi(buf.c_str());
 
             GetConfig("FRAMERATE", buf);
-            WIDTH= atoi(buf.c_str());
+            FRAMERATE= atoi(buf.c_str());
 
             GetConfig("MIXER_BITRATE", buf);
             MIXER_BITRATE= atoi(buf.c_str());

@@ -43,12 +43,14 @@ public: CConfig();
     template <typename T>
     static void log(T t)
     {
-        std::cout << t << std::endl ;
+        auto end = std::chrono::system_clock::now();
+        std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+        std::cout << t << " "<< std::ctime(&end_time)<< std::endl ;
     }
     template<typename T, typename... Args>
     static void log(T t, Args... args) // recursive variadic function
     {
-        std::cout << t  ;
+        std::cout << t << " " ;
         log(args...) ;
     }
 };
