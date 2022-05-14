@@ -215,39 +215,13 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
 
     long long startTime = av_gettime();
     av_dump_format(ofmt_ctx, 0, outUrl.c_str(), 1);
-    long long i=0;
+    long long i=0, j=0;
         while(true ||  i<60) {
             i++;
+            j++;
         fflush(stdout);
         ret = av_frame_make_writable(frame);
-        /* prepare a dummy image */
-        /* Y */
-       /*  for (int y = 0; y < enc_ctx->height; y++) {
-              for (int x = 0; x < enc_ctx->width; x++) {
-                  frame->data[0][y * frame->linesize[0] + x] = x + y + i * 3;
-              }
-          }
-          // Cb and Cr
-          for (int y = 0; y < enc_ctx->height/2; y++) {
-              for (int x = 0; x < enc_ctx->width/2; x++) {
-                  frame->data[1][y * frame->linesize[1] + x] = 128 + y + i * 2;
-                  frame->data[2][y * frame->linesize[2] + x] = 64 + x + i * 5;
-              }
-          }*/
 
-       //
-          /*  int j=0;
-            free(image);
-            image=(unsigned  char*) malloc(1280*720*3*sizeof(unsigned  char));
-            srand(std::chrono::system_clock::now().time_since_epoch().count());
-            do{
-                //  std::cout<<i<<std::endl;
-
-                image[j+0]= ((double)rand() / RAND_MAX)*254;;
-                image[j+1]= ((double)rand() / RAND_MAX)*254;;
-                image[j+2]= ((double)rand() / RAND_MAX)*254;;
-                j=j+3;
-            } while(j< 1280*720*3);*/
 
        int linesize=WIDTH*3;
        locker->lock();
@@ -291,9 +265,10 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
             }
 
             pkt->stream_index = 0;
+            pkt->duration=(1000/enc_ctx->time_base.den)*j;
             std::cout<<"avcodec_receive_packet " << pkt->pts<<" "<< pkt->dts<< " "<<pkt->duration <<std::endl;
 
-            log_packet(ofmt_ctx, pkt);
+            j=0;
             ret = av_interleaved_write_frame(ofmt_ctx, pkt);
            // std::cout<<"av_interleaved_write_frame "<< i <<std::endl;
         }
