@@ -25,16 +25,9 @@
 
 Ccmd::Ccmd() {
     clearPresImage();
-
-    for (int i = 0; i <CConfig::MAX_FACES; i++) {
-        previewImageData.push_back(loadNotConnected(i));
-    }
-
-
 };
 
-void
-Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vector<unsigned char *> previewImageData,
+void Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vector<unsigned char *> previewImageData,
                     std::mutex *locker, std::function<void(std::string eventid)> onStart,
                     std::function<void(std::string eventid)> onEnd) {
     onStart(eventid);
