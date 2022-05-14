@@ -34,6 +34,7 @@ extern "C" {
 #include "Ccmd.h"
 #include "SstreamData.h"
 #include "CConfig.h"
+#include "CEvent.h"
 
 
 using namespace std;
@@ -51,7 +52,7 @@ int CffmpegStreamer::init() {
     return  1;
 }
 
-void CffmpegStreamer::startStream(const std::string eventid, unsigned char * image,std::mutex *locker,  std::function<void(std::string)> onStart,   std::function<void(std::string)> onEnd){
+void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  std::function<void(std::string)> onStart,   std::function<void(std::string)> onEnd){
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
 
@@ -184,15 +185,15 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         ret = av_frame_make_writable(frame);
 
        int linesize=CConfig::WIDTH*3;
-       locker->lock();
+       pEvent->locker.lock();
             ret = sws_scale(sws_ctx,                //struct SwsContext* c,
-                            &image,            //const uint8_t* const srcSlice[],
+                            &pEvent->mainImageData,            //const uint8_t* const srcSlice[],
                             &linesize,        //const int srcStride[],
                             0,                      //int srcSliceY,
                             frame->height,          //int srcSliceH,
                             frame->data,        //uint8_t* const dst[],
                             frame->linesize);   //const int dstStride[]);
-       locker->unlock();
+            pEvent->locker.unlock();
         frame->pts +=1000/enc_ctx->time_base.den;//   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);
             if(frame->pts<0) {
                 frame->pts = 0;
