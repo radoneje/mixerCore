@@ -192,7 +192,7 @@ void Ccmd::clearPresImage() {
 };
 
 int Ccmd::startEvent(const std::string eventid) {
-
+    CConfig::log("startEvent", eventid);
     int w = CConfig::WIDTH;
     int h = CConfig::HEIGHT;
     mainImageData = SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
