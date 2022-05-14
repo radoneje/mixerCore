@@ -20,7 +20,7 @@ CHttp::CHttp(){
 
 };
 void CHttp::init(int port, Ccmd *pCmd){
-    CConfig::log( "HTTP sercer listening port: ", port);
+    CConfig::log( "HTTP Server listening port: ", port);
     httplib::Server svr;
     svr.Get(R"(/mixer/startEvent/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))", [&](const httplib::Request &req, httplib::Response &res) {
         // res.set_content("Hello World!", "text/plain");
