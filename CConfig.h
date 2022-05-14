@@ -5,7 +5,7 @@
 #ifndef MIXERCORE_CCONFIG_H
 #define MIXERCORE_CCONFIG_H
 
-#include "CSettings.h"
+
 
 
 class CConfig {
