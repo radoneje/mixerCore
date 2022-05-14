@@ -14,7 +14,7 @@
 #include <Magick++.h>
 
 
-//#include "CSettings.h"
+#include "CConfig.h"
 #include "Ccmd.h"
 #include "SOIL.h"
 #include "CFFreader.h"
@@ -25,7 +25,7 @@
 Ccmd::Ccmd() {
     clearPresImage();
 
-    for (int i = 0; i < MAX_FACES; i++) {
+    for (int i = 0; i <CConfig::MAX_FACES; i++) {
         previewImageData.push_back(loadNotConnected(i));
     }
 
@@ -37,9 +37,9 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
                     std::mutex *locker, std::function<void(std::string eventid)> onStart,
                     std::function<void(std::string eventid)> onEnd) {
     onStart(eventid);
-    int ww = WIDTH / 4;
-    int hh = HEIGHT / 4;
-    int memorySize = WIDTH * HEIGHT * 3 * sizeof(unsigned char);
+    int ww = CConfig::WIDTH / 4;
+    int hh = CConfig::HEIGHT / 4;
+    int memorySize = CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char);
 
     unsigned char *blankImage = (unsigned char *) malloc(memorySize);
     for (int i = 0; i < memorySize; i++) {
@@ -47,7 +47,7 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
     }
     Magick::InitializeMagick(nullptr);
     Magick::Image image;
-    image.read(WIDTH, HEIGHT, "RGB", MagickLib::CharPixel, blankImage);
+    image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, blankImage);
 
     using namespace Magick;
 
@@ -61,7 +61,7 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
         for(int i=0;i< /*previewImageData.size()*/1;i++)//TODO: uncomment
         {
             Magick::Image imageInput;
-            imageInput.read(WIDTH, HEIGHT, "RGB", MagickLib::CharPixel, previewImageData[i]);
+            imageInput.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, previewImageData[i]);
             imageInput.resize( Magick::Geometry(ww, hh));
             if(i<4)
                 image.composite(imageInput,ww*i, 0);
@@ -74,10 +74,10 @@ Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vect
         std::chrono::duration<double, std::milli> elapsed = end - start;
     //    std::cout << "render image " << i << " sleep: "
                //   << (int) (std::chrono::milliseconds(1000 / FRAMERATE).count() - elapsed.count()) << endl;
-        std::this_thread::sleep_for(std::chrono::milliseconds((int) ((1000 / FRAMERATE) - elapsed.count())));
+        std::this_thread::sleep_for(std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())));
 
         locker->lock();
-        image.write(0, 0, WIDTH, HEIGHT, "RGB", MagickLib::CharPixel, mainImageData);
+        image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, mainImageData);
         locker->unlock();
 
 
@@ -97,14 +97,14 @@ unsigned char *Ccmd::loadNotConnected(int input) {
     std::string fileName("/etc/mixerCore/images/notconnected");
     fileName.append(std::to_string(input + 1));
     fileName.append(".png");
-    int h = HEIGHT;
-    int w = WIDTH;
+    int h = CConfig::HEIGHT;
+    int w = CConfig::WIDTH;
     Magick::InitializeMagick(nullptr);
     Magick::Image image;
     image.read(fileName.c_str());
     // image.crop( Magick::Geometry(0,0, WIDTH, HEIGHT) );
-    unsigned char *pixels = (unsigned char *) malloc(HEIGHT * WIDTH * 3 * sizeof(unsigned char));
-    image.write(0, 0, WIDTH, HEIGHT, "RGB", MagickLib::CharPixel, pixels);
+    unsigned char *pixels = (unsigned char *) malloc(CConfig::HEIGHT * CConfig::WIDTH * 3 * sizeof(unsigned char));
+    image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, pixels);
 
     return pixels;
 
@@ -193,8 +193,8 @@ void Ccmd::clearPresImage() {
 
 int Ccmd::startEvent(const std::string eventid) {
 
-    int w = WIDTH;
-    int h = HEIGHT;
+    int w = CConfig::WIDTH;
+    int h = CConfig::HEIGHT;
     mainImageData = SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
                                     &w,
                                     &h,
