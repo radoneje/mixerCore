@@ -51,7 +51,7 @@ void Ccmd::makeMainImage(std::string eventid,
 
         long long i = 0;
         auto start = std::chrono::high_resolution_clock::now();
-        while (true ) {
+        while (true && !pEvent->stop) {
             using namespace std::chrono_literals;
 
             i++;
@@ -109,7 +109,6 @@ unsigned char *Ccmd::loadNotConnected(int input) {
 
 }
 void Ccmd::_stopEvent(std::string eventid){
-    return;
     std::lock_guard<std::mutex> lock(_locker);
     if(_Events.find(eventid)==_Events.end())
         return;

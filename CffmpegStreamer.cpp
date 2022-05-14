@@ -249,13 +249,14 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
 
 
         avio_closep(&ofmt_ctx->pb);
-
+/*
         av_frame_free(&frame);
         av_packet_free(&pkt);
         av_dict_free(&opts);
         avcodec_free_context(&enc_ctx);
         avformat_close_input(&ofmt_ctx);
         sws_freeContext(sws_ctx);
+        */
     }
     catch (...){
         CConfig::error("ERROR IN CffmpegStreamer::startStream");
