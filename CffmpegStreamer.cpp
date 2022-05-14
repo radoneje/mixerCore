@@ -109,7 +109,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
   //  av_log_set_level(AV_LOG_DEBUG);
   //  av_log_set_level(AV_LOG_DEBUG);
 
-    avformat_alloc_output_context2(&ofmt_ctx, NULL, "webm", outUrl.c_str());
+    avformat_alloc_output_context2(&ofmt_ctx, NULL, "flv", outUrl.c_str());
     if (!ofmt_ctx) {
         av_log(NULL, AV_LOG_ERROR, "Could not create output context\n");
         return ;
@@ -129,7 +129,9 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
         av_log(NULL, AV_LOG_ERROR, "Failed allocating output stream\n");
         return ;
     }
-    encoder = avcodec_find_encoder_by_name(codec_name.c_str());
+    //encoder = avcodec_find_encoder_by_name(codec_name.c_str());
+
+    encoder=  avcodec_find_encoder(AV_CODEC_ID_H264);
     if (!encoder) {
         fprintf(stderr, "Codec '%s' not found\n", codec_name.c_str());
         return ;
@@ -151,7 +153,7 @@ void CffmpegStreamer::startStream(const std::string eventid, unsigned char * ima
      */
     enc_ctx->gop_size = 30;
     enc_ctx->max_b_frames = 1;
-   // enc_ctx->profile=FF_PROFILE_H264_HIGH;
+    enc_ctx->profile=FF_PROFILE_H264_BASELINE;
    // enc_ctx->level=4.0;
     enc_ctx->pix_fmt = AV_PIX_FMT_YUV420P;
    /* if (encoder->id == AV_CODEC_ID_H264)
