@@ -186,7 +186,7 @@ void Ccmd::clearPresImage() {
 };
 
 int Ccmd::startEvent(const std::string eventid) {
-
+   auto f= Ccmd::_Events.find(eventid)
 
     /*   if(Ccmd::_Events.find(eventid)!=_Events.end())
       {
