@@ -188,9 +188,9 @@ void Ccmd::clearPresImage() {
 };
 
 int Ccmd::startEvent(const std::string eventid) {
-   auto f= Ccmd::_Events.find(eventid);
 
-    /*   if(Ccmd::_Events.find(eventid)!=_Events.end())
+
+      if(Ccmd::_Events.find(eventid)!=_Events.end())
       {
           CConfig::log("start Event:: already started", eventid);
           return 0;
@@ -207,7 +207,7 @@ int Ccmd::startEvent(const std::string eventid) {
                                       &w,
                                       &h,
                                       0,
-                                      SOIL_LOAD_RGB);*/
+                                      SOIL_LOAD_RGB);
 
   /*  std::thread streamThread(CffmpegStreamer::startStream, eventid, event->mainImageData, & event->locker,
                              (std::function<void(std::string)>) notifyStreamStarted,
