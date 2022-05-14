@@ -27,7 +27,7 @@ Ccmd::Ccmd() {
     clearPresImage();
 };
 
-std::map<std::string, CEvent*> _Events;
+std::map<std::string, CEvent*> Ccmd::_Events;
 
 void Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vector<unsigned char *> previewImageData,
                     std::mutex *locker, std::function<void(std::string eventid)> onStart,
