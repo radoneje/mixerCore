@@ -13,5 +13,5 @@
 
 #include "CEvent.h"
 CEvent::CEvent(std::string eventid) {
-    this->eventid=eventid;
+    _eventid=eventid;
 }

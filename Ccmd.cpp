@@ -195,7 +195,7 @@ void Ccmd::clearPresImage() {
 int Ccmd::startEvent(const std::string eventid) {
 
 
-    if(_Events.find(eventid)!=_Events.end())
+    if(Ccmd::_Events.find(eventid)!=_Events.end())
     {
         CConfig::log("start Event:: already started", eventid);
         return 0;
@@ -204,17 +204,17 @@ int Ccmd::startEvent(const std::string eventid) {
 
     CEvent *event=new CEvent(eventid);
 
-    _Events.insert({eventid, event});
+    Ccmd::_Events.insert({eventid, event});
 
     int w = CConfig::WIDTH;
     int h = CConfig::HEIGHT;
-    mainImageData = SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
+    event->mainImageData = SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
                                     &w,
                                     &h,
                                     0,
                                     SOIL_LOAD_RGB);
 
-    std::thread streamThread(CffmpegStreamer::startStream, eventid, mainImageData, &locker,
+    std::thread streamThread(CffmpegStreamer::startStream, eventid, event->mainImageData, & event->locker,
                              (std::function<void(std::string)>) notifyStreamStarted,
                              (std::function<void(std::string)>) notifyStreamEnded);
     streamThread.detach();
@@ -222,7 +222,7 @@ int Ccmd::startEvent(const std::string eventid) {
 
     event->thread = &streamThread;
 
-    std::thread makeMainImageThread(Ccmd::makeMainImage, eventid, mainImageData, previewImageData, &locker,
+    std::thread makeMainImageThread(Ccmd::makeMainImage, eventid, event->mainImageData, event->previewImageData, & event->locker,
                                     (std::function<void(std::string eventid)>) notifyMakeMainImageStarted,
                                     (std::function<void(std::string eventid)>) notifyMakeMainImageEnded);
     makeMainImageThread.detach();

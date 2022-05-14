@@ -23,7 +23,7 @@ using namespace std;
 class Ccmd {
     private:
 
-        std::map<std::string, CEvent*> _Events;
+        static std::map<std::string, CEvent*> _Events;
         unsigned  char* loadNotConnected(int input);
     public:
 
@@ -47,8 +47,8 @@ class Ccmd {
         static void notifyStreamStarted(std::string eventid);
         static void notifyStreamEnded(std::string eventid);
 
-        unsigned char * mainImageData; // главная картинка
-        std::vector<unsigned char*> previewImageData;
+       // unsigned char * mainImageData; // главная картинка
+      //  std::vector<unsigned char*> previewImageData;
         static  void makeMainImage  (std::string eventid, unsigned char * mainImageData, std::vector<unsigned char*> previewImageData,std::mutex *locker, std::function<void(std::string eventid)> onStart, std::function<void(std::string eventid)> onEnd );
         static void notifyMakeMainImageStarted(std::string eventid);
         static void notifyMakeMainImageEnded(std::string eventid);

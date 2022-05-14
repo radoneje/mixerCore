@@ -15,11 +15,14 @@
 #include <vector>
 
 class CEvent {
+private:
+    std::string _eventid;
 public:
-    CEvent(std::string eventId);
-    std::string eventid;
-    int inputNo;
+    CEvent(std::string eventid);
+    std::mutex locker;
     std::thread *thread;
+    unsigned char* mainImageData; // главная картинка
+    unsigned char* previewImageData;
 };
 
 
