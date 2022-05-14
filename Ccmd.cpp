@@ -56,14 +56,16 @@ void Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std:
 
         for(int i=0;i< /*previewImageData.size()*/1;i++)//TODO: uncomment
         {
-            Magick::Image imageInput;
-            imageInput.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, previewImageData[i]);
+            //TODO: previewImageData-> заполнить и взять
+         /*   Magick::Image imageInput;
+            imageInput.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel,
+                            std::find(previewImageData->begin(), previewImageData->)[i]);
             imageInput.resize( Magick::Geometry(ww, hh));
             if(i<4)
                 image.composite(imageInput,ww*i, 0);
             else
                 image.composite(imageInput,ww*3, (hh*(i-3)));
-
+*/
         }
 
         auto end = std::chrono::high_resolution_clock::now();
