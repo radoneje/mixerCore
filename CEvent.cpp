@@ -10,9 +10,11 @@
 #include <thread>
 #include <mutex>
 #include <vector>
+#include <Magick++.h>
 
 #include "CEvent.h"
 #include "CConfig.h"
+
 CEvent::CEvent(std::string eventid) {
     _eventid=eventid;
     stop= false;
