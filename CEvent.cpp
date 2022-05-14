@@ -21,7 +21,7 @@ CEvent::CEvent(std::string eventid) {
     for(int i=0; i<CConfig::MAX_FACES; i++) {
 
         std::string fileName("/etc/mixerCore/images/notconnected");
-        fileName.append(std::to_string(input + 1));
+        fileName.append(std::to_string(i + 1));
         fileName.append(".png");
         int h = CConfig::HEIGHT;
         int w = CConfig::WIDTH;
