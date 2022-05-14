@@ -29,7 +29,7 @@ Ccmd::Ccmd() {
 
 std::map<std::string, CEvent*> Ccmd::_Events;
 
-void Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vector<unsigned char *> previewImageData,
+void Ccmd::makeMainImage(std::string eventid, unsigned char *mainImageData, std::vector<unsigned char *> *previewImageData,
                     std::mutex *locker, std::function<void(std::string eventid)> onStart,
                     std::function<void(std::string eventid)> onEnd) {
     onStart(eventid);
@@ -210,7 +210,7 @@ int Ccmd::startEvent(const std::string eventid) {
                                       SOIL_LOAD_RGB);
 
 
-   std::thread streamThread(CffmpegStreamer::startStream, eventid, event->mainImageData, & event->locker,
+   std::thread streamThread(CffmpegStreamer::startStream, eventid, event->mainImageData, &event->locker,
                              (std::function<void(std::string)>) notifyStreamStarted,
                              (std::function<void(std::string)>) notifyStreamEnded);
     streamThread.detach();
@@ -218,9 +218,15 @@ int Ccmd::startEvent(const std::string eventid) {
 
     event->thread = &streamThread;
 
-    std::thread makeMainImageThread(Ccmd::makeMainImage, eventid, event->mainImageData, event->previewImageData, & event->locker,
+    std::thread makeMainImageThread(Ccmd::makeMainImage,
+                                    eventid,
+                                    event->mainImageData,
+                                    &event->previewImageData,
+                                    &event->locker,
                                     (std::function<void(std::string eventid)>) notifyMakeMainImageStarted,
                                     (std::function<void(std::string eventid)>) notifyMakeMainImageEnded);
+
+
     makeMainImageThread.detach();
 
     return 0;

@@ -22,7 +22,7 @@ public:
     std::mutex locker;
     std::thread *thread;
     unsigned char* mainImageData; // главная картинка
-    unsigned char* previewImageData;
+    std::vector<unsigned char *>  previewImageData;
 };
 
 
