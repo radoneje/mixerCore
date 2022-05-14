@@ -193,7 +193,7 @@ int Ccmd::startEvent(const std::string eventid) {
         CConfig::log("start Event:: already started", eventid);
         return 0;
     }
-    CConfig::log("startEvent", eventid);
+  /*  CConfig::log("startEvent", eventid);
 
     CEvent *event=new CEvent(eventid);
 
@@ -205,7 +205,7 @@ int Ccmd::startEvent(const std::string eventid) {
                                     &w,
                                     &h,
                                     0,
-                                    SOIL_LOAD_RGB);
+                                    SOIL_LOAD_RGB);*/
 
   /*  std::thread streamThread(CffmpegStreamer::startStream, eventid, event->mainImageData, & event->locker,
                              (std::function<void(std::string)>) notifyStreamStarted,
