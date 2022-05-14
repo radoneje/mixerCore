@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     Ccmd *cmd= new Ccmd();
     printf("startStream 0 \n");
     //std::map<std::string, SstreamData *> streamers;
-    cmd->startStream("==event ID==");
+    cmd->startStream("15dcce20-eec2-4a95-b556-26404597d218");
     std::cin.get();
 
 
