@@ -41,16 +41,13 @@ int CConfig::getGlobalValues(){
             GetConfig("RTMP_MAIN", buf);
             RTMP_MAIN= buf;
 
-
-
-
         }
         catch (...){
             std::cout<< "error read config file"<<std::endl;
             return 1;
         }
         return 0;
-)}
+}
 
 int CConfig::GetConfig(const char *name, std::string &str) {
 
