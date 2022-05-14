@@ -204,7 +204,7 @@ int Ccmd::startEvent(const std::string eventid) {
 
     CEvent *event=new CEvent(eventid);
 
-    _Events.insert(std::pair<std::string, CEvent*>(eventid, &event));
+    _Events.insert({eventid, event});
 
     int w = CConfig::WIDTH;
     int h = CConfig::HEIGHT;
