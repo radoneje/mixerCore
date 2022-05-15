@@ -59,7 +59,7 @@ void Ccmd::makeMainImage(std::string eventid,
             for (int i = 0; i < /*previewImageData.size()*/1; i++)//TODO: uncomment
             {
                 //TODO: previewImageData-> заполнить и взять
-                Magick::Image imageInput;
+             /*   Magick::Image imageInput;
                 pEvent->locker.lock();
                 imageInput.read(CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
                                 pEvent->imageData[i].previewImageData);
@@ -68,7 +68,7 @@ void Ccmd::makeMainImage(std::string eventid,
                 if (i < 4)
                     image.composite(imageInput, ww * i, 0);
                 else
-                    image.composite(imageInput, ww * 3, (hh * (i - 3)));
+                    image.composite(imageInput, ww * 3, (hh * (i - 3)));*/
 
             }
 
