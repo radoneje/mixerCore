@@ -53,7 +53,7 @@ CEvent::CEvent(std::string eventid) {
 }
 
 void CEvent::showPres(unsigned char * data, std::string itemid){
-   /* try {
+    try {
         Magick::Image image;
         image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel,
                    data);
@@ -72,5 +72,5 @@ void CEvent::showPres(unsigned char * data, std::string itemid){
     catch(...)
     {
         CConfig::error("Error cmd::showPres");
-    };*/
+    };
 };

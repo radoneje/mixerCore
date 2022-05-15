@@ -62,7 +62,7 @@ void Ccmd::makeMainImage(std::string eventid,
             for (int i = 0; i < /*previewImageData.size()*/1; i++)//TODO: uncomment
             {
                 //TODO: previewImageData-> заполнить и взять
-             /*   Magick::Image imageInput;
+                Magick::Image imageInput;
                 pEvent->locker.lock();
                 imageInput.read(CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
                                 pEvent->imageData[i].previewImageData);
@@ -71,20 +71,20 @@ void Ccmd::makeMainImage(std::string eventid,
                 if (i < 4)
                     image.composite(imageInput, ww * i, 0);
                 else
-                    image.composite(imageInput, ww * 3, (hh * (i - 3)));*/
+                    image.composite(imageInput, ww * 3, (hh * (i - 3)));
 
             }
 
             ///////// генерация презы
-            std::cout<<pEvent->activeInputs.size() << "" << pEvent->activeInputs[0]<<std::endl;
-            break;
+            std::cout<<pEvent->activeInputs.size() <<std::endl;
+
             if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
-             /*   Magick::Image imageInput;
+               Magick::Image imageInput;
                 pEvent->locker.lock();
                 imageInput.read(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75, "RGB", MagickLib::CharPixel,
                                 pEvent->imageData[CConfig::MAX_FACES].fullImageData);
                 pEvent->locker.unlock();
-                image.composite(imageInput, ww * i, 0);*/
+                image.composite(imageInput, ww * i, 0);
             }
 
             auto end = std::chrono::high_resolution_clock::now();
