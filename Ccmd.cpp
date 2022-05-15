@@ -74,9 +74,10 @@ void Ccmd::makeMainImage(std::string eventid,
                     image.composite(imageInput, ww * 3, (hh * (i - 3)));*/
 
             }
-            break;
+
             ///////// генерация презы
             std::cout<<pEvent->activeInputs.size() << "" << pEvent->activeInputs[0]<<std::endl;
+            break;
             if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
              /*   Magick::Image imageInput;
                 pEvent->locker.lock();
