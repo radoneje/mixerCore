@@ -70,10 +70,8 @@ void CHttp::init(int port, Ccmd *pCmd) {
 
                 if (req.has_file("image")) {
                     const auto &file = req.get_file_value("image");
-
                     std::ofstream myfile;
                     std::string fileName("/tmp/pres" + eventid + ".png");
-                    std::cout << fileName << std::endl;
                     myfile.open(fileName);
                     myfile << file.content;
                     myfile.close();

@@ -274,10 +274,8 @@ bool Ccmd::showPres(std::string fileName, std::string eventid, std::string itemi
     unsigned char *buf = (unsigned char *) malloc(CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char));
     image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, buf);
     event->showPres(buf, itemid);
-
     free(buf);
-
-
+    CConfig::log("show pres id:",itemid,", event id:", eventid);
     return true;
 };
 bool  Ccmd::activateInput(std::string eventid,  int itemid){
@@ -287,11 +285,11 @@ bool  Ccmd::activateInput(std::string eventid,  int itemid){
         return false;
     if(itemid>=CConfig::MAX_FACES)
         return false;
-    std::cout<<"active input"<<itemid<<std::endl;
     auto event=_Events.at(eventid);
     event->locker.lock();
     event->activeInputs.clear();
     event->activeInputs.push_back(itemid);
     event->locker.unlock();
+    CConfig::log("activate Input,",itemid,", event id:", eventid);
     return true;
 }
