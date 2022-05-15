@@ -31,11 +31,11 @@ CEvent::CEvent(std::string eventid) {
         image.read(fileName.c_str());
 
         image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, imageDataItem.fullImageData);
-        image.resize(CConfig::WIDTH/4,CConfig::HEIGHT/4);
+        image.resize(Magick::Geometry(CConfig::WIDTH/4,CConfig::HEIGHT/4));
         image.write(0, 0, CConfig::WIDTH/4, CConfig::HEIGHT/4, "RGB", MagickLib::CharPixel, imageDataItem.previewImageData);
 
         imageData.push_back(imageDataItem);
     }
     SImageData imageDataItem;
-    imageData.push_back(imageDataItem)
+    imageData.push_back(imageDataItem);
 }
