@@ -83,8 +83,8 @@ void Ccmd::makeMainImage(std::string eventid,
                 std::cout<<" inside"<<std::endl;
                 Magick::Image imageInput;
                 pEvent->locker.lock();
-                imageInput.read(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75, "RGB", MagickLib::CharPixel,
-                                pEvent->imageData[1].fullImageData);
+                imageInput.read(CConfig::WIDTH *0.25, CConfig::HEIGHT *0.25, "RGB", MagickLib::CharPixel,
+                                pEvent->imageData[1].previewImageData);
                 pEvent->locker.unlock();
                 image.composite(imageInput, ww ,0);
             }
