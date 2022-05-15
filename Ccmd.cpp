@@ -46,9 +46,9 @@ void Ccmd::makeMainImage(std::string eventid,
 
         Magick::InitializeMagick(nullptr);
         Magick::Image image;
-        return;
-        image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, blankImage);
 
+        image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, blankImage);
+        return;
         // using namespace Magick;
 
         long long i = 0;
