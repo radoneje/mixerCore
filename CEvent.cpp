@@ -35,7 +35,7 @@ CEvent::CEvent(std::string eventid) {
         imageDataItem.previewImageData=(unsigned char*)malloc(previewImageSize);
         imageDataItem.itemid="";
 
-      /*  Magick::InitializeMagick(nullptr);
+        Magick::InitializeMagick(nullptr);
         Magick::Image image;
         image.read(fileName.c_str());
 
@@ -43,7 +43,7 @@ CEvent::CEvent(std::string eventid) {
         image.resize(Magick::Geometry(CConfig::WIDTH/4,CConfig::HEIGHT/4));
         image.write(0, 0, CConfig::WIDTH/4, CConfig::HEIGHT/4, "RGB", MagickLib::CharPixel, imageDataItem.previewImageData);
 
-        imageData.push_back(imageDataItem);*/
+        imageData.push_back(imageDataItem);
     }
     SImageData imageDataItem;
     imageDataItem.previewImageData= (unsigned char*)malloc(imageSize);
