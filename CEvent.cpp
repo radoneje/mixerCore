@@ -15,7 +15,7 @@
 #include "CEvent.h"
 #include "CConfig.h"
 
-CEvent(std::string eventid) {
+CEvent::CEvent(std::string eventid) {
      startTime = std::chrono::system_clock::now().time_since_epoch().count();
     _eventid=eventid;
     stop= false;
