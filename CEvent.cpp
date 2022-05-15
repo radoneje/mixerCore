@@ -59,7 +59,7 @@ void CEvent::showPres(unsigned char * data, std::string itemid){
                    data);
         image.resize(Magick::Geometry(CConfig::WIDTH * 0.75, CConfig::HEIGHT * 0.75));
         locker.lock();
-        image.write(0, 0, CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
+        image.write(0, 0, CConfig::WIDTH * 0.75, CConfig::HEIGHT * 0.75, "RGB", MagickLib::CharPixel,
                     imageData.back().fullImageData);
         image.resize(Magick::Geometry(CConfig::WIDTH * 0.25, CConfig::HEIGHT * 0.25));
         image.write(0, 0, CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
