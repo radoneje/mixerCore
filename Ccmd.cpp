@@ -26,12 +26,12 @@ Ccmd::Ccmd() {
     clearPresImage();
 };
 
-std::map<std::string, CEvent*> Ccmd::_Events;
+std::map<std::string, CEvent *> Ccmd::_Events;
 std::mutex Ccmd::_locker;
 
 void Ccmd::makeMainImage(std::string eventid,
-                    CEvent *pEvent, std::function<void(std::string eventid)> onStart,
-                    std::function<void(std::string eventid)> onEnd) {
+                         CEvent *pEvent, std::function<void(std::string eventid)> onStart,
+                         std::function<void(std::string eventid)> onEnd) {
 
     try {
         onStart(eventid);
@@ -47,7 +47,7 @@ void Ccmd::makeMainImage(std::string eventid,
         Magick::Image image;
         image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, blankImage);
 
-       // using namespace Magick;
+        // using namespace Magick;
 
         long long i = 0;
         auto start = std::chrono::high_resolution_clock::now();
@@ -60,9 +60,9 @@ void Ccmd::makeMainImage(std::string eventid,
             {
                 //TODO: previewImageData-> заполнить и взять
                 Magick::Image imageInput;
-                imageInput.read(CConfig::WIDTH/4, CConfig::HEIGHT/4, "RGB", MagickLib::CharPixel,
+                imageInput.read(CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
                                 pEvent->imageData[i].previewImageData);
-               // imageInput.resize(Magick::Geometry(ww, hh));
+                // imageInput.resize(Magick::Geometry(ww, hh));
                 if (i < 4)
                     image.composite(imageInput, ww * i, 0);
                 else
@@ -84,12 +84,11 @@ void Ccmd::makeMainImage(std::string eventid,
             start = std::chrono::high_resolution_clock::now();
         }
     }
-    catch (...){
+    catch (...) {
         CConfig::error("ERROR IN makeMainImage");
     }
     onEnd(eventid);
 }
-
 
 
 unsigned char *Ccmd::loadNotConnected(int input) {
@@ -108,14 +107,16 @@ unsigned char *Ccmd::loadNotConnected(int input) {
     return pixels;
 
 }
-void Ccmd::_stopEvent(std::string eventid){
+
+void Ccmd::_stopEvent(std::string eventid) {
     std::lock_guard<std::mutex> lock(_locker);
-    if(_Events.find(eventid)==_Events.end())
+    if (_Events.find(eventid) == _Events.end())
         return;
-    _Events[eventid]->stop=true;
+    _Events[eventid]->stop = true;
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     _Events.erase(eventid);
 }
+
 void Ccmd::notifyStreamStarted(std::string eventid) {
     CConfig::log("Main stream loop started", eventid);
 };
@@ -125,6 +126,7 @@ void Ccmd::notifyStreamEnded(std::string eventid) {
     _stopEvent(eventid);
 
 };
+
 void Ccmd::notifyMakeMainImageStarted(std::string eventid) {
     CConfig::log("Main image loop Started", eventid);
 }
@@ -138,15 +140,15 @@ void Ccmd::notifyMakeMainImageEnded(std::string eventid) {
 
 void Ccmd::startReadStream(std::string rtmpURL, int layerNumber) { // TODO: Delete!!!!
 
- /*   FFreader[layerNumber].dt.width = layerNumber;
-    FFreader[layerNumber].dt.layer = layerNumber;
-    std::cout << "start input " << rtmpURL << " " << layerNumber << std::endl;
-    std::cout << "start  " << (FFreader[layerNumber].dt.width) << " " << layerNumber << std::endl;
-    // worker.work(rtmpURL);
+    /*   FFreader[layerNumber].dt.width = layerNumber;
+       FFreader[layerNumber].dt.layer = layerNumber;
+       std::cout << "start input " << rtmpURL << " " << layerNumber << std::endl;
+       std::cout << "start  " << (FFreader[layerNumber].dt.width) << " " << layerNumber << std::endl;
+       // worker.work(rtmpURL);
 
-    std::thread ffmpegThread(FFreader[layerNumber].work, rtmpURL, &FFreader[layerNumber].dt, &locker);
-    ffmpegThread.detach();
-*/
+       std::thread ffmpegThread(FFreader[layerNumber].work, rtmpURL, &FFreader[layerNumber].dt, &locker);
+       ffmpegThread.detach();
+   */
 
     // ffmpegThread
 
@@ -158,7 +160,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid) {
 
     clearPresImage();
 
-   // std::lock_guard<std::mutex> lockGuard(locker);
+    // std::lock_guard<std::mutex> lockGuard(locker);
     imageid = simageid;
     free(PresImagePixels);
 
@@ -191,7 +193,7 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid) {
 }
 
 void Ccmd::clearPresImage() {
-   // std::lock_guard<std::mutex> lockGuard(locker);
+    // std::lock_guard<std::mutex> lockGuard(locker);
     PresImageWidth = 0;
     PresImageHeight = 0;
     imageid = "";
@@ -200,34 +202,34 @@ void Ccmd::clearPresImage() {
     // PresImagePixels=nullptr;
 
 };
-int Ccmd::stopEvent(const std::string eventid){
+
+int Ccmd::stopEvent(const std::string eventid) {
     _stopEvent(eventid);
     return 0;
 }
 
 int Ccmd::startEvent(const std::string eventid) {
 
-      if(Ccmd::_Events.find(eventid)!=_Events.end())
-      {
-          CConfig::log("start Event:: already started", eventid);
-          return 0;
-      }
-     CConfig::log("startEvent", eventid);
+    if (Ccmd::_Events.find(eventid) != _Events.end()) {
+        CConfig::log("start Event:: already started", eventid);
+        return 0;
+    }
+    CConfig::log("startEvent", eventid);
 
-      CEvent *event=new CEvent(eventid);
+    CEvent *event = new CEvent(eventid);
 
-      Ccmd::_Events.insert({eventid, event});
+    Ccmd::_Events.insert({eventid, event});
 
-      int w = CConfig::WIDTH;
-      int h = CConfig::HEIGHT;
-      event->mainImageData = SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
-                                      &w,
-                                      &h,
-                                      0,
-                                      SOIL_LOAD_RGB);
+    int w = CConfig::WIDTH;
+    int h = CConfig::HEIGHT;
+    event->mainImageData = SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
+                                           &w,
+                                           &h,
+                                           0,
+                                           SOIL_LOAD_RGB);
 
 
-   std::thread streamThread(CffmpegStreamer::startStream, eventid, event,
+    std::thread streamThread(CffmpegStreamer::startStream, eventid, event,
                              (std::function<void(std::string)>) notifyStreamStarted,
                              (std::function<void(std::string)>) notifyStreamEnded);
     streamThread.detach();
@@ -245,3 +247,23 @@ int Ccmd::startEvent(const std::string eventid) {
     makeMainImageThread.detach();
     return 0;
 }
+
+bool Ccmd::showPres(std::string fileName, std::string eventid, std::string itemid) {
+
+
+    std::lock_guard<std::mutex> lock(_locker);
+    if (_Events.find(eventid) == _Events.end())
+        return false;
+
+    CEvent *event = _Events.at(eventid);
+    Magick::Image image;
+    image.read(fileName);
+    unsigned char *buf = (unsigned char *) malloc(CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char));
+    image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, buf);
+    event->showPres(buf, itemid);
+
+    free(buf);
+
+
+    return true;
+};

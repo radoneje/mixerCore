@@ -58,9 +58,36 @@ void CHttp::init(int port, Ccmd *pCmd){
     svr.Post(R"(/mixer/activatePresImg/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))",[&](const httplib::Request &req, httplib::Response &res){
         std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         auto start = std::chrono::system_clock::now();
-        std::cout<< "/mixer/activatePresImg" << std::endl;
+
         const std::string eventid = req.matches[1];
         const std::string imageid = req.matches[2];
+        CConfig::log("/mixer/activatePresImg", eventid);
+
+        if( req.has_file("image")) {
+            const auto &file = req.get_file_value("image");
+
+            std::ofstream myfile;
+            std::string fileName("/tmp/pres" + eventid + ".png");
+            std::cout << fileName << std::endl;
+            myfile.open(fileName);
+            myfile << file.content;
+            myfile.close();
+            std::string jsonResponce;
+            if(pCmd->showPres(fileName, eventid, imageid))
+                jsonResponce=("{\"error\":false, \"presFileId\":\"" + imageid + "\"}");
+            else
+                jsonResponce=("{\"error\":true}");
+
+            res.set_content(jsonResponce, "application/json");
+
+        }
+        else {
+            std::string jsonResponce("{\"error\":true, \"presFileId\":\"" + imageid + "\"}");
+            res.set_content(jsonResponce, "application/json");
+            CConfig::error("file not find in request show pores, eventid:",eventid, "itemid", imageid);
+        }
+        return;
+        /*
         if(imageid==pCmd->imageid)
         {
             pCmd->clearPresImage();
@@ -87,7 +114,7 @@ void CHttp::init(int port, Ccmd *pCmd){
         int timeDiff=( std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count())/1000;
         std::cout << "Time difference = " <<timeDiff << "[ms]" << std::endl;
         std::string jsonResponce("{\"error\":false, \"presFileId\":\""+imageid+"\"}");
-        res.set_content(jsonResponce, "application/json");
+        res.set_content(jsonResponce, "application/json");*/
 
     });
     svr.Get(R"(/mixer/activeInput/(\d+))", [&](const httplib::Request &req, httplib::Response &res) {

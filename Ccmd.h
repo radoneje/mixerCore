@@ -56,6 +56,9 @@ class Ccmd {
         static void notifyMakeMainImageStarted(std::string eventid);
         static void notifyMakeMainImageEnded(std::string eventid);
         Ccmd();
+
+
+        bool showPres(std::string fileName, std::string eventid, std::string itemid);
 };
 
 

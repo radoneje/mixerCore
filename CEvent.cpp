@@ -15,7 +15,7 @@
 #include "CEvent.h"
 #include "CConfig.h"
 
-CEvent::CEvent(std::string eventid) {
+CEvent(std::string eventid) {
      startTime = std::chrono::system_clock::now().time_since_epoch().count();
     _eventid=eventid;
     stop= false;
@@ -28,10 +28,12 @@ CEvent::CEvent(std::string eventid) {
         fileName.append(".png");
         int h = CConfig::HEIGHT;
         int w = CConfig::WIDTH;
+
         SImageData imageDataItem;
         imageDataItem.fullImageData= (unsigned char*)malloc(imageSize);
-        imageDataItem.previewImageData= (unsigned char*)malloc(imageSize);
         imageDataItem.previewImageData=(unsigned char*)malloc(previewImageSize);
+        imageDataItem.itemid="";
+
         Magick::InitializeMagick(nullptr);
         Magick::Image image;
         image.read(fileName.c_str());
@@ -45,5 +47,29 @@ CEvent::CEvent(std::string eventid) {
     SImageData imageDataItem;
     imageDataItem.previewImageData= (unsigned char*)malloc(imageSize);
     imageDataItem.previewImageData=(unsigned char*)malloc(previewImageSize);
+    imageDataItem.itemid="";
     imageData.push_back(imageDataItem);
 }
+
+void CEvent::showPres(unsigned char * data, std::string itemid){
+    try {
+        Magick::Image image;
+        image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel,
+                   data);
+        image.resize(Magick::Geometry(CConfig::WIDTH * 0.75, CConfig::HEIGHT * 0.75));
+        locker.lock();
+        image.write(0, 0, CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
+                    imageData.back().fullImageData);
+        image.resize(Magick::Geometry(CConfig::WIDTH * 0.25, CConfig::HEIGHT * 0.25));
+        image.write(0, 0, CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
+                    imageData.back().previewImageData);
+        activeInputs.clear();
+        activeInputs.push_back(CConfig::MAX_FACES);
+        imageData.back().itemid = itemid;
+        locker.unlock();
+    }
+    catch(...)
+    {
+        CConfig::error("Error cmd::showPres");
+    };
+};
