@@ -18,7 +18,6 @@
 
 
 
-
 CHttp httpServer;
 //CRender render;
 
