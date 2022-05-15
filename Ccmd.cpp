@@ -76,11 +76,7 @@ void Ccmd::makeMainImage(std::string eventid,
             }
 
             ///////// генерация презы
-            if(pEvent->activeInputs.size()==1)
-            std::cout<<pEvent->activeInputs[0] << "" << CConfig::MAX_FACES<<std::endl;
-
             if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
-                std::cout<<" inside"<<std::endl;
                 Magick::Image imageInput;
                 pEvent->locker.lock();
                 imageInput.read(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75, "RGB", MagickLib::CharPixel,
