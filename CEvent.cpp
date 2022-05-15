@@ -22,6 +22,7 @@ CEvent::CEvent(std::string eventid) {
     int imageSize=CConfig::WIDTH*CConfig::HEIGHT*3*sizeof(unsigned char);
     int previewImageSize=(CConfig::WIDTH/4)*(CConfig::HEIGHT/4)*3*sizeof(unsigned char);
 
+    return;
     for(int i=0; i<CConfig::MAX_FACES; i++) {
         std::string fileName("/etc/mixerCore/images/notconnected");
         fileName.append(std::to_string(i + 1));
