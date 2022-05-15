@@ -86,7 +86,7 @@ void Ccmd::makeMainImage(std::string eventid,
                 imageInput.read(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75, "RGB", MagickLib::CharPixel,
                                 pEvent->imageData[1].fullImageData);
                 pEvent->locker.unlock();
-                image.composite(imageInput, ww ,hh);
+                image.composite(imageInput, 0 ,hh);
             }
 
             auto end = std::chrono::high_resolution_clock::now();
