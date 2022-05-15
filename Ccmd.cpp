@@ -281,12 +281,13 @@ bool Ccmd::showPres(std::string fileName, std::string eventid, std::string itemi
     return true;
 };
 bool  Ccmd::activateInput(std::string eventid,  int itemid){
-    std::cout<<"active input"<<std::endl;
+
     std::lock_guard<std::mutex> lock(_locker);
     if (_Events.find(eventid) == _Events.end())
         return false;
     if(itemid>=CConfig::MAX_FACES)
         return false;
+    std::cout<<"active input"<<itemid<<std::endl;
     auto event=_Events.at(eventid);
     event->locker.lock();
     event->activeInputs.clear();
