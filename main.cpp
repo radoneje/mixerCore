@@ -13,7 +13,7 @@
 #include "CHttp.h"
 #include "Ccmd.h"
 #include "CffmpegStreamer.h"
-#include "SstreamData.h"
+
 #include "CConfig.h"
 
 

@@ -17,7 +17,7 @@ extern "C" {
 
 }
 
-#include "SstreamData.h"
+
 #include "CEvent.h"
 
 class CffmpegStreamer {
