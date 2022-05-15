@@ -56,7 +56,7 @@ void Ccmd::makeMainImage(std::string eventid,
         while (true && !pEvent->stop) {
             using namespace std::chrono_literals;
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
-           // break;
+            break;
             i++;
             ////////генерация превьюшек
             for (int i = 0; i < /*previewImageData.size()*/1; i++)//TODO: uncomment
@@ -94,7 +94,7 @@ void Ccmd::makeMainImage(std::string eventid,
                     std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())));
 
             pEvent->locker.lock();
-             image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, pEvent->mainImageData);
+            // image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, pEvent->mainImageData);
             pEvent->locker.unlock();
 
             start = std::chrono::high_resolution_clock::now();
