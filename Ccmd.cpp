@@ -59,7 +59,7 @@ void Ccmd::makeMainImage(std::string eventid,
 
             i++;
             ////////генерация превьюшек
-            for (int i = 0; i < /*previewImageData.size()*/1; i++)//TODO: uncomment
+            for (int i = 0; i < CConfig::MAX_FACES; i++)//TODO: uncomment
             {
                 //TODO: previewImageData-> заполнить и взять
                 Magick::Image imageInput;
@@ -76,10 +76,12 @@ void Ccmd::makeMainImage(std::string eventid,
             }
 
             ///////// генерация презы
-            std::cout<<pEvent->activeInputs.size() <<std::endl;
+            if(pEvent->activeInputs.size()==1)
+            std::cout<<pEvent->activeInputs[0] << "" << CConfig::MAX_FACES<<std::endl;
 
             if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
-               Magick::Image imageInput;
+                std::cout<<" inside"<<std::endl;
+                Magick::Image imageInput;
                 pEvent->locker.lock();
                 imageInput.read(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75, "RGB", MagickLib::CharPixel,
                                 pEvent->imageData[CConfig::MAX_FACES].fullImageData);
