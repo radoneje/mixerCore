@@ -43,6 +43,7 @@ void Ccmd::makeMainImage(std::string eventid,
         for (int i = 0; i < memorySize; i++) {
             blankImage[i] = 0xff;
         }
+        return;
         Magick::InitializeMagick(nullptr);
         Magick::Image image;
         image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, blankImage);
