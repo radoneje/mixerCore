@@ -245,13 +245,13 @@ int Ccmd::startEvent(const std::string eventid) {
                                            SOIL_LOAD_RGB);
 
 
-    std::thread streamThread(CffmpegStreamer::startStream, eventid, event,
+   /* std::thread streamThread(CffmpegStreamer::startStream, eventid, event,
                              (std::function<void(std::string)>) notifyStreamStarted,
                              (std::function<void(std::string)>) notifyStreamEnded);
     streamThread.detach();
 
 
-    event->thread = &streamThread;
+    event->thread = &streamThread;*/
 
     std::thread makeMainImageThread(Ccmd::makeMainImage,
                                     eventid,
