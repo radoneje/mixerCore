@@ -20,7 +20,7 @@ private:
 public:
     struct SImageData{
         unsigned char * previewImageData;
-        unsigned char * fullImageData
+        unsigned char * fullImageData;
     };
     CEvent(std::string eventid);
     std::mutex locker;
