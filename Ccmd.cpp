@@ -61,9 +61,9 @@ void Ccmd::makeMainImage(std::string eventid,
             {
                 //TODO: previewImageData-> заполнить и взять
                 Magick::Image imageInput;
-                imageInput.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel,
-                                pEvent->previewImageData[i]);
-                imageInput.resize(Magick::Geometry(ww, hh));
+                imageInput.read(CConfig::WIDTH/4, CConfig::HEIGHT/4, "RGB", MagickLib::CharPixel,
+                                pEvent->imageData[i].previewImageData);
+               // imageInput.resize(Magick::Geometry(ww, hh));
                 if (i < 4)
                     image.composite(imageInput, ww * i, 0);
                 else

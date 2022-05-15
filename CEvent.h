@@ -18,11 +18,16 @@ class CEvent {
 private:
     std::string _eventid;
 public:
+    struct SImageData{
+        unsigned char * previewImageData;
+        unsigned char * fullImageData
+    };
     CEvent(std::string eventid);
     std::mutex locker;
     std::thread *thread;
+    long  startTime;
     unsigned char* mainImageData; // главная картинка
-    std::vector<unsigned char *>  previewImageData;
+    std::vector<SImageData>  imageData; // картинка по входам
     bool  stop;
 };
 
