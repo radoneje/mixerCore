@@ -50,7 +50,7 @@ void Ccmd::makeMainImage(std::string eventid,
         image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, blankImage);
         free(blankImage);
         // using namespace Magick;
-        return;
+
         long long i = 0;
         auto start = std::chrono::high_resolution_clock::now();
         while (true && !pEvent->stop) {
@@ -93,7 +93,7 @@ void Ccmd::makeMainImage(std::string eventid,
                     std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())));
 
             pEvent->locker.lock();
-            image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, pEvent->mainImageData);
+           // image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, pEvent->mainImageData);
             pEvent->locker.unlock();
 
             start = std::chrono::high_resolution_clock::now();
