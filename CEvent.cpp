@@ -22,7 +22,7 @@ CEvent::CEvent(std::string eventid) {
     int imageSize=CConfig::WIDTH*CConfig::HEIGHT*3*sizeof(unsigned char);
     int previewImageSize=(CConfig::WIDTH/4)*(CConfig::HEIGHT/4)*3*sizeof(unsigned char);
     mainImageData=(unsigned char*)malloc(CConfig::WIDTH*CConfig::HEIGHT*3*sizeof(unsigned char));
-    return;
+
     for(int i=0; i<CConfig::MAX_FACES; i++) {
         std::string fileName("/etc/mixerCore/images/notconnected");
         fileName.append(std::to_string(i + 1));
@@ -35,7 +35,7 @@ CEvent::CEvent(std::string eventid) {
         imageDataItem.previewImageData=(unsigned char*)malloc(previewImageSize);
         imageDataItem.itemid="";
 
-        Magick::InitializeMagick(nullptr);
+      /*  Magick::InitializeMagick(nullptr);
         Magick::Image image;
         image.read(fileName.c_str());
 
@@ -43,7 +43,7 @@ CEvent::CEvent(std::string eventid) {
         image.resize(Magick::Geometry(CConfig::WIDTH/4,CConfig::HEIGHT/4));
         image.write(0, 0, CConfig::WIDTH/4, CConfig::HEIGHT/4, "RGB", MagickLib::CharPixel, imageDataItem.previewImageData);
 
-        imageData.push_back(imageDataItem);
+        imageData.push_back(imageDataItem);*/
     }
     SImageData imageDataItem;
     imageDataItem.previewImageData= (unsigned char*)malloc(imageSize);
@@ -53,7 +53,7 @@ CEvent::CEvent(std::string eventid) {
 }
 
 void CEvent::showPres(unsigned char * data, std::string itemid){
-    try {
+   /* try {
         Magick::Image image;
         image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel,
                    data);
@@ -72,5 +72,5 @@ void CEvent::showPres(unsigned char * data, std::string itemid){
     catch(...)
     {
         CConfig::error("Error cmd::showPres");
-    };
+    };*/
 };
