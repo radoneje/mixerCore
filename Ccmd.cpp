@@ -74,7 +74,7 @@ void Ccmd::makeMainImage(std::string eventid,
                     image.composite(imageInput, ww * 3, (hh * (i - 3)));*/
 
             }
-
+            break;
             ///////// генерация презы
             std::cout<<pEvent->activeInputs.size() << "" << pEvent->activeInputs[0]<<std::endl;
             if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
@@ -85,7 +85,7 @@ void Ccmd::makeMainImage(std::string eventid,
                 pEvent->locker.unlock();
                 image.composite(imageInput, ww * i, 0);*/
             }
-            break;
+
             auto end = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double, std::milli> elapsed = end - start;
             //    std::cout << "render image " << i << " sleep: "
