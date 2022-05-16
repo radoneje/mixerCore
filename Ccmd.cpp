@@ -105,11 +105,11 @@ void Ccmd::makeMainImage(std::string eventid,
 
                     if(pEvent->imageData.size()-1>col+row-1) {
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0]=
-                                pEvent->imageData[col+row].previewImageData[(int) ((inputX + inputY) * 3) + 0];
+                                pEvent->imageData[4].previewImageData[(int) ((inputX + inputY) * 3) + 0];
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1]=
-                                pEvent->imageData[col+row].previewImageData[(int) ((inputX + inputY) * 3) + 1];
+                                pEvent->imageData[4].previewImageData[(int) ((inputX + inputY) * 3) + 1];
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2]=
-                                pEvent->imageData[col+row].previewImageData[(int) ((inputX + inputY) * 3) + 2];
+                                pEvent->imageData[4].previewImageData[(int) ((inputX + inputY) * 3) + 2];
 
                     }
                 }
