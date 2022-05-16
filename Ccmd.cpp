@@ -103,6 +103,7 @@ void Ccmd::makeMainImage(std::string eventid,
                     if(pEvent->imageData.size()-1>col+row-1) {
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0]=
                                 pEvent->imageData[col+row].previewImageData[(int) ((inputX + (y * ww-(hh*row))) * 3) + 0];
+                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1]=0xff;
                     }
                 }
                 else{ // пустой PGM
