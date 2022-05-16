@@ -71,6 +71,7 @@ void CEvent::showPres(unsigned char * data, std::string itemid){
         image.resize(Magick::Geometry(CConfig::WIDTH * 0.25, CConfig::HEIGHT * 0.25));
         image.write(0, 0, CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
                     imageData.back().previewImageData);
+        std::cout<<"before loock"<<std::endl;
         locker.lock();
             activeInputs.clear();
            std::cout<<"before pb"<<std::endl;
