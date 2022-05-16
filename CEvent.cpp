@@ -49,11 +49,11 @@ CEvent::CEvent(std::string eventid) {
     imageDataItem.fullImageData= (unsigned char*)malloc(imageSize);
 
     for(int i=0;i<imageSize;i++)
-        imageDataItem.fullImageData[i]=0;
+        imageDataItem.fullImageData[i]=0x88;
     imageDataItem.previewImageData=(unsigned char*)malloc(previewImageSize);
 
     for(int i=0;i<previewImageSize;i++)
-        imageDataItem.previewImageData[i]=0;
+        imageDataItem.previewImageData[i]=0x66;
 
     imageDataItem.itemid="";
     imageData.push_back(imageDataItem);
