@@ -75,7 +75,7 @@ void CEvent::showPres(unsigned char *data, std::string itemid) {
 
 
             activeInputs.clear();
-            activeInputs.push_back(CConfig::MAX_FACES);//CConfig::MAX_FACES);
+            activeInputs.push_back(CConfig::MAX_FACES);
             imageData.back().itemid = itemid;
         locker.unlock();
     }
