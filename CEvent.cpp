@@ -51,6 +51,7 @@ CEvent::CEvent(std::string eventid) {
     for(int i=0;i<imageSize;i++)
         imageDataItem.fullImageData[i]=0;
     imageDataItem.previewImageData=(unsigned char*)malloc(previewImageSize);
+
     for(int i=0;i<previewImageSize;i++)
         imageDataItem.previewImageData[i]=0;
 
@@ -60,7 +61,7 @@ CEvent::CEvent(std::string eventid) {
 
 void CEvent::showPres(unsigned char * data, std::string itemid){
     try {
-        Magick::Image image;
+   /*     Magick::Image image;
         image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel,
                    data);
         image.resize(Magick::Geometry(CConfig::WIDTH * 0.75, CConfig::HEIGHT * 0.75));
@@ -73,7 +74,7 @@ void CEvent::showPres(unsigned char * data, std::string itemid){
         activeInputs.clear();
         activeInputs.push_back(CConfig::MAX_FACES);
         imageData.back().itemid = itemid;
-        locker.unlock();
+        locker.unlock();*/
     }
     catch(...)
     {
