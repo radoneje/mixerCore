@@ -72,12 +72,12 @@ void Ccmd::makeMainImage(std::string eventid,
                       if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
                           std::cout<< pEvent->imageData.size()<< "size;" << std::endl;
                           pEvent->imageData.end()->fullImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] =
-                                  pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 0];
+                                  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 0];
 
                           pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] =0;
-                                  pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 1];
+                                  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 1];
                           pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] =0;
-                                  pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
+                                  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
 
                       }
                     else{ // пустой PGM
