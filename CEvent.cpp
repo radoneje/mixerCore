@@ -62,6 +62,7 @@ CEvent::CEvent(std::string eventid) {
 
 void CEvent::showPres(unsigned char *data, std::string itemid) {
     try {
+        free(imageData.back().previewImageData);
         Magick::Image image;
         image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel,
                    data);
