@@ -84,7 +84,7 @@ void Ccmd::makeMainImage(std::string eventid,
                 }
                 else if (y<hh){ //top roq of inputs
                     if(y==0)
-                        std::cout<< (int)x/(CConfig::WIDTH*0.25)  <<std::endl;
+                        std::cout<< (int)(x/(CConfig::WIDTH*0.25))  <<std::endl;
                 }
                 else{ // пустой PGM
                     blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
