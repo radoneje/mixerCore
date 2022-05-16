@@ -33,90 +33,88 @@ void Ccmd::makeMainImage(std::string eventid,
                          CEvent *pEvent, std::function<void(std::string eventid)> onStart,
                          std::function<void(std::string eventid)> onEnd) {
 
-    try {
-        onStart(eventid);
-        int ww = CConfig::WIDTH / 4;
-        int hh = CConfig::HEIGHT / 4;
-        int memorySize = CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char);
+    //  try {
+    onStart(eventid);
+    int ww = CConfig::WIDTH / 4;
+    int hh = CConfig::HEIGHT / 4;
+    int memorySize = CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char);
 
-        unsigned char *blankImage = (unsigned char *) malloc(memorySize);
-        for (int i = 0; i < memorySize; i++) {
-            blankImage[i] = 0xff;
-            pEvent->mainImageData[i] = 0xff;
-        }
+    unsigned char *blankImage = (unsigned char *) malloc(memorySize);
+    for (int i = 0; i < memorySize; i++) {
+        blankImage[i] = 0xff;
+        pEvent->mainImageData[i] = 0xff;
+    }
 
-        Magick::InitializeMagick(nullptr);
-        Magick::Image image;
+    Magick::InitializeMagick(nullptr);
+    Magick::Image image;
 
-        image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, blankImage);
-       // free(blankImage);
-        // using namespace Magick;
+    image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, blankImage);
+    // free(blankImage);
+    // using namespace Magick;
 
 
-        long long i = 0;
-        auto start = std::chrono::high_resolution_clock::now();
-        while (true && !pEvent->stop) {
-            using namespace std::chrono_literals;
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            i++;
-            pEvent->locker.lock();
-            for(int x=0; x<CConfig::WIDTH; x++)
-                for(int y=0; i<CConfig::HEIGHT; y++){
-                    /// находим PGM
-                 ///   if(x<ww*3 && y>hh){
+    long long i = 0;
+    auto start = std::chrono::high_resolution_clock::now();
+    while (true && !pEvent->stop) {
+        using namespace std::chrono_literals;
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        i++;
+        pEvent->locker.lock();
+        for (int x = 0; x < CConfig::WIDTH; x++)
+            for (int y = 0; i < CConfig::HEIGHT; y++) {
+                /// находим PGM
+                ///   if(x<ww*3 && y>hh){
 
-                        //заполняем PGM
-                        pEvent->mainImageData[(x*3*y)+0] = 0xff;
-                        pEvent->mainImageData[(x*3*y)+1] = 0x00;
-                        pEvent->mainImageData[(x*3*y)+2] = 0x00;
-                    }
-
-                }
-            pEvent->locker.unlock();
-            ////////генерация превьюшек
-            for (int i = 0; i < CConfig::MAX_FACES; i++)//TODO: uncomment
-            {
-                //TODO: previewImageData-> заполнить и взять
-            /*    Magick::Image imageInput;
-                pEvent->locker.lock();
-                imageInput.read(CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
-                                pEvent->imageData[i].previewImageData);
-                pEvent->locker.unlock();
-                if (i < 4)
-                    image.composite(imageInput, ww * i, 0);
-                else
-                    image.composite(imageInput, ww * 3, (hh * (i - 3)));*/
-
+                //заполняем PGM
+                pEvent->mainImageData[(x * 3 * y) + 0] = 0xff;
+                pEvent->mainImageData[(x * 3 * y) + 1] = 0x00;
+                pEvent->mainImageData[(x * 3 * y) + 2] = 0x00;
             }
 
-            ///////// генерация презы
-          /*  if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
-                Magick::Image imageInput;
-                pEvent->locker.lock();
-                imageInput.read(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75, "RGB", MagickLib::CharPixel,
-                                pEvent->imageData[1].fullImageData);
-                pEvent->locker.unlock();
-                image.composite(imageInput, 0 ,hh);
-            }*/
-
-            auto end = std::chrono::high_resolution_clock::now();
-            std::chrono::duration<double, std::milli> elapsed = end - start;
-            //    std::cout << "render image " << i << " sleep: "
-            //   << (int) (std::chrono::milliseconds(1000 / FRAMERATE).count() - elapsed.count()) << endl;
-        std::cout<<"sleep "<< std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count()))<<std::endl;
-            std::this_thread::sleep_for(
-                    std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())));
-
-         //   pEvent->locker.lock();
-          //   image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, pEvent->mainImageData);
-         //   pEvent->locker.unlock();
-
-            start = std::chrono::high_resolution_clock::now();
-        }
     }
-    catch (...) {
-        CConfig::error("ERROR IN makeMainImage");
+    pEvent->locker.unlock();
+    ////////генерация превьюшек
+    for (int i = 0; i < CConfig::MAX_FACES; i++)//TODO: uncomment
+    {
+        //TODO: previewImageData-> заполнить и взять
+        /*    Magick::Image imageInput;
+            pEvent->locker.lock();
+            imageInput.read(CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
+                            pEvent->imageData[i].previewImageData);
+            pEvent->locker.unlock();
+            if (i < 4)
+                image.composite(imageInput, ww * i, 0);
+            else
+                image.composite(imageInput, ww * 3, (hh * (i - 3)));*/
+
     }
+
+    ///////// генерация презы
+    /*  if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
+          Magick::Image imageInput;
+          pEvent->locker.lock();
+          imageInput.read(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75, "RGB", MagickLib::CharPixel,
+                          pEvent->imageData[1].fullImageData);
+          pEvent->locker.unlock();
+          image.composite(imageInput, 0 ,hh);
+      }*/
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> elapsed = end - start;
+    //    std::cout << "render image " << i << " sleep: "
+    //   << (int) (std::chrono::milliseconds(1000 / FRAMERATE).count() - elapsed.count()) << endl;
+    std::cout<<"sleep "<< std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())).count()<<std::endl;
+    //   std::this_thread::sleep_for(
+    //          std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())));
+
+    //   pEvent->locker.lock();
+    //   image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, pEvent->mainImageData);
+    //   pEvent->locker.unlock();
+
+    start = std::chrono::high_resolution_clock::now();
+
+
+//  } catch (...) { CConfig::error("ERROR IN makeMainImage"); }
     onEnd(eventid);
 }
 
@@ -290,21 +288,22 @@ bool Ccmd::showPres(std::string fileName, std::string eventid, std::string itemi
     image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, buf);
     event->showPres(buf, itemid);
     free(buf);
-    CConfig::log("show pres id:",itemid,", event id:", eventid);
+    CConfig::log("show pres id:", itemid, ", event id:", eventid);
     return true;
 };
-bool  Ccmd::activateInput(std::string eventid,  int itemid){
+
+bool Ccmd::activateInput(std::string eventid, int itemid) {
 
     std::lock_guard<std::mutex> lock(_locker);
     if (_Events.find(eventid) == _Events.end())
         return false;
-    if(itemid>=CConfig::MAX_FACES)
+    if (itemid >= CConfig::MAX_FACES)
         return false;
-    auto event=_Events.at(eventid);
+    auto event = _Events.at(eventid);
     event->locker.lock();
     event->activeInputs.clear();
     event->activeInputs.push_back(itemid);
     event->locker.unlock();
-    CConfig::log("activate Input,",itemid,", event id:", eventid);
+    CConfig::log("activate Input,", itemid, ", event id:", eventid);
     return true;
 }
