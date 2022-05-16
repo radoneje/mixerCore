@@ -97,7 +97,7 @@ void Ccmd::makeMainImage(std::string eventid,
                 }
                 else if (x>ww*3 && y>hh) { //left row of inputs
                     int col=3;
-                    int inputX=x-(col*3*ww);
+                    int inputX=x-(3*ww);
                     int row=(int)(y/(hh));
                     int inputY=y-(row-1)*hh;
 
