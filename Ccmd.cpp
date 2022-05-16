@@ -78,17 +78,7 @@ void Ccmd::makeMainImage(std::string eventid,
                                   pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 1];
                           pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] =
                                   pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
-                     // }
-                     /*     std::cout<< " "<<  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[0]<<std::endl;
-                          std::cout<< pEvent->imageData.size()<< "size;" << std::endl;
-                          pEvent->imageData.end()->fullImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] =
-                                  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 0];
 
-                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] =0;
-                                  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 1];
-                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] =0;
-                                  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
-*/
                       }
                     else{ // пустой PGM
                         pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
@@ -98,9 +88,6 @@ void Ccmd::makeMainImage(std::string eventid,
                 }
             }
         pEvent->locker.unlock();
-    //    std::cout<<"after "<< i <<std::endl;
-
-
         ////////генерация превьюшек
         for (int i = 0; i < CConfig::MAX_FACES; i++)//TODO: uncomment
         {
@@ -129,9 +116,9 @@ void Ccmd::makeMainImage(std::string eventid,
 
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> elapsed = end - start;
-        std::cout << "sleep "
-                  << std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())).count()
-                  << std::endl;
+       // std::cout << "sleep "
+       //           << std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())).count()
+        //          << std::endl;
         std::this_thread::sleep_for(
                 std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())));
 
