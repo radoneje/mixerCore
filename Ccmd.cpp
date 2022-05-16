@@ -42,6 +42,7 @@ void Ccmd::makeMainImage(std::string eventid,
         unsigned char *blankImage = (unsigned char *) malloc(memorySize);
         for (int i = 0; i < memorySize; i++) {
             blankImage[i] = 0xff;
+            pEvent->mainImageData[i] = 0xff;
         }
 
         Magick::InitializeMagick(nullptr);
@@ -51,39 +52,51 @@ void Ccmd::makeMainImage(std::string eventid,
        // free(blankImage);
         // using namespace Magick;
 
+
         long long i = 0;
         auto start = std::chrono::high_resolution_clock::now();
         while (true && !pEvent->stop) {
             using namespace std::chrono_literals;
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
             i++;
+            pEvent->locker.lock();
+            for(int x=0; x<CConfig::WIDTH; x++)
+                for(int y=0; i<CConfig::HEIGHT; y++){
+                    /// находим MainScreen
+                    if(x<ww*3 && y>hh){
+                        //заполняем mainScreen
+                        pEvent->mainImageData[(x*3*y)+0] = 0xff;
+                        pEvent->mainImageData[(x*3*y)+1] = 0x00;
+                        pEvent->mainImageData[(x*3*y)+2] = 0x00;
+                    }
+
+                }
+            pEvent->locker.unlock()lock();
             ////////генерация превьюшек
             for (int i = 0; i < CConfig::MAX_FACES; i++)//TODO: uncomment
             {
                 //TODO: previewImageData-> заполнить и взять
-                Magick::Image imageInput;
+            /*    Magick::Image imageInput;
                 pEvent->locker.lock();
                 imageInput.read(CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
                                 pEvent->imageData[i].previewImageData);
                 pEvent->locker.unlock();
-                // imageInput.resize(Magick::Geometry(ww, hh));
                 if (i < 4)
                     image.composite(imageInput, ww * i, 0);
                 else
-                    image.composite(imageInput, ww * 3, (hh * (i - 3)));
+                    image.composite(imageInput, ww * 3, (hh * (i - 3)));*/
 
             }
 
             ///////// генерация презы
-            if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
+          /*  if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
                 Magick::Image imageInput;
                 pEvent->locker.lock();
                 imageInput.read(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75, "RGB", MagickLib::CharPixel,
                                 pEvent->imageData[1].fullImageData);
                 pEvent->locker.unlock();
                 image.composite(imageInput, 0 ,hh);
-            }
+            }*/
 
             auto end = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double, std::milli> elapsed = end - start;
@@ -92,9 +105,9 @@ void Ccmd::makeMainImage(std::string eventid,
             std::this_thread::sleep_for(
                     std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())));
 
-            pEvent->locker.lock();
-             image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, pEvent->mainImageData);
-            pEvent->locker.unlock();
+         //   pEvent->locker.lock();
+          //   image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, pEvent->mainImageData);
+         //   pEvent->locker.unlock();
 
             start = std::chrono::high_resolution_clock::now();
         }
