@@ -60,11 +60,10 @@ void Ccmd::makeMainImage(std::string eventid,
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         i++;
         pEvent->locker.lock();
-        std::cout<<"before "<< i <<std::endl;
         for (int y = 0; y < CConfig::HEIGHT; y++)
             for (int x = 0; x < CConfig::WIDTH; x++) {
-                /// находим PGM
-                ///   if(x<ww*3 && y>hh){
+                 находим PGM
+                   if(x<ww*3 && y>hh){
 
                 //заполняем PGM
                 pEvent->mainImageData[((x+(y*CConfig::WIDTH))*3) + 0] = 0xff;
@@ -72,9 +71,6 @@ void Ccmd::makeMainImage(std::string eventid,
                 pEvent->mainImageData[((x+(y*CConfig::WIDTH))*3) + 2] = 0x00;
             }
         pEvent->locker.unlock();
-        std::cout<<"after "<< i <<std::endl;
-
-
         ////////генерация превьюшек
         for (int i = 0; i < CConfig::MAX_FACES; i++)//TODO: uncomment
         {
