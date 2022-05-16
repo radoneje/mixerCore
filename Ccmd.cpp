@@ -68,9 +68,10 @@ void Ccmd::makeMainImage(std::string eventid,
                     int pgmX=x; // координаты PGM
                     int pgmY=y-hh;
                     ///////// генерация презы
-                    std::cout<< pEvent->imageData.size()<< "size;" << std::endl;
+
                       if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
-                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] =
+                          std::cout<< pEvent->imageData.size()<< "size;" << std::endl;
+                          pEvent->imageData.end()->[((x + (y * CConfig::WIDTH)) * 3) + 0] =
                                   pEvent->imageData.end()->fullImageData[((0) * 3) + 0];
                           pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] =0;
                                 //  pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 1];
