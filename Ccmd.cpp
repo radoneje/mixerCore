@@ -57,7 +57,6 @@ void Ccmd::makeMainImage(std::string eventid,
     auto start = std::chrono::high_resolution_clock::now();
     while (true && !pEvent->stop) {
         using namespace std::chrono_literals;
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
         i++;
         pEvent->locker.lock();
       //  std::cout<<"before "<< i <<std::endl;
