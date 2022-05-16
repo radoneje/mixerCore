@@ -104,21 +104,11 @@ void Ccmd::makeMainImage(std::string eventid,
 
         }
 
-        ///////// генерация презы
-        /*  if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
-              Magick::Image imageInput;
-              pEvent->locker.lock();
-              imageInput.read(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75, "RGB", MagickLib::CharPixel,
-                              pEvent->imageData[1].fullImageData);
-              pEvent->locker.unlock();
-              image.composite(imageInput, 0 ,hh);
-          }*/
 
         pEvent->locker.lock();
             free(pEvent->mainImageData);
-            std::memcpy( pEvent->mainImageData, blankImage, memorySize);
+            memcpy( pEvent->mainImageData, blankImage, memorySize);
         pEvent->locker.unlock();
-
 
 
         auto end = std::chrono::high_resolution_clock::now();
