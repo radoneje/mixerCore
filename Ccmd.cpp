@@ -85,6 +85,7 @@ void Ccmd::makeMainImage(std::string eventid,
                 else if (y<hh){ //top roq of inputs TODO: <= test
                         int col=(int)(x/(ww));
                         int inputX=x-col*ww;
+                    std::cout<<((int)(inputX + (y * ww)))<< " inputX "  <<inputX<<std::endl;
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] =
                                 pEvent->imageData[col].previewImageData[(int)((inputX + (y * ww)) * 3) + 0];
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] =
