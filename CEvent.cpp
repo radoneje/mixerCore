@@ -47,7 +47,13 @@ CEvent::CEvent(std::string eventid) {
     }
     SImageData imageDataItem;
     imageDataItem.fullImageData= (unsigned char*)malloc(imageSize);
+
+    for(int i=0;i<imageSize;i++)
+        imageDataItem.fullImageData[i]=0;
     imageDataItem.previewImageData=(unsigned char*)malloc(previewImageSize);
+    for(int i=0;i<previewImageSize;i++)
+        imageDataItem.previewImageData[i]=0;
+
     imageDataItem.itemid="";
     imageData.push_back(imageDataItem);
 }
