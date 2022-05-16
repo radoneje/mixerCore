@@ -95,13 +95,14 @@ void Ccmd::makeMainImage(std::string eventid,
                                    pEvent->imageData[col].previewImageData[(int) ((inputX + (y * ww)) * 3) + 2];
                        }
                 }
-                else if (x>ww*3 && y>hh) { //top roq of inputs
+                else if (x>ww*3 && y>hh) { //left row of inputs
                     int col=3;
                     int inputX=x-(col-3)*ww;
                     int row=(int)(y/(hh));
                     int inputY=y-(row-1)*hh;
                     if(pEvent->imageData.size()-1>col+row-1) {
-                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0]=0x55;
+                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0]=
+                                pEvent->imageData[col+row].previewImageData[(int) ((inputX + (y * ww-(hh*row))) * 3) + 0];
                     }
                 }
                 else{ // пустой PGM
