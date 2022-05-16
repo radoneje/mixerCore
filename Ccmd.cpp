@@ -82,7 +82,7 @@ void Ccmd::makeMainImage(std::string eventid,
                       }
 
                 }
-                else if (y<hh){ //top roq of inputs TODO: <= test
+                else if (y<=hh){ //top roq of inputs TODO: <= test
                         int col=(int)(x/(ww));
                         int inputX=x-col*ww;
                     //std::cout<<((x + (y * CConfig::WIDTH)) * 3) + 0<< " inputX "  <<(int)((inputX + (y * ww)) * 3) + 0<<std::endl;
