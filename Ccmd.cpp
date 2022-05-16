@@ -62,9 +62,10 @@ void Ccmd::makeMainImage(std::string eventid,
             pEvent->locker.lock();
             for(int x=0; x<CConfig::WIDTH; x++)
                 for(int y=0; i<CConfig::HEIGHT; y++){
-                    /// находим MainScreen
+                    /// находим PGM
                     if(x<ww*3 && y>hh){
-                        //заполняем mainScreen
+                        std::cout<<"inside PGM"<<std::endl;
+                        //заполняем PGM
                         pEvent->mainImageData[(x*3*y)+0] = 0xff;
                         pEvent->mainImageData[(x*3*y)+1] = 0x00;
                         pEvent->mainImageData[(x*3*y)+2] = 0x00;
