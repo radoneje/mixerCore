@@ -71,6 +71,7 @@ void Ccmd::makeMainImage(std::string eventid,
                 pEvent->mainImageData[(x * 3 * y) + 2] = 0x00;
             }
         pEvent->locker.unlock();
+        std::cout<<"outside"<<std::endl;
 
 
         ////////генерация превьюшек
