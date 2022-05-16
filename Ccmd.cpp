@@ -88,7 +88,7 @@ void Ccmd::makeMainImage(std::string eventid,
                         pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
                         pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0x00;
                         pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0xee;
-                  //  }
+                    }
                 }
             }
         pEvent->locker.unlock();
