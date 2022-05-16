@@ -60,7 +60,7 @@ void Ccmd::makeMainImage(std::string eventid,
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         i++;
         pEvent->locker.lock();
-        std::cout<<"before "<< i <<std::endl;
+      //  std::cout<<"before "<< i <<std::endl;
         for (int y = 0; y < CConfig::HEIGHT; y++)
             for (int x = 0; x < CConfig::WIDTH; x++) {
                 /// находим PGM
@@ -72,7 +72,7 @@ void Ccmd::makeMainImage(std::string eventid,
                 }
             }
         pEvent->locker.unlock();
-        std::cout<<"after "<< i <<std::endl;
+    //    std::cout<<"after "<< i <<std::endl;
 
 
         ////////генерация превьюшек
