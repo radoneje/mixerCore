@@ -68,8 +68,10 @@ void Ccmd::makeMainImage(std::string eventid,
                     int pgmX=x; // координаты PGM
                     int pgmY=y-hh;
                     ///////// генерация презы
-
-                   //   if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
+                    std::cout<< "before if "<<std::endl;
+                      if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
+                          std::cout<< "inside if "<<std::endl;
+                      }
                      /*     std::cout<< " "<<  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[0]<<std::endl;
                           std::cout<< pEvent->imageData.size()<< "size;" << std::endl;
                           pEvent->imageData.end()->fullImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] =
@@ -80,8 +82,8 @@ void Ccmd::makeMainImage(std::string eventid,
                           pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] =0;
                                   pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
 */
-                //      }
-                 //   else{ // пустой PGM
+                      }
+                    else{ // пустой PGM
                         pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
                         pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0x00;
                         pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0xee;
