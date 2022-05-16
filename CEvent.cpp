@@ -64,7 +64,7 @@ void CEvent::showPres(unsigned char *data, std::string itemid) {
     try {
 
         Magick::Image image;
-        locker.lock();
+
         image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel,
                    data);
         image.resize(Magick::Geometry(CConfig::WIDTH * 0.75, CConfig::HEIGHT * 0.75));
