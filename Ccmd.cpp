@@ -298,7 +298,7 @@ int Ccmd::startEvent(const std::string eventid) {
 
 bool Ccmd::showPres(std::string fileName, std::string eventid, std::string itemid) {
 
-    return  true;
+
     std::lock_guard<std::mutex> lock(_locker);
     if (_Events.find(eventid) == _Events.end())
         return false;
@@ -308,7 +308,7 @@ bool Ccmd::showPres(std::string fileName, std::string eventid, std::string itemi
     image.read(fileName);
     unsigned char *buf = (unsigned char *) malloc(CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char));
     image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, buf);
-    event->showPres(buf, itemid);
+   // event->showPres(buf, itemid);
     free(buf);
     CConfig::log("show pres id:", itemid, ", event id:", eventid);
     return true;
