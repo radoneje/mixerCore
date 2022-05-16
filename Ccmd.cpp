@@ -82,16 +82,27 @@ void Ccmd::makeMainImage(std::string eventid,
                       }
 
                 }
-                else if (y<=hh){ //top roq of inputs TODO: <= test
+                else if (y<=hh){ //top roq of inputs
                         int col=(int)(x/(ww));
                         int inputX=x-col*ww;
                     //std::cout<<((x + (y * CConfig::WIDTH)) * 3) + 0<< " inputX "  <<(int)((inputX + (y * ww)) * 3) + 0<<std::endl;
-                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] =
-                                pEvent->imageData[col].previewImageData[(int)((inputX + (y * ww)) * 3) + 0];
-                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1] =
-                                pEvent->imageData[col].previewImageData[(int)((inputX + (y * ww)) * 3) + 1];
-                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] =
-                                pEvent->imageData[col].previewImageData[(int)((inputX + (y * ww)) * 3) + 2];
+                       if(pEvent->imageData.size()-1>col) {
+                           blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] =
+                                   pEvent->imageData[col].previewImageData[(int) ((inputX + (y * ww)) * 3) + 0];
+                           blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1] =
+                                   pEvent->imageData[col].previewImageData[(int) ((inputX + (y * ww)) * 3) + 1];
+                           blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] =
+                                   pEvent->imageData[col].previewImageData[(int) ((inputX + (y * ww)) * 3) + 2];
+                       }
+                }
+                else if (x>ww*3 && y>hh) { //top roq of inputs
+                    int col=3;
+                    int inputX=x-(col-3)*ww;
+                    int row=(int)(y/(hh));
+                    int inputY=y-(row-1)*hh;
+                    if(pEvent->imageData.size()-1>col+row-1) {
+                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0]=0x55;
+                    }
                 }
                 else{ // пустой PGM
                     blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
