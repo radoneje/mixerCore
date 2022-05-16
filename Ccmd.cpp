@@ -106,7 +106,7 @@ void Ccmd::makeMainImage(std::string eventid,
 
 
         pEvent->locker.lock();
-            free(pEvent->mainImageData);
+          //  free(pEvent->mainImageData);
             memcpy( pEvent->mainImageData, blankImage, memorySize);
         pEvent->locker.unlock();
 
