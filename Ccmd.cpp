@@ -298,7 +298,7 @@ int Ccmd::startEvent(const std::string eventid) {
 
 bool Ccmd::showPres(std::string fileName, std::string eventid, std::string itemid) {
 
-
+    return  true;
     std::lock_guard<std::mutex> lock(_locker);
     if (_Events.find(eventid) == _Events.end())
         return false;
