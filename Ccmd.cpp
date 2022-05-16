@@ -73,6 +73,7 @@ void Ccmd::makeMainImage(std::string eventid,
                           std::cout<< pEvent->imageData.size()<< "size;" << std::endl;
                           pEvent->imageData.end()->fullImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] =
                                   pEvent->imageData.end()->fullImageData[((0) * 3) + 0];
+
                           pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] =0;
                                 //  pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 1];
                           pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] =0;
