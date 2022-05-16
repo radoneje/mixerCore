@@ -58,7 +58,7 @@ void Ccmd::makeMainImage(std::string eventid,
     while (true && !pEvent->stop) {
         using namespace std::chrono_literals;
         i++;
-        pEvent->locker.lock();
+
       //  std::cout<<"before "<< i <<std::endl;
         for (int y = 0; y < CConfig::HEIGHT; y++)
             for (int x = 0; x < CConfig::WIDTH; x++) {
@@ -72,22 +72,22 @@ void Ccmd::makeMainImage(std::string eventid,
                       if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
                          // std::cout<< "inside if "<<std::endl;
                           //std::cout<< pEvent->imageData.size()<< "size; " << pEvent->activeInputs[0] <<std::endl;
-                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] =
+                          blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] =
                                   pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 0];
-                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] =
+                          blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1] =
                                   pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 1];
-                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] =
+                          blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] =
                                   pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
 
                       }
                     else{ // пустой PGM
-                        pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
-                        pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0xf0;
-                        pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0x00;
+                          blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
+                          blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0xf0;
+                          blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0x00;
                     }
                 }
             }
-        pEvent->locker.unlock();
+
         ////////генерация превьюшек
         for (int i = 0; i < CConfig::MAX_FACES; i++)//TODO: uncomment
         {
@@ -113,6 +113,13 @@ void Ccmd::makeMainImage(std::string eventid,
               pEvent->locker.unlock();
               image.composite(imageInput, 0 ,hh);
           }*/
+
+        pEvent->locker.lock();
+            free(pEvent->mainImageData);
+            std::memcpy( pEvent->mainImageData, blankImage, memorySize);
+        pEvent->locker.unlock();
+
+
 
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> elapsed = end - start;
