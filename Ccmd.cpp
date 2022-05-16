@@ -97,7 +97,7 @@ void Ccmd::makeMainImage(std::string eventid,
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] =
                                 pEvent->imageData[col].previewImageData[(int)((inputX + (y * ww)) * 3) + 2];*/
                         //
-                       // std::cout<<col<< " col "  <<inputX<<std::endl;
+                       //
                 }
                 else{ // пустой PGM
                     blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
