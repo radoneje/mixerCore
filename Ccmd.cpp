@@ -83,7 +83,7 @@ void Ccmd::makeMainImage(std::string eventid,
 
                 }
                 else if (y<=hh){ //top roq of inputs
-                        int col=(int)(x/(ww);
+                        int col=(int)(x/(ww));
                         int inputX=x-col*ww;
 
                         std::cout<<col<< " col "  <<inputX<<std::endl;
