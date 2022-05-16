@@ -72,7 +72,9 @@ void Ccmd::makeMainImage(std::string eventid,
                       if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
                          // std::cout<< "inside if "<<std::endl;
                           //std::cout<< pEvent->imageData.size()<< "size; " << pEvent->activeInputs[0] <<std::endl;
-                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] =0x3f;
+                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
+                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0x00;
+                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0xff;
                      // }
                      /*     std::cout<< " "<<  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[0]<<std::endl;
                           std::cout<< pEvent->imageData.size()<< "size;" << std::endl;
@@ -87,8 +89,8 @@ void Ccmd::makeMainImage(std::string eventid,
                       }
                     else{ // пустой PGM
                         pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
-                        pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0x00;
-                        pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0xee;
+                        pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0xf0;
+                        pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0x00;
                     }
                 }
             }
