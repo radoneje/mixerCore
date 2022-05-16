@@ -72,6 +72,7 @@ void Ccmd::makeMainImage(std::string eventid,
                       if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
                           std::cout<< "inside if "<<std::endl;
                           std::cout<< pEvent->imageData.size()<< "size; " << pEvent->activeInputs[0] <<std::endl;
+                          pEvent->imageData.end()->fullImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] =0x3f;
                      // }
                      /*     std::cout<< " "<<  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[0]<<std::endl;
                           std::cout<< pEvent->imageData.size()<< "size;" << std::endl;
