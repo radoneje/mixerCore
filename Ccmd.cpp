@@ -100,6 +100,9 @@ void Ccmd::makeMainImage(std::string eventid,
                     int inputX=x-(col-3)*ww;
                     int row=(int)(y/(hh));
                     int inputY=y-(row-1)*hh;
+
+                    std::cout<<inputX<< " inputX "  <<inputY<<std::endl;
+
                     if(pEvent->imageData.size()-1>col+row-1) {
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0]=
                                 pEvent->imageData[col+row].previewImageData[(int) ((inputX + (y * ww-(hh*row))) * 3) + 0];
