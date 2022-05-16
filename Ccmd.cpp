@@ -67,9 +67,9 @@ void Ccmd::makeMainImage(std::string eventid,
                 ///   if(x<ww*3 && y>hh){
 
                 //заполняем PGM
-                pEvent->mainImageData[(x*3+(y*(x*3))) + 0] = 0xff;
-                pEvent->mainImageData[(x*3+(y*(x*3))) + 1] = 0x00;
-                pEvent->mainImageData[(x*3+(y*(x*3))) + 2] = 0x00;
+                pEvent->mainImageData[((x+(y*CConfig::WIDTH))*3) + 0] = 0xff;
+                pEvent->mainImageData[((x+(y*CConfig::WIDTH))*3) + 1] = 0x00;
+                pEvent->mainImageData[((x+(y*CConfig::WIDTH))*3) + 2] = 0x00;
             }
         pEvent->locker.unlock();
         std::cout<<"after "<< i <<std::endl;
