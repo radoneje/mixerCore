@@ -65,9 +65,23 @@ void Ccmd::makeMainImage(std::string eventid,
                 /// находим PGM
                 if(x<ww*3 && y>hh) {
                     //заполняем PGM
-                    pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0xff;
-                    pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0x00;
-                    pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0x00;
+                    int pgmX=x; // координаты PGM
+                    int pgmY=y-hh;
+                    ///////// генерация презы
+                      if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
+                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] =
+                                  pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 0];
+                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] =
+                                  pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
+                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] =
+                                  pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 3];
+
+                      }
+                    else{ // пустой PGM
+                        pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
+                        pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0x00;
+                        pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0x33;
+                    }
                 }
             }
         pEvent->locker.unlock();
@@ -102,17 +116,12 @@ void Ccmd::makeMainImage(std::string eventid,
 
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> elapsed = end - start;
-        //    std::cout << "render image " << i << " sleep: "
-        //   << (int) (std::chrono::milliseconds(1000 / FRAMERATE).count() - elapsed.count()) << endl;
         std::cout << "sleep "
                   << std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())).count()
                   << std::endl;
         std::this_thread::sleep_for(
                 std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())));
 
-        //   pEvent->locker.lock();
-        //   image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, pEvent->mainImageData);
-        //   pEvent->locker.unlock();
 
         start = std::chrono::high_resolution_clock::now();
     }
