@@ -72,9 +72,9 @@ void Ccmd::makeMainImage(std::string eventid,
                           pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] =
                                   pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 0];
                           pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] =
-                                  pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
+                                  pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 1];
                           pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] =
-                                  pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 3];
+                                  pEvent->imageData.end()->fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
 
                       }
                     else{ // пустой PGM
