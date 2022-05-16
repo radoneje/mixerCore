@@ -62,8 +62,8 @@ CEvent::CEvent(std::string eventid) {
 
 void CEvent::showPres(unsigned char *data, std::string itemid) {
     try {
-        free(imageData.back().previewImageData);
-        Magick::Image image;
+
+    /*    Magick::Image image;
         image.read(CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel,
                    data);
         image.resize(Magick::Geometry(CConfig::WIDTH * 0.75, CConfig::HEIGHT * 0.75));
@@ -72,8 +72,23 @@ void CEvent::showPres(unsigned char *data, std::string itemid) {
                         imageData.back().fullImageData);
             image.resize(Magick::Geometry(CConfig::WIDTH * 0.25, CConfig::HEIGHT * 0.25));
             image.write(0, 0, CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
-                        imageData.back().previewImageData);
+                        imageData.back().previewImageData);*/
 
+        locker.lock();
+        int previewImageSize = (CConfig::WIDTH / 4) * (CConfig::HEIGHT / 4) * 3 * sizeof(unsigned char);
+        free( imageData.back().previewImageData);
+        imageData.back().previewImageData=(unsigned char*)malloc(previewImageSize);
+
+        int ImageSize = ((int)(CConfig::WIDTH * 0.75)) * ((int)(CConfig::HEIGHT * 0.75)) * 3 * sizeof(unsigned char);
+        free( imageData.back().fullImageData);
+        imageData.back().fullImageData=(unsigned char*)malloc(ImageSize);
+
+        for (int i = 0; i < previewImageSize; i++) {
+            imageData.back().previewImageData[i]=0x44;
+        }
+        for (int i = 0; i < ImageSize; i++) {
+            imageData.back().fullImageData[i]=0x44;
+        }
 
             activeInputs.clear();
             activeInputs.push_back(CConfig::MAX_FACES);
