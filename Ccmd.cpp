@@ -61,8 +61,8 @@ void Ccmd::makeMainImage(std::string eventid,
         i++;
         pEvent->locker.lock();
         std::cout<<"before "<< i <<std::endl;
-        for (int x = 0; x < CConfig::WIDTH; x++)
-            for (int y = 0; i < CConfig::HEIGHT; y++) {
+        for (int y = 0; y < CConfig::HEIGHT; y++)
+            for (int x = 0; x < CConfig::WIDTH; x++) {
                 /// находим PGM
                 ///   if(x<ww*3 && y>hh){
 
