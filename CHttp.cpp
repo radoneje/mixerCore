@@ -69,12 +69,13 @@ void CHttp::init(int port, Ccmd *pCmd) {
                 CConfig::log("/mixer/activatePresImg", eventid);
 
                 if (req.has_file("image")) {
-                    const auto &file = req.get_file_value("image");
+                   // const auto &file = req.get_file_value("image");
                     std::ofstream myfile;
                     std::string fileName("/tmp/pres" + eventid + ".png");
                     myfile.open(fileName);
-                    myfile << file.content;
+                   // myfile << file.content;
                     myfile.close();
+
                     std::string jsonResponce;
                     if (pCmd->showPres(fileName, eventid, imageid))
                         jsonResponce = ("{\"error\":false, \"presFileId\":\"" + imageid + "\"}");
