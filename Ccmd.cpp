@@ -71,7 +71,7 @@ void Ccmd::makeMainImage(std::string eventid,
                     }
 
                 }
-            pEvent->locker.unlock()lock();
+            pEvent->locker.unlock();
             ////////генерация превьюшек
             for (int i = 0; i < CConfig::MAX_FACES; i++)//TODO: uncomment
             {
