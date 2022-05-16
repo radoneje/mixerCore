@@ -63,8 +63,8 @@ void Ccmd::makeMainImage(std::string eventid,
             for(int x=0; x<CConfig::WIDTH; x++)
                 for(int y=0; i<CConfig::HEIGHT; y++){
                     /// находим PGM
-                    if(x<ww*3 && y>hh){
-                        std::cout<<"inside PGM"<<std::endl;
+                 ///   if(x<ww*3 && y>hh){
+
                         //заполняем PGM
                         pEvent->mainImageData[(x*3*y)+0] = 0xff;
                         pEvent->mainImageData[(x*3*y)+1] = 0x00;
@@ -103,6 +103,7 @@ void Ccmd::makeMainImage(std::string eventid,
             std::chrono::duration<double, std::milli> elapsed = end - start;
             //    std::cout << "render image " << i << " sleep: "
             //   << (int) (std::chrono::milliseconds(1000 / FRAMERATE).count() - elapsed.count()) << endl;
+        std::cout<<"sleep "<< std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count()))<<std::endl;
             std::this_thread::sleep_for(
                     std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())));
 
