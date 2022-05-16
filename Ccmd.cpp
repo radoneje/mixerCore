@@ -80,15 +80,16 @@ void Ccmd::makeMainImage(std::string eventid,
                                   pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
 
                       }
-                      else if (y<hh){ //top roq of inputs
-                          if(y==0)
-                              std::cout<< (int)x/(CConfig::WIDTH*0.25)  <<std::endl;
-                      }
-                    else{ // пустой PGM
-                          blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
-                          blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0xf0;
-                          blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0x00;
-                    }
+
+                }
+                else if (y<hh){ //top roq of inputs
+                    if(y==0)
+                        std::cout<< (int)x/(CConfig::WIDTH*0.25)  <<std::endl;
+                }
+                else{ // пустой PGM
+                    blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
+                    blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0xf0;
+                    blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0x00;
                 }
             }
 
