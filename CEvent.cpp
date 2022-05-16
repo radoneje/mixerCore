@@ -72,9 +72,9 @@ void CEvent::showPres(unsigned char * data, std::string itemid){
         image.write(0, 0, CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
                     imageData.back().previewImageData);*/
         locker.lock();
-        activeInputs.clear();
-        activeInputs.push_back(1);//CConfig::MAX_FACES);
-        imageData.back().itemid = itemid;
+           // activeInputs.clear();
+            activeInputs.push_back(1);//CConfig::MAX_FACES);
+            imageData.back().itemid = itemid;
         locker.unlock();
     }
     catch(...)
