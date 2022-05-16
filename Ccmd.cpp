@@ -74,8 +74,10 @@ void Ccmd::makeMainImage(std::string eventid,
                           //std::cout<< pEvent->imageData.size()<< "size; " << pEvent->activeInputs[0] <<std::endl;
                           pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 0] =
                                   pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 0];
-                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0x00;
-                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0xff;
+                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 1] =
+                                  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 1];
+                          pEvent->mainImageData[((x + (y * CConfig::WIDTH)) * 3) + 2] =
+                                  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
                      // }
                      /*     std::cout<< " "<<  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[0]<<std::endl;
                           std::cout<< pEvent->imageData.size()<< "size;" << std::endl;
