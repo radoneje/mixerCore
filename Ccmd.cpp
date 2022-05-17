@@ -101,6 +101,7 @@ void Ccmd::makeMainImage(std::string eventid,
                     int row=(int)(y/(hh));
                     int inputY=(row-1)*hh;
 
+                    int imgNum=((int)(y/(hh)))+3;
                  //   if(y==710)
 
                     int pixelx=x-ww*3;
@@ -109,19 +110,12 @@ void Ccmd::makeMainImage(std::string eventid,
                     int pixelNum=(pixelx +(pixely*ww))*3;
                    // if(pEvent->imageData.size()-1>col+row-1)
                     {
-                        auto ch= blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0];
-                        auto ch1= pEvent->imageData[0].previewImageData[pixelNum + 0];
-                        std::cout<<" 0"<<std::endl;
-                        if(ch1!=0)
-                           std::cout<<"more 0"<<ch1<<std::endl;
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0]=
-                                pEvent->imageData[col].previewImageData[pixelNum + 0];
-                        //        pEvent->imageData[0].previewImageData[pixelNum + 0];
-                       // 0x44;
+                                pEvent->imageData[imgNum].previewImageData[pixelNum + 0];
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1]=
-                                pEvent->imageData[col].previewImageData[pixelNum + 1];
+                                pEvent->imageData[imgNum].previewImageData[pixelNum + 1];
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2]=
-                                pEvent->imageData[col].previewImageData[pixelNum + 2];
+                                pEvent->imageData[imgNum].previewImageData[pixelNum + 2];
 
                     }
                 }

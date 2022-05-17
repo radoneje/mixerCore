@@ -19,7 +19,7 @@ CEvent::CEvent(std::string eventid) {
     startTime = std::chrono::system_clock::now().time_since_epoch().count();
     _eventid = eventid;
     stop = false;
-    int imageSize = CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char);
+    int imageSize = (CConfig::WIDTH*0.75) * (CConfig::HEIGHT*0.75) * 3 * sizeof(unsigned char);
     int previewImageSize = (CConfig::WIDTH / 4) * (CConfig::HEIGHT / 4) * 3 * sizeof(unsigned char);
     mainImageData = (unsigned char *) malloc(CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char));
 
@@ -39,7 +39,7 @@ CEvent::CEvent(std::string eventid) {
         Magick::InitializeMagick(nullptr);
         Magick::Image image;
         image.read(fileName.c_str());
-
+        image.resize(Magick::Geometry(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75));
         image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, imageDataItem.fullImageData);
         image.resize(Magick::Geometry(CConfig::WIDTH / 4, CConfig::HEIGHT / 4));
         image.write(0, 0, CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
