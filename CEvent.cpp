@@ -25,27 +25,9 @@ CEvent::CEvent(std::string eventid) {
 
 
     for (int i = 0; i < CConfig::MAX_FACES; i++) {
-        std::string fileName("/etc/mixerCore/images/notconnected");
-        fileName.append(std::to_string(i + 1));
-        fileName.append(".png");
-        int h = CConfig::HEIGHT;
-        int w = CConfig::WIDTH;
 
-        SImageData imageDataItem;
-        imageDataItem.fullImageData = (unsigned char *) malloc(imageSize);
-        imageDataItem.previewImageData = (unsigned char *) malloc(previewImageSize);
-        imageDataItem.itemid = "";
 
-        Magick::InitializeMagick(nullptr);
-        Magick::Image image;
-        image.read(fileName.c_str());
-        image.resize(Magick::Geometry(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75));
-        image.write(0, 0, CConfig::WIDTH*0.75, CConfig::HEIGHT*0.75, "RGB", MagickLib::CharPixel, imageDataItem.fullImageData);
-        image.resize(Magick::Geometry(CConfig::WIDTH / 4, CConfig::HEIGHT / 4));
-        image.write(0, 0, CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
-                    imageDataItem.previewImageData);
-
-        imageData.push_back(imageDataItem);
+        imageData.push_back(loadDefaultInput(i));
     }
     SImageData imageDataItem;
     imageDataItem.fullImageData = (unsigned char *) malloc(imageSize);
@@ -60,6 +42,32 @@ CEvent::CEvent(std::string eventid) {
     imageDataItem.itemid = "";
     imageData.push_back(imageDataItem);
 }
+CEvent::SImageData CEvent::loadDefaultInput(int inputNo){
+    int imageSize = (CConfig::WIDTH*0.75) * (CConfig::HEIGHT*0.75) * 3 * sizeof(unsigned char);
+    int previewImageSize = (CConfig::WIDTH / 4) * (CConfig::HEIGHT / 4) * 3 * sizeof(unsigned char);
+
+
+    std::string fileName("/etc/mixerCore/images/notconnected");
+    fileName.append(std::to_string(inputNo + 1));
+    fileName.append(".png");
+    int h = CConfig::HEIGHT;
+    int w = CConfig::WIDTH;
+
+    SImageData imageDataItem;
+    imageDataItem.fullImageData = (unsigned char *) malloc(imageSize);
+    imageDataItem.previewImageData = (unsigned char *) malloc(previewImageSize);
+    imageDataItem.itemid = "";
+
+    Magick::InitializeMagick(nullptr);
+    Magick::Image image;
+    image.read(fileName.c_str());
+    image.resize(Magick::Geometry(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75));
+    image.write(0, 0, CConfig::WIDTH*0.75, CConfig::HEIGHT*0.75, "RGB", MagickLib::CharPixel, imageDataItem.fullImageData);
+    image.resize(Magick::Geometry(CConfig::WIDTH / 4, CConfig::HEIGHT / 4));
+    image.write(0, 0, CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
+                imageDataItem.previewImageData);
+    return imageDataItem;
+};
 
 void CEvent::showPres(unsigned char *data, std::string itemid) {
     try {
@@ -76,23 +84,6 @@ void CEvent::showPres(unsigned char *data, std::string itemid) {
             image.write(0, 0, CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
                         imageData.back().previewImageData);
 
-
-
-       /* int previewImageSize = (CConfig::WIDTH / 4) * (CConfig::HEIGHT / 4) * 3 * sizeof(unsigned char);
-        free( imageData.back().previewImageData);
-        imageData.back().previewImageData=(unsigned char*)malloc(previewImageSize);
-
-        int ImageSize = ((int)(CConfig::WIDTH * 0.75)) * ((int)(CConfig::HEIGHT * 0.75)) * 3 * sizeof(unsigned char);
-        free( imageData.back().fullImageData);
-        imageData.back().fullImageData=(unsigned char*)malloc(ImageSize);
-
-        for (int i = 0; i < previewImageSize; i++) {
-            imageData.back().previewImageData[i]=0x44;
-        }
-        for (int i = 0; i < ImageSize; i++) {
-            imageData.back().fullImageData[i]=0x44;
-        }*/
-
             activeInputs.clear();
             activeInputs.push_back(CConfig::MAX_FACES);
             imageData.back().itemid = itemid;
@@ -102,3 +93,30 @@ void CEvent::showPres(unsigned char *data, std::string itemid) {
         CConfig::error("Error cmd::showPres");
     };
 };
+bool CEvent::onInputStart(int inputNo){
+    CConfig::log("Input Start", _eventid, inputNo);
+    if(inputs.find(inputNo)!=inputs.end()) {
+        CConfig::error("input already started");
+        return false;
+    }
+    CEvent::SInputData *inputData= new SInputData();
+    const auto p1 = std::chrono::system_clock::now();
+    inputData->time_start=p1.time_since_epoch().count();
+    locker.lock();
+    inputs.insert({inputNo,inputData });
+    locker.unlock();
+    return  true;
+  //  std::map<int,SInputData*> inputs;
+
+}
+void CEvent::onInputEnd(int inputNo){
+    CConfig::log("Input Stop", _eventid, inputNo);
+    if(inputs.find(inputNo)==inputs.end()) {
+        CConfig::error("input not present");
+        return;
+    }
+    locker.lock();
+    inputs.erase(inputNo);
+    imageData[inputNo]=loadDefaultInput(inputNo);
+    locker.unlock();
+}

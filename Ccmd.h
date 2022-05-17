@@ -29,8 +29,6 @@ class Ccmd {
         static std::mutex _locker;
     public:
 
-
-
         std::vector<CFFreader>  FFreader;
         std::vector<int> activeTextureId;
 

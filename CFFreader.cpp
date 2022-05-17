@@ -47,7 +47,6 @@ CFFreader::CFFreader(){
 }
 
 int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Data &pData){
-    std::cout <<"in Worker" << " " <<url << std::endl;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
     AVFormatContext *ctx_format = nullptr;
@@ -73,11 +72,11 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
         std::cout <<"ERROR avformat  " << 1 << std::endl;
         return 0;
     }
-    std::cout <<"in Worker01"<<  CConfig::WIDTH << " " <<url << std::endl;
+
 
     ctx_format->probesize=100000;
    // ctx_format->max_analyze_duration=32000;
-    std::cout <<"in Worker 3"<<  CConfig::WIDTH << " " <<url << std::endl;
+
     std::cout <<"probesize  " << ctx_format->probesize << " max_analyze_duration "<<ctx_format->max_analyze_duration << std::endl;
 
 
@@ -186,7 +185,8 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
         std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
         return 0;  //Error!
     }
-
+    if(!pEvent->onInputStart(inputNum))
+        return 0;
     while (av_read_frame(ctx_format, pkt) >= 0) {
         //
 
@@ -296,6 +296,7 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
         pData->height = 0;
         pData->frameNumber = -1;*/
     }
+    pEvent->onInputEnd(inputNum);
     std::this_thread::sleep_for(std::chrono::milliseconds(frameDur));
 
     av_packet_unref(pkt);
