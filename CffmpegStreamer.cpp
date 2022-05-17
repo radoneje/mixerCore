@@ -180,7 +180,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
             onEnd(eventid);
             return;
         }
-        ret = avformat_write_header(ofmt_ctx, options);
+        ret = avformat_write_header(ofmt_ctx, &options);
         if (ret < 0) {
 
             CConfig::error("Error avformat_write_header");
