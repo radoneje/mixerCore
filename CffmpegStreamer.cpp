@@ -246,7 +246,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
                 //pkt->duration = (1000 / enc_ctx->time_base.den) * (j + 1);
                 pkt->pos = -1;
                 pkt->pts=frame->pts;
-                pkt->dts=frame->pts-10;
+                pkt->dts=frame->pts-1;
 
 
                 j = 0;
