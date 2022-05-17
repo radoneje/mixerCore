@@ -219,9 +219,9 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
             int must = (1000) * frame->pts;
             int fact = now_time - startTime;
             if (must > fact) {
-               // av_usleep(must - fact);
+                av_usleep(must - fact-30);
             }
-            av_usleep(6500);
+           // av_usleep(6500);
 
 
             ret = avcodec_send_frame(enc_ctx, frame);
