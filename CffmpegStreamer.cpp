@@ -232,12 +232,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
                 frame->pts = 0;
                 startTime = av_gettime();
             }
-            int64_t now_time = av_gettime();// - startTime;
-            int must = (1000) * frame->pts;
-            int fact = now_time - startTime;
-            if (must > fact) {
-                av_usleep(must - fact);
-            }
+
            // av_usleep(6500);
 
 
@@ -262,6 +257,12 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
                 pkt->pts=frame->pts;
                 pkt->dts=frame->pts;
 
+                int64_t now_time = av_gettime();// - startTime;
+                int must = (1000) * frame->pts*j;
+                int fact = now_time - startTime;
+                if (must > fact) {
+                    av_usleep(must - fact);
+                }
 
                 j = 0;
                 av_interleaved_write_frame(ofmt_ctx, pkt);
