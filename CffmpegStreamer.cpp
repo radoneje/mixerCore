@@ -122,15 +122,15 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
             CConfig::error("Codec AV_CODEC_ID_H264 not found");
             onEnd(eventid);
             return;
-        }
+        }*/
         enc_ctx = avcodec_alloc_context3(encoder);
-        /* put sample parameters */
+
         enc_ctx->bit_rate = CConfig::MIXER_BITRATE;
         /* resolution must be a multiple of two */
         enc_ctx->width = CConfig::WIDTH;
         enc_ctx->height = CConfig::HEIGHT;
 
-        std::cout<<"avcodec_find_encoder 1"<<std::endl;
+
 
         /* frames per second */
         enc_ctx->time_base = (AVRational) {1, CConfig::FRAMERATE};
