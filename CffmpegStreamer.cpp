@@ -61,7 +61,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
       //  avcodec_register_all();
 
         AVStream *out_stream;
-        const AVOutputFormat *oformat;// = nullptr;
+         AVOutputFormat *oformat;// = nullptr;
         AVFormatContext *ofmt_ctx = NULL;
         const AVCodec *encoder;
 
@@ -180,7 +180,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
             onEnd(eventid);
             return;
         }
-        ret = avformat_write_header(ofmt_ctx, 0);
+        ret = avformat_write_header(ofmt_ctx, options);
         if (ret < 0) {
 
             CConfig::error("Error avformat_write_header");
