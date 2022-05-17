@@ -61,6 +61,8 @@ add_definitions(
 
 
 set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -O0" CACHE STRING "")
+
 
 add_executable(mixerCore main.cpp CTextureData.cpp CTextureData.h  CHttp.cpp CHttp.h CConfig.cpp CConfig.h SOIL.h Ccmd.cpp Ccmd.h CFFreader.cpp CFFreader.h CffmpegStreamer.cpp CffmpegStreamer.h SstreamData.cpp SstreamData.h CEvent.cpp CEvent.h)
 

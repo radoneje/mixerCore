@@ -32,7 +32,7 @@ std::mutex Ccmd::_locker;
 void Ccmd::makeMainImage(std::string eventid,
                          CEvent *pEvent, std::function<void(std::string eventid)> onStart,
                          std::function<void(std::string eventid)> onEnd) {
-
+    std::cout<< " makeMainImage "  <<std::endl;
     //  try {
     onStart(eventid);
     int ww = CConfig::WIDTH / 4;
@@ -82,7 +82,7 @@ void Ccmd::makeMainImage(std::string eventid,
                       }
 
                 }
-                else if (y<=hh){ //top roq of inputs
+                else if (y<hh){ //top roq of inputs
                         int col=(int)(x/(ww));
                         int inputX=x-col*ww;
                     //std::cout<<((x + (y * CConfig::WIDTH)) * 3) + 0<< " inputX "  <<(int)((inputX + (y * ww)) * 3) + 0<<std::endl;
@@ -95,22 +95,33 @@ void Ccmd::makeMainImage(std::string eventid,
                                    pEvent->imageData[col].previewImageData[(int) ((inputX + (y * ww)) * 3) + 2];
                        }
                 }
-                else if (x>ww*3 && y>hh) { //left row of inputs
+                else if (x>=ww*3 && y>=hh) { //left row of inputs
                     int col=3;
                     int inputX=x-(col*ww);
                     int row=(int)(y/(hh));
-                    int inputY=y-(row-1)*hh;
+                    int inputY=(row-1)*hh;
 
-                    if(y==710)
-                    std::cout<<inputX<< " inputX "  <<inputY<<std::endl;
+                 //   if(y==710)
 
-                    if(pEvent->imageData.size()-1>col+row-1) {
+                    int pixelx=x-ww*3;
+                    int pixely=y-hh*row;
+
+                    int pixelNum=(pixelx +(pixely*ww))*3;
+                   // if(pEvent->imageData.size()-1>col+row-1)
+                    {
+                        auto ch= blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0];
+                        auto ch1= pEvent->imageData[0].previewImageData[pixelNum + 0];
+                        std::cout<<" 0"<<std::endl;
+                        if(ch1!=0)
+                           std::cout<<"more 0"<<ch1<<std::endl;
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0]=
-                                pEvent->imageData[4].previewImageData[(int) ((inputX + inputY) * 3) + 0];
+                                pEvent->imageData[col].previewImageData[pixelNum + 0];
+                        //        pEvent->imageData[0].previewImageData[pixelNum + 0];
+                       // 0x44;
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1]=
-                                pEvent->imageData[4].previewImageData[(int) ((inputX + inputY) * 3) + 1];
+                                pEvent->imageData[col].previewImageData[pixelNum + 1];
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2]=
-                                pEvent->imageData[4].previewImageData[(int) ((inputX + inputY) * 3) + 2];
+                                pEvent->imageData[col].previewImageData[pixelNum + 2];
 
                     }
                 }

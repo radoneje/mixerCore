@@ -23,6 +23,7 @@ CEvent::CEvent(std::string eventid) {
     int previewImageSize = (CConfig::WIDTH / 4) * (CConfig::HEIGHT / 4) * 3 * sizeof(unsigned char);
     mainImageData = (unsigned char *) malloc(CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char));
 
+
     for (int i = 0; i < CConfig::MAX_FACES; i++) {
         std::string fileName("/etc/mixerCore/images/notconnected");
         fileName.append(std::to_string(i + 1));
