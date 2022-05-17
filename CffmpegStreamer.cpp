@@ -123,6 +123,8 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
             onEnd(eventid);
             return;
         }*/
+
+        std::cout<<"encoderName"<< encoderName<<std::endl;
         enc_ctx = avcodec_alloc_context3(encoder);
 
         enc_ctx->bit_rate = CConfig::MIXER_BITRATE;
@@ -144,7 +146,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
 
 
         std::string encoderName=encoder->name;
-        std::cout<<"encoderName"<< encoderName<<std::endl;
+
         if(encoderName==std::string("libx264")) {
             av_dict_set(&opts, "preset", "fast", 0);
             av_dict_set(&opts, "tune", "zerolatency", 0);
