@@ -26,6 +26,7 @@ private:
 public:
     CffmpegStreamer();
     static void startStream( const std::string eventid, CEvent *pEvent,  std::function<void(std::string )> onStart,   std::function<void(std::string)> onEnd);
+
     int init();
 };
 

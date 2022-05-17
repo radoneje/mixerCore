@@ -51,17 +51,16 @@ void CHttp::init(int port, Ccmd *pCmd) {
 
     svr.Get("/mixer/startInput", [&](const httplib::Request &req, httplib::Response &res) {
         res.set_content("{\"err\":false}", "application/json");
-        bool ret=pCmd->startReadStream(
+        pCmd->startReadStream(
                 req.get_param_value("url"),
                 req.get_param_value("eventid"),
                 std::stoi(req.get_param_value("id"))/*,
                 (Ccmd::vFunctionCall)Ccmd::notifyStreamStarted,
                 (Ccmd::vFunctionCall)Ccmd::notifyStreamEnded*/
         );
-        if(ret)
+
             res.set_content("{\"error\":false}", "application/json");
-        else
-            res.set_content("{\"error\":true}", "application/json");
+
 
     });
     svr.Post(

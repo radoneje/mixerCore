@@ -223,7 +223,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
 
             ret = avcodec_send_frame(enc_ctx, frame);
             if (ret < 0) {
-                fprintf(stderr, "Error sending a frame to the encoder: %s\n", i);
+                CConfig::error( "Error sending a frame to the encoder: ", i);
                 return;
             }
             while (ret >= 0) {
@@ -233,7 +233,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
                 if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
                     break;
                 else if (ret < 0) {
-                    fprintf(stderr, "Error encoding a frame: \n");
+                    CConfig::error( "Error encoding a frame:", i);
                     return;
                 }
                 pkt->stream_index = 0;

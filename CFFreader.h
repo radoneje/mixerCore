@@ -28,6 +28,7 @@ public:
     Data dt;
 
     static int work(const std::string url, int inputNum, CEvent  *pEvent);
+
 };
 
 

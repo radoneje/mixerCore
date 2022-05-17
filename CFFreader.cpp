@@ -45,10 +45,9 @@ CFFreader::CFFreader(){
     );
     return ms.count();
 }
+
 int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Data &pData){
     std::cout <<"in Worker" << " " <<url << std::endl;
-
-    return 0;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
     AVFormatContext *ctx_format = nullptr;
@@ -68,6 +67,7 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
 
 
     struct SwsContext *sws_ctx = NULL;
+    struct SwsContext *sws_ctx_preview = NULL;
 
     if (int ret = avformat_open_input(&ctx_format, fin, nullptr, nullptr) != 0) {
         std::cout <<"ERROR avformat  " << 1 << std::endl;
@@ -132,6 +132,16 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
                              NULL,
                              NULL,
                              NULL);
+    sws_ctx_preview = sws_getContext(ctx_codec->width,
+                             ctx_codec->height,
+                             ctx_codec->pix_fmt,
+                             CConfig::WIDTH*0.25,
+                             CConfig::HEIGHT*0.25,
+                             AV_PIX_FMT_RGB24,
+                             SWS_BICUBIC,
+                             NULL,
+                             NULL,
+                             NULL);
     std::cout << 94 << std::endl;
 
 
@@ -154,6 +164,28 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
 
     //////////
 
+    AVFrame *frame = av_frame_alloc();
+    AVFrame *pRGBFrame = av_frame_alloc();
+    AVFrame *pRGBFrame_preview = av_frame_alloc();
+
+    pRGBFrame->format = AV_PIX_FMT_RGB24;
+    pRGBFrame->width = CConfig::WIDTH*0.75;
+    pRGBFrame->height = CConfig::HEIGHT*0.75;
+
+    pRGBFrame_preview->format = AV_PIX_FMT_RGB24;
+    pRGBFrame_preview->width = CConfig::WIDTH*0.25;
+    pRGBFrame_preview->height = CConfig::HEIGHT*0.25;
+
+    int sts = av_frame_get_buffer(pRGBFrame, 0);
+    if (sts < 0) {
+        std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
+        return 0;  //Error!
+    }
+    int sts_preview=av_frame_get_buffer(pRGBFrame_preview, 0);
+    if (sts_preview < 0) {
+        std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
+        return 0;  //Error!
+    }
 
     while (av_read_frame(ctx_format, pkt) >= 0) {
         //
@@ -162,16 +194,6 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
             //Allocate frame for storing image converted to RGB.
             ////////////////////////////////////////////////////////////////////////////
 
-            AVFrame *frame = av_frame_alloc();
-            AVFrame *pRGBFrame = av_frame_alloc();
-            pRGBFrame->format = AV_PIX_FMT_RGB24;
-            pRGBFrame->width = ctx_codec->width;
-            pRGBFrame->height = ctx_codec->height;
-            int sts = av_frame_get_buffer(pRGBFrame, 0);
-            if (sts < 0) {
-                std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
-                return 0;  //Error!
-            }
 
 
             int ret = avcodec_send_packet(ctx_codec, pkt);
@@ -180,6 +202,7 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
 
                 av_frame_free(&pRGBFrame);
                 av_frame_free(&frame);
+                av_frame_free(&pRGBFrame_preview);
                 break;
             }
             while (ret >= 0) {
@@ -195,18 +218,32 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
 
                // int64_t pts = av_rescale(frame->pts, 1000000, AV_TIME_BASE);
                // int64_t now = av_gettime_relative();//- frame->start;
-                const int  dstStride=(int)(CConfig::WIDTH*0.75*3);
+                 int  dstStride= (int)(CConfig::WIDTH*0.75*3);
 
                 try {
                     sts = sws_scale(sws_ctx,                //struct SwsContext* c,
                                     frame->data,            //const uint8_t* const srcSlice[],
                                     frame->linesize,        //const int srcStride[],
                                     0,                      //int srcSliceY,
-                                    pRGBFrame->height,          //int srcSliceH,
+                                    frame->height,          //int srcSliceH,
                                     pRGBFrame->data,        //uint8_t* const dst[],
                                     &dstStride);   //const int dstStride[]);
-                    if (sts != frame->height) {
-                        std::cout << "sts != frame->height " << std::endl;
+                    if (sts != CConfig::HEIGHT *0.75) {
+                        std::cout << "sts != frame->height " <<sts  <<" "<< frame->height<< std::endl;
+                        return 0;  //Error!
+                    }
+
+                    dstStride= (int)(CConfig::WIDTH*0.25*3);
+
+                    sts_preview = sws_scale(sws_ctx_preview,                //struct SwsContext* c,
+                                    frame->data,            //const uint8_t* const srcSlice[],
+                                    frame->linesize,        //const int srcStride[],
+                                    0,                      //int srcSliceY,
+                                    frame->height,          //int srcSliceH,
+                                    pRGBFrame_preview->data,        //uint8_t* const dst[],
+                                    &dstStride);
+                    if (sts_preview != CConfig::HEIGHT *0.25) {
+                        std::cout << "sts != sts_preview_frame->height " <<sts_preview  <<" "<< frame->height*0.25<< std::endl;
                         return 0;  //Error!
                     }
 
@@ -223,11 +260,15 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
                         std::size_t size =
                                 pRGBFrame->width * pRGBFrame->height * (pRGBFrame->linesize[0] / pRGBFrame->width) *
                                 sizeof(unsigned char);
-                       /* free(pEvent->imageData[inputNum].fullImageData);
+                        /*   free(pEvent->imageData[inputNum].fullImageData);
 
-                        pEvent->imageData[inputNum].fullImageData= (unsigned char *) malloc(size);
-                        */
-                        memcpy(pEvent->imageData[inputNum].fullImageData, pRGBFrame->data[0], size);
+                           pEvent->imageData[inputNum].fullImageData= (unsigned char *) malloc(size);
+                           */
+                       memcpy(pEvent->imageData[inputNum].fullImageData, pRGBFrame->data[0], size);
+                         size =
+                                pRGBFrame_preview->width * pRGBFrame_preview->height * (pRGBFrame_preview->linesize[0] / pRGBFrame_preview->width) *
+                                sizeof(unsigned char);
+                        memcpy(pEvent->imageData[inputNum].previewImageData, pRGBFrame_preview->data[0], size);
                         pEvent->imageData[inputNum].frameNumber = ctx_codec->frame_number;
 
                     }
@@ -237,11 +278,15 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
 
             }
 
-            av_frame_free(&frame);
+           /* av_frame_free(&frame);
             av_frame_free(&pRGBFrame);
+            av_frame_free(&pRGBFrame_preview);*/
 
         }
     }
+    av_frame_free(&frame);
+    av_frame_free(&pRGBFrame);
+    av_frame_free(&pRGBFrame_preview);
     ///////////
     {
         std::lock_guard<std::mutex> lockGuard(pEvent->locker);
@@ -254,7 +299,8 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
     std::this_thread::sleep_for(std::chrono::milliseconds(frameDur));
 
     av_packet_unref(pkt);
-
+    sws_freeContext(sws_ctx);
+    sws_freeContext(sws_ctx_preview);
     avcodec_free_context(&ctx_codec);
     avformat_close_input(&ctx_format);
 

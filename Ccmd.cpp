@@ -16,7 +16,6 @@
 
 #include "CConfig.h"
 #include "Ccmd.h"
-#include "SOIL.h"
 #include "CFFreader.h"
 #include "CffmpegStreamer.h"
 #include "CEvent.h"
@@ -217,18 +216,21 @@ void Ccmd::notifyMakeMainImageEnded(std::string eventid) {
 }
 
 
-bool Ccmd::startReadStream(std::string rtmpURL,std::string eventid, int layerNumber) { // TODO: Delete!!!!
+void Ccmd::startReadStream(std::string rtmpURL,std::string eventid, int layerNumber) { // TODO: Delete!!!!
 
     if (_Events.find(eventid) == _Events.end()) {
         CConfig::error("startReadStream, cant find stream", eventid);
-        return false;
+        return;
     }
     if(layerNumber>=CConfig::MAX_FACES){
         CConfig::error("startReadStream, cant allocate input ",layerNumber,  eventid);
-        return false;
+        return;
     }
     auto event= _Events.at(eventid);
 
+
+
+   // std::thread inputThread(CffmpegStreamer::test, eventid, event);
 
     std::thread inputThread(CFFreader::work , rtmpURL ,layerNumber, event);
     inputThread.detach();
@@ -315,11 +317,7 @@ int Ccmd::startEvent(const std::string eventid) {
 
     int w = CConfig::WIDTH;
     int h = CConfig::HEIGHT;
-    event->mainImageData = SOIL_load_image("/etc/mixerCore/images/pgmbg.png",
-                                           &w,
-                                           &h,
-                                           0,
-                                           SOIL_LOAD_RGB);
+
 
 
     std::thread streamThread(CffmpegStreamer::startStream, eventid, event,
