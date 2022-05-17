@@ -82,7 +82,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
             onEnd(eventid);
             return;
         }
-        oformat->video_codec = AV_CODEC_ID_H264;
+      //  oformat->video_codec = AV_CODEC_ID_H264;
 
 
         int ret;
