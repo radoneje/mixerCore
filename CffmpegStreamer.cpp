@@ -262,7 +262,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
                 int fact = now_time - startTime;
                 if (must > fact) {
                     av_usleep(must - fact);
-                    std::count<<"sleep"<<must - fact<<std::endl;
+                    std::cout<<"sleep"<<must - fact<<std::endl;
                 }
 
                 j = 0;
