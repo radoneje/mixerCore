@@ -248,6 +248,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
                 pkt->pts=frame->pts;
                 pkt->dts=frame->pts-10;
 
+
                 j = 0;
                 av_interleaved_write_frame(ofmt_ctx, pkt);
             }
