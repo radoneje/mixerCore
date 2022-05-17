@@ -75,7 +75,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
         outUrl.append(eventid);
 
 
-        oformat = av_guess_format("flv", "test.mp4", NULL);//, "test.mp4", nullptr);
+        oformat =(AVOutputFormat*) av_guess_format("flv", "test.mp4", NULL);//, "test.mp4", nullptr);
         if (!oformat) {
 
             CConfig::error("can't create output format");
