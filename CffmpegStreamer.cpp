@@ -210,7 +210,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
             pEvent->locker.unlock();
             frame->pts +=
                     1000 / enc_ctx->time_base.den;//   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);
-            frame->dts=frame->pts;
+
             if (frame->pts < 0) {
                 frame->pts = 0;
                 startTime = av_gettime();
@@ -219,7 +219,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
             int must = (1000) * frame->pts;
             int fact = now_time - startTime;
             if (must > fact) {
-                av_usleep(must - fact);
+                av_usleep(must - fact-100);
             }
 
 
