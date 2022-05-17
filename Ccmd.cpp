@@ -69,7 +69,7 @@ void Ccmd::makeMainImage(std::string eventid,
                     int pgmY=y-hh;
                     ///////// генерация презы
                    // std::cout<< "before if "<<std::endl;
-                      if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]==CConfig::MAX_FACES){
+                      if(pEvent->activeInputs.size()==1 /* && pEvent->activeInputs[0]==CConfig::MAX_FACES*/){ // усли только один инпут
                          // std::cout<< "inside if "<<std::endl;
                           //std::cout<< pEvent->imageData.size()<< "size; " << pEvent->activeInputs[0] <<std::endl;
                           blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] =
@@ -80,6 +80,9 @@ void Ccmd::makeMainImage(std::string eventid,
                                   pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
 
                       }
+                      //else if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]<CConfig::MAX_FACES){ // если один инпут
+
+                    //  }
 
                 }
                 else if (y<hh){ //top roq of inputs
@@ -214,8 +217,22 @@ void Ccmd::notifyMakeMainImageEnded(std::string eventid) {
 }
 
 
-void Ccmd::startReadStream(std::string rtmpURL, int layerNumber) { // TODO: Delete!!!!
+bool Ccmd::startReadStream(std::string rtmpURL,std::string eventid, int layerNumber) { // TODO: Delete!!!!
 
+    if (_Events.find(eventid) == _Events.end()) {
+        CConfig::error("startReadStream, cant find stream", eventid);
+        return false;
+    }
+    if(layerNumber>=CConfig::MAX_FACES){
+        CConfig::error("startReadStream, cant allocate input ",layerNumber,  eventid);
+        return false;
+    }
+    auto event= _Events.at(eventid);
+
+
+    std::thread inputThread(CFFreader::work , rtmpURL ,layerNumber, event);
+    inputThread.detach();
+//work(const std::string url, int inputNum, CEvent  *pEvent)
     /*   FFreader[layerNumber].dt.width = layerNumber;
        FFreader[layerNumber].dt.layer = layerNumber;
        std::cout << "start input " << rtmpURL << " " << layerNumber << std::endl;

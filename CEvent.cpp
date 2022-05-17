@@ -40,7 +40,7 @@ CEvent::CEvent(std::string eventid) {
         Magick::Image image;
         image.read(fileName.c_str());
         image.resize(Magick::Geometry(CConfig::WIDTH *0.75, CConfig::HEIGHT *0.75));
-        image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, imageDataItem.fullImageData);
+        image.write(0, 0, CConfig::WIDTH*0.75, CConfig::HEIGHT*0.75, "RGB", MagickLib::CharPixel, imageDataItem.fullImageData);
         image.resize(Magick::Geometry(CConfig::WIDTH / 4, CConfig::HEIGHT / 4));
         image.write(0, 0, CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
                     imageDataItem.previewImageData);

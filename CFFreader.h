@@ -6,6 +6,7 @@
 #define MIXERCORE_CFFREADER_H
 #include <libavformat/avformat.h>
 
+#include "CEvent.h"
 
 class CFFreader {
 private:
@@ -26,7 +27,7 @@ public:
     CFFreader();
     Data dt;
 
-    static void work(const std::string url, Data  *pData, std::mutex *pLocker);
+    static int work(const std::string url, int inputNum, CEvent  *pEvent);
 };
 
 

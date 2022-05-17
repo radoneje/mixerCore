@@ -23,6 +23,7 @@ public:
         unsigned char * previewImageData;
         unsigned char * fullImageData;
         std::string itemid;
+        long long frameNumber;
     };
     CEvent(std::string eventid);
     std::mutex locker;

@@ -45,9 +45,10 @@ CFFreader::CFFreader(){
     );
     return ms.count();
 }
-void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){//, Data &pData){
-    std::cout <<"in Worker"<<  pData->width << " " <<url << std::endl;
+int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Data &pData){
+    std::cout <<"in Worker" << " " <<url << std::endl;
 
+    return 0;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
     AVFormatContext *ctx_format = nullptr;
@@ -70,21 +71,21 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
 
     if (int ret = avformat_open_input(&ctx_format, fin, nullptr, nullptr) != 0) {
         std::cout <<"ERROR avformat  " << 1 << std::endl;
-        return ;
+        return 0;
     }
-    std::cout <<"in Worker01"<<  pData->width << " " <<url << std::endl;
+    std::cout <<"in Worker01"<<  CConfig::WIDTH << " " <<url << std::endl;
 
     ctx_format->probesize=100000;
    // ctx_format->max_analyze_duration=32000;
-    std::cout <<"in Worker 3"<<  pData->width << " " <<url << std::endl;
+    std::cout <<"in Worker 3"<<  CConfig::WIDTH << " " <<url << std::endl;
     std::cout <<"probesize  " << ctx_format->probesize << " max_analyze_duration "<<ctx_format->max_analyze_duration << std::endl;
 
 
         if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
             std::cout << "ERROR avformat  " << 2 << std::endl;
-            return; // Couldn't find stream information
+            return 0; // Couldn't find stream information
         }
-    std::cout <<"in Worker 4"<<  pData->width << " " <<url << std::endl;
+    std::cout <<"in Worker 4"<<  CConfig::WIDTH << " " <<url << std::endl;
     av_dump_format(ctx_format, 0, fin, false);
 
     for (int i = 0; i < ctx_format->nb_streams; i++) {
@@ -97,13 +98,13 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
 
     if (vid_stream == nullptr) {
         std::cout<<"ERROR avformat VIDEO " << 4 << std::endl;
-        return ;
+        return 0;
     }
 
     const AVCodec  *codec = avcodec_find_decoder(vid_stream->codecpar->codec_id);
     if (!codec) {
         std::cout << "ERROR codec not found" << std::endl;
-        return ;
+        return 0;
     }
 
     ctx_codec = avcodec_alloc_context3(codec);
@@ -118,14 +119,14 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
 
     if (avcodec_open2(ctx_codec, codec, nullptr) < 0) {
         std::cout << "ERROR avcodec_open2"<< std::endl;
-        return ;
+        return 0;
     }
 
     sws_ctx = sws_getContext(ctx_codec->width,
                              ctx_codec->height,
                              ctx_codec->pix_fmt,
-                             ctx_codec->width,
-                             ctx_codec->height,
+                             CConfig::WIDTH*0.75,
+                             CConfig::HEIGHT*0.75,
                              AV_PIX_FMT_RGB24,
                              SWS_BICUBIC,
                              NULL,
@@ -142,10 +143,8 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
     std::cout<< "frameDur" <<frameDur  << std::endl;
    // finalFrameData_lock.lock();
     {
-        std::lock_guard<std::mutex> lockGuard(*pLocker);
-        pData->width = 0;
-        pData->height = 0;
-        pData->frameNumber = -1;
+       // std::lock_guard<std::mutex> lockGuard(pEvent->locker);
+
     }
    // finalFrameData_lock.unlock();
 
@@ -163,8 +162,6 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
             //Allocate frame for storing image converted to RGB.
             ////////////////////////////////////////////////////////////////////////////
 
-
-
             AVFrame *frame = av_frame_alloc();
             AVFrame *pRGBFrame = av_frame_alloc();
             pRGBFrame->format = AV_PIX_FMT_RGB24;
@@ -173,7 +170,7 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
             int sts = av_frame_get_buffer(pRGBFrame, 0);
             if (sts < 0) {
                 std::cout <<"ERROR av_frame_get_buffer" << 4444 << std::endl;
-                return ;  //Error!
+                return 0;  //Error!
             }
 
 
@@ -198,19 +195,19 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
 
                // int64_t pts = av_rescale(frame->pts, 1000000, AV_TIME_BASE);
                // int64_t now = av_gettime_relative();//- frame->start;
-
+                const int  dstStride=(int)(CConfig::WIDTH*0.75*3);
 
                 try {
                     sts = sws_scale(sws_ctx,                //struct SwsContext* c,
                                     frame->data,            //const uint8_t* const srcSlice[],
                                     frame->linesize,        //const int srcStride[],
                                     0,                      //int srcSliceY,
-                                    frame->height,          //int srcSliceH,
+                                    pRGBFrame->height,          //int srcSliceH,
                                     pRGBFrame->data,        //uint8_t* const dst[],
-                                    pRGBFrame->linesize);   //const int dstStride[]);
+                                    &dstStride);   //const int dstStride[]);
                     if (sts != frame->height) {
                         std::cout << "sts != frame->height " << std::endl;
-                        return;  //Error!
+                        return 0;  //Error!
                     }
 
                     // задержка на частоту кадров
@@ -221,17 +218,17 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
                     lastFrameTime = nowTime();
                     // std::cout<< "av_read_frame: "   << ii << std::endl;
                     {
-                        std::lock_guard<std::mutex> lockGuard(*pLocker);
-                        pData->width = pRGBFrame->width;
-                        pData->height = pRGBFrame->height;
-                        free(pData->pixels);
+                        std::lock_guard<std::mutex> lockGuard(pEvent->locker);
+
                         std::size_t size =
                                 pRGBFrame->width * pRGBFrame->height * (pRGBFrame->linesize[0] / pRGBFrame->width) *
                                 sizeof(unsigned char);
-                        pData->pixels = (unsigned char *) malloc(size);
-                        memcpy(pData->pixels, pRGBFrame->data[0], size);
-                        pData->linesize = pRGBFrame->linesize[0];
-                        pData->frameNumber = ctx_codec->frame_number;
+                       /* free(pEvent->imageData[inputNum].fullImageData);
+
+                        pEvent->imageData[inputNum].fullImageData= (unsigned char *) malloc(size);
+                        */
+                        memcpy(pEvent->imageData[inputNum].fullImageData, pRGBFrame->data[0], size);
+                        pEvent->imageData[inputNum].frameNumber = ctx_codec->frame_number;
 
                     }
                 } catch (...){
@@ -247,12 +244,12 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
     }
     ///////////
     {
-        std::lock_guard<std::mutex> lockGuard(*pLocker);
+        std::lock_guard<std::mutex> lockGuard(pEvent->locker);
       //  if(pData->width>720 && pData->width<1921)
        //     free(pData->pixels);
-        pData->width = 0;
+      /*  pData->width = 0;
         pData->height = 0;
-        pData->frameNumber = -1;
+        pData->frameNumber = -1;*/
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(frameDur));
 
@@ -261,6 +258,6 @@ void CFFreader::work(const std::string url, Data  *pData, std::mutex *pLocker){/
     avcodec_free_context(&ctx_codec);
     avformat_close_input(&ctx_format);
 
-    return ;
+    return 0;
 }
 
