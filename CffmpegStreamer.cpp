@@ -138,6 +138,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
         enc_ctx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
 
         std::string encoderName=encoder->name;
+        std::cout<<"encoderName"<< encoderName<<std::endl;
         if(encoderName==std::string("libx264")) {
             av_dict_set(&opts, "preset", "fast", 0);
             av_dict_set(&opts, "tune", "zerolatency", 0);
