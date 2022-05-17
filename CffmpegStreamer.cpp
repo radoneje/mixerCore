@@ -131,8 +131,8 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
         enc_ctx->pix_fmt = AV_PIX_FMT_YUV420P;
         enc_ctx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
 
-      //  av_dict_set(&opts, "preset", "fast", 0);
-       // av_dict_set(&opts, "tune", "zerolatency", 0);
+        av_dict_set(&opts, "preset", "fast", 0);
+        av_dict_set(&opts, "tune", "zerolatency", 0);
 
         ret = avcodec_open2(enc_ctx, encoder, &opts);
         if (ret < 0) {
@@ -210,6 +210,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
             pEvent->locker.unlock();
             frame->pts +=
                     1000 / enc_ctx->time_base.den;//   av_rescale_q( 1, enc_ctx->time_base, out_stream->time_base);
+            frame->dts=frame->pts;
             if (frame->pts < 0) {
                 frame->pts = 0;
                 startTime = av_gettime();
