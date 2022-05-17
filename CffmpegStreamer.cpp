@@ -114,7 +114,7 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
             onEnd(eventid);
             return;
         }
-        CConfig::log("avcodec_find_encoder", encoder->name)
+        CConfig::log("avcodec_find_encoder", encoder->name);
 
       /*  encoder = avcodec_find_encoder_by_name("libx264");
         if (!encoder) {
