@@ -129,10 +129,13 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
         /* resolution must be a multiple of two */
         enc_ctx->width = CConfig::WIDTH;
         enc_ctx->height = CConfig::HEIGHT;
+
+        std::cout<<"avcodec_find_encoder 1"<<std::endl;
+
         /* frames per second */
         enc_ctx->time_base = (AVRational) {1, CConfig::FRAMERATE};
         enc_ctx->framerate = (AVRational) {CConfig::FRAMERATE, 1};
-        std::cout<<"avcodec_find_encoder 1"<<std::endl;
+
         enc_ctx->gop_size = CConfig::MIXER_GOP;
         enc_ctx->max_b_frames = 1;
         enc_ctx->profile = FF_PROFILE_H264_BASELINE;
