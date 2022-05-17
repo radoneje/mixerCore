@@ -60,7 +60,7 @@ add_definitions(
 )
 
 
-
+add_compile_options(-q)
 
 add_executable(mixerCore main.cpp CTextureData.cpp CTextureData.h  CHttp.cpp CHttp.h CConfig.cpp CConfig.h SOIL.h Ccmd.cpp Ccmd.h CFFreader.cpp CFFreader.h CffmpegStreamer.cpp CffmpegStreamer.h SstreamData.cpp SstreamData.h CEvent.cpp CEvent.h)
 
