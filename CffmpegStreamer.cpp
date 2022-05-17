@@ -115,12 +115,12 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
             onEnd(eventid);
             return;
         }*/
-        encoder = avcodec_find_encoder_by_name("libx264");
+      /*  encoder = avcodec_find_encoder_by_name("libx264");
         if (!encoder) {
             CConfig::error("Codec AV_CODEC_ID_H264 not found");
             onEnd(eventid);
             return;
-        }
+        }*/
         enc_ctx = avcodec_alloc_context3(encoder);
         /* put sample parameters */
         enc_ctx->bit_rate = CConfig::MIXER_BITRATE;
@@ -228,9 +228,9 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
             int must = (1000) * frame->pts;
             int fact = now_time - startTime;
             if (must > fact) {
-                av_usleep(must - fact+200);
+                av_usleep(must - fact);
             }
-           // av_usleep(6500);
+           std::cout<<"sleep"<< must - fact<<std::endl;
 
 
             ret = avcodec_send_frame(enc_ctx, frame);
