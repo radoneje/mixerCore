@@ -57,8 +57,8 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
     try {
         onStart(eventid);
 
-        av_register_all();
-        avcodec_register_all();
+       // av_register_all();
+      //  avcodec_register_all();
 
         AVStream *out_stream;
         AVOutputFormat *oformat = nullptr;
@@ -74,7 +74,10 @@ void CffmpegStreamer::startStream(const std::string eventid, CEvent *pEvent,  st
         std::string outUrl = CConfig::RTMP_MAIN;
         outUrl.append(eventid);
 
-        oformat = av_guess_format("flv", "test.mp4", NULL);//, "test.mp4", nullptr);
+        const  char* short_name="flv";
+        const  char* filename="flv";
+
+        oformat = av_guess_format(short_name, filename, NULL);//, "test.mp4", nullptr);
         if (!oformat) {
 
             CConfig::error("can't create output format");
