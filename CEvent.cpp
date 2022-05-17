@@ -77,6 +77,7 @@ void CEvent::showPres(unsigned char *data, std::string itemid) {
                         imageData.back().previewImageData);
 
 
+
        /* int previewImageSize = (CConfig::WIDTH / 4) * (CConfig::HEIGHT / 4) * 3 * sizeof(unsigned char);
         free( imageData.back().previewImageData);
         imageData.back().previewImageData=(unsigned char*)malloc(previewImageSize);
