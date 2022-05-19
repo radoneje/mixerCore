@@ -22,7 +22,7 @@ using namespace std;
 
 class Ccmd {
     private:
-        int test1;
+   
         static std::map<std::string, CEvent*> _Events;
         unsigned  char* loadNotConnected(int input);
         static void _stopEvent(std::string eventid);
