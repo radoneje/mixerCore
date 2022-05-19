@@ -19,8 +19,8 @@
 class CEvent {
 private:
     std::string _eventid;
-    int test;
-    int test3;
+
+
 public:
 
     struct SImageData{
