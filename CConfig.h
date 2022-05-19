@@ -46,7 +46,7 @@ private:
         ltrim(s);
         rtrim(s);
     }
-        int test 5;
+       
     static void _HTTPgetRequest(std::string target);
 public: CConfig();
     static int GetConfig(const char *name, std::string &str);
