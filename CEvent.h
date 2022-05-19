@@ -15,9 +15,11 @@
 #include <vector>
 #include <map>
 
+
 class CEvent {
 private:
     std::string _eventid;
+    int test;
 
 public:
 
