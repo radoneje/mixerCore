@@ -197,11 +197,13 @@ void Ccmd::_stopEvent(std::string eventid) {
 
 void Ccmd::notifyStreamStarted(std::string eventid) {
     CConfig::log("Main stream loop started", eventid);
+    CConfig::notifyControl("eventStarted",eventid);
 };
 
 void Ccmd::notifyStreamEnded(std::string eventid) {
     CConfig::log("Main stream loop stopped", eventid);
     _stopEvent(eventid);
+    CConfig::notifyControl("eventStopped",eventid);
 
 };
 
@@ -369,4 +371,10 @@ bool Ccmd::activateInput(std::string eventid, int itemid) {
     event->locker.unlock();
     CConfig::log("activate Input,", itemid, ", event id:", eventid);
     return true;
+}
+std::string Ccmd::getEvent(std::string eventid) {
+    if (_Events.find(eventid) == _Events.end())
+        return "{\"status\":0}";
+    else
+        return "{\"status\":1}";
 }

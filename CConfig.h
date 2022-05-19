@@ -46,6 +46,7 @@ private:
         ltrim(s);
         rtrim(s);
     }
+    static void _HTTPgetRequest(std::string target);
 public: CConfig();
     static int GetConfig(const char *name, std::string &str);
     static int getGlobalValues();
@@ -58,6 +59,8 @@ public: CConfig();
     static int MIXER_BITRATE;
     static int MIXER_GOP;
     static int HTTP_SERVER_PORT;
+    static std::string CONTROL_SERVER;
+    static int CONTROL_SERVER_PORT;
 
     template <typename T>
     static void log(T t)
@@ -86,6 +89,10 @@ public: CConfig();
         std::cout << RED << t << " " ;
         error(args...) ;
     }
+
+    static void notifyControl(std::string action, std::string eventid, std::string *param1= nullptr, std::string *param2= nullptr, std::string *param3= nullptr);
+
+
 };
 
 

@@ -23,17 +23,37 @@ CHttp::CHttp() {
 void CHttp::init(int port, Ccmd *pCmd) {
     CConfig::log("HTTP Server listening port: ", port);
     httplib::Server svr;
+
+    svr.Get(R"(/mixer/eventStatus/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))",
+            [&](const httplib::Request &req, httplib::Response &res) {
+                // res.set_content("Hello World!", "text/plain");
+                if(req.matches.size()>0)
+                {
+                    //std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+                    res.set_content(pCmd->getEvent(req.matches[1]), "application/json");
+                    // pCmd->locker.lock();
+                }
+                else
+                    res.set_content(std::string("{\"error\":true}"),"application/json" );
+
+
+            });
     svr.Get(R"(/mixer/startEvent/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))",
             [&](const httplib::Request &req, httplib::Response &res) {
                 // res.set_content("Hello World!", "text/plain");
-                std::string eventid = req.matches[1];
-                {
-                    pCmd->clearPresImage();
-                    //std::lock_guard<std::mutex> lockGuard(pCmd->locker);
-                    pCmd->startEvent(eventid);
-                    res.set_content("{\"error\":false}", "application/json");
-                    // pCmd->locker.lock();
+                if(req.matches.size()>0) {
+                    std::string eventid = req.matches[1];
+                    {
+                        pCmd->clearPresImage();
+                        //std::lock_guard<std::mutex> lockGuard(pCmd->locker);
+                        pCmd->startEvent(eventid);
+                        res.set_content("{\"error\":false}", "application/json");
+                        // pCmd->locker.lock();
+                    }
                 }
+                else
+                    res.set_content("{\"error\":true}", "application/json");
+
 
             });
     svr.Get(R"(/mixer/stopEvent/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))",

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <charconv>
 #include <string>
 #include <chrono>
 #include <thread>
@@ -13,6 +14,9 @@
 #include <cctype>
 #include <locale>
 
+
+
+#include "httplib.h"
 #include "CConfig.h"
 
 
@@ -23,11 +27,29 @@ CConfig::CConfig() {};
  int CConfig::MAX_FACES=7;
  int CConfig::WIDTH=1280;
  int CConfig::HEIGHT=720;
- std::string CConfig::RTMP_MAIN="rtmp://wowza02.onevent.online/live/";
+
  int CConfig::FRAMERATE=30;
  int CConfig::MIXER_BITRATE=1024*1024*1.5;
  int CConfig::MIXER_GOP=30;
  int CConfig::HTTP_SERVER_PORT=8090;
+
+ std::string CConfig::RTMP_MAIN="rtmp://wowza02.onevent.online/live/";
+ std::string CConfig::CONTROL_SERVER="localhost";
+ int CConfig::CONTROL_SERVER_PORT=3000;
+
+ void CConfig::_HTTPgetRequest(std::string target){
+
+     std::string srv="http://"+CONTROL_SERVER+":"+std::to_string(CONTROL_SERVER_PORT);
+     target="/api/v1/"+target;
+
+     httplib::Client cli(srv);
+     auto res = cli.Get(target.c_str());
+
+
+    return;
+
+
+};
 
 int CConfig::getGlobalValues(){
        try {
@@ -55,6 +77,12 @@ int CConfig::getGlobalValues(){
 
            GetConfig("HTTP_SERVER_PORT", buf);
            HTTP_SERVER_PORT= atoi(buf.c_str());
+
+           GetConfig("CONTROL_SERVER", buf);
+           CONTROL_SERVER= buf;
+
+           GetConfig("CONTROL_SERVER_PORT", buf);
+           CONTROL_SERVER_PORT= atoi(buf.c_str());
 
         }
         catch (...){
@@ -96,4 +124,25 @@ int CConfig::GetConfig(const char *name, std::string &str) {
     }
     return -1;
 }
+void CConfig::notifyControl(std::string action, std::string eventid, std::string *param1, std::string *param2,
+                                   std::string *param3) {
+    std::string url=action+"/"+eventid;
+    if(param1!= nullptr){
+        url+= "/";
+        url+= param1->c_str();
+    }
+    if(param2!= nullptr){
+        url+= "/";
+        url+= param2->c_str();
+    }
+    if(param3!= nullptr){
+        url+= "/";
+        url+= param3->c_str();
+    }
+    std::thread requestThread(_HTTPgetRequest, url);
+    requestThread.detach();
+
+}
+
+
 

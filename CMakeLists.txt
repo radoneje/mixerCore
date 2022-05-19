@@ -22,9 +22,6 @@ find_library(AVUTIL_LIBRARY avutil)
 find_library(SWSCALE_LIBRARIES swscale)
 find_library(IM_LIBRARIES Magick++)
 
-
-
-
 include_directories(
 
         external/ffmpeg
