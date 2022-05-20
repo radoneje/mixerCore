@@ -22,7 +22,7 @@ CHttp httpServer;
 //CRender render;
 
 int main(int argc, char* argv[]) {
-    std::cout<< "!!!!! 66"<< std::endl;
+    std::cout<< "!!!!! 77"<< std::endl;
 
     if(CConfig::getGlobalValues()>0)
         exit(1);
