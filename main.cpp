@@ -22,6 +22,11 @@ CHttp httpServer;
 //CRender render;
 
 int main(int argc, char* argv[]) {
+   const std::string compilation_date = __DATE__;
+   const std::string compilation_time = __TIME__;
+
+   std::cout << "This source file was compiled: " << compilation_time 
+          << "  " << compilation_date << '\n';
     std::cout<< "!!!!! 77"<< std::endl;
 
     if(CConfig::getGlobalValues()>0)
