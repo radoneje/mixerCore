@@ -65,8 +65,7 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
 
 
 
-    struct SwsContext *sws_ctx = NULL;
-    struct SwsContext *sws_ctx_preview = NULL;
+   
 
     if (int ret = avformat_open_input(&ctx_format, fin, nullptr, nullptr) != 0) {
         std::cout <<"ERROR avformat  " << 1 << std::endl;
@@ -75,14 +74,19 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
 
 
     ctx_format->probesize=100000;
-   // ctx_format->max_analyze_duration=32000;
+   //ctx_format->max_analyze_duration=32000;
 
     std::cout <<"probesize  " << ctx_format->probesize << " max_analyze_duration "<<ctx_format->max_analyze_duration << std::endl;
 
+    int avformatRez=avformat_find_stream_info(ctx_format, nullptr);
+        if (avformatRez < 0) {
+             ctx_format->probesize=5000000;
 
-        if (avformat_find_stream_info(ctx_format, nullptr) < 0) {
+            avformatRez=avformat_find_stream_info(ctx_format, nullptr);
+            if(avformatRez<0){
             std::cout << "ERROR avformat  " << 2 << std::endl;
             return 0; // Couldn't find stream information
+            }
         }
     std::cout <<"in Worker 4"<<  CConfig::WIDTH << " " <<url << std::endl;
     av_dump_format(ctx_format, 0, fin, false);
@@ -121,26 +125,9 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
         return 0;
     }
 
-    sws_ctx = sws_getContext(ctx_codec->width,
-                             ctx_codec->height,
-                             ctx_codec->pix_fmt,
-                             CConfig::WIDTH*0.75,
-                             CConfig::HEIGHT*0.75,
-                             AV_PIX_FMT_RGB24,
-                             SWS_BICUBIC,
-                             NULL,
-                             NULL,
-                             NULL);
-    sws_ctx_preview = sws_getContext(ctx_codec->width,
-                             ctx_codec->height,
-                             ctx_codec->pix_fmt,
-                             CConfig::WIDTH*0.25,
-                             CConfig::HEIGHT*0.25,
-                             AV_PIX_FMT_RGB24,
-                             SWS_BICUBIC,
-                             NULL,
-                             NULL,
-                             NULL);
+    ;
+
+    
     std::cout << 94 << std::endl;
 
 
@@ -215,12 +202,39 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
                     break;
                 }
                 ii++;
-
+                std::cout << " " <<frame->width  <<" "<< frame->height<< std::endl;
                // int64_t pts = av_rescale(frame->pts, 1000000, AV_TIME_BASE);
                // int64_t now = av_gettime_relative();//- frame->start;
                  int  dstStride= (int)(CConfig::WIDTH*0.75*3);
-
+               
+               float coof=(float)CConfig::HEIGHT/(float)CConfig::WIDTH;
+               std::cout<<coof<< " "<<CConfig::WIDTH*coof<<  std::endl;
+                   
                 try {
+                    struct SwsContext *sws_ctx = sws_getContext(
+                             frame->width,
+                             frame->height,
+                             ctx_codec->pix_fmt,
+                             CConfig::WIDTH*0.75,
+                             CConfig::HEIGHT*0.75,
+                             AV_PIX_FMT_RGB24,
+                             SWS_BICUBIC,
+                             NULL,
+                             NULL,
+                             NULL);
+                struct SwsContext *sws_ctx_preview = sws_getContext(
+                             frame->width,
+                             frame->height,
+                             ctx_codec->pix_fmt,
+                             CConfig::WIDTH*0.25,
+                             CConfig::HEIGHT*0.25,
+                             AV_PIX_FMT_RGB24,
+                             SWS_BICUBIC,
+                             NULL,
+                             NULL,
+                             NULL);
+                            
+
                     sts = sws_scale(sws_ctx,                //struct SwsContext* c,
                                     frame->data,            //const uint8_t* const srcSlice[],
                                     frame->linesize,        //const int srcStride[],
@@ -228,9 +242,10 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
                                     frame->height,          //int srcSliceH,
                                     pRGBFrame->data,        //uint8_t* const dst[],
                                     &dstStride);   //const int dstStride[]);
-                    if (sts != CConfig::HEIGHT *0.75) {
+                   // std::cout << ">height " <<frame->linesize  <<" "<< frame->height<< std::endl;
+                   if (sts != CConfig::HEIGHT *0.75) {
                         std::cout << "sts != frame->height " <<sts  <<" "<< frame->height<< std::endl;
-                        return 0;  //Error!
+                       // return 0;  //Error!
                     }
 
                     dstStride= (int)(CConfig::WIDTH*0.25*3);
@@ -244,8 +259,10 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
                                     &dstStride);
                     if (sts_preview != CConfig::HEIGHT *0.25) {
                         std::cout << "sts != sts_preview_frame->height " <<sts_preview  <<" "<< frame->height*0.25<< std::endl;
-                        return 0;  //Error!
+                        //return 0;  //Error!
                     }
+
+                     
 
                     // задержка на частоту кадров
                     long thisFrameTime = lastFrameTime + frameDur;
@@ -255,7 +272,7 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
                     lastFrameTime = nowTime();
                     // std::cout<< "av_read_frame: "   << ii << std::endl;
                     {
-                        std::lock_guard<std::mutex> lockGuard(pEvent->locker);
+                      //  std::lock_guard<std::mutex> lockGuard(pEvent->locker);
 
                         std::size_t size =
                                 pRGBFrame->width * pRGBFrame->height * (pRGBFrame->linesize[0] / pRGBFrame->width) *
@@ -271,7 +288,12 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
                         memcpy(pEvent->imageData[inputNum].previewImageData, pRGBFrame_preview->data[0], size);
                         pEvent->imageData[inputNum].frameNumber = ctx_codec->frame_number;
 
+
+                        
+
                     }
+                     sws_freeContext(sws_ctx);
+                        sws_freeContext(sws_ctx_preview);
                 } catch (...){
                     std::cout<< "Error in ffmpeg processing" << std::endl;
                 }
@@ -300,8 +322,7 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
     std::this_thread::sleep_for(std::chrono::milliseconds(frameDur));
 
     av_packet_unref(pkt);
-    sws_freeContext(sws_ctx);
-    sws_freeContext(sws_ctx_preview);
+  
     avcodec_free_context(&ctx_codec);
     avformat_close_input(&ctx_format);
 
