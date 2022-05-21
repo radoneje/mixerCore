@@ -208,7 +208,7 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
                  int  dstStride= (int)(CConfig::WIDTH*0.75*3);
                
                float coof=(float)CConfig::HEIGHT/(float)CConfig::WIDTH;
-               std::cout<<coof<< " "<<CConfig::WIDTH*coof<<  std::endl;
+               //std::cout<<coof<< " "<<CConfig::WIDTH*coof<<  std::endl;
                    
                 try {
                     struct SwsContext *sws_ctx = sws_getContext(
