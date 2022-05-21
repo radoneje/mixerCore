@@ -41,7 +41,7 @@ class Ccmd {
         std::string imageid;
         CFFreader meReader;
       //  typedef void (* vFunctionCall)(std::string args);
-        void startReadStream(std::string rtmpURL,std::string eventid, int layerNumber); // TODO: Delete!!!!
+        void startReadStream(std::string rtmpURL,std::string eventid, int layerNumber, std::string spkid); // TODO: Delete!!!!
 
         int startEvent(const std::string eventid);
         int stopEvent(const std::string eventid);

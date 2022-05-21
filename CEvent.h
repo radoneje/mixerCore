@@ -31,7 +31,12 @@ public:
     };
     struct SInputData{
         long time_start;
+         int number;
+        std::string spkid;
+        bool isActive;
     };
+   
+
     CEvent(std::string eventid);
     std::mutex locker;
     std::thread *thread;
@@ -45,6 +50,7 @@ public:
     void onInputEnd(int inputNo);
     void showPres(unsigned char * data, std::string itemid);
     std::map<int,SInputData*> inputs;
+   
 };
 
 

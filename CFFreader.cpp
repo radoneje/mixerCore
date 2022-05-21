@@ -202,7 +202,7 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
                     break;
                 }
                 ii++;
-                std::cout << " " <<frame->width  <<" "<< frame->height<< std::endl;
+                //std::cout << " " <<frame->width  <<" "<< frame->height<< std::endl;
                // int64_t pts = av_rescale(frame->pts, 1000000, AV_TIME_BASE);
                // int64_t now = av_gettime_relative();//- frame->start;
                  int  dstStride= (int)(CConfig::WIDTH*0.75*3);

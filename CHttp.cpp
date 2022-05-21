@@ -71,10 +71,14 @@ void CHttp::init(int port, Ccmd *pCmd) {
 
     svr.Get("/mixer/startInput", [&](const httplib::Request &req, httplib::Response &res) {
         res.set_content("{\"err\":false}", "application/json");
+    
+       
         pCmd->startReadStream(
                 req.get_param_value("url"),
                 req.get_param_value("eventid"),
-                std::stoi(req.get_param_value("id"))/*,
+                std::stoi(req.get_param_value("id")),
+                req.get_param_value("spkid")
+                /*,
                 (Ccmd::vFunctionCall)Ccmd::notifyStreamStarted,
                 (Ccmd::vFunctionCall)Ccmd::notifyStreamEnded*/
         );

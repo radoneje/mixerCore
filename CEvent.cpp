@@ -23,9 +23,17 @@ CEvent::CEvent(std::string eventid) {
     int previewImageSize = (CConfig::WIDTH / 4) * (CConfig::HEIGHT / 4) * 3 * sizeof(unsigned char);
     mainImageData = (unsigned char *) malloc(CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char));
 
-
+    const auto p1 = std::chrono::system_clock::now();
     for (int i = 0; i < CConfig::MAX_FACES; i++) {
+        
+        
+        SInputData * input = new SInputData;
+        input->isActive=false;
+        input->number=i;
+        input->spkid="",
+        input->time_start=p1.time_since_epoch().count();
 
+        inputs.insert({i, input});
 
         imageData.push_back(loadDefaultInput(i));
     }
@@ -95,18 +103,25 @@ void CEvent::showPres(unsigned char *data, std::string itemid) {
 };
 bool CEvent::onInputStart(int inputNo){
     CConfig::log("Input Start", _eventid, inputNo);
-    if(inputs.find(inputNo)!=inputs.end()) {
+
+    if(inputs.at(inputNo)->isActive==true) {
         CConfig::error("input already started");
         return false;
     }
     CEvent::SInputData *inputData= new SInputData();
-    const auto p1 = std::chrono::system_clock::now();
-    inputData->time_start=p1.time_since_epoch().count();
+
+    
     locker.lock();
-    inputs.insert({inputNo,inputData });
+    auto input=inputs.at(inputNo); //.insert({inputNo,inputData });
+        input->isActive=true;
+        input->time_start=std::chrono::system_clock::now().time_since_epoch().count();
     locker.unlock();
-    return  true;
-  //  std::map<int,SInputData*> inputs;
+   
+
+    auto s=std::to_string(inputNo);
+    CConfig::notifyControl("inputStart",_eventid,&s,&input->spkid);
+     return  true;
+  
 
 }
 void CEvent::onInputEnd(int inputNo){
@@ -116,7 +131,10 @@ void CEvent::onInputEnd(int inputNo){
         return;
     }
     locker.lock();
-    inputs.erase(inputNo);
+    inputs.at(inputNo)->isActive=false;
     imageData[inputNo]=loadDefaultInput(inputNo);
     locker.unlock();
+
+    auto s=std::to_string(inputNo);
+    CConfig::notifyControl("inputStop",_eventid,&s,&inputs.at(inputNo)->spkid);
 }

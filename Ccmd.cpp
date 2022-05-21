@@ -218,7 +218,7 @@ void Ccmd::notifyMakeMainImageEnded(std::string eventid) {
 }
 
 
-void Ccmd::startReadStream(std::string rtmpURL,std::string eventid, int layerNumber) { // TODO: Delete!!!!
+void Ccmd::startReadStream(std::string rtmpURL,std::string eventid, int layerNumber, std::string spkid) { // TODO: Delete!!!!
 
     if (_Events.find(eventid) == _Events.end()) {
         CConfig::error("startReadStream, cant find stream", eventid);
@@ -229,13 +229,16 @@ void Ccmd::startReadStream(std::string rtmpURL,std::string eventid, int layerNum
         return;
     }
     auto event= _Events.at(eventid);
-
-
+    auto input=event->inputs.at(layerNumber);
+    input->spkid=spkid;
+   
+    
 
    // std::thread inputThread(CffmpegStreamer::test, eventid, event);
 
     std::thread inputThread(CFFreader::work , rtmpURL ,layerNumber, event);
     inputThread.detach();
+
 //work(const std::string url, int inputNum, CEvent  *pEvent)
     /*   FFreader[layerNumber].dt.width = layerNumber;
        FFreader[layerNumber].dt.layer = layerNumber;
