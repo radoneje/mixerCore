@@ -57,7 +57,7 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -O0" CACHE STRING "")
 
 
-add_executable(mixerCore main.cpp CHttp.cpp CHttp.h CConfig.cpp CConfig.h Ccmd.cpp Ccmd.h CFFreader.cpp CFFreader.h CffmpegStreamer.cpp CffmpegStreamer.h SstreamData.cpp SstreamData.h CEvent.cpp CEvent.h)
+add_executable(mixerCore main.cpp CHttp.cpp CHttp.h CConfig.cpp CConfig.h Ccmd.cpp Ccmd.h CFFreader.cpp CFFreader.h CffmpegStreamer.cpp CffmpegStreamer.h SstreamData.cpp SstreamData.h CEvent.cpp CEvent.h CffmegFileReader.h)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)

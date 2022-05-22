@@ -15,6 +15,8 @@
 #include <vector>
 #include <map>
 
+#include "CffmpegFileReader.h"
+
 
 class CEvent {
 private:
@@ -50,6 +52,9 @@ public:
     void onInputEnd(int inputNo);
     void showPres(unsigned char * data, std::string itemid);
     std::map<int,SInputData*> inputs;
+
+    std::map<std::string, CffmegFileReader*> videoFileReaders;
+    void loadVideoFile(std::string fileid, std::string url);
    
 };
 

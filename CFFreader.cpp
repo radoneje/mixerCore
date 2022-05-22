@@ -73,7 +73,7 @@ int CFFreader::work(const std::string url, int inputNum, CEvent  *pEvent){//, Da
     }
 
 
-    ctx_format->probesize=32000;
+    ctx_format->probesize=500000;
    //ctx_format->max_analyze_duration=32000;
 
     std::cout <<"probesize  " << ctx_format->probesize << " max_analyze_duration "<<ctx_format->max_analyze_duration << std::endl;

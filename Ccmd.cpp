@@ -24,6 +24,7 @@
 #include "CffmpegStreamer.h"
 #include "CEvent.h"
 
+
 Ccmd::Ccmd()
 {
     clearPresImage();
@@ -434,9 +435,14 @@ std::string Ccmd::getEventStatus(std::string eventid)
         doc.Accept(writer);
 
         const std::string &str = buffer.GetString();
-
-        std::cout << str << "JSON  " << std::endl;
         return str;
     }
     return "";
 }
+std::string Ccmd::loadPresVideo(std::string  eventid, std::string  fileid, std::string  url ){
+
+if (_Events.find(eventid) == _Events.end())
+        return "{\"status\":-1}";
+
+return   "{\"status\":-1}";;
+};

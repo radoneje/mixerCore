@@ -58,6 +58,7 @@ class Ccmd {
 
         bool showPres(std::string fileName, std::string eventid, std::string itemid);
         bool activateInput(std::string eventid,  int itemid);
+        std::string loadPresVideo(std::string  eventid, std::string  fileid, std::string  url );
 };
 
 
