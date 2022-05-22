@@ -15,8 +15,6 @@
 #include <vector>
 #include <map>
 
-#include "CffmpegFileReader.h"
-
 
 class CEvent {
 private:
@@ -37,6 +35,11 @@ public:
         std::string spkid;
         bool isActive;
     };
+    struct SVideoFileData{
+        std::string fileid;
+        bool isPaused;
+        bool isReady;
+    };
    
 
     CEvent(std::string eventid);
@@ -53,8 +56,8 @@ public:
     void showPres(unsigned char * data, std::string itemid);
     std::map<int,SInputData*> inputs;
 
-    std::map<std::string, CffmegFileReader*> videoFileReaders;
-    void loadVideoFile(std::string fileid, std::string url);
+    std::map<std::string, SVideoFileData*> videoFileReaders;
+
    
 };
 

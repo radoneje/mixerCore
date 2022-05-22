@@ -23,6 +23,7 @@
 #include "CFFreader.h"
 #include "CffmpegStreamer.h"
 #include "CEvent.h"
+#include "CffFileReader.h"
 
 
 Ccmd::Ccmd()
@@ -444,5 +445,18 @@ std::string Ccmd::loadPresVideo(std::string  eventid, std::string  fileid, std::
 if (_Events.find(eventid) == _Events.end())
         return "{\"status\":-1}";
 
-return   "{\"status\":-1}";;
+
+auto pEvent=_Events.at(eventid);
+
+    std::thread readerThered(CffFileReader::work, fileid, url,pEvent );
+    readerThered.detach();
+
+    CEvent::SVideoFileData item;
+    item.fileid= fileid,
+    item.isPaused=true;
+    item.isReady=false;
+
+   pEvent->videoFileReaders.insert({ fileid, &item}); 
+   return "{\"status\":-0}";
+
 };
