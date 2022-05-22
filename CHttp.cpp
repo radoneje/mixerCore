@@ -27,6 +27,7 @@ void CHttp::init(int port, Ccmd *pCmd) {
     svr.Get(R"(/mixer/eventStatus/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))",
             [&](const httplib::Request &req, httplib::Response &res) {
                 // res.set_content("Hello World!", "text/plain");
+                
                 if(req.matches.size()>0)
                 {
                     //std::lock_guard<std::mutex> lockGuard(pCmd->locker);

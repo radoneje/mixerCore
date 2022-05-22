@@ -13,6 +13,10 @@
 #include <functional>
 #include <Magick++.h>
 
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/prettywriter.h"
+#include "rapidjson/stringbuffer.h"
 
 #include "CConfig.h"
 #include "Ccmd.h"
@@ -20,8 +24,8 @@
 #include "CffmpegStreamer.h"
 #include "CEvent.h"
 
-
-Ccmd::Ccmd() {
+Ccmd::Ccmd()
+{
     clearPresImage();
 };
 
@@ -30,16 +34,18 @@ std::mutex Ccmd::_locker;
 
 void Ccmd::makeMainImage(std::string eventid,
                          CEvent *pEvent, std::function<void(std::string eventid)> onStart,
-                         std::function<void(std::string eventid)> onEnd) {
-    std::cout<< " makeMainImage "  <<std::endl;
+                         std::function<void(std::string eventid)> onEnd)
+{
+    std::cout << " makeMainImage " << std::endl;
     //  try {
     onStart(eventid);
     int ww = CConfig::WIDTH / 4;
     int hh = CConfig::HEIGHT / 4;
     int memorySize = CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char);
 
-    unsigned char *blankImage = (unsigned char *) malloc(memorySize);
-    for (int i = 0; i < memorySize; i++) {
+    unsigned char *blankImage = (unsigned char *)malloc(memorySize);
+    for (int i = 0; i < memorySize; i++)
+    {
         blankImage[i] = 0xff;
         pEvent->mainImageData[i] = 0xff;
     }
@@ -51,77 +57,81 @@ void Ccmd::makeMainImage(std::string eventid,
     // free(blankImage);
     // using namespace Magick;
 
-
     long long i = 0;
     auto start = std::chrono::high_resolution_clock::now();
-    while (true && !pEvent->stop) {
+    while (true && !pEvent->stop)
+    {
         using namespace std::chrono_literals;
         i++;
 
-      //  std::cout<<"before "<< i <<std::endl;
+        //  std::cout<<"before "<< i <<std::endl;
         for (int y = 0; y < CConfig::HEIGHT; y++)
-            for (int x = 0; x < CConfig::WIDTH; x++) {
+            for (int x = 0; x < CConfig::WIDTH; x++)
+            {
                 /// находим PGM
-                if(x<ww*3 && y>hh) {
+                if (x < ww * 3 && y > hh)
+                {
                     //заполняем PGM
-                    int pgmX=x; // координаты PGM
-                    int pgmY=y-hh;
+                    int pgmX = x; // координаты PGM
+                    int pgmY = y - hh;
                     ///////// генерация презы
-                   // std::cout<< "before if "<<std::endl;
-                      if(pEvent->activeInputs.size()==1 /* && pEvent->activeInputs[0]==CConfig::MAX_FACES*/){ // усли только один инпут
-                         // std::cout<< "inside if "<<std::endl;
-                          //std::cout<< pEvent->imageData.size()<< "size; " << pEvent->activeInputs[0] <<std::endl;
-                          blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] =
-                                  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 0];
-                          blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1] =
-                                  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 1];
-                          blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] =
-                                  pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH*0.75)) * 3) + 2];
-
-                      }
-                      //else if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]<CConfig::MAX_FACES){ // если один инпут
+                    // std::cout<< "before if "<<std::endl;
+                    if (pEvent->activeInputs.size() == 1 /* && pEvent->activeInputs[0]==CConfig::MAX_FACES*/)
+                    { // усли только один инпут
+                        // std::cout<< "inside if "<<std::endl;
+                        // std::cout<< pEvent->imageData.size()<< "size; " << pEvent->activeInputs[0] <<std::endl;
+                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] =
+                            pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH * 0.75)) * 3) + 0];
+                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1] =
+                            pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH * 0.75)) * 3) + 1];
+                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] =
+                            pEvent->imageData[pEvent->activeInputs[0]].fullImageData[(int)((pgmX + (pgmY * CConfig::WIDTH * 0.75)) * 3) + 2];
+                    }
+                    // else if(pEvent->activeInputs.size()==1 && pEvent->activeInputs[0]<CConfig::MAX_FACES){ // если один инпут
 
                     //  }
-
                 }
-                else if (y<hh){ //top roq of inputs
-                        int col=(int)(x/(ww));
-                        int inputX=x-col*ww;
-                    //std::cout<<((x + (y * CConfig::WIDTH)) * 3) + 0<< " inputX "  <<(int)((inputX + (y * ww)) * 3) + 0<<std::endl;
-                       if(pEvent->imageData.size()-1>col) {
-                           blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] =
-                                   pEvent->imageData[col].previewImageData[(int) ((inputX + (y * ww)) * 3) + 0];
-                           blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1] =
-                                   pEvent->imageData[col].previewImageData[(int) ((inputX + (y * ww)) * 3) + 1];
-                           blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] =
-                                   pEvent->imageData[col].previewImageData[(int) ((inputX + (y * ww)) * 3) + 2];
-                       }
-                }
-                else if (x>=ww*3 && y>=hh) { //left row of inputs
-                    int col=3;
-                    int inputX=x-(col*ww);
-                    int row=(int)(y/(hh));
-                    int inputY=(row-1)*hh;
-
-                    int imgNum=((int)(y/(hh)))+3;
-                 //   if(y==710)
-
-                    int pixelx=x-ww*3;
-                    int pixely=y-hh*row;
-
-                    int pixelNum=(pixelx +(pixely*ww))*3;
-                   // if(pEvent->imageData.size()-1>col+row-1)
+                else if (y < hh)
+                { // top roq of inputs
+                    int col = (int)(x / (ww));
+                    int inputX = x - col * ww;
+                    // std::cout<<((x + (y * CConfig::WIDTH)) * 3) + 0<< " inputX "  <<(int)((inputX + (y * ww)) * 3) + 0<<std::endl;
+                    if (pEvent->imageData.size() - 1 > col)
                     {
-                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0]=
-                                pEvent->imageData[imgNum].previewImageData[pixelNum + 0];
-                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1]=
-                                pEvent->imageData[imgNum].previewImageData[pixelNum + 1];
-                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2]=
-                                pEvent->imageData[imgNum].previewImageData[pixelNum + 2];
-
+                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] =
+                            pEvent->imageData[col].previewImageData[(int)((inputX + (y * ww)) * 3) + 0];
+                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1] =
+                            pEvent->imageData[col].previewImageData[(int)((inputX + (y * ww)) * 3) + 1];
+                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] =
+                            pEvent->imageData[col].previewImageData[(int)((inputX + (y * ww)) * 3) + 2];
                     }
                 }
-                else{ // пустой PGM
+                else if (x >= ww * 3 && y >= hh)
+                { // left row of inputs
+                    int col = 3;
+                    int inputX = x - (col * ww);
+                    int row = (int)(y / (hh));
+                    int inputY = (row - 1) * hh;
+
+                    int imgNum = ((int)(y / (hh))) + 3;
+                    //   if(y==710)
+
+                    int pixelx = x - ww * 3;
+                    int pixely = y - hh * row;
+
+                    int pixelNum = (pixelx + (pixely * ww)) * 3;
+                    // if(pEvent->imageData.size()-1>col+row-1)
+                    {
+                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] =
+                            pEvent->imageData[imgNum].previewImageData[pixelNum + 0];
+                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1] =
+                            pEvent->imageData[imgNum].previewImageData[pixelNum + 1];
+                        blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] =
+                            pEvent->imageData[imgNum].previewImageData[pixelNum + 2];
+                    }
+                }
+                else
+                { // пустой PGM
                     blankImage[((x + (y * CConfig::WIDTH)) * 3) + 0] = 0x00;
                     blankImage[((x + (y * CConfig::WIDTH)) * 3) + 1] = 0xf0;
                     blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] = 0x00;
@@ -129,9 +139,9 @@ void Ccmd::makeMainImage(std::string eventid,
             }
 
         ////////генерация превьюшек
-        for (int i = 0; i < CConfig::MAX_FACES; i++)//TODO: uncomment
+        for (int i = 0; i < CConfig::MAX_FACES; i++) // TODO: uncomment
         {
-            //TODO: previewImageData-> заполнить и взять
+            // TODO: previewImageData-> заполнить и взять
             /*    Magick::Image imageInput;
                 pEvent->locker.lock();
                 imageInput.read(CConfig::WIDTH / 4, CConfig::HEIGHT / 4, "RGB", MagickLib::CharPixel,
@@ -141,35 +151,30 @@ void Ccmd::makeMainImage(std::string eventid,
                     image.composite(imageInput, ww * i, 0);
                 else
                     image.composite(imageInput, ww * 3, (hh * (i - 3)));*/
-
         }
 
-
         pEvent->locker.lock();
-          //  free(pEvent->mainImageData);
-            memcpy( pEvent->mainImageData, blankImage, memorySize);
+        //  free(pEvent->mainImageData);
+        memcpy(pEvent->mainImageData, blankImage, memorySize);
         pEvent->locker.unlock();
-
 
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> elapsed = end - start;
-       // std::cout << "sleep "
-       //           << std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())).count()
+        // std::cout << "sleep "
+        //           << std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())).count()
         //          << std::endl;
         std::this_thread::sleep_for(
-                std::chrono::milliseconds((int) ((1000 / CConfig::FRAMERATE) - elapsed.count())));
-
+            std::chrono::milliseconds((int)((1000 / CConfig::FRAMERATE) - elapsed.count())));
 
         start = std::chrono::high_resolution_clock::now();
     }
 
-
-//  } catch (...) { CConfig::error("ERROR IN makeMainImage"); }
+    //  } catch (...) { CConfig::error("ERROR IN makeMainImage"); }
     onEnd(eventid);
 }
 
-
-unsigned char *Ccmd::loadNotConnected(int input) {
+unsigned char *Ccmd::loadNotConnected(int input)
+{
     std::string fileName("/etc/mixerCore/images/notconnected");
     fileName.append(std::to_string(input + 1));
     fileName.append(".png");
@@ -179,14 +184,14 @@ unsigned char *Ccmd::loadNotConnected(int input) {
     Magick::Image image;
     image.read(fileName.c_str());
     // image.crop( Magick::Geometry(0,0, WIDTH, HEIGHT) );
-    unsigned char *pixels = (unsigned char *) malloc(CConfig::HEIGHT * CConfig::WIDTH * 3 * sizeof(unsigned char));
+    unsigned char *pixels = (unsigned char *)malloc(CConfig::HEIGHT * CConfig::WIDTH * 3 * sizeof(unsigned char));
     image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, pixels);
 
     return pixels;
-
 }
 
-void Ccmd::_stopEvent(std::string eventid) {
+void Ccmd::_stopEvent(std::string eventid)
+{
     std::lock_guard<std::mutex> lock(_locker);
     if (_Events.find(eventid) == _Events.end())
         return;
@@ -195,51 +200,54 @@ void Ccmd::_stopEvent(std::string eventid) {
     _Events.erase(eventid);
 }
 
-void Ccmd::notifyStreamStarted(std::string eventid) {
+void Ccmd::notifyStreamStarted(std::string eventid)
+{
     CConfig::log("Main stream loop started", eventid);
-    CConfig::notifyControl("eventStarted",eventid);
+    CConfig::notifyControl("eventStarted", eventid);
 };
 
-void Ccmd::notifyStreamEnded(std::string eventid) {
+void Ccmd::notifyStreamEnded(std::string eventid)
+{
     CConfig::log("Main stream loop stopped", eventid);
     _stopEvent(eventid);
-    CConfig::notifyControl("eventStopped",eventid);
-
+    CConfig::notifyControl("eventStopped", eventid);
 };
 
-void Ccmd::notifyMakeMainImageStarted(std::string eventid) {
+void Ccmd::notifyMakeMainImageStarted(std::string eventid)
+{
     CConfig::log("Main image loop Started", eventid);
 }
 
-void Ccmd::notifyMakeMainImageEnded(std::string eventid) {
+void Ccmd::notifyMakeMainImageEnded(std::string eventid)
+{
     CConfig::log("Main image loop stopped", eventid);
 
     _stopEvent(eventid);
 }
 
+void Ccmd::startReadStream(std::string rtmpURL, std::string eventid, int layerNumber, std::string spkid)
+{ // TODO: Delete!!!!
 
-void Ccmd::startReadStream(std::string rtmpURL,std::string eventid, int layerNumber, std::string spkid) { // TODO: Delete!!!!
-
-    if (_Events.find(eventid) == _Events.end()) {
+    if (_Events.find(eventid) == _Events.end())
+    {
         CConfig::error("startReadStream, cant find stream", eventid);
         return;
     }
-    if(layerNumber>=CConfig::MAX_FACES){
-        CConfig::error("startReadStream, cant allocate input ",layerNumber,  eventid);
+    if (layerNumber >= CConfig::MAX_FACES)
+    {
+        CConfig::error("startReadStream, cant allocate input ", layerNumber, eventid);
         return;
     }
-    auto event= _Events.at(eventid);
-    auto input=event->inputs.at(layerNumber);
-    input->spkid=spkid;
-   
-    
+    auto event = _Events.at(eventid);
+    auto input = event->inputs.at(layerNumber);
+    input->spkid = spkid;
 
-   // std::thread inputThread(CffmpegStreamer::test, eventid, event);
+    // std::thread inputThread(CffmpegStreamer::test, eventid, event);
 
-    std::thread inputThread(CFFreader::work , rtmpURL ,layerNumber, event);
+    std::thread inputThread(CFFreader::work, rtmpURL, layerNumber, event);
     inputThread.detach();
 
-//work(const std::string url, int inputNum, CEvent  *pEvent)
+    // work(const std::string url, int inputNum, CEvent  *pEvent)
     /*   FFreader[layerNumber].dt.width = layerNumber;
        FFreader[layerNumber].dt.layer = layerNumber;
        std::cout << "start input " << rtmpURL << " " << layerNumber << std::endl;
@@ -251,10 +259,10 @@ void Ccmd::startReadStream(std::string rtmpURL,std::string eventid, int layerNum
    */
 
     // ffmpegThread
-
 }
 
-void Ccmd::loadPresImage(std::string filepath, const std::string simageid) {
+void Ccmd::loadPresImage(std::string filepath, const std::string simageid)
+{
 
     // auto start = std::chrono::system_clock::now();
 
@@ -271,28 +279,34 @@ void Ccmd::loadPresImage(std::string filepath, const std::string simageid) {
                                   SOIL_LOAD_RGB);*/
     PresImageWidth = 1280;
     PresImageHeight = 720;
-    PresImagePixels = (unsigned char *) malloc(PresImageWidth * PresImageHeight * 3 * sizeof(unsigned char));
-    std::cout << "PresImagePixels" << " " << PresImageWidth << "" << std::endl;
+    PresImagePixels = (unsigned char *)malloc(PresImageWidth * PresImageHeight * 3 * sizeof(unsigned char));
+    std::cout << "PresImagePixels"
+              << " " << PresImageWidth << "" << std::endl;
     int i = 0;
     srand(std::chrono::system_clock::now().time_since_epoch().count());
-    do {
+    do
+    {
         //  std::cout<<i<<std::endl;
 
-        PresImagePixels[i + 0] = ((double) rand() / RAND_MAX) * 254;;
-        PresImagePixels[i + 1] = ((double) rand() / RAND_MAX) * 254;;
-        PresImagePixels[i + 2] = ((double) rand() / RAND_MAX) * 254;;
+        PresImagePixels[i + 0] = ((double)rand() / RAND_MAX) * 254;
+        ;
+        PresImagePixels[i + 1] = ((double)rand() / RAND_MAX) * 254;
+        ;
+        PresImagePixels[i + 2] = ((double)rand() / RAND_MAX) * 254;
+        ;
         i = i + 3;
     } while (i < PresImageWidth * PresImageHeight * 3);
-    std::cout << "PresImagePixels complite " << " " << ((double) rand() / RAND_MAX) * 16 << "" << std::endl;
+    std::cout << "PresImagePixels complite "
+              << " " << ((double)rand() / RAND_MAX) * 16 << "" << std::endl;
     std::remove(filepath.c_str());
     activeTextureId.clear();
     /*auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end-start;
     std::cout << "elapsed time: " << elapsed_seconds.count() << "s" << std::endl;*/
-
 }
 
-void Ccmd::clearPresImage() {
+void Ccmd::clearPresImage()
+{
     // std::lock_guard<std::mutex> lockGuard(locker);
     PresImageWidth = 0;
     PresImageHeight = 0;
@@ -300,17 +314,19 @@ void Ccmd::clearPresImage() {
     // free(PresImagePixels);
     PresImagePixels;
     // PresImagePixels=nullptr;
-
 };
 
-int Ccmd::stopEvent(const std::string eventid) {
+int Ccmd::stopEvent(const std::string eventid)
+{
     _stopEvent(eventid);
     return 0;
 }
 
-int Ccmd::startEvent(const std::string eventid) {
+int Ccmd::startEvent(const std::string eventid)
+{
 
-    if (Ccmd::_Events.find(eventid) != _Events.end()) {
+    if (Ccmd::_Events.find(eventid) != _Events.end())
+    {
         CConfig::log("start Event:: already started", eventid);
         return 0;
     }
@@ -323,27 +339,24 @@ int Ccmd::startEvent(const std::string eventid) {
     int w = CConfig::WIDTH;
     int h = CConfig::HEIGHT;
 
-
-
     std::thread streamThread(CffmpegStreamer::startStream, eventid, event,
-                             (std::function<void(std::string)>) notifyStreamStarted,
-                             (std::function<void(std::string)>) notifyStreamEnded);
+                             (std::function<void(std::string)>)notifyStreamStarted,
+                             (std::function<void(std::string)>)notifyStreamEnded);
     streamThread.detach();
     event->thread = &streamThread;
 
     std::thread makeMainImageThread(Ccmd::makeMainImage,
                                     eventid,
                                     event,
-                                    (std::function<void(std::string eventid)>) notifyMakeMainImageStarted,
-                                    (std::function<void(std::string eventid)>) notifyMakeMainImageEnded);
-
+                                    (std::function<void(std::string eventid)>)notifyMakeMainImageStarted,
+                                    (std::function<void(std::string eventid)>)notifyMakeMainImageEnded);
 
     makeMainImageThread.detach();
     return 0;
 }
 
-bool Ccmd::showPres(std::string fileName, std::string eventid, std::string itemid) {
-
+bool Ccmd::showPres(std::string fileName, std::string eventid, std::string itemid)
+{
 
     std::lock_guard<std::mutex> lock(_locker);
     if (_Events.find(eventid) == _Events.end())
@@ -352,7 +365,7 @@ bool Ccmd::showPres(std::string fileName, std::string eventid, std::string itemi
     CEvent *event = _Events.at(eventid);
     Magick::Image image;
     image.read(fileName);
-    unsigned char *buf = (unsigned char *) malloc(CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char));
+    unsigned char *buf = (unsigned char *)malloc(CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char));
     image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, buf);
     event->showPres(buf, itemid);
     free(buf);
@@ -360,7 +373,8 @@ bool Ccmd::showPres(std::string fileName, std::string eventid, std::string itemi
     return true;
 };
 
-bool Ccmd::activateInput(std::string eventid, int itemid) {
+bool Ccmd::activateInput(std::string eventid, int itemid)
+{
 
     std::lock_guard<std::mutex> lock(_locker);
     if (_Events.find(eventid) == _Events.end())
@@ -375,9 +389,54 @@ bool Ccmd::activateInput(std::string eventid, int itemid) {
     CConfig::log("activate Input,", itemid, ", event id:", eventid);
     return true;
 }
-std::string Ccmd::getEventStatus(std::string eventid) {
+std::string Ccmd::getEventStatus(std::string eventid)
+{
+
     if (_Events.find(eventid) == _Events.end())
         return "{\"status\":0, \"inputs\":[]}";
     else
-        return "{\"status\":1}";
+    {
+        rapidjson::Document doc;
+        auto &allocator = doc.GetAllocator();
+        rapidjson::Value jsonInputs(rapidjson::kArrayType);
+
+        doc.SetObject();
+        doc.AddMember("status", "1", allocator);
+        
+
+        auto event = _Events.at(eventid);
+        for (int i = 0; i < event->inputs.size(); i++)
+        {
+            rapidjson::Value jsonValue;
+            jsonValue.SetObject();
+           
+
+            rapidjson::Value spkid;
+            spkid.SetString(event->inputs[i]->spkid.c_str(), allocator);
+
+            jsonValue.AddMember("inputNo", event->inputs[i]->number, allocator);
+            jsonValue.AddMember("isActive", event->inputs[i]->isActive, allocator);
+            jsonValue.AddMember("spkid",spkid, allocator);
+            jsonValue.AddMember("time_start", event->inputs[i]->time_start, allocator);
+            bool onAir=false;
+            std::for_each(std::begin(event->activeInputs), std::end(event->activeInputs), [&](int const& value) {
+                        if(value==i)
+                        onAir=true;
+            });
+            jsonValue.AddMember("onAir", onAir, allocator);
+            
+            jsonInputs.PushBack(jsonValue, allocator);
+        }
+        doc.AddMember("inputs", jsonInputs, allocator);
+
+        rapidjson::StringBuffer buffer;
+        rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+        doc.Accept(writer);
+
+        const std::string &str = buffer.GetString();
+
+        std::cout << str << "JSON  " << std::endl;
+        return str;
+    }
+    return "";
 }
