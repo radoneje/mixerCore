@@ -451,12 +451,6 @@ auto pEvent=_Events.at(eventid);
     std::thread readerThered(CffFileReader::work, fileid, url,pEvent );
     readerThered.detach();
 
-    CEvent::SVideoFileData item;
-    item.fileid= fileid,
-    item.isPaused=true;
-    item.isReady=false;
-
-   pEvent->videoFileReaders.insert({ fileid, &item}); 
    return "{\"status\":-0}";
 
 };

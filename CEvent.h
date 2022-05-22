@@ -56,6 +56,8 @@ public:
     void showPres(unsigned char * data, std::string itemid);
     std::map<int,SInputData*> inputs;
 
+    bool onVideoLoaded(std::string fileid);
+    void onVideoEnd(std::string fileid);
     std::map<std::string, SVideoFileData*> videoFileReaders;
 
    

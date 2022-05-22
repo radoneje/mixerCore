@@ -8,6 +8,8 @@
 
 class CffFileReader
 {
+    private:
+    static long nowTime();
 public:
 	CffFileReader();
 	~CffFileReader() = default;

@@ -138,3 +138,23 @@ void CEvent::onInputEnd(int inputNo){
     auto s=std::to_string(inputNo);
     CConfig::notifyControl("inputStop",_eventid,&s,&inputs.at(inputNo)->spkid);
 }
+bool CEvent::onVideoLoaded(std::string fileid){
+    CConfig::log("VIDEO LOADED", fileid);
+
+    CEvent::SVideoFileData item;
+    item.fileid= fileid,
+    item.isPaused=true;
+    item.isReady=false;
+
+   locker.lock();
+    if(videoFileReaders.find(fileid)!=videoFileReaders.end()){
+        locker.unlock();
+        return false;
+    }
+    videoFileReaders.insert({ fileid, &item}); 
+    locker.unlock();
+    return true;
+};
+void  CEvent::onVideoEnd(std::string fileid){
+CConfig::log("VIDEO END", fileid);
+}
