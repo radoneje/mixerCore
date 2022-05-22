@@ -30,7 +30,7 @@ void CHttp::init(int port, Ccmd *pCmd) {
                 if(req.matches.size()>0)
                 {
                     //std::lock_guard<std::mutex> lockGuard(pCmd->locker);
-                    res.set_content(pCmd->getEvent(req.matches[1]), "application/json");
+                    res.set_content(pCmd->getEventStatus(req.matches[1]), "application/json");
                     // pCmd->locker.lock();
                 }
                 else

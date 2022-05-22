@@ -31,7 +31,7 @@ class Ccmd {
 
         std::vector<CFFreader>  FFreader;
         std::vector<int> activeTextureId;
-        std::string getEvent(std::string eventid);
+        std::string getEventStatus(std::string eventid);
         void loadPresImage(std::string filepath, const std::string simageid);
         void clearPresImage();
         unsigned char* PresImagePixels;

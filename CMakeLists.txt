@@ -23,11 +23,12 @@ find_library(SWSCALE_LIBRARIES swscale)
 find_library(IM_LIBRARIES Magick++)
 
 include_directories(
-
+        include/
         external/ffmpeg
         /usr/include/x86_64-linux-gnu/
         /usr/local/include/
         /usr/include/
+
         ${ImageMagick_INCLUDE_DIRS}
         .
 )

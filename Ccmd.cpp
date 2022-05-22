@@ -375,9 +375,9 @@ bool Ccmd::activateInput(std::string eventid, int itemid) {
     CConfig::log("activate Input,", itemid, ", event id:", eventid);
     return true;
 }
-std::string Ccmd::getEvent(std::string eventid) {
+std::string Ccmd::getEventStatus(std::string eventid) {
     if (_Events.find(eventid) == _Events.end())
-        return "{\"status\":0}";
+        return "{\"status\":0, \"inputs\":[]}";
     else
         return "{\"status\":1}";
 }
