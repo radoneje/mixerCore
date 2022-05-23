@@ -25,7 +25,6 @@
 #include "CEvent.h"
 #include "CffFileReader.h"
 
-
 Ccmd::Ccmd()
 {
     clearPresImage();
@@ -131,7 +130,6 @@ void Ccmd::makeMainImage(std::string eventid,
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] =
                             pEvent->imageData[imgNum].previewImageData[pixelNum + 2];
                     }
-                    
                 }
                 else
                 { // пустой PGM
@@ -142,7 +140,7 @@ void Ccmd::makeMainImage(std::string eventid,
             }
 
         ////////генерация превьюшек
-        for (int i = 0; i <=CConfig::MAX_FACES; i++) // TODO: uncomment
+        for (int i = 0; i <= CConfig::MAX_FACES; i++) // TODO: uncomment
         {
             // TODO: previewImageData-> заполнить и взять
             /*    Magick::Image imageInput;
@@ -356,7 +354,6 @@ int Ccmd::startEvent(const std::string eventid)
 
     makeMainImageThread.detach();
 
-    
     return 0;
 }
 
@@ -407,29 +404,27 @@ std::string Ccmd::getEventStatus(std::string eventid)
 
         doc.SetObject();
         doc.AddMember("status", "1", allocator);
-        
 
         auto event = _Events.at(eventid);
         for (int i = 0; i < event->inputs.size(); i++)
         {
             rapidjson::Value jsonValue;
             jsonValue.SetObject();
-           
 
             rapidjson::Value spkid;
             spkid.SetString(event->inputs[i]->spkid.c_str(), allocator);
 
             jsonValue.AddMember("inputNo", event->inputs[i]->number, allocator);
             jsonValue.AddMember("isActive", event->inputs[i]->isActive, allocator);
-            jsonValue.AddMember("spkid",spkid, allocator);
+            jsonValue.AddMember("spkid", spkid, allocator);
             jsonValue.AddMember("time_start", event->inputs[i]->time_start, allocator);
-            bool onAir=false;
-            std::for_each(std::begin(event->activeInputs), std::end(event->activeInputs), [&](int const& value) {
+            bool onAir = false;
+            std::for_each(std::begin(event->activeInputs), std::end(event->activeInputs), [&](int const &value)
+                          {
                         if(value==i)
-                        onAir=true;
-            });
+                        onAir=true; });
             jsonValue.AddMember("onAir", onAir, allocator);
-            
+
             jsonInputs.PushBack(jsonValue, allocator);
         }
         doc.AddMember("inputs", jsonInputs, allocator);
@@ -443,29 +438,35 @@ std::string Ccmd::getEventStatus(std::string eventid)
     }
     return "";
 }
-std::string Ccmd::loadPresVideo(std::string  eventid, std::string  fileid, std::string  url ){
+std::string Ccmd::loadPresVideo(std::string eventid, std::string fileid, std::string url)
+{
 
-if (_Events.find(eventid) == _Events.end())
+    if (_Events.find(eventid) == _Events.end())
         return "{\"status\":-1}";
 
+    auto pEvent = _Events.at(eventid);
 
-auto pEvent=_Events.at(eventid);
-
-    std::thread readerThered(CffFileReader::work, fileid, url,pEvent );
+    std::thread readerThered(CffFileReader::work, fileid, url, pEvent);
     readerThered.detach();
 
-   return "{\"status\":-0}";
-
+    return "{\"status\":-0}";
 };
-std::string Ccmd::activatePresVideo(std::string eventid, std::string fileid){
-    if (_Events.find(eventid) == _Events.end()){
-       
-        CConfig::error("ERROR activatePresVideo - event is not active");
-         return "{\"status\":0, \"cant find event\"}";
-    }
-    auto pEvent=_Events.at(eventid);
+std::string Ccmd::activatePresVideo(std::string eventid, std::string fileid)
+{
+    if (_Events.find(eventid) == _Events.end())
+    {
 
-    if(pEvent->inputs.find(fileid)==pEvent->inputs.end())
-     CConfig::error("ERROR activatePresVideo - video is not loaded");
-      return "{\"status\":0, \"cant find input\"}";
+        CConfig::error("ERROR activatePresVideo - event is not active");
+        return "{\"status\":0, \"error\":\"cant find event\"}";
+    }
+    auto pEvent = _Events.at(eventid);
+
+    if (pEvent->videoFileReaders.find(fileid) == pEvent->videoFileReaders.end())
+    {
+        CConfig::error("ERROR activatePresVideo - video is not loaded");
+        return "{\"status\":0, \"error\":\"cant find input\"}";
+    }
+
+    auto videoFileReader = pEvent->videoFileReaders.at(fileid);
+      return "{\"status\":1, }";
 };
