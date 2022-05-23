@@ -162,6 +162,22 @@ void CHttp::init(int port, Ccmd *pCmd) {
 
 
             });
+             svr.Get(
+            R"(/mixer/activatePresVideo)",
+            [&](const httplib::Request &req, httplib::Response &res) {
+                std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+                auto start = std::chrono::system_clock::now();
+
+                const std::string eventid = req.get_param_value("eventid");
+                const std::string fileid = req.get_param_value("fileid");
+                CConfig::log("/mixer/activatePresVideo", eventid);
+                
+                res.set_content(pCmd->activatePresVideo(eventid, fileid), "application/json");
+               
+                return;
+
+
+            });
     svr.Get(R"(/mixer/activeInput/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/(\d+))",
             [&](const httplib::Request &req, httplib::Response &res) {
                 // res.set_content("Hello World!", "text/plain");

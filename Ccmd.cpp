@@ -335,26 +335,28 @@ int Ccmd::startEvent(const std::string eventid)
     }
     CConfig::log("startEvent", eventid);
 
-    CEvent *event = new CEvent(eventid);
+    CEvent *pEvent = new CEvent(eventid);
 
-    Ccmd::_Events.insert({eventid, event});
+    Ccmd::_Events.insert({eventid, pEvent});
 
     int w = CConfig::WIDTH;
     int h = CConfig::HEIGHT;
 
-    std::thread streamThread(CffmpegStreamer::startStream, eventid, event,
+    std::thread streamThread(CffmpegStreamer::startStream, eventid, pEvent,
                              (std::function<void(std::string)>)notifyStreamStarted,
                              (std::function<void(std::string)>)notifyStreamEnded);
     streamThread.detach();
-    event->thread = &streamThread;
+    pEvent->thread = &streamThread;
 
     std::thread makeMainImageThread(Ccmd::makeMainImage,
                                     eventid,
-                                    event,
+                                    pEvent,
                                     (std::function<void(std::string eventid)>)notifyMakeMainImageStarted,
                                     (std::function<void(std::string eventid)>)notifyMakeMainImageEnded);
 
     makeMainImageThread.detach();
+
+    
     return 0;
 }
 
@@ -454,4 +456,16 @@ auto pEvent=_Events.at(eventid);
 
    return "{\"status\":-0}";
 
+};
+std::string Ccmd::activatePresVideo(std::string eventid, std::string fileid){
+    if (_Events.find(eventid) == _Events.end()){
+       
+        CConfig::error("ERROR activatePresVideo - event is not active");
+         return "{\"status\":0, \"cant find event\"}";
+    }
+    auto pEvent=_Events.at(eventid);
+
+    if(pEvent->inputs.find(fileid)==pEvent->inputs.end())
+     CConfig::error("ERROR activatePresVideo - video is not loaded");
+      return "{\"status\":0, \"cant find input\"}";
 };
