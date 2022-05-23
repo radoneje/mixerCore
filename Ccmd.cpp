@@ -25,6 +25,8 @@
 #include "CEvent.h"
 #include "CffFileReader.h"
 
+
+
 Ccmd::Ccmd()
 {
     clearPresImage();
@@ -205,6 +207,34 @@ void Ccmd::notifyStreamStarted(std::string eventid)
 {
     CConfig::log("Main stream loop started", eventid);
     CConfig::notifyControl("eventStarted", eventid);
+    if (_Events.find(eventid) == _Events.end())
+        return;
+    auto event= _Events[eventid];
+
+    auto res=CConfig::getDataFromControl("eventVideos",eventid);
+    try{
+        CConfig::log(res);
+    rapidjson::Document json;
+    json.Parse(res.c_str());
+    if(json.IsArray()){
+        for (int i = 0; i < json.Size(); i++){
+            loadPresVideo(eventid,json[i]["fileid"].GetString(),json[i]["url"].GetString(), json[i]["islooped"].GetBool());
+            
+        }
+    }
+    }
+    catch(...){
+         CConfig::error("ERROR GET EVENTS VIDEO", eventid);
+    }
+
+    
+    CConfig::log("webClient.Get", res);
+    
+
+
+   // loadPresVideo( eventid, std::string fileid, std::string url)
+    
+   
 };
 
 void Ccmd::notifyStreamEnded(std::string eventid)
@@ -364,12 +394,13 @@ bool Ccmd::showPres(std::string fileName, std::string eventid, std::string itemi
     if (_Events.find(eventid) == _Events.end())
         return false;
 
-    CEvent *event = _Events.at(eventid);
+    CEvent *pEvent = _Events.at(eventid);
     Magick::Image image;
     image.read(fileName);
     unsigned char *buf = (unsigned char *)malloc(CConfig::WIDTH * CConfig::HEIGHT * 3 * sizeof(unsigned char));
     image.write(0, 0, CConfig::WIDTH, CConfig::HEIGHT, "RGB", MagickLib::CharPixel, buf);
-    event->showPres(buf, itemid);
+    pEvent->stopAllVideos();
+    pEvent->showPres(buf, itemid);
     free(buf);
     CConfig::log("show pres id:", itemid, ", event id:", eventid);
     return true;
@@ -383,11 +414,12 @@ bool Ccmd::activateInput(std::string eventid, int itemid)
         return false;
     if (itemid >= CConfig::MAX_FACES)
         return false;
-    auto event = _Events.at(eventid);
-    event->locker.lock();
-    event->activeInputs.clear();
-    event->activeInputs.push_back(itemid);
-    event->locker.unlock();
+    auto pEvent = _Events.at(eventid);
+    pEvent->locker.lock();
+    pEvent->stopAllVideos();
+    pEvent->activeInputs.clear();
+    pEvent->activeInputs.push_back(itemid);
+    pEvent->locker.unlock();
     CConfig::log("activate Input,", itemid, ", event id:", eventid);
     return true;
 }
@@ -438,7 +470,7 @@ std::string Ccmd::getEventStatus(std::string eventid)
     }
     return "";
 }
-std::string Ccmd::loadPresVideo(std::string eventid, std::string fileid, std::string url)
+std::string Ccmd::loadPresVideo(std::string eventid, std::string fileid, std::string url, bool islooped)
 {
 
     if (_Events.find(eventid) == _Events.end())
@@ -446,7 +478,7 @@ std::string Ccmd::loadPresVideo(std::string eventid, std::string fileid, std::st
 
     auto pEvent = _Events.at(eventid);
 
-    std::thread readerThered(CffFileReader::work, fileid, url, pEvent);
+    std::thread readerThered(CffFileReader::work, fileid, url, pEvent, islooped);
     readerThered.detach();
 
     return "{\"status\":-0}";
@@ -467,6 +499,44 @@ std::string Ccmd::activatePresVideo(std::string eventid, std::string fileid)
         return "{\"status\":0, \"error\":\"cant find input\"}";
     }
 
-    auto videoFileReader = pEvent->videoFileReaders.at(fileid);
-      return "{\"status\":1, }";
+    
+    {
+        std::lock_guard<std::mutex> lock(_locker);
+        for (const auto &[key, value] : pEvent->videoFileReaders)
+        {
+            value->isPaused = key != fileid;
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(320));
+        pEvent->activeInputs.clear();
+        pEvent->activeInputs.push_back(CConfig::MAX_FACES - 1);
+    }
+
+    return "{\"status\":1 }";
+};
+
+std::string Ccmd::loopedPresVideo(std::string eventid, std::string fileid ,std::string islooped ){
+    if (_Events.find(eventid) == _Events.end())
+    {
+
+        CConfig::error("ERROR loopedPresVideo - event is not active");
+        return "{\"status\":0, \"error\":\"cant find event\"}";
+    }
+    auto pEvent = _Events.at(eventid);
+
+    if (pEvent->videoFileReaders.find(fileid) == pEvent->videoFileReaders.end())
+    {
+        CConfig::error("ERROR loopedPresVideo - video is not loaded");
+        
+        return "{\"status\":0, \"error\":\"cant find input\"}";
+    }
+     {
+        std::lock_guard<std::mutex> lock(_locker);
+        for (const auto &[key, value] : pEvent->videoFileReaders)
+        {
+            value->islooped = islooped=="true";
+        }
+       
+    }
+
+      return "{\"status\":1 }";
 };

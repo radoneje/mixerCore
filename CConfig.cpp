@@ -143,6 +143,27 @@ void CConfig::notifyControl(std::string action, std::string eventid, std::string
     requestThread.detach();
 
 }
+ std::string  CConfig::getDataFromControl(std::string target, std::string eventid, std::string *param1, std::string *param2 , std::string *param3){
+     std::string url= target+"/"+eventid;
+    if(param1!= nullptr){
+        url+= "/";
+        url+= param1->c_str();
+    }
+    if(param2!= nullptr){
+        url+= "/";
+        url+= param2->c_str();
+    }
+    if(param3!= nullptr){
+        url+= "/";
+        url+= param3->c_str();
+    }
+     std::string srv="http://"+CONTROL_SERVER+":"+std::to_string(CONTROL_SERVER_PORT);
+     url="/api/v1/"+url;
+
+     httplib::Client cli(srv);
+     auto res = cli.Get(url.c_str());
+     return res->body;
+}
 
 
 

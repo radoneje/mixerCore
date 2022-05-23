@@ -13,7 +13,7 @@ class CffFileReader
 public:
 	CffFileReader();
 	~CffFileReader() = default;
-    static void work(std::string fileid, std::string fileurl, CEvent *pEvent );
+    static void work(std::string fileid, std::string fileurl, CEvent *pEvent, bool islooped );
 };
 
 

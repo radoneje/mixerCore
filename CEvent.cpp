@@ -138,20 +138,22 @@ void CEvent::onInputEnd(int inputNo){
     auto s=std::to_string(inputNo);
     CConfig::notifyControl("inputStop",_eventid,&s,&inputs.at(inputNo)->spkid);
 }
-bool CEvent::onVideoLoaded(std::string fileid){
+bool CEvent::onVideoLoaded(std::string fileid, bool islooped){
     CConfig::log("VIDEO LOADED", fileid);
 
-    CEvent::SVideoFileData item;
-    item.fileid= fileid,
-    item.isPaused=true;
-    item.isReady=false;
+    CEvent::SVideoFileData *item = new CEvent::SVideoFileData ;
+    item->fileid= fileid,
+    item->isPaused=true;
+    item->isReady=false;
+    item->islooped=islooped;
+    item->isRequestToStart=false;
 
    locker.lock();
     if(videoFileReaders.find(fileid)!=videoFileReaders.end()){
         locker.unlock();
         return false;
     }
-    videoFileReaders.insert({ fileid, &item}); 
+    videoFileReaders.insert({ fileid, item}); 
     locker.unlock();
     return true;
 };
@@ -164,4 +166,16 @@ CConfig::log("VIDEO END", fileid);
     }
     videoFileReaders.erase(fileid);
     locker.unlock();
+}
+void CEvent::stopAllVideos(){
+    for (const auto &[key, value] : videoFileReaders)
+        {
+            value->isPaused = true;
+            value->isRequestToStart= true;
+        }
+}
+void CEvent::onVideoFilePause(std::string fileid, bool pause){
+        auto p=std::to_string(pause);
+
+    CConfig::notifyControl("videoFilePause",_eventid,&fileid,&p);
 }

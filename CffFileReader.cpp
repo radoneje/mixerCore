@@ -22,6 +22,8 @@ extern "C"
 #include "CffFileReader.h"
 #include "CConfig.h"
 
+#define INBUF_SIZE 4096
+
 CffFileReader::CffFileReader()
 {
 }
@@ -32,8 +34,9 @@ long CffFileReader::nowTime()
         system_clock::now().time_since_epoch());
     return ms.count();
 }
-void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent)
+void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent, bool islooped)
 {
+
     AVFormatContext *ctx_format = nullptr;
     AVCodecContext *ctx_codec = nullptr;
     AVCodecContext *ctx_aud_codec = nullptr;
@@ -43,6 +46,9 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
     int ret;
     int stream_idx = -1;
     int ii = 0;
+    bool localPause = true;
+
+    avformat_network_init();
 
     if (int ret = avformat_open_input(&ctx_format, fileurl.c_str(), nullptr, nullptr) != 0)
     {
@@ -96,13 +102,14 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
         pEvent->onVideoEnd(fileid);
         return;
     }
-     ret = avio_open(&ctx_format->pb, fileurl.c_str(), AVIO_FLAG_READ);// , NULL, NULL);
-        if (ret < 0) {
+    ret = avio_open(&ctx_format->pb, fileurl.c_str(), AVIO_FLAG_READ); // , NULL, NULL);
+    if (ret < 0)
+    {
 
-            CConfig::error("FILE READER ERROR - avio_open", fileid, fileurl);
-            pEvent->onVideoEnd(fileid);
-            return;
-        }
+        CConfig::error("FILE READER ERROR - avio_open", fileid, fileurl);
+        pEvent->onVideoEnd(fileid);
+        return;
+    }
 
     // задержка на частоту кадров
     int frameDur = 0;
@@ -112,7 +119,6 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
     CConfig::log("FILE READER frameDur 2", frameDur);
 
     //////////
-
     AVFrame *frame = av_frame_alloc();
     AVFrame *pRGBFrame = av_frame_alloc();
     AVFrame *pRGBFrame_preview = av_frame_alloc();
@@ -140,98 +146,132 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
         pEvent->onVideoEnd(fileid);
         return; // Error!
     }
-    if (!pEvent->onVideoLoaded(fileid))
+
+    if (!pEvent->onVideoLoaded(fileid, islooped))
         return;
-    while (av_read_frame(ctx_format, pkt) >= 0)
+    do
     {
-
-         while(pEvent->videoFileReaders.at(fileid)->isPaused){
-             std::this_thread::sleep_for(std::chrono::milliseconds(300));
-             if(pEvent->stop)
-                  break;
-         }
-        if (pEvent->stop)
-            break;
-        ret = avcodec_send_packet(ctx_codec, pkt);
-        if (ret < 0 || ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+        while (av_read_frame(ctx_format, pkt) >= 0)
         {
-            std::cout << "avcodec_send_packet: " << ret << " " << AVERROR(EAGAIN) << " " << AVERROR_EOF << std::endl;
-            break;
+
+            if (localPause != pEvent->videoFileReaders.at(fileid)->isPaused)
+            {
+                localPause = pEvent->videoFileReaders.at(fileid)->isPaused;
+                pEvent->onVideoFilePause(fileid, localPause);
+            }
+            while (pEvent->videoFileReaders.at(fileid)->isPaused)
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds(300));
+                if (pEvent->stop)
+                    return;
+            }
+            if (pEvent->stop)
+                return;
+
+            if (pkt->stream_index == stream_idx)
+            {
+                // std::cout << "av_read_frame complite " << std::endl;
+
+                ret = avcodec_send_packet(ctx_codec, pkt);
+                if (ret < 0 || ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+                {
+                    // std::cout << "avcodec_send_packet: " << ret << " " << AVERROR(EAGAIN) << " " << AVERROR_EOF << std::endl;
+                    break;
+                }
+                while (ret >= 0)
+                {
+
+                    ret = avcodec_receive_frame(ctx_codec, frame);
+                    if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+                    {
+                        // std::cout << "avcodec_receive_frame: " << ret << std::endl;
+
+                        break;
+                    }
+                    ii++;
+
+                    int dstStride = (int)(CConfig::WIDTH * 0.75 * 3);
+                    struct SwsContext *sws_ctx = sws_getContext(
+                        frame->width,
+                        frame->height,
+                        ctx_codec->pix_fmt,
+                        CConfig::WIDTH * 0.75,
+                        CConfig::HEIGHT * 0.75,
+                        AV_PIX_FMT_RGB24,
+                        SWS_BICUBIC,
+                        NULL,
+                        NULL,
+                        NULL);
+                    struct SwsContext *sws_ctx_preview = sws_getContext(
+                        frame->width,
+                        frame->height,
+                        ctx_codec->pix_fmt,
+                        CConfig::WIDTH * 0.25,
+                        CConfig::HEIGHT * 0.25,
+                        AV_PIX_FMT_RGB24,
+                        SWS_BICUBIC,
+                        NULL,
+                        NULL,
+                        NULL);
+                    sts = sws_scale(sws_ctx,         // struct SwsContext* c,
+                                    frame->data,     // const uint8_t* const srcSlice[],
+                                    frame->linesize, // const int srcStride[],
+                                    0,               // int srcSliceY,
+                                    frame->height,   // int srcSliceH,
+                                    pRGBFrame->data, // uint8_t* const dst[],
+                                    &dstStride);     // const int dstStride[]);
+                                                     // задержка на частоту кадров
+
+                    dstStride = (int)(CConfig::WIDTH * 0.25 * 3);
+
+                    sts_preview = sws_scale(sws_ctx_preview,         // struct SwsContext* c,
+                                            frame->data,             // const uint8_t* const srcSlice[],
+                                            frame->linesize,         // const int srcStride[],
+                                            0,                       // int srcSliceY,
+                                            frame->height,           // int srcSliceH,
+                                            pRGBFrame_preview->data, // uint8_t* const dst[],
+                                            &dstStride);
+
+                    long thisFrameTime = lastFrameTime + frameDur;
+                    if (thisFrameTime > nowTime())
+                    {
+                        std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
+                    }
+                    lastFrameTime = nowTime();
+
+                    std::size_t size =
+                        pRGBFrame->width * pRGBFrame->height * (pRGBFrame->linesize[0] / pRGBFrame->width) *
+                        sizeof(unsigned char);
+
+                    memcpy(pEvent->imageData[CConfig::MAX_FACES - 1].fullImageData, pRGBFrame->data[0], size);
+
+                    size =
+                        pRGBFrame_preview->width * pRGBFrame_preview->height * (pRGBFrame_preview->linesize[0] / pRGBFrame_preview->width) *
+                        sizeof(unsigned char);
+                    memcpy(pEvent->imageData[CConfig::MAX_FACES - 1].previewImageData, pRGBFrame_preview->data[0], size);
+                    pEvent->imageData[CConfig::MAX_FACES - 1].frameNumber = ctx_codec->frame_number;
+
+                    sws_freeContext(sws_ctx_preview);
+                    sws_freeContext(sws_ctx);
+                }
+            }
+            if (pEvent->videoFileReaders.at(fileid)->isRequestToStart)
+            {
+                av_seek_frame(ctx_format, stream_idx, 0, AVSEEK_FLAG_FRAME);
+                pEvent->videoFileReaders.at(fileid)->isRequestToStart = false;
+            }
         }
-        while (ret >= 0)
+
+        if (!pEvent->videoFileReaders.at(fileid)->islooped)
+            pEvent->videoFileReaders.at(fileid)->isPaused = true;
+        while (pEvent->videoFileReaders.at(fileid)->isPaused)
         {
-            ret = avcodec_receive_frame(ctx_codec, frame);
-            if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
-            {
-                // std::cout << "avcodec_receive_frame: " << ret << std::endl;
-
-                break;
-            }
-            ii++;
-          
-
-            int dstStride = (int)(CConfig::WIDTH * 0.75 * 3);
-            struct SwsContext *sws_ctx = sws_getContext(
-                frame->width,
-                frame->height,
-                ctx_codec->pix_fmt,
-                CConfig::WIDTH * 0.75,
-                CConfig::HEIGHT * 0.75,
-                AV_PIX_FMT_RGB24,
-                SWS_BICUBIC,
-                NULL,
-                NULL,
-                NULL);
-            struct SwsContext *sws_ctx_preview = sws_getContext(
-                frame->width,
-                frame->height,
-                ctx_codec->pix_fmt,
-                CConfig::WIDTH * 0.25,
-                CConfig::HEIGHT * 0.25,
-                AV_PIX_FMT_RGB24,
-                SWS_BICUBIC,
-                NULL,
-                NULL,
-                NULL);
-            sts = sws_scale(sws_ctx,         // struct SwsContext* c,
-                            frame->data,     // const uint8_t* const srcSlice[],
-                            frame->linesize, // const int srcStride[],
-                            0,               // int srcSliceY,
-                            frame->height,   // int srcSliceH,
-                            pRGBFrame->data, // uint8_t* const dst[],
-                            &dstStride);     // const int dstStride[]);
-                                             // задержка на частоту кадров
-            dstStride = (int)(CConfig::WIDTH * 0.25 * 3);
-
-            sts_preview = sws_scale(sws_ctx_preview,         // struct SwsContext* c,
-                                    frame->data,             // const uint8_t* const srcSlice[],
-                                    frame->linesize,         // const int srcStride[],
-                                    0,                       // int srcSliceY,
-                                    frame->height,           // int srcSliceH,
-                                    pRGBFrame_preview->data, // uint8_t* const dst[],
-                                    &dstStride);
-
-            long thisFrameTime = lastFrameTime + frameDur;
-            if (thisFrameTime > nowTime())
-            {
-                std::this_thread::sleep_for(std::chrono::milliseconds(thisFrameTime - nowTime()));
-            }
-            lastFrameTime = nowTime();
-
-            std::size_t size =
-                pRGBFrame->width * pRGBFrame->height * (pRGBFrame->linesize[0] / pRGBFrame->width) *
-                sizeof(unsigned char);
-
-            memcpy(pEvent->imageData[CConfig::MAX_FACES-1].fullImageData, pRGBFrame->data[0], size);
-
-            size =
-                pRGBFrame_preview->width * pRGBFrame_preview->height * (pRGBFrame_preview->linesize[0] / pRGBFrame_preview->width) *
-                sizeof(unsigned char);
-            memcpy(pEvent->imageData[CConfig::MAX_FACES-1].previewImageData, pRGBFrame_preview->data[0], size);
-            pEvent->imageData[CConfig::MAX_FACES-1].frameNumber = ctx_codec->frame_number;
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
+            if (pEvent->stop)
+                return;
         }
-    }
-    
+
+    } while (av_seek_frame(ctx_format, stream_idx, 0, AVSEEK_FLAG_FRAME) >= 0);
 
     av_frame_free(&frame);
     av_frame_free(&pRGBFrame);

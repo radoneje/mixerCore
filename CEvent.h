@@ -39,6 +39,8 @@ public:
         std::string fileid;
         bool isPaused;
         bool isReady;
+        bool islooped;
+        bool isRequestToStart;
     };
    
 
@@ -56,9 +58,11 @@ public:
     void showPres(unsigned char * data, std::string itemid);
     std::map<int,SInputData*> inputs;
 
-    bool onVideoLoaded(std::string fileid);
+    bool onVideoLoaded(std::string fileid, bool islooped);
     void onVideoEnd(std::string fileid);
+    void stopAllVideos();
     std::map<std::string, SVideoFileData*> videoFileReaders;
+    void onVideoFilePause(std::string fileid, bool pause);
 
    
 };

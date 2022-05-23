@@ -95,6 +95,7 @@ public:
     }
 
     static void notifyControl(std::string action, std::string eventid, std::string *param1 = nullptr, std::string *param2 = nullptr, std::string *param3 = nullptr);
+    static std::string getDataFromControl(std::string target, std::string eventid, std::string *param1 = nullptr, std::string *param2 = nullptr, std::string *param3 = nullptr);
 };
 
 #endif // MIXERCORE_CCONFIG_H
