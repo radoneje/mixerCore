@@ -157,4 +157,11 @@ bool CEvent::onVideoLoaded(std::string fileid){
 };
 void  CEvent::onVideoEnd(std::string fileid){
 CConfig::log("VIDEO END", fileid);
+    locker.lock();
+    if(videoFileReaders.find(fileid)==videoFileReaders.end()){
+        locker.unlock();
+        return ;
+    }
+    videoFileReaders.erase(fileid);
+    locker.unlock();
 }

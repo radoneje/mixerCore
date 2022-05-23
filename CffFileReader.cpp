@@ -47,6 +47,7 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
     if (int ret = avformat_open_input(&ctx_format, fileurl.c_str(), nullptr, nullptr) != 0)
     {
         CConfig::error("FILE READER ERROR - avformat_open_input", fileid, fileurl);
+        pEvent->onVideoEnd(fileid);
         return;
     }
 
@@ -54,6 +55,7 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
     if (ret < 0)
     {
         CConfig::error("FILE READER ERROR - avformat_find_stream_info", fileid, fileurl);
+        pEvent->onVideoEnd(fileid);
         return; // Couldn't find stream information
     }
     av_dump_format(ctx_format, 0, fileurl.c_str(), false);
@@ -70,12 +72,14 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
     if (vid_stream == nullptr)
     {
         CConfig::error("FILE READER ERROR - aavformat VIDEO", fileid, fileurl);
+        pEvent->onVideoEnd(fileid);
         return;
     }
     codec = avcodec_find_decoder(vid_stream->codecpar->codec_id);
     if (!codec)
     {
         CConfig::error("FILE READER ERROR - codec not found", fileid, fileurl);
+        pEvent->onVideoEnd(fileid);
         return;
     }
     ctx_codec = avcodec_alloc_context3(codec);
@@ -83,13 +87,23 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
     if (avcodec_parameters_to_context(ctx_codec, vid_stream->codecpar) < 0)
     {
         CConfig::error("FILE READER ERROR - avcodec_parameters_to_context", fileid, fileurl);
+        pEvent->onVideoEnd(fileid);
         return;
     }
     if (avcodec_open2(ctx_codec, codec, nullptr) < 0)
     {
         CConfig::error("FILE READER ERROR - avcodec_open2", fileid, fileurl);
+        pEvent->onVideoEnd(fileid);
         return;
     }
+     ret = avio_open(&ctx_format->pb, fileurl.c_str(), AVIO_FLAG_READ);// , NULL, NULL);
+        if (ret < 0) {
+
+            CConfig::error("FILE READER ERROR - avio_open", fileid, fileurl);
+            pEvent->onVideoEnd(fileid);
+            return;
+        }
+
     // задержка на частоту кадров
     int frameDur = 0;
     if (vid_stream->avg_frame_rate.num > 0)
@@ -116,12 +130,14 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
     {
 
         CConfig::error("FILE READER ERROR - av_frame_get_buffer", fileid, fileurl);
+        pEvent->onVideoEnd(fileid);
         return;
     }
     int sts_preview = av_frame_get_buffer(pRGBFrame_preview, 0);
     if (sts_preview < 0)
     {
         CConfig::error("FILE READER ERROR - av_frame_get_buffer", fileid, fileurl);
+        pEvent->onVideoEnd(fileid);
         return; // Error!
     }
     if (!pEvent->onVideoLoaded(fileid))
@@ -129,11 +145,11 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
     while (av_read_frame(ctx_format, pkt) >= 0)
     {
 
-        /* while(pEvent->videoFileReaders.at(fileid)->isPaused){
+         while(pEvent->videoFileReaders.at(fileid)->isPaused){
              std::this_thread::sleep_for(std::chrono::milliseconds(300));
              if(pEvent->stop)
                   break;
-         }*/
+         }
         if (pEvent->stop)
             break;
         ret = avcodec_send_packet(ctx_codec, pkt);
@@ -152,6 +168,7 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
                 break;
             }
             ii++;
+          
 
             int dstStride = (int)(CConfig::WIDTH * 0.75 * 3);
             struct SwsContext *sws_ctx = sws_getContext(
@@ -205,16 +222,16 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
                 pRGBFrame->width * pRGBFrame->height * (pRGBFrame->linesize[0] / pRGBFrame->width) *
                 sizeof(unsigned char);
 
-            memcpy(pEvent->imageData[CConfig::MAX_FACES].fullImageData, pRGBFrame->data[0], size);
+            memcpy(pEvent->imageData[CConfig::MAX_FACES-1].fullImageData, pRGBFrame->data[0], size);
 
             size =
                 pRGBFrame_preview->width * pRGBFrame_preview->height * (pRGBFrame_preview->linesize[0] / pRGBFrame_preview->width) *
                 sizeof(unsigned char);
-            memcpy(pEvent->imageData[CConfig::MAX_FACES].previewImageData, pRGBFrame_preview->data[0], size);
-            pEvent->imageData[CConfig::MAX_FACES].frameNumber = ctx_codec->frame_number;
+            memcpy(pEvent->imageData[CConfig::MAX_FACES-1].previewImageData, pRGBFrame_preview->data[0], size);
+            pEvent->imageData[CConfig::MAX_FACES-1].frameNumber = ctx_codec->frame_number;
         }
     }
-    pEvent->onVideoEnd(fileid);
+    
 
     av_frame_free(&frame);
     av_frame_free(&pRGBFrame);
@@ -222,6 +239,7 @@ void CffFileReader::work(std::string fileid, std::string fileurl, CEvent *pEvent
     av_packet_unref(pkt);
     avcodec_free_context(&ctx_codec);
     avformat_close_input(&ctx_format);
+    pEvent->onVideoEnd(fileid);
 
-    CConfig::log("FILE READER READY ", fileid, fileurl);
+    CConfig::log("FILE READER COMPLITE ", fileid, fileurl);
 };

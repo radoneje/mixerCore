@@ -131,6 +131,7 @@ void Ccmd::makeMainImage(std::string eventid,
                         blankImage[((x + (y * CConfig::WIDTH)) * 3) + 2] =
                             pEvent->imageData[imgNum].previewImageData[pixelNum + 2];
                     }
+                    
                 }
                 else
                 { // пустой PGM
@@ -141,7 +142,7 @@ void Ccmd::makeMainImage(std::string eventid,
             }
 
         ////////генерация превьюшек
-        for (int i = 0; i < CConfig::MAX_FACES; i++) // TODO: uncomment
+        for (int i = 0; i <=CConfig::MAX_FACES; i++) // TODO: uncomment
         {
             // TODO: previewImageData-> заполнить и взять
             /*    Magick::Image imageInput;
